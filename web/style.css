@@ -1,0 +1,99 @@
+/* 
+    Document   : style
+    Created on : Dec 9, 2008, 10:08:30 AM
+    Author     : Paul Wolfgang
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+
+h1  {
+    color: #9e1b32;;
+    font-family: 'Times New Roman',Times,serif;
+    font-size: XX-large;
+    font-variant: small-caps;
+}
+
+body {
+    
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: medium;
+}
+
+form {
+	margin-bottom: 35px;
+}
+
+th {
+	padding: 6px;
+	text-align: left;
+    font-size: 90%;
+}
+
+.border {
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: black;
+    border-bottom-color: black;
+    border-left-color: black;
+    border-right-color: black;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-collapse: collapse;
+}
+
+.border td, .border th {
+    
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: black;
+    border-bottom-color: black;
+    border-left-color: black;
+    border-right-color: black;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-collapse: collapse;
+    vertical-align: top;
+    padding: 4px;
+    text-align: left;
+}
+
+.header {
+    background: #AAC1FF;
+    font-weight: bold;
+    padding: 3px;
+}
+
+.selectSize {
+    width: 500px;
+}
+
+.smallRedText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 70%;
+	color: #CC3366;
+}
+
+.button {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 90%;
+	font-weight: bold;
+	color: #dfdffff;
+    background:#AAC1FF;
+    padding: 3px;
+    margin: 6px;
+}
+

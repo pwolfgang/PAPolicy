@@ -1,0 +1,384 @@
+body		{
+    background: #fff;
+    color: #000;
+    font: 80% Ariel, Helvetica, sans-serif;
+    margin: 0px;
+}
+
+h1			{
+    font-family: "Times New Roman", Times, serif;
+    background: #fff;
+    color: #990000;
+    font-size: 200%;
+}
+
+h1#start, h1#new	{
+    font-family: "Times New Roman", Times, serif;
+    font-size: 115%;
+    text-transform: uppercase;
+    color: #990000;
+    background: #ccccff;}
+
+h1#welcome 	{
+    font-family: "Times New Roman", Times, serif;
+    font-size: 200%;
+    color: #990000;
+    background: #fff;
+    font-weight: bold;
+    text-transform: none;
+}			
+
+h2			{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 125%;
+}
+
+h3			{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 100%;
+    margin-bottom: 0px;
+    color: #00006B;
+}
+
+#skipnav	{display: none;}
+#redbanner	{background: #990000; text-align:right}
+
+#leftcol	{
+    color: #000066;
+    background: #ccccff;
+    padding: 15px 7px;
+    vertical-align: top;
+}
+
+#centercol	{
+    color: #000;
+    background: #fff;
+    vertical-align: top;
+    padding: 5px 20px;
+}
+
+#rightcol	{
+    color: #000066;
+    background: #ccccff;
+    padding: 15px 7px;
+    vertical-align: top;
+}
+
+#footer		{
+    font-size: 90%;
+    border-top: 1px solid #000066;
+    text-align: center;
+}
+
+#globalnav	{
+    text-align: center;
+    font-size: 90%;
+}
+
+#leftnav	{
+    vertical-align: top;
+    margin: 0px;
+    width: 171px;
+    background-color: #CCCCFF;
+}
+
+#leftnav br {
+    background-color: #CCCCFF;
+    display: block;
+}
+
+#leftnav a  {
+    display: block;
+    background: #ccccff;
+    color: #cc0000;
+    width: 171px;
+    text-decoration: none;
+    padding: 8px;
+}			
+
+#leftnav a.first	{
+    border-top: 13px solid #ccccff;
+    margin-top: 0px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#leftnav span {
+    display: block;
+    background: #ccccff;
+    color: #cc0000;
+    width: 171px;
+    padding: 8px;
+}
+
+#leftnav .sub {
+    text-indent: 15px;
+    font-size: 11px;
+}
+
+#leftnav .sub2 {
+
+    text-indent: 30px;
+    font-size: 10px;
+}
+
+#leftnav .current {
+    color: #000000;
+    font-weight: bold;
+}
+
+#leftnav a:visited	{	
+    background: #ccccff;
+    color: #CC0000;
+}
+
+#leftnav a:hover	{
+    background: #ccccff;
+    color: #000;
+}
+
+#leftnav a:active	{
+    background: #ccccff;
+    color: #000066;
+}
+
+img.filler	{
+    width: 187px;
+    height: 50px;
+    vertical-align: top;
+}
+
+#content	{
+    background: #fff;
+    color: #000;
+    padding: 10px 20px 15px 0px;
+    vertical-align: top;
+}
+/* Styling for page contents div, for in-page navigation */			
+#pagecontents { font-family: "Times New Roman", Times, serif;
+    background: #fff;
+    color: #000000;
+    font-size: 95%;
+    border: 1px solid #000000;
+    margin-top: -15px;
+    padding: 2px;}
+
+a:link 		{color: #000066; text-decoration: underline;}
+a:visited 	{color: #990000; text-decoration: underline;}
+a:hover 	{color: #990000; text-decoration: none;}
+a:active 	{color: #000000; text-decoration: none;}
+
+a.highlight:link, a.highlight:visited {color: #cc0000; text-decoration: underline;}
+a.highlight:hover 	{color: #000; text-decoration: none;}
+a.highlight:active	{color: #000; text-decoration: none;}
+
+.aligntop	{vertical-align: top;}
+.aligncenter	{text-align: center;}
+.alignright {text-align: right;}
+.indent25	{padding-left: 25px;}
+.notop		{margin-top: 0px;}
+.bold		{font-weight: bold;}
+.italic		{font-style: italic;}
+.top		{padding-top: 15px;}
+.leftcolbg	{background: #ccccff;}
+.comment	{color: #6600CC;}
+.indent15 {
+    padding-left: 15px;
+}
+.pseudolink {
+    color: #000066;
+}
+th {
+    background: #000099;
+    color: #FFFFFF;
+}
+tr.codebook {
+    background: #CCCCFF;
+}
+tr.alternate {
+    background: #FFECFF;
+}
+td.category {
+    background: #010066;
+    color: #FFFFFF;
+    padding-left: 3px;
+}
+.new {
+    font-style: italic;
+    color: #FF0000;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+#datasets a.rollover {
+    color: #FFFFFF;
+    font-weight: bold;
+}
+#datasets a.rollover:hover {
+    color: #FF0000;
+    text-decoration:none;
+}
+
+#datasets a.rollover:active {
+    background: #010066;
+
+}
+
+#datasets a.rollover span {
+    color:#FFFFFF;
+    display: none;
+    font-size: smaller;
+}
+#datasets a.rollover:hover span {
+    display:inline;
+}
+#datasets a.rollover:active span {
+    display:inline;
+}
+
+/* DataTools classes */
+
+div.tool {
+    width: 760px;
+    margin-left: 20px;
+}
+
+div.tool dl {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+div.tool table, div.tool td, div.tool th {
+    border: solid #00005A 1px;
+    border-collapse: collapse;
+    padding: 3px;
+}
+
+div.tool th {
+    background: #ffffff;
+    color: #000000;
+}
+
+.level1 {
+    padding-left: 20px;
+    border-top: solid #00005A 1px;
+}
+
+.level2 {
+    padding-left: 20px;
+    border-bottom: solid #00005A 1px;
+}
+
+.level3 {
+    padding-left: 20px;
+    font-size: 90%;
+}
+
+.header {
+    background: #AAC1FF;
+    font-weight: bold;
+    padding: 3px;
+}
+
+div.rowHead {
+    clear: both;
+    padding-top: 10px;
+    background: #CEDBFF;
+    font-weight: bold;
+}
+
+div.rowOff {
+    clear: both;
+    padding-top: 10px;
+    background: #EBEBEB;
+}
+
+div.rowOn {
+    clear: both;
+    padding-top: 10px;
+}  
+
+div.row {
+    padding-left: 15px;
+    background: #AAC1FF;
+}  
+
+div.row span.left {
+    float: left;
+    width: 200px;
+    text-align: left;
+}
+
+div.row span.middle {
+    width: 200px;
+}
+
+div.row span.right {
+    float: right;
+    width: 100px;
+    text-align: left;
+} 
+
+
+.button {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 90%;
+    font-weight: bold;
+    background:#EBEBEB;
+    padding: 3px;
+    float: right;
+}
+
+.buttonSmall {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 75%;
+    font-weight: bold;
+    background:#EBEBEB;
+    padding: 1px;
+    margin-bottom: 3px;
+    float: right;
+}
+
+.formColor { 
+    background-color: #EBEBEB;
+    color: #000051
+}
+
+.justify {
+    text-align: justify;
+    line-height: 1.5;
+} 
+
+.navy {
+    background: #ffffff;
+    padding-right: 2px;
+    padding-left: 2px;
+    padding-bottom: 0px;
+    margin: 0px;
+    font: 90% "verdana", "skia", "arial", "helvetica";
+    padding-top: 0px;
+    color: #000051;
+} 
+
+.smallText {
+    font-size: 80%;
+    font-weight: normal;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #0000FF;
+} 
+
+.smallTextNavy {font-size: 80%; color: #000051;}
+
+h1.example {padding-top: 10px; padding-left: 10px;}
+#example .leftpadding {padding-left: 10px;}
+
+dd {
+margin-bottom: 0px;
+list-style-type: square;
+list-style-position: inside;
+}
+
+li {
+margin-bottom: 0px;
+margin-top: 0px;
+}

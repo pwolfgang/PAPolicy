@@ -1,0 +1,204 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package edu.temple.cla.papolicy.tables;
+
+import edu.temple.cla.papolicy.Units;
+import edu.temple.cla.papolicy.dao.Topic;
+import edu.temple.cla.papolicy.dao.YearValue;
+import edu.temple.cla.papolicy.filters.Filter;
+import java.util.List;
+import java.util.SortedMap;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+
+/**
+ *
+ * @author Paul Wolfgang
+ */
+public interface Table {
+    /**
+     * @return the id
+     */
+    public int getId();
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id);
+
+    /**
+     * @return the tableName
+     */
+    public String getTableName();
+
+    /**
+     * @param tableName the tableName to set
+     */
+    public void setTableName(String tableName);
+
+    /**
+     * @return the tableTitle
+     */
+    public String getTableTitle();
+
+    /**
+     * @param tableTitle the tableTitle to set
+     */
+    public void setTableTitle(String tableTitle);
+
+    /**
+     * @return the majorOnly
+     */
+    public boolean isMajorOnly();
+
+    /**
+     * @param majorOnly the majorOnly to set
+     */
+    public void setMajorOnly(boolean majorOnly);
+
+    /**
+     * @return the minYear
+     */
+    public int getMinYear();
+
+    /**
+     * @param minYear the minYear to set
+     */
+    public void setMinYear(int minYear);
+
+    /**
+     * @return the maxYear
+     */
+    public int getMaxYear();
+
+    /**
+     * @param maxYear the maxYear to set
+     */
+    public void setMaxYear(int maxYear);
+
+    /**
+     * @return the filterList
+     */
+    public List<Filter> getFilterList();
+
+    /**
+     * @return filterList.size()
+     */
+    public int getFilterListSize();
+
+    /**
+     * @param filterList the filterList to set
+     */
+    public void setFilterList(List<Filter> filterList);
+
+    /**
+     * Method to generate the HTML code for the title box.
+     */
+    public String getTitleBox();
+
+    /**
+     * @param jdbcTemplate the jdbcTemplate to set
+     */
+    public void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate);
+
+    /**
+     * @return the qualifier
+     */
+    public char getQualifier();
+
+    /**
+     * @param qualifier the qualifier to set
+     */
+    public void setQualifier(char qualifier);
+
+    /**
+     * @return the textColumn
+     */
+    public String getTextColumn();
+
+    /**
+     * @param textColumn the textColumn to set
+     */
+    public void setTextColumn(String textColumn);
+
+
+    StringBuilder getFilterQualifierString();
+
+    String getFilterQueryString();
+
+    public boolean isTopicSearchable();
+
+    public void setAdditionalParameters(HttpServletRequest request);
+
+    public String getTotalQueryString();
+
+    public String getTopicQueryString(Topic topic);
+
+    public String getYearColumn();
+
+    public Units getUnits(String showResults);
+
+    /**
+     * @param yearColumn the yearColumn to set
+     */
+    public void setYearColumn(String yearColumn);
+
+    /**
+     * Function to get the subtable of this table based on the
+     * qualifier character.
+     * @param qualifier A character ('A', 'B', etc.) that follows the table ID
+     * @return The subtable as indicated by the qualifier character.
+     */
+    public Table getSubTable(char qualifier);
+
+    public Number getValueForRange(SortedMap<Integer, Number> valueMap);
+
+    public Number getPercentForRange(SortedMap<Integer, Number> valueMap,
+            SortedMap<Integer, Number> totalMap);
+
+    public String getAxisTitle(Units units);
+
+    public List<YearValue> getYearValueList(SimpleJdbcTemplate jdbcTemplate, String query);
+
+    /**
+     * @return the drill-down columns
+     */
+    public String[] getDrillDownColumns();
+
+    /**
+     * @param drillDownColumns the array of columns to display in the
+     * drill-down page
+     */
+    public void setDrillDownColumns(String[] drillDownColumns);
+
+    /**
+     * @return the linkColumn
+     */
+    public String getLinkColumn();
+
+    /**
+     * @param linkColumn the linkColumn to set
+     */
+    public void setLinkColumn(String linkColumn);
+
+    /**
+     * Method to convert the SQL query that gets the count to a
+     * SQL query that gets the DrillDown columns
+     * @param query The query that gets the count.
+     * @return Modified query that selects the DrillDown columns and
+     * link column if defined.
+     */
+    public String createDrillDownQuery(String query);
+
+    /**
+     * Method to convert the SQL query that gets the count to a
+     * SQL query that gets all columns for download
+     * @param query The query that gets the count.
+     * @return Modified query that selects all columns.
+     */
+    public String createDownloadQuery(String query);
+
+}

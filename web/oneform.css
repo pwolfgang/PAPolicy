@@ -1,0 +1,103 @@
+body {
+}
+
+form {
+	margin-bottom: 35px;
+}	
+	
+th {
+	padding: 6px;
+	text-align: left;
+    font-size: 90%;
+}
+
+.advanced {
+    font-size: 80%;
+    font-weight: normal;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #efefef;
+	border: solid #000066 1px;
+    border-collapse: collapse;
+}
+
+.advanced p {
+    margin-top: 2px;
+    margin-bottom: 4px;
+}
+
+.filter {
+    display: none;
+}
+
+.subtbl {
+    display: none;
+}
+
+.subcodelist {
+    display: none;
+}
+
+.alert {
+    color: #ff0000;
+    font-size: 110%;
+}
+
+.border {
+	border: solid #000066 1px;
+    border-collapse: collapse;
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+
+.border td, .border th {
+	border: solid #000066 1px;
+    border-collapse: collapse;
+    vertical-align: top;
+	padding: 4px;
+	text-align: left;
+}
+
+.button {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 90%;
+	font-weight: bold;
+    background:#AAC1FF; 
+    padding: 3px;
+    margin: 6px;
+}
+ 
+.buttonSmall {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 75%;
+	font-weight: bold;
+	color: #dfdfff;
+    background:#EBEBEB; 
+    padding: 1px;
+    margin-bottom: 3px;
+    float: right;
+}
+
+.indent {
+    padding-left: 30px; 
+}
+
+.instructions {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 70%;
+    color: #0033cc;
+    margin: 0px;
+}
+
+.left {
+	text-align: left;
+}
+
+.selectSize {
+    width: 500px;
+}
+
+.smallRedText {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 70%;
+	color: #CC3366;
+}

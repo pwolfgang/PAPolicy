@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : views.xml
+    Created on : April 27, 2009, 8:13 AM
+    Author     : Paul Wolfgang
+    Description:
+        Purpose of the document follows.
+-->
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+    <bean name="download" class="edu.temple.cla.papolicy.DownloadExcelView"/>
+</beans>

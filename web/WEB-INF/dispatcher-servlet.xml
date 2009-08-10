@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+    
+    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
+    
+    <!--
+    Most controllers will use the ControllerClassNameHandlerMapping above, but
+    for the index controller we are using ParameterizableViewController, so we must
+    define an explicit mapping for it.
+    -->
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="index.spg">indexController</prop>
+                <prop key="analysis.spg">analysisController</prop>
+                <prop key="display.spg">displayFormController</prop>
+                <prop key="drilldown.spg">drillDownController</prop>
+                <prop key="*.xls">downloadController</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="jspViewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+              <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+              <property name="prefix" value="/WEB-INF/jsp/"/>
+              <property name="suffix" value=".jsp"/>
+          </bean>
+
+    <bean id="excelViewReslover"
+    class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="order" value="1"/>
+        <property name="location" value="/WEB-INF/views.xml"/>
+    </bean>
+
+    <!--
+    The index controller.
+    -->
+    <bean name="indexController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="index" />
+
+    <!--
+    The analysis controller.
+    -->
+    <bean name="analysisController"
+          class="edu.temple.cla.papolicy.controllers.AnalysisController" >
+              <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <!--
+    The display form controller.
+    -->
+    <bean name="displayFormController"
+        class="edu.temple.cla.papolicy.controllers.DisplayFormController">
+            <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <!--
+    The drilldown controller.
+    -->
+    <bean name="drillDownController"
+        class="edu.temple.cla.papolicy.controllers.DrillDownController">
+            <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <!--
+    The download controller.
+    -->
+    <bean name="downloadController"
+        class="edu.temple.cla.papolicy.controllers.Download">
+            <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+</beans>
