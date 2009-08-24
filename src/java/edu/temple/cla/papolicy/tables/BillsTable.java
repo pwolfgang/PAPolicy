@@ -128,7 +128,7 @@ public class BillsTable extends AbstractTable {
 
     @Override
     public String getYearColumn() {
-        return "Year_Reffered";
+        return "Year_Referred";
     }
 
     @Override
