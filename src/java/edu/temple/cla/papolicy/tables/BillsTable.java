@@ -15,6 +15,7 @@ public class BillsTable extends AbstractTable {
 
     String[] chamber;
     String billtype;
+    String sessionType;
 
 
     /**
@@ -65,6 +66,7 @@ public class BillsTable extends AbstractTable {
             chamber = new String[]{"house", "senate"};
         }
         billtype = request.getParameter("billtype");
+        sessionType = request.getParameter("sessiontype");
     }
 
     @Override
@@ -117,6 +119,17 @@ public class BillsTable extends AbstractTable {
             }
             stb.append(chamberSelect.subSequence(0, chamberSelect.length()-4));
             stb.append(")");
+        }
+        if (!stb.toString().endsWith(" WHERE ")
+                && getFilterQueryString().length() != 0) {
+            stb.append(" AND ");
+        }
+        if (sessionType.equals("BOTH")) {
+            // do nothing
+        } else if (sessionType.equals("REGULAR")) {
+            stb.append(" Session NOT LIKE('%-%-%')");
+        } else {
+            stb.append(" Session LIKE('%-%-%')");
         }
         if (!stb.toString().endsWith(" WHERE ")
                 && getFilterQueryString().length() != 0) {
