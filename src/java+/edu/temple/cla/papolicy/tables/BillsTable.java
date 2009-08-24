@@ -15,6 +15,7 @@ public class BillsTable extends AbstractTable {
 
     String[] chamber;
     String billtype;
+    String sessionType;
 
 
     /**
@@ -65,6 +66,7 @@ public class BillsTable extends AbstractTable {
             chamber = new String[]{"house", "senate"};
         }
         billtype = request.getParameter("billtype");
+        sessionType = request.getParameter("sessiontype");
     }
 
     @Override
@@ -122,13 +124,24 @@ public class BillsTable extends AbstractTable {
                 && getFilterQueryString().length() != 0) {
             stb.append(" AND ");
         }
+        if (sessionType.equals("BOTH")) {
+            // do nothing
+        } else if (sessionType.equals("REGULAR")) {
+            stb.append(" Session NOT LIKE('%-%-%')");
+        } else {
+            stb.append(" Session LIKE('%-%-%')");
+        }
+        if (!stb.toString().endsWith(" WHERE ")
+                && getFilterQueryString().length() != 0) {
+            stb.append(" AND ");
+        }
         stb.append(getFilterQueryString());
         return stb.toString();
     }
 
     @Override
     public String getYearColumn() {
-        return "Year_Reffered";
+        return "Year_Referred";
     }
 
     @Override
