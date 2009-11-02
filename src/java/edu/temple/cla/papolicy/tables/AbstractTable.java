@@ -248,7 +248,7 @@ public abstract class AbstractTable implements Table {
 
     public String getTopicQueryString(Topic topic) {
         StringBuilder stb = new StringBuilder(getTotalQueryString());
-        if (topic != null) {
+        if (topic != null && topic.getCode() != 0) {
             if (!getTotalQueryString().endsWith("WHERE ")) {
                 stb.append(" AND ");
             }
