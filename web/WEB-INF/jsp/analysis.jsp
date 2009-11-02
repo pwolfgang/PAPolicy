@@ -11,7 +11,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Analysis Page</title>
         <link type="text/css" rel="stylesheet" href="oneform.css" />
         <link type="text/css" rel="stylesheet" href="policy.css" />
@@ -27,6 +27,9 @@
             This form enables you to graph trends and download data from
             the main Pennsylvania Policy Project datasets.
             Scroll down the page for the available search options.
+            <%if ("1".equals(request.getParameter("error"))) { %>
+            <br /><span class="error">At least one dataset must be chosen!</span>
+            <%}%>
         </p>
         <form method="post" action="display.spg">
         <table class="border">
@@ -35,18 +38,20 @@
                     <p>DATASETS TO SEARCH:</p>
                     <p class="smallText">
                         Keep scrolling down the page to select:
-                        <ul>
-                            <li>additional datasets</li>
-                            <li>policy topics and key word search </li>
-                            <li>time frame</li>
-                        </ul>
                     </p>
+                    <ul>
+                        <li>additional datasets</li>
+                        <li>policy topics and key word search </li>
+                        <li>time frame</li>
+                    </ul>
+                    
                 </td>
                 <td width="34%">&nbsp;</td>
                 <th width="50%">DATASET FILTERS
                 <br/><span class="smallText">
                         Pre-set to default values
                     </span>
+                </th>
             </tr>
             <c:forEach var="table" items="${tables}">
                 <tr>
@@ -97,7 +102,7 @@
                         </li>
                     </ul>
                     <p>
-                        <input type="checkbox" name="subtopics" value="${topicList}">
+                        <input type="checkbox" name="subtopics" value="${topicList}" />
                             Search ALL Topics, or select specific topics/subtopics
                             from the lists below:
                     </p>

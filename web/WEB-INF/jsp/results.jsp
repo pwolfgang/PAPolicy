@@ -80,5 +80,6 @@
                 }
             %>
         </table>
+        <a href="analysis.spg">Search Again</a>
     </body>
 </html>

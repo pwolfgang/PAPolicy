@@ -70,7 +70,7 @@ public class BudgetTable extends AbstractTable {
 
     @Override
     public String getTopicQueryString(Topic topic) {
-        if (topic != null) {
+        if (topic != null && topic.getCode() != 0) {
             return  getTotalQueryString() + "WHERE MajorCode.Code=" + 
                     topic.getCode();
         } else {

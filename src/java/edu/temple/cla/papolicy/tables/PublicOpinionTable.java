@@ -40,9 +40,13 @@ public class PublicOpinionTable extends StandardTable {
 
     @Override
     public String getTopicQueryString(Topic topic) {
-        return getTotalQueryString()
+        if (topic != null && topic.getCode() != 0) {
+            return getTotalQueryString()
                 + "Code="
                 + topic.getCode();
+        } else {
+            return getTotalQueryString();
+        }
     }
 
     @Override

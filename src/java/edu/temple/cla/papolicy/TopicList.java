@@ -7,6 +7,7 @@ package edu.temple.cla.papolicy;
 
 import edu.temple.cla.papolicy.dao.TopicMapper;
 import edu.temple.cla.papolicy.dao.Topic;
+import edu.temple.cla.papolicy.dao.AllTopics;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -24,7 +25,11 @@ public class TopicList {
     private Map<Integer, Topic> subTopics = new TreeMap<Integer, Topic>();
 
     public TopicList(String[] topics, SimpleJdbcTemplate jdbcTemplate) {
-        if (topics == null) return;
+        if (topics == null) {
+            majorTopics.put(0, new AllTopics());
+            subTopics.put(0, new AllTopics());
+            return;
+        }
         if (topics[0].contains(",")) {
             topics = topics[0].split(",\\s*");
         }

@@ -44,7 +44,8 @@ public class DisplayFormController extends AbstractController {
         List<Table> tables = new ArrayList<Table>();
         String[] tableIds = request.getParameterValues("dataset");
         if (tableIds == null) {
-            tableIds = new String[]{};
+            response.sendRedirect("analysis.spg?error=1");
+            return null;
         }
         for (String tableId : tableIds) {
             char qualifier = ' ';
