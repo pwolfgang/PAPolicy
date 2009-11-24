@@ -63,7 +63,7 @@ public class BillsTable extends AbstractTable {
     public void setAdditionalParameters(HttpServletRequest request) {
         chamber = request.getParameterValues("chamber");
         if (chamber == null || chamber.length == 0) {
-            chamber = new String[]{"house", "senate"};
+            chamber = new String[]{"House", "Senate"};
         }
         billtype = request.getParameter("billtype");
         sessionType = request.getParameter("sessiontype");
@@ -95,13 +95,11 @@ public class BillsTable extends AbstractTable {
         stb.append(" AS TheYear, count(ID) AS TheValue FROM ");
         stb.append(getTableName());
         stb.append(" WHERE ");
-        if ("BOTH".equals(billtype) && chamber.length == 2) {
-            // do nothing
-        } else {
+        if (!"BOTH".equals(billtype) || chamber.length != 2) {
             StringBuilder chamberSelect = new StringBuilder("(");
             for (String aChamber : chamber) {
                 if ("BOTH".equals(billtype) || ("BILLS".equals(billtype))) {
-                    if (aChamber.equals("house")) {
+                    if (aChamber.equals("House")) {
                         chamberSelect.append("Bill LIKE ('HB%')");
                     } else {
                         chamberSelect.append("Bill LIKE ('SB%')");
@@ -109,7 +107,7 @@ public class BillsTable extends AbstractTable {
                     chamberSelect.append(" OR ");
                 }
                 if ("BOTH".equals(billtype) || ("RES".equals(billtype))) {
-                    if (aChamber.equals("house")) {
+                    if (aChamber.equals("House")) {
                         chamberSelect.append("Bill LIKE ('HR%')");
                     } else {
                         chamberSelect.append("Bill LIKE ('SR%')");
@@ -120,16 +118,15 @@ public class BillsTable extends AbstractTable {
             stb.append(chamberSelect.subSequence(0, chamberSelect.length()-4));
             stb.append(")");
         }
-        if (!stb.toString().endsWith(" WHERE ")
-                && getFilterQueryString().length() != 0) {
-            stb.append(" AND ");
-        }
-        if (sessionType.equals("BOTH")) {
-            // do nothing
-        } else if (sessionType.equals("REGULAR")) {
-            stb.append(" Session NOT LIKE('%-%-%')");
-        } else {
-            stb.append(" Session LIKE('%-%-%')");
+        if (!sessionType.equals("BOTH")) {
+            if (!stb.toString().endsWith(" WHERE ")) {
+                stb.append(" AND ");
+            }
+            if (sessionType.equals("REGULAR")) {
+                stb.append(" Session NOT LIKE('%-%-%')");
+            } else {
+                stb.append(" Session LIKE('%-%-%')");
+            }
         }
         if (!stb.toString().endsWith(" WHERE ")
                 && getFilterQueryString().length() != 0) {

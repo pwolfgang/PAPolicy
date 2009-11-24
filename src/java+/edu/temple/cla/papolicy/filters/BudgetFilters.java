@@ -36,7 +36,7 @@ public class BudgetFilters extends Filter {
         List<Deflator> items = getJdbcTemplate().query(query, itemMapper);
         StringBuilder stb = new StringBuilder();
         stb.append({{<input type="radio" name="disp" value="0" checked="checked" />
-                Display Dolar Values
+                Display Dollar Values
                 <br />&nbsp;&nbsp;<input type="radio" name="disp" value="1" />
                 Display Percent of Total Spending
                 <br />&nbsp;&nbsp;<input type="radio" name="disp" value="2" />
