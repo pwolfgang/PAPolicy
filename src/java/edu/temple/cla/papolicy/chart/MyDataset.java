@@ -129,11 +129,8 @@ public class MyDataset implements CategoryDataset, Serializable{
         int rowIndex = getRowIndex(rowKey);
         // Remember Dataset rows are our columns
         Number returnValue = columns.get(rowIndex).getDisplayedValue((String)columnKey);
-        if (returnValue == null) {
-            returnValue = new Double(0);
-        }
         if (getUnits() == Units.RANK) {
-            if (returnValue.doubleValue() != 0) {
+            if (returnValue != null && returnValue.doubleValue() != 0) {
                 returnValue = new Double(Math.floor(maxValue.doubleValue()) - returnValue.doubleValue());
             }
         }

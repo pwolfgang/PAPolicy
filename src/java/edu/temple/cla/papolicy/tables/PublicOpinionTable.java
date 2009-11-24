@@ -70,7 +70,8 @@ public class PublicOpinionTable extends StandardTable {
             total += (25.0 - entry.getValue().doubleValue());
         }
         double value = 25.0 - total/valueMap.size();
-        return new Double(value);
+        if (Double.isNaN(value)) return null;
+        else return new Double(value);
     }
 
     @Override
@@ -80,7 +81,10 @@ public class PublicOpinionTable extends StandardTable {
         for (Map.Entry<Integer, Number> entry : valueMap.entrySet()) {
             total += entry.getValue().doubleValue();
         }
-        return new Double(total/valueMap.size() * 100);
+        double value = total/valueMap.size() * 100;
+        if (Double.isNaN(value)) return null;
+        else return new Double(value);
+
     }
 
     @Override
