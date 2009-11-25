@@ -30,6 +30,7 @@ public class TableMapper implements ParameterizedRowMapper<Table> {
             item.setTableName(rs.getString("TableName"));
             item.setTableTitle(rs.getString("TableTitle"));
             item.setMajorOnly(rs.getBoolean("MajorOnly"));
+            item.setCodeColumn(rs.getString("CodeColumn"));
             item.setTextColumn(rs.getString("TextColumn"));
             item.setYearColumn(rs.getString("YearColumn"));
             item.setMinYear(rs.getInt("MinYear"));

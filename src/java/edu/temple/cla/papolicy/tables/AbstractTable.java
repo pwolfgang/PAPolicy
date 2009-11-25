@@ -27,6 +27,7 @@ public abstract class AbstractTable implements Table {
     private String tableName;
     private String tableTitle;
     private boolean majorOnly;
+    private String codeColumn;
     private String textColumn;
     private String yearColumn;
     private String[] drillDownColumns;
@@ -253,10 +254,12 @@ public abstract class AbstractTable implements Table {
                 stb.append(" AND ");
             }
             if (isMajorOnly() || topic.getCode() >= 100) {
-                stb.append("Code=");
+                stb.append(getCodeColumn());
+                stb.append("=");
                 stb.append(topic.getCode());
             } else {
-                stb.append("Code LIKE('");
+                stb.append(getCodeColumn());
+                stb.append(" LIKE('");
                 stb.append(topic.getCode());
                 stb.append("__')");
             }
@@ -401,4 +404,18 @@ public abstract class AbstractTable implements Table {
         stb.delete(posGroup, posOrder);
         return stb.toString();
     }
+
+    /**
+     * Method to get the Code column name
+     * @return the Code column name
+     */
+     public String getCodeColumn() {return codeColumn;}
+
+    /**
+     * Method to set the Code column name
+     */
+     public void setCodeColumn(String codeColumn) {
+         this.codeColumn = codeColumn;
+     }
+
 }
