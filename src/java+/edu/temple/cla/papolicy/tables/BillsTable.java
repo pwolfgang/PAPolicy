@@ -154,6 +154,7 @@ public class BillsTable extends AbstractTable {
             newTable.setLinkColumn(getLinkColumn());
             newTable.setMinYear(getMinYear());
             newTable.setMaxYear(getMaxYear());
+            newTable.setCodeColumn(getCodeColumn());
             return newTable;
         } else {
             return this;

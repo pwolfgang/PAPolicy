@@ -193,10 +193,10 @@
                 <td>GRAPH AS:</td>
                 <td colspan="2">
                     <input type="radio" name="showResults" value="count" checked />
-                    Number of cases per year
+                    Number of cases per year or legislative session
                     <br/>
                     <input type="radio" name="showResults" value="percent" />
-                    Percent of all activity per year
+                    Percent of all activity per year or legislative
                 </td>
             </tr>
             <tr>
