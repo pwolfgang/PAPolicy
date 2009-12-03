@@ -35,7 +35,7 @@
             <%
                 for (Map<String, Object> rowData : theList) {
                     %>
-            <tr>
+                    <tr valign="top">
                     <%
                     for (Object obj : rowData.values()) {
                         %>
@@ -45,7 +45,7 @@
                                     String txt = obj.toString();
                                     if (txt.startsWith("#") && txt.endsWith("#")){
                                         txt = txt.substring(1, txt.length()-1);
-                                        %><a href="<%=txt%>"><%=txt%></a><%
+                                        %><a href="<%=txt%>" target="_blank"><%=txt%></a><%
                                     } else {
                                         %><%=txt%><%
                                     }
