@@ -53,7 +53,12 @@ public class BudgetTable extends AbstractTable {
 
     @Override
     public String toString() {
-        return "Total Spending";
+        Units units = getUnits(null);
+        if (units == Units.PERCENT) {
+            return "Percent of Total Spending";
+        } else {
+            return "Total Spending " + getAxisTitle(getUnits(null));
+        }
     }
 
     @Override

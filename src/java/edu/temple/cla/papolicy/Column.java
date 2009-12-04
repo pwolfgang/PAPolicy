@@ -130,7 +130,7 @@ public class Column {
     }
     
     public void setInitialPrevValue(int minYear, int maxYear) {
-        prevValue = table.getValueForRange(valueMap.subMap(minYear, maxYear+1));
+        prevValue = table.getValueForRange(valueMap.subMap(minYear, maxYear));
     }
 
     public Number getPercentChange(int minYear, int maxYear) {
