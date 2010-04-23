@@ -380,6 +380,7 @@ public abstract class AbstractTable implements Table {
         if (linkColumn != null) {
             stb.append(", ");
             stb.append(linkColumn);
+            stb.append(" as Link");
         }
         stb.append(" ");
         stb.append(query.substring(posFrom));
