@@ -18,8 +18,10 @@ public class StandardTable extends AbstractTable implements Table {
         return {{
         <dl><dt>
             <input type="checkbox" name="dataset" value="{{getId()}}"
-                 id="t{{getId()}}" onclick="expandFilters({{getId()}});" />
+                 id="t{{getId()}}" onclick="expandFilters({{getId()}});expandNote({{getId()}});" />
             <span class="strong">{{getTableTitle()}}</span>
-        </dt></dl> }};
+        </dt></dl>
+        <div id="note{{getId()}}" class="nnoottee"><p>{{getNoteColumn()}}</p></div>
+        }};
     }
 }

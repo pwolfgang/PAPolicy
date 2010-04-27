@@ -5,7 +5,6 @@
 
 package edu.temple.cla.papolicy.dao;
 
-import edu.temple.cla.papolicy.dao.CommitteeAlias;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;

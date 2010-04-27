@@ -41,6 +41,7 @@ public class TableMapper implements ParameterizedRowMapper<Table> {
                 String[] drillDownColumnListArray = drillDownColumnList.split(",\\s*");
                 item.setDrillDownColumns(drillDownColumnListArray);
             }
+            item.setNoteColumn(rs.getString("Note"));
             return item;
         } catch (Exception ex) {
             // do nothing

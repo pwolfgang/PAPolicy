@@ -212,4 +212,8 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
      */
      void setCodeColumn(String codeColumn);
 
+     void setNoteColumn(String noteColumn);
+
+     String getNoteColumn();
+
 }

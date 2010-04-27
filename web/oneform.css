@@ -37,6 +37,10 @@ th {
     display: none;
 }
 
+.nnoottee {
+    display: none;
+}
+
 .alert {
     color: #ff0000;
     font-size: 110%;

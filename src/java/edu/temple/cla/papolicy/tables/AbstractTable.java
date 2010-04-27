@@ -35,6 +35,7 @@ public abstract class AbstractTable implements Table {
     private int minYear;
     private int maxYear;
     private char qualifier;
+    private String noteColumn;
     private List<Filter> filterList;
     private SimpleJdbcTemplate jdbcTemplate;
     private String filterQueryString = null;
@@ -361,6 +362,12 @@ public abstract class AbstractTable implements Table {
     public void setLinkColumn(String linkColumn) {
         this.linkColumn = linkColumn;
     }
+
+    public void setNoteColumn(String noteColumn) {
+        this.noteColumn = noteColumn;
+    }
+
+    public String getNoteColumn() {return noteColumn != null ? noteColumn : "";}
 
     /**
      * Method to convert the SQL query that gets the count to a

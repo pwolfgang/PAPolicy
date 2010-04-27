@@ -68,3 +68,13 @@ function expandSubtopics(topicNo) {
         subtopicListElement.style.display="none";
     }
 }
+
+function expandNote(tableIdNo) {
+    var tableElement = document.getElementById("t"+tableIdNo);
+    var noteElement = document.getElementById("note"+tableIdNo);
+    if (tableElement.checked) {
+        noteElement.style.display="block";
+    } else {
+        noteElement.style.display="none";
+    }
+}
