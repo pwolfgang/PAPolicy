@@ -62,16 +62,18 @@
                     <c:choose>
                         <c:when test="${table.filterListSize != 0}">
                             <div id="filters${table.id}" class="filter">
+                                <%boolean first=true;%>
                                 <c:forEach var="filter" items="${table.filterList}">
-                                    <br/>&nbsp;&nbsp;${filter.filterFormInput}
+                                    <%if(first) first=false; else{%>
+                                    <br/>&nbsp;<br/><%}%>
+                                    &nbsp;&nbsp;${filter.filterFormInput}
                                 </c:forEach>
                             </div>
                         </c:when>
                         <c:otherwise>
-                            <br/>No Filters
+                            No Filters
                         </c:otherwise>
                     </c:choose>
-
                     </td>
                 </tr>
             </c:forEach>

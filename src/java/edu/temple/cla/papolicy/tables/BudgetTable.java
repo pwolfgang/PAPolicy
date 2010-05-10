@@ -61,8 +61,7 @@ public class BudgetTable extends AbstractTable {
         }
     }
 
-    @Override
-    public String getTotalQueryString() {
+    public String getAllocatedTotalQueryString() {
         return "SELECT " + getYearColumn() +
             ", Sum(BudgetTable.TheValue*Crosswalk.PercentMatch/100)/1000 AS " +
             "TheValue " +
@@ -74,12 +73,19 @@ public class BudgetTable extends AbstractTable {
     }
 
     @Override
+    public String getTotalQueryString() {
+        return "SELECT " + getYearColumn() +
+            ", Sum(BudgetTable.TheValue/1000) AS " +
+            "TheValue FROM " + getTableName() + " WHERE ";
+    }
+
+    @Override
     public String getTopicQueryString(Topic topic) {
         if (topic != null && topic.getCode() != 0) {
-            return  getTotalQueryString() + "WHERE MajorCode.Code=" + 
+            return  getAllocatedTotalQueryString() + "WHERE MajorCode.Code=" +
                     topic.getCode();
         } else {
-            return getTotalQueryString();
+            return getAllocatedTotalQueryString();
         }
     }
 
