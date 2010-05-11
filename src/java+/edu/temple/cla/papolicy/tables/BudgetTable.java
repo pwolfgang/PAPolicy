@@ -74,9 +74,10 @@ public class BudgetTable extends AbstractTable {
 
     @Override
     public String getTotalQueryString() {
-        return "SELECT " + getYearColumn() +
-            ", Sum(BudgetTable.TheValue/1000) AS " +
-            "TheValue FROM " + getTableName() + " WHERE ";
+//        return "SELECT " + getYearColumn() +
+//            ", Sum(BudgetTable.TheValue/1000) AS " +
+//            "TheValue FROM " + getTableName() + " WHERE ";
+        return getAllocatedTotalQueryString();
     }
 
     @Override

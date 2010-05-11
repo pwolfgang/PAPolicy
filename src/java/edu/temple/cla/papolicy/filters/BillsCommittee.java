@@ -49,8 +49,7 @@ public class BillsCommittee extends Filter {
                 chamberNumber + "%%\') ORDER BY AlternateName";
         List<CommitteeAlias> items = getJdbcTemplate().query(query, itemMapper);
         StringBuilder stb = new StringBuilder();
-        stb.append(getAdditionalParam());
-        stb.append(" Hearings\n"+
+        stb.append(" Referred to "+getAdditionalParam()+" Committee\n"+
 "                <input name=\""+primaryName+"\" value=\"1\" type=\"checkbox\"/> Primary Only\n"+
 "                <br /><select name=\""+parameterName+"\">\n"+
 "                    <option value=\"ALL\">ALL COMMITTEES</option>\n"+
