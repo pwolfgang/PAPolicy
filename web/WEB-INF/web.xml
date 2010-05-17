@@ -12,6 +12,14 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>SenateHearings</servlet-name>
+        <servlet-class>edu.temple.cla.papolicy.controllers.SenateHearings</servlet-class>
+        <init-param>
+            <param-name>path</param-name>
+            <param-value>/var/www/html/PAPolicy/SenateHearings/SenateHearingsPDF</param-value>
+        </init-param>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.spg</url-pattern>
@@ -28,6 +36,10 @@
         <servlet-name>chart</servlet-name>
         <url-pattern>/chart</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SenateHearings</servlet-name>
+        <url-pattern>/SenateHearings</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -35,5 +47,5 @@
     </session-config>
     <welcome-file-list>
         <welcome-file>redirect.jsp</welcome-file>
-        </welcome-file-list>
-    </web-app>
+    </welcome-file-list>
+</web-app>
