@@ -8,9 +8,11 @@ package edu.temple.cla.papolicy.controllers;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,18 +35,40 @@ public class SenateHearings extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("application/pdf");
-        OutputStream out = response.getOutputStream();
+        OutputStream out = null;
+        String fileName = request.getParameter("file");
         try {
-            String fileName = request.getParameter("file");
             File pathFile = new File(path);
             File inputFile = new File(path, fileName + ".pdf");
             InputStream in = new BufferedInputStream(new FileInputStream(inputFile));
+            response.setContentType("application/pdf");
+            out = response.getOutputStream();
             int c;
             while ((c = in.read()) != -1) out.write(c);
             in.close();
-        } finally { 
-            out.close();
+        } catch (FileNotFoundException ex) {
+            try {
+            response.setContentType("text/html");
+            PrintWriter pw = response.getWriter();
+            pw.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"");
+            pw.println("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">");
+            pw.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\" xml:lang=\"en\">");
+            pw.println("<head>");
+            pw.println("<title>Error Page</title>");
+            pw.println("</head>");
+            pw.println("<body>");
+            pw.println("<img src=\"images/cla_201_4c.jpg\" alt=\"CLA Logo\" width=\"592\" height=\"77\" />");
+            pw.println("<h1>Pennsylvania Policy Database Project</h1>");
+            pw.println("<p>We are sorry, but " + fileName + " is not available.</p>");
+            pw.println("</body>");
+            pw.println("</html>");
+            pw.close();
+            }catch (Throwable t) {
+                String message = t.toString();
+            }
+        } finally {
+            if (out != null)
+                out.close();
         }
     }
 
