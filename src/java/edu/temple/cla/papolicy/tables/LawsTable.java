@@ -11,6 +11,8 @@ package edu.temple.cla.papolicy.tables;
  */
 public class LawsTable extends BillsTable {
 
+    private String[] drillDownColumns = null;
+
     @Override
     public String toString() {
         StringBuilder stb = new StringBuilder();
@@ -28,5 +30,16 @@ public class LawsTable extends BillsTable {
         return "Year_Enacted";
     }
 
+    @Override
+    public String[] getDrillDownColumns() {
+        if (drillDownColumns == null) {
+            String[] superDrillDownColumns = super.getDrillDownColumns();
+            drillDownColumns = new String[superDrillDownColumns.length + 1];
+            drillDownColumns[0] = "Act_No";
+            System.arraycopy(superDrillDownColumns, 0,
+                    drillDownColumns, 1, superDrillDownColumns.length);
+        }
+        return drillDownColumns;
+    }
 
 }

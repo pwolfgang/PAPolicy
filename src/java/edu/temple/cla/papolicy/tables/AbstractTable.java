@@ -379,10 +379,10 @@ public abstract class AbstractTable implements Table {
     public String createDrillDownQuery(String query) {
         int posFrom = query.indexOf("FROM");
         StringBuilder stb = new StringBuilder("SELECT ");
-        stb.append(drillDownColumns[0]);
-        for (int i = 1; i < drillDownColumns.length; i++) {
+        stb.append(getDrillDownColumns()[0]);
+        for (int i = 1; i < getDrillDownColumns().length; i++) {
             stb.append(", ");
-            stb.append(drillDownColumns[i]);
+            stb.append(getDrillDownColumns()[i]);
         }
         if (linkColumn != null) {
             stb.append(", ");
