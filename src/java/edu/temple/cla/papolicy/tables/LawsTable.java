@@ -20,7 +20,7 @@ public class LawsTable extends BillsTable {
             stb.append(chamber[0]);
             stb.append(" ");
         }
-        stb.append("Laws");
+        stb.append("Acts (Laws) and Adopted Resolutions");
         return stb.toString();
     }
 
