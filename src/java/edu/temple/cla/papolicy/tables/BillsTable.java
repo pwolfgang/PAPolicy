@@ -53,7 +53,7 @@ public class BillsTable extends AbstractTable {
 "</div>\n"+
 "<dl><input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"a\"\n"+
 "           id=\"t"+getId()+"a\" onclick=\"expandBills("+getId()+");\" />\n"+
-"    <span class=\"strong\">Laws</span>\n"+
+"    <span class=\"strong\">Acts (Laws) and Adopted Resolutions</span>\n"+
 "</dl>\n"+
 "</dt>\n"+
 "        ";

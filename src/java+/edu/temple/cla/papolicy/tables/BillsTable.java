@@ -53,7 +53,7 @@ public class BillsTable extends AbstractTable {
 </div>
 <dl><input type="checkbox" name="dataset" value="{{getId()}}a"
            id="t{{getId()}}a" onclick="expandBills({{getId()}});" />
-    <span class="strong">Laws</span>
+    <span class="strong">Acts (Laws) and Adopted Resolutions</span>
 </dl>
 </dt>
         }};
