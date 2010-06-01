@@ -20,6 +20,14 @@
             <param-value>/var/www/html/PAPolicy/SenateHearings/SenateHearingsPDF</param-value>
         </init-param>
     </servlet>
+    <servlet>
+        <servlet-name>DownloadGovernorsBudgetAddress</servlet-name>
+        <servlet-class>edu.temple.cla.papolicy.controllers.DownloadGovernorsBudgetAddress</servlet-class>
+        <init-param>
+            <param-name>path</param-name>
+            <param-value>/var/www/html/PAPolicy/GovernorsBudgetAddress/pdfs</param-value>
+        </init-param>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.spg</url-pattern>
@@ -39,6 +47,10 @@
     <servlet-mapping>
         <servlet-name>SenateHearings</servlet-name>
         <url-pattern>/SenateHearings</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DownloadGovernorsBudgetAddress</servlet-name>
+        <url-pattern>/GBA</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
