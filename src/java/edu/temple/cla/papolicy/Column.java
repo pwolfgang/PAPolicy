@@ -7,10 +7,13 @@ package edu.temple.cla.papolicy;
 import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.tables.Table;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.regex.Pattern;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 /**
@@ -33,6 +36,8 @@ public class Column {
     private String downloadQuery = null;
     private Number minValue = null;
     private Number maxValue = null;
+
+    protected Column() {} // used for unit test purposes only
 
     public Column(Table table, Topic topic, String freeText, String showResults) {
         this.table = table;
@@ -87,7 +92,7 @@ public class Column {
                     topicCountQueryString = topicCountQueryString + " AND ";
                 }
                 topicCountQueryString = topicCountQueryString +
-                        table.getTextColumn() + " LIKE('%" + freeText + "%')";
+                        parseFreeText(table.getTextColumn(), freeText);
             }
         }
         return topicCountQueryString;
@@ -241,4 +246,45 @@ public class Column {
     public Number getMinValue() {return minValue;}
 
     public Number getMaxValue() {return maxValue;}
+
+    /**
+     * Method to parse the free text and generate the query condition
+     * @param textColumn The name of the text column
+     * @param freeText the free text string
+     */
+    public String parseFreeText(String textColumn, String freeText) {
+        Pattern p = Pattern.compile("(\\\"[^\\\"]+\\\")|([^\\p{javaWhitespace}]+)");
+        Scanner scan = new Scanner(freeText);
+        List<String> list = new ArrayList<String>();
+        String t = null;
+        while ((t = scan.findInLine(p)) != null) {
+            list.add(t);
+        }
+        boolean operatorNeeded = false;
+        StringBuilder stb = new StringBuilder("(");
+        for (String token : list) {
+            if (token.toLowerCase().equals("and")) {
+                stb.append(" AND ");
+                operatorNeeded = false;
+            } else if (token.toLowerCase().equals("or")) {
+                stb.append(" OR ");
+                operatorNeeded = false;
+            } else {
+                if (operatorNeeded) {
+                    stb.append(" AND ");
+                    operatorNeeded = false;
+                }
+                if (token.startsWith("\"")){
+                    token = token.substring(1, token.length()-1);
+                }
+                stb.append(textColumn);
+                stb.append(" LIKE(\"%");
+                stb.append(token);
+                stb.append("%\")");
+                operatorNeeded = true;
+           }
+        }
+        stb.append(")");
+        return stb.toString();
+    }
 }

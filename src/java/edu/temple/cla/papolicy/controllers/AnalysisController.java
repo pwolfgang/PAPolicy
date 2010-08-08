@@ -5,12 +5,12 @@
 
 package edu.temple.cla.papolicy.controllers;
 
+import edu.temple.cla.papolicy.YearRange;
 import edu.temple.cla.papolicy.dao.TopicMapper;
 import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.TableMapper;
 import edu.temple.cla.papolicy.dao.FilterMapper;
 import edu.temple.cla.papolicy.filters.Filter;
-import edu.temple.cla.papolicy.*;
 import edu.temple.cla.papolicy.tables.Table;
 import java.util.HashMap;
 import java.util.List;
