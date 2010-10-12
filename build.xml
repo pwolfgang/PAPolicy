@@ -68,25 +68,4 @@
     nbproject/build-impl.xml file. 
 
     -->
-    <target name="-pre-compile">
-          <taskdef name="javaplus"
-            classpath="n:/java+/dist/java_.jar"
-            classname="edu.virtualschool.javaplus.Ant"
-          />
-
-    <javaplus
-        verbose="false"
-        force="true"
-        parentDir="${basedir}"
-        srcDir="${source.root}/java+"
-        binDir="${build.classes.dir}"
-        dstDir="${source.root}/java"
-        srcSuffix=".java"
-        dstSuffix=".java"
-        binSuffix=".properties"
-        skipDir=".svn"
-        skipSuffix=".bak"
-    />
-
-    </target>
 </project>

@@ -21,6 +21,7 @@ public class LawsTable extends BillsTable {
             stb.append(" ");
         }
         stb.append("Acts (Laws) and Adopted Resolutions");
+        stb.append(getFilterQualifierString());
         return stb.toString();
     }
 
