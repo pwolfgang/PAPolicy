@@ -100,7 +100,13 @@
                         </li>
                         <li>
                             To select <em>all</em> major topics, check the
-                            box "Search ALL topics ..."
+                            box "Search ALL topics ..." this will give you a
+                            breakdown of each policy topic
+                        </li>
+                        <li>
+                            To combine all topics in to one figure and download
+                            link, do <em>not</em> select any of the policy topics 
+                            check boxes or the "Search ALL topics" box.
                         </li>
                     </ul>
                     <p>
