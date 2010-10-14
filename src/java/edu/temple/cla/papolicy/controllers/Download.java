@@ -6,12 +6,13 @@
 package edu.temple.cla.papolicy.controllers;
 
 import edu.temple.cla.papolicy.Utility;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import javax.sql.DataSource;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -21,14 +22,8 @@ import org.springframework.web.servlet.mvc.AbstractController;
  */
 public class Download extends AbstractController{
 
-    private SimpleJdbcTemplate jdbcTemplate;
+    private DataSource datasource;
 
-    /**
-     * @param jdbcTemplate the jdbcTemplate to set
-     */
-    public void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     /**
      * Create the ModelAndView
@@ -37,10 +32,28 @@ public class Download extends AbstractController{
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         String query = Utility.decodeAndDecompress(request.getParameter("query"));
-        List<Map<String, Object>> theList = jdbcTemplate.queryForList(query);
-        Map<String, Object> theMap = new HashMap<String, Object>();
-        theMap.put("theList", theList);
-        return new ModelAndView("download", theMap);
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        try {
+            conn = datasource.getConnection();
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
+        } catch (SQLException ex) {
+            
+        } finally {
+            try {if (rs != null) rs.close();} catch (Exception e) { }
+            try {if (stmt != null) stmt.close();} catch (Exception e) { }
+            try {if (conn != null) conn.close();} catch (Exception e) { }
+        }
+        return null;
+    }
+
+    /**
+     * @param datasource the datasource to set
+     */
+    public void setDatasource(DataSource datasource) {
+        this.datasource = datasource;
     }
 
 
