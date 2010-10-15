@@ -75,8 +75,8 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     The download controller.
     -->
     <bean name="downloadController"
-         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-         <property name="datasource" ref="dataSource"/>
+         class="edu.temple.cla.papolicy.controllers.Download">
+            <property name="dataSource" ref="dataSource"/>
     </bean>
 
 </beans>
