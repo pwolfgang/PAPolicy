@@ -34,12 +34,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
               <property name="suffix" value=".jsp"/>
           </bean>
 
-    <bean id="excelViewReslover"
-    class="org.springframework.web.servlet.view.XmlViewResolver">
-        <property name="order" value="1"/>
-        <property name="location" value="/WEB-INF/views.xml"/>
-    </bean>
-
     <!--
     The index controller.
     -->

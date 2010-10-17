@@ -5,6 +5,7 @@
 
 package edu.temple.cla.papolicy.controllers;
 
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.OutputStream;
 import java.util.Date;
 import edu.temple.cla.papolicy.Utility;
@@ -16,7 +17,6 @@ import java.sql.Statement;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Row;
@@ -58,7 +58,7 @@ public class Download extends AbstractController{
                 columnNames[i] = rsmd.getColumnName(i+1);
                 columnTypes[i] = rsmd.getColumnType(i+1);
             }
-            Workbook wb = new HSSFWorkbook();
+            Workbook wb = new XSSFWorkbook();
             Sheet sheet = wb.createSheet("sheet 1");
             CreationHelper helper = wb.getCreationHelper();
             int rowNum = 0;
