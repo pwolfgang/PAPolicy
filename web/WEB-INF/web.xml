@@ -34,7 +34,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
-        <url-pattern>*.xls</url-pattern>
+        <url-pattern>*.xlsx</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>chart</servlet-name>

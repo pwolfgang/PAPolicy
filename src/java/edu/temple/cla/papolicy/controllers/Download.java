@@ -5,8 +5,8 @@
 
 package edu.temple.cla.papolicy.controllers;
 
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import java.io.OutputStream;
+import edu.temple.cis.wolfgang.mycreatexlsx.MyWorksheet;
+import edu.temple.cis.wolfgang.mycreatexlsx.MyWorkbook;
 import java.util.Date;
 import edu.temple.cla.papolicy.Utility;
 import java.sql.Connection;
@@ -17,11 +17,6 @@ import java.sql.Statement;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 import static java.sql.Types.*;
@@ -58,20 +53,16 @@ public class Download extends AbstractController{
                 columnNames[i] = rsmd.getColumnName(i+1);
                 columnTypes[i] = rsmd.getColumnType(i+1);
             }
-            Workbook wb = new XSSFWorkbook();
-            Sheet sheet = wb.createSheet("sheet 1");
-            CreationHelper helper = wb.getCreationHelper();
-            int rowNum = 0;
-            Row row = sheet.createRow(rowNum);
+            MyWorkbook wb = new MyWorkbook(response.getOutputStream());
+            MyWorksheet sheet = wb.getWorksheet();
+            sheet.startRow();
             for (int i = 0; i < numColumns; i++) {
-                Cell cell = row.createCell(i);
-                cell.setCellValue(helper.createRichTextString(columnNames[i]));
+                sheet.addCell(columnNames[i]);
             }
+            sheet.endRow();
             while (rs.next()) {
-                rowNum++;
-                row = sheet.createRow(rowNum);
+                sheet.startRow();
                 for (int i = 0; i < numColumns; i++) {
-                    Cell cell = row.createCell(i);
                     switch (columnTypes[i]) {
                         case BIT:
                         case TINYINT:
@@ -79,13 +70,17 @@ public class Download extends AbstractController{
                         case INTEGER:
                             int intValue = rs.getInt(i+1);
                             if (!rs.wasNull()) {
-                                cell.setCellValue(intValue);
+                                sheet.addCell(intValue);
+                            } else {
+                                sheet.addCell("null");
                             }
                             break;
                         case BIGINT:
                             long longValue = rs.getLong(i+1);
                             if (!rs.wasNull()) {
-                                cell.setCellValue(longValue);
+                                sheet.addCell(longValue);
+                            } else {
+                                sheet.addCell("null");
                             }
                             break;
                         case FLOAT:
@@ -95,7 +90,9 @@ public class Download extends AbstractController{
                         case DECIMAL:
                             double doubleValue = rs.getDouble(i+1);
                             if (!rs.wasNull()) {
-                                cell.setCellValue(doubleValue);
+                                sheet.addCell(doubleValue);
+                            } else {
+                                sheet.addCell("null");
                             }
                             break;
                         case CHAR:
@@ -103,7 +100,9 @@ public class Download extends AbstractController{
                         case LONGVARCHAR:
                             String stringValue = rs.getString(i+1);
                             if (!rs.wasNull()) {
-                                cell.setCellValue(helper.createRichTextString(stringValue));
+                                sheet.addCell(stringValue);
+                            } else {
+                                sheet.addCell("null");
                             }
                             break;
                         case DATE:
@@ -111,14 +110,16 @@ public class Download extends AbstractController{
                         case TIMESTAMP:
                              Date dateValue = rs.getDate(i+1);
                              if (!rs.wasNull()) {
-                                cell.setCellValue(dateValue);
+                                 sheet.addCell(dateValue);
+                            } else {
+                                 sheet.addCell("null");
                             }
                     }
                 }
+                sheet.endRow();
             }
-            OutputStream out = response.getOutputStream();
-            wb.write(out);
-            out.close();
+            sheet.close();
+            wb.close();
         } catch (SQLException ex) {
             
         } finally {

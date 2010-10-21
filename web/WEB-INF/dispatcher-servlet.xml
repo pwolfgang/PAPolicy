@@ -22,7 +22,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="analysis.spg">analysisController</prop>
                 <prop key="display.spg">displayFormController</prop>
                 <prop key="drilldown.spg">drillDownController</prop>
-                <prop key="*.xls">downloadController</prop>
+                <prop key="*.xlsx">downloadController</prop>
             </props>
         </property>
     </bean>
