@@ -111,14 +111,14 @@ public class Download extends AbstractController{
                         case DATE:
                         case TIME:
                         case TIMESTAMP:
-                             Date dateValue = rs.getDate(i+1);
+                            String dateString = rs.getString(i+1);
                              if (!rs.wasNull()) {
-                                 sheet.addCell(dateValue);
+                                 sheet.addDateCell(dateString);
                             } else {
                                  sheet.addCell("null");
                             }
-                    }
-                    } catch (SQLException ex) {
+                        }
+                    } catch (Exception ex) {
                         logger.error("Error converting cell", ex);
                         sheet.addCell("null");
                     }
