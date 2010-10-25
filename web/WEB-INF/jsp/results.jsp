@@ -21,7 +21,7 @@
         <%@include file="header.jspf"%>
         <h3>To download the raw data as an Excel spreadsheet, click on the link</h3>
         <c:forEach var="column" items="${columns}">
-            <a href="<c:out value="${column}"/>.xlsx?query=${column.downloadQuery}">
+            <a href="<c:out value="${column} ${yearRange.minYear}_${yearRange.maxYear}"/>.xlsx?query=${column.downloadQuery}">
             <c:out value="${column}"/></a><br/>
         </c:forEach>
         <br/><br/>

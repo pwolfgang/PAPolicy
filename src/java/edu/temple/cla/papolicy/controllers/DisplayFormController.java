@@ -37,7 +37,6 @@ public class DisplayFormController extends AbstractController {
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        Map<String, Object> model = new HashMap<String, Object>();
         ParameterizedRowMapper<Table> tableMapper = new TableMapper();
         ParameterizedRowMapper<Filter> filterMapper = new FilterMapper();
         ParameterizedRowMapper<Topic> topicMapper = new TopicMapper();
@@ -85,7 +84,6 @@ public class DisplayFormController extends AbstractController {
                                             request.getParameter("endSession"),
                                             request.getParameter("span"));
         String showResults = request.getParameter("showResults");
-
         ArrayList<Column> columns = new ArrayList<Column>();
         for (Table table : tables) {
             if (table.isTopicSearchable()) {
@@ -161,7 +159,7 @@ public class DisplayFormController extends AbstractController {
         }
 
         Map<String, Object> theMap = new HashMap<String, Object>();
-
+        theMap.put("yearRange", yearRange);
         theMap.put("columns", columns);
         ArrayList<MyDataset> datasetList = new ArrayList<MyDataset>();
         for (Map.Entry<Units, ArrayList<Column>> entry : columnMap.entrySet()) {

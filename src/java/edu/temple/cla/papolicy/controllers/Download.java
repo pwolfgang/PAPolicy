@@ -41,6 +41,8 @@ public class Download extends AbstractController{
         Statement stmt = null;
         ResultSet rs = null;
         ResultSetMetaData rsmd = null;
+        MyWorkbook wb = null;
+        MyWorksheet sheet = null;
         try {
             conn = dataSource.getConnection();
             stmt = conn.createStatement();
@@ -53,8 +55,8 @@ public class Download extends AbstractController{
                 columnNames[i] = rsmd.getColumnName(i+1);
                 columnTypes[i] = rsmd.getColumnType(i+1);
             }
-            MyWorkbook wb = new MyWorkbook(response.getOutputStream());
-            MyWorksheet sheet = wb.getWorksheet();
+            wb = new MyWorkbook(response.getOutputStream());
+            sheet = wb.getWorksheet();
             sheet.startRow();
             for (int i = 0; i < numColumns; i++) {
                 sheet.addCell(columnNames[i]);
@@ -63,6 +65,7 @@ public class Download extends AbstractController{
             while (rs.next()) {
                 sheet.startRow();
                 for (int i = 0; i < numColumns; i++) {
+                    try {
                     switch (columnTypes[i]) {
                         case BIT:
                         case TINYINT:
@@ -115,14 +118,22 @@ public class Download extends AbstractController{
                                  sheet.addCell("null");
                             }
                     }
+                    } catch (SQLException ex) {
+                        logger.error("Error converting cell", ex);
+                        sheet.addCell("null");
+                    }
                 }
                 sheet.endRow();
             }
             sheet.close();
+            sheet = null;
             wb.close();
+            wb = null;
         } catch (SQLException ex) {
-            
+            logger.error("Error reading table", ex);
         } finally {
+            if (sheet != null) sheet.close();
+            if (wb != null) wb.close();
             try {if (rs != null) rs.close();} catch (Exception e) { }
             try {if (stmt != null) stmt.close();} catch (Exception e) { }
             try {if (conn != null) conn.close();} catch (Exception e) { }
