@@ -1,2 +1,14 @@
-        <img src="images/cla_201_4c.jpg" alt="CLA Logo" width="592" height="77" />
-        <h1>Pennsylvania Policy Database Project</h1>
+<img src="images/cla_201_4c.jpg" alt="CLA Logo" width="592" height="77" />
+<h1>Pennsylvania Policy Database Project</h1>
+<div class="navigation">
+    <table>
+        <tr>
+            <td class="mylink">
+                <a href="http://www.temple.edu/papolicy/AboutDatasets.htm"> About our data</a>
+            </td>
+            <td class="mylink">
+                <a href="http://www.temple.edu/papolicy">Return to Pennsylvania Policy Project home page</a>
+            </td>
+        </tr>
+    </table>
+</div>

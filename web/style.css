@@ -20,18 +20,18 @@ h1  {
 }
 
 body {
-    
+
     font-family: Arial,Helvetica,sans-serif;
     font-size: medium;
 }
 
 form {
-	margin-bottom: 35px;
+    margin-bottom: 35px;
 }
 
 th {
-	padding: 6px;
-	text-align: left;
+    padding: 6px;
+    text-align: left;
     font-size: 90%;
 }
 
@@ -52,7 +52,7 @@ th {
 }
 
 .border td, .border th {
-    
+
     border-top-width: 1px;
     border-bottom-width: 1px;
     border-left-width: 1px;
@@ -82,20 +82,33 @@ th {
 }
 
 .smallRedText {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 70%;
-	color: #CC3366;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 70%;
+    color: #CC3366;
 }
 
 .button {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 90%;
-	font-weight: bold;
-	color: #dfdfff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 90%;
+    font-weight: bold;
+    color: #dfdfff;
     background:#AAC1FF;
     padding: 3px;
     margin: 6px;
 }
 
+.navigation {
+    width: 600px;
+    background: #9e1b32;
+}
 
+.mylink {
+    width : 50%;
+    color : #ffffff;
+}
 
+.mylink a {
+    color : #ffffff;
+    text-decoration: none;
+    font-weight : bold;
+}
