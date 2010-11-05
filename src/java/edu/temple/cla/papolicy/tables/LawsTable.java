@@ -5,6 +5,8 @@
 
 package edu.temple.cla.papolicy.tables;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  *
  * @author Paul Wolfgang
@@ -20,7 +22,20 @@ public class LawsTable extends BillsTable {
             stb.append(chamber[0]);
             stb.append(" ");
         }
-        stb.append("Acts (Laws) and Adopted Resolutions");
+        if ("BILLS".equals(billtype)) {
+            stb.append("Acts");
+        } else if ("RES".equals(billtype)) {
+            stb.append("Adopted Resolutions");
+        } else {
+            stb.append("Acts and Resolutions");
+        }
+        if ("REGULAR".equals(sessionType)) {
+            stb.append(" Regular Sessions ");
+        } else if ("SPECIAL".equals(sessionType)) {
+            stb.append(" Special Sessions ");
+        } else {
+            stb.append(" Regular and Special Sessions ");
+        }
         stb.append(getFilterQualifierString());
         return stb.toString();
     }
@@ -43,4 +58,13 @@ public class LawsTable extends BillsTable {
         return drillDownColumns;
     }
 
+    @Override
+    public void setAdditionalParameters(HttpServletRequest request) {
+        chamber = request.getParameterValues("chambera");
+        if (chamber == null || chamber.length == 0) {
+            chamber = new String[]{"House", "Senate"};
+        }
+        billtype = request.getParameter("billtypea");
+        sessionType = request.getParameter("sessiontypea");
+    }
 }

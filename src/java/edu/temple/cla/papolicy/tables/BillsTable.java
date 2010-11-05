@@ -51,10 +51,33 @@ public class BillsTable extends AbstractTable {
 "        <span class=\"strong\">Both Regular and Special Sessions</strong></dd>\n"+
 "</dl>\n"+
 "</div>\n"+
-"<dl><input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"a\"\n"+
-"           id=\"t"+getId()+"a\" onclick=\"expandBills("+getId()+");\" />\n"+
-"    <span class=\"strong\">Acts (Laws) and Adopted Resolutions</span>\n"+
+"<dl><dt><input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"a\"\n"+
+"           id=\"t"+getId()+"a\" onclick=\'expandBills(\""+getId()+"a\");\' />\n"+
+"    <span class=\"strong\">Acts (Laws) and Adopted Resolutions</span></dt>\n"+
+"<div class=\"subtbl\" id=\"subtbl"+getId()+"a\">\n"+
+"    <dd><input type=\"checkbox\" name=\"chambera\" value=\"House\" checked=\"checked\" />\n"+
+"        <span class=\"strong\">House</span>\n"+
+"    </dd>\n"+
+"    <dd><input type=\"checkbox\" name=\"chambera\" value=\"Senate\" checked=\"checked\" />\n"+
+"        <span class=\"strong\">Senate</span>\n"+
+"    </dd>\n"+
+"    <dd><input type=\"radio\" name=\"billtypea\" value=\"BOTH\" checked=\"checked\" />\n"+
+"        <span class=\"strong\">Acts and Adopted Resolutions</span>\n"+
+"    </dd>\n"+
+"    <dd><input type=\"radio\" name=\"billtypea\" value=\"BILLS\" />\n"+
+"        <span class=\"strong\">Acts</span>\n"+
+"    </dd>\n"+
+"    <dd><input type=\"radio\" name=\"billtypea\" value=\"RES\" />\n"+
+"        <span class=\"strong\">Adopted Resolutions</span>\n"+
+"    </dd>\n"+
+"    <dd><input type=\"radio\" name=\"sessiontypea\" value=\"REGULAR\" checked=\"checked\" />\n"+
+"        <span class=\"strong\">Regular Sessions Only</span></dd>\n"+
+"    <dd><input type=\"radio\" name=\"sessiontypea\" value=\"SPECIAL\" />\n"+
+"        <span class=\"strong\">Special Sessions Only</span></dd>\n"+
+"    <dd><input type=\"radio\" name=\"sessiontypea\" value=\"BOTH\" />\n"+
+"        <span class=\"strong\">Both Regular and Special Sessions</strong></dd>\n"+
 "</dl>\n"+
+"</div>\n"+
 "</dt>\n"+
 "        ";
     }
@@ -82,6 +105,13 @@ public class BillsTable extends AbstractTable {
             stb.append("Resolutions");
         } else {
             stb.append("Bills and Resolutions");
+        }
+        if ("REGULAR".equals(sessionType)) {
+            stb.append(" Regular Sessions ");
+        } else if ("SPECIAL".equals(sessionType)) {
+            stb.append(" Special Sessions ");
+        } else {
+            stb.append(" Regular and Special Sessions ");
         }
         stb.append(getFilterQualifierString());
         return stb.toString();

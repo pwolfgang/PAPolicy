@@ -29,15 +29,33 @@ function expandSubTables(tableIdNo) {
 }
 
 function expandBills(tableIdNo) {
-    var billsTableElement = document.getElementById("t"+tableIdNo);
-    var lawsTableElement = document.getElementById("t"+tableIdNo+"a");
-    var filterBoxElement = document.getElementById("filters"+tableIdNo);
-    var subTableBoxElement = document.getElementById("subtbl"+tableIdNo);
+    var tableIdNoStr = tableIdNo.toString();
+    var rawTableIdNo;
+    if (tableIdNoStr.charAt(tableIdNoStr.length-1) == "a") {
+        rawTableIdNo = tableIdNoStr.substring(0, tableIdNoStr.length-1);
+    } else {
+        rawTableIdNo = tableIdNoStr;
+    }
+    var billsTableElement = document.getElementById("t"+rawTableIdNo);
+    var lawsTableElement = document.getElementById("t"+rawTableIdNo+"a");
+    var filterBoxElement = document.getElementById("filters"+rawTableIdNo);
+    var billsTableBoxElement = document.getElementById("subtbl"+rawTableIdNo);
+    var lawsTableBoxElement = document.getElementById("subtbl"+rawTableIdNo+"a");
     if (billsTableElement.checked || lawsTableElement.checked) {
-        subTableBoxElement.style.display="block";
+        if (billsTableElement.checked) {
+            billsTableBoxElement.style.display="block";
+        } else {
+            billsTableBoxElement.style.display="none";
+        }
+        if (lawsTableElement.checked) {
+            lawsTableBoxElement.style.display="block";
+        } else {
+            lawsTableBoxElement.style.display="none";
+        }
         filterBoxElement.style.display="block";
     } else {
-        subTableBoxElement.style.display="none";
+        billsTableBoxElement.style.display="none";
+        lawsTableBoxElement.style.display="none";
         filterBoxElement.style.display="none";
     }
 }
