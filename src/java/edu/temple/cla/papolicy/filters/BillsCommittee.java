@@ -49,13 +49,21 @@ public class BillsCommittee extends Filter {
                 chamberNumber + "%%\') ORDER BY AlternateName";
         List<CommitteeAlias> items = getJdbcTemplate().query(query, itemMapper);
         StringBuilder stb = new StringBuilder();
-        stb.append(" Referred to "+getAdditionalParam()+" Committee\n"+
-"                <input name=\""+primaryName+"\" value=\"1\" type=\"checkbox\"/> Primary Only\n"+
-"                <br /><select name=\""+parameterName+"\">\n"+
-"                    <option value=\"ALL\">ALL COMMITTEES</option>\n"+
-"        ");
+        stb.append(" Referred to ").append(getAdditionalParam()).append(" Committee\n")
+                .append("<input name=\"").append(primaryName).append("\" value=\"1\" type=\"checkbox\"/> Primary Only\n")
+                .append("<br /><select name=\"").append(parameterName).append("\">\n")
+                .append("<option value=\"ALL\">ALL COMMITTEES</option>\n");
         for (CommitteeAlias item : items) {
-            stb.append("<option value=\""+item.getCtyCode()+"\">"+item.getAlternateName()+"</option>");
+            if (item.getCtyCode() % 100 != 99) { // Exclude special committees
+                String committeeName = item.getAlternateName();
+                if (!committeeName.startsWith(getAdditionalParam())) {
+                    stb.append("<option value=\"")
+                            .append(item.getCtyCode())
+                            .append("\">")
+                            .append(item.getAlternateName())
+                            .append("</option>");
+                }
+            }
         }
         stb.append("</select>");
         return stb.toString();
