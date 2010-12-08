@@ -7,6 +7,7 @@ package edu.temple.cla.papolicy.dao;
 import edu.temple.cla.papolicy.tables.Table;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 /**
@@ -14,6 +15,8 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  * @author Paul Wolfgang
  */
 public class TableMapper implements ParameterizedRowMapper<Table> {
+
+    private static final Logger logger = Logger.getLogger(TableMapper.class);
 
     public TableMapper() {
     }
@@ -43,8 +46,10 @@ public class TableMapper implements ParameterizedRowMapper<Table> {
             }
             item.setNoteColumn(rs.getString("Note"));
             return item;
+        } catch (SQLException sqlex) {
+            logger.error(sqlex);
         } catch (Exception ex) {
-            // do nothing
+            logger.error(ex);
         }
         return null;
     }

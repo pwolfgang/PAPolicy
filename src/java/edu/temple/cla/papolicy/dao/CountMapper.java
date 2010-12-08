@@ -5,8 +5,10 @@
 
 package edu.temple.cla.papolicy.dao;
 
+import edu.temple.cla.papolicy.Utility;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 /**
@@ -15,7 +17,14 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  */
 public class CountMapper implements ParameterizedRowMapper<Integer> {
 
+    private static final Logger logger = Logger.getLogger(CountMapper.class);
+
     public Integer mapRow(ResultSet rs, int colNum) throws SQLException {
-        return new Integer(rs.getInt("Count"));
+        try {
+            return new Integer(rs.getInt("Count"));
+        } catch (SQLException ex) {
+            logger.error(ex);
+            throw ex;
+        }
     }
 }

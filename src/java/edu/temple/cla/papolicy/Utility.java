@@ -14,6 +14,8 @@ import java.io.StringWriter;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.log4j.Logger;
+
 
 /**
  * Class to hold utility methods
@@ -21,9 +23,11 @@ import org.apache.commons.codec.binary.Base64;
  */
 public class Utility {
 
+    private static final Logger logger = Logger.getLogger(Utility.class);
+
     /**
      * Method to compress and encode a string to be used as a get parameter.
-     * The string is first comprssed using the zip algorithm and then encoded
+     * The string is first compressed using the zip algorithm and then encoded
      * using the base64 code
      * @param theString the string to be compressed and encoded.
      * @return the compressed and encoded string.
@@ -38,6 +42,7 @@ public class Utility {
             String codedString = Base64.encodeBase64URLSafeString(bytes.toByteArray());
             return codedString;
         } catch (Exception ex) {
+            logger.error(ex);
             return theString;
         }
     }
@@ -65,6 +70,7 @@ public class Utility {
              }
              return w.toString();
          } catch (Exception ex) {
+             logger.error(ex);
              return theString;
          }
      }

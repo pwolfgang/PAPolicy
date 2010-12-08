@@ -17,13 +17,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Paul Wolfgang
  */
 public class SenateHearings extends HttpServlet {
-
+    private static final Logger logger = Logger.getLogger(SenateHearings.class);
     private String path;
    
     /** 
@@ -33,8 +34,7 @@ public class SenateHearings extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         OutputStream out = null;
         String fileName = request.getParameter("file");
         try {
@@ -64,16 +64,18 @@ public class SenateHearings extends HttpServlet {
             pw.println("</html>");
             pw.close();
             }catch (Throwable t) {
-                String message = t.toString();
+                logger.error(t);
             }
+        } catch (IOException ioex) {
+            logger.error(ioex);
         } finally {
             if (out != null)
-                out.close();
+                try {out.close();} catch (IOException ioex) {}
         }
     }
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         path = getServletConfig().getInitParameter("path");
     }
 

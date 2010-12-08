@@ -9,6 +9,7 @@ import edu.temple.cla.papolicy.filters.Filter;
 import java.lang.reflect.Constructor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 /**
@@ -16,6 +17,8 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  * @author Paul Wolfgang
  */
 public class FilterMapper implements ParameterizedRowMapper<Filter> {
+
+    private static final Logger logger = Logger.getLogger(FilterMapper.class);
 
     @Override
     @SuppressWarnings("unchecked")
@@ -37,8 +40,11 @@ public class FilterMapper implements ParameterizedRowMapper<Filter> {
             Filter item = constructor.newInstance(id, tableId, description,
                     columnName, tableReference, additionalParam);
             return item;
+        } catch (SQLException sqlex) {
+            logger.error(sqlex);
+            throw sqlex;
         } catch (Exception ex) {
-            System.out.println(ex);
+            logger.error(ex);
         }
         return null;
     }

@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DownloadGovernorsBudgetAddress extends HttpServlet {
 
     private String path;
+    private static final Logger logger = Logger.getLogger(DownloadGovernorsBudgetAddress.class);
 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -66,7 +68,7 @@ public class DownloadGovernorsBudgetAddress extends HttpServlet {
             pw.println("</html>");
             pw.close();
             }catch (Throwable t) {
-                String message = t.toString();
+                logger.error(t);
             }
         } finally {
             if (out != null)

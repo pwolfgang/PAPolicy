@@ -5,6 +5,8 @@
 
 package edu.temple.cla.papolicy.controllers;
 
+import java.io.IOException;
+import org.apache.log4j.Logger;
 import edu.temple.cis.wolfgang.mycreatexlsx.MyWorksheet;
 import edu.temple.cis.wolfgang.mycreatexlsx.MyWorkbook;
 import edu.temple.cla.papolicy.Utility;
@@ -26,6 +28,8 @@ import static java.sql.Types.*;
  */
 public class Download extends AbstractController{
 
+    private static Logger logger = Logger.getLogger(Download.class);
+
     private DataSource dataSource;
 
 
@@ -34,7 +38,7 @@ public class Download extends AbstractController{
      */
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+            HttpServletResponse response) {
         String query = Utility.decodeAndDecompress(request.getParameter("query"));
         Connection conn = null;
         Statement stmt = null;
@@ -130,6 +134,8 @@ public class Download extends AbstractController{
             wb = null;
         } catch (SQLException ex) {
             logger.error("Error reading table", ex);
+        } catch (IOException ioex) {
+            logger.error(ioex);
         } finally {
             if (sheet != null) sheet.close();
             if (wb != null) wb.close();

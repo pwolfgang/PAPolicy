@@ -18,6 +18,7 @@ import java.util.List;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
@@ -42,6 +43,8 @@ import org.jfree.data.general.PieDataset;
 public class Chart extends HttpServlet {
 
     static final long serialVersionUID = -7696314789843526771L;
+
+    private static final Logger logger = Logger.getLogger(Chart.class);
 
     private static CategoryPlot createLinePlot(List<MyDataset> datasets) {
         CategoryPlot plot = new CategoryPlot();
@@ -112,7 +115,7 @@ public class Chart extends HttpServlet {
             int c;
             while ((c = in.read()) != -1) out.write(c);
         } catch(IOException ioex) {
-            // do nothing for now
+            logger.error(ioex);
         }
     }
 
@@ -149,6 +152,7 @@ public class Chart extends HttpServlet {
             out.close();
             return outputFile.getAbsolutePath();
         } catch (IOException ioex) {
+            logger.error(ioex);
             return null;
         }
     }
