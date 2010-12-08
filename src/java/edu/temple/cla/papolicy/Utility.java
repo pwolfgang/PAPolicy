@@ -13,6 +13,7 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * Class to hold utility methods
@@ -34,8 +35,8 @@ public class Utility {
             OutputStreamWriter out = new OutputStreamWriter(zipped);
             out.write(theString);
             out.close();
-            char[] chars = biz.source_code.Base64Coder.encode(bytes.toByteArray());
-            return new String(chars);
+            String codedString = Base64.encodeBase64URLSafeString(bytes.toByteArray());
+            return codedString;
         } catch (Exception ex) {
             return theString;
         }
@@ -54,7 +55,7 @@ public class Utility {
                  if (chars[i] == ' ') chars[i] = '+';
              }
              theString = new String(chars);
-             byte[] bytes = biz.source_code.Base64Coder.decode(theString);
+             byte[] bytes = Base64.decodeBase64(theString);
              Reader r = 
                      new InputStreamReader(new GZIPInputStream(new ByteArrayInputStream(bytes)));
              StringWriter w = new StringWriter();
