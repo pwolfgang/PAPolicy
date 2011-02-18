@@ -13,7 +13,11 @@
 
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link type="text/css" rel="stylesheet" href="oneform.css" />
+        <link type="text/css" rel="stylesheet" href="policy.css" />
+        <link type="text/css" rel="stylesheet" href="style.css" />
+        <script type="text/javascript" src="script.js"></script>
         <title>Drilldown Results</title>
     </head>
     <body>

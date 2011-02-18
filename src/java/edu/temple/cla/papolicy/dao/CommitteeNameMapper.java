@@ -14,25 +14,22 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  *
  * @author Paul Wolfgang
  */
-public class CommitteeAliasMapper implements ParameterizedRowMapper<CommitteeAlias> {
+public class CommitteeNameMapper implements ParameterizedRowMapper<CommitteeName>{
 
     private static final Logger logger = Logger.getLogger(CommitteeAliasMapper.class);
 
-    public CommitteeAlias mapRow(ResultSet rs, int colNum) throws SQLException {
+    public CommitteeName mapRow(ResultSet rs, int colNum) throws SQLException {
 
-        CommitteeAlias item = new CommitteeAlias();
+        CommitteeName item = new CommitteeName();
         try {
-        item.setID(rs.getInt("ID"));
         item.setCtyCode(rs.getInt("CtyCode"));
         item.setName(rs.getString("Name"));
-        item.setAlternateName(rs.getString("AlternateName"));
-        item.setStartYear(rs.getInt("StartYear"));
-        item.setEndYear(rs.getInt("EndYear"));
         } catch (SQLException ex) {
             logger.error(ex);
             throw ex;
         }
         return item;
     }
+
 
 }

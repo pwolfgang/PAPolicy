@@ -197,7 +197,7 @@ public abstract class AbstractTable implements Table {
                 filterQualifiers.add(filter.getFilterQualifier());
             }
         }
-        if (filterQualifiers.size() != 0) {
+        if (!filterQualifiers.isEmpty()) {
             stb.append(" ");
             stb.append(filterQualifiers.get(0));
             for (int i = 1; i < filterQualifiers.size(); i++) {
