@@ -22,6 +22,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="analysis.spg">analysisController</prop>
                 <prop key="display.spg">displayFormController</prop>
                 <prop key="drilldown.spg">drillDownController</prop>
+                <prop key="transcriptdrilldown.spg">transcriptDrillDownController</prop>
                 <prop key="*.xlsx">downloadController</prop>
             </props>
         </property>
@@ -58,10 +59,14 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     </bean>
 
     <!--
-    The drilldown controller.
+    The drilldown controllers.
     -->
     <bean name="drillDownController"
         class="edu.temple.cla.papolicy.controllers.DrillDownController">
+            <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    <bean name="transcriptDrillDownController"
+        class="edu.temple.cla.papolicy.controllers.TranscriptDrillDownController">
             <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
 

@@ -31,7 +31,7 @@ public abstract class AbstractTable implements Table {
     private String codeColumn;
     private String textColumn;
     private String yearColumn;
-    private String[] drillDownColumns;
+    protected String[] drillDownColumns;
     private String linkColumn;
     private int minYear;
     private int maxYear;
@@ -377,7 +377,7 @@ public abstract class AbstractTable implements Table {
      * @return Modified query that selects the DrillDown columns and
      * link column if defined.
      */
-    private String createDrillDownQuery(String query) {
+    protected String createDrillDownQuery(String query) {
         int posFrom = query.indexOf("FROM");
         StringBuilder stb = new StringBuilder("SELECT ");
         stb.append(getDrillDownColumns()[0]);
