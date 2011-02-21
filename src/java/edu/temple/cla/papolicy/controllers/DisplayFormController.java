@@ -145,8 +145,7 @@ public class DisplayFormController extends AbstractController {
                         String countQuery =
                                 column.getTopicCountQueryString(current.getMinYear(),
                                 current.getMaxYear());
-                        String drillDownQueryString = column.getTable().createDrillDownQuery(countQuery);
-                        column.setDrillDown(rowKey, Utility.compressAndEncode(drillDownQueryString));
+                        column.setDrillDown(rowKey, column.getTable().createDrillDownURL(countQuery));
                         column.setDisplayedValue(rowKey, column.getValue(currentMinYear,
                                 currentMaxYear));
                     } else if (column.getUnits() == Units.PERCENT) {

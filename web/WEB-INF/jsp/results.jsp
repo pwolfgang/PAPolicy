@@ -57,7 +57,7 @@
                                 <%
                                 String s = column.getDisplayedValueString(rowKey);
                                 if (!s.equals("null") && drillDown != null) {%>
-                                    <a href="drilldown.spg?query=<%=drillDown%>">
+                                    <a href="<%=drillDown%>">
                                 <%}
                                 if (!s.equals("null")) {
                                 %>

@@ -185,13 +185,11 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
      void setLinkColumn(String linkColumn);
 
     /**
-     * Method to convert the SQL query that gets the count to a
-     * SQL query that gets the DrillDown columns
-     * @param query The query that gets the count.
-     * @return Modified query that selects the DrillDown columns and
-     * link column if defined.
+     * Method to create the drilldown url.
+     * @param query The query string that gets the count
+     * @return the url that will invoke the DrillDownController
      */
-     String createDrillDownQuery(String query);
+    String createDrillDownURL(String query);
 
     /**
      * Method to convert the SQL query that gets the count to a

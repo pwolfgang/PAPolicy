@@ -6,6 +6,7 @@
 package edu.temple.cla.papolicy.tables;
 
 import edu.temple.cla.papolicy.Units;
+import edu.temple.cla.papolicy.Utility;
 import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.dao.YearValueMapper;
@@ -376,7 +377,7 @@ public abstract class AbstractTable implements Table {
      * @return Modified query that selects the DrillDown columns and
      * link column if defined.
      */
-    public String createDrillDownQuery(String query) {
+    private String createDrillDownQuery(String query) {
         int posFrom = query.indexOf("FROM");
         StringBuilder stb = new StringBuilder("SELECT ");
         stb.append(getDrillDownColumns()[0]);
@@ -395,6 +396,18 @@ public abstract class AbstractTable implements Table {
         int posOrder = stb.indexOf("ORDER BY");
         stb.delete(posGroup, posOrder);
         return stb.toString();
+    }
+
+    /**
+     * Method to create the drilldown url.
+     * This method returns the string &quot;drilldown.spg?query=<i>queyr</i>&quot;
+     * Tables that need a different DrillDownController can override this method.
+     * @param query The query string that gets the count
+     * @return the url that will invoke the DrillDownController
+     */
+    public String createDrillDownURL(String query) {
+        String drillDownQuery = createDrillDownQuery(query);
+        return "drilldown.spg?query=" + Utility.compressAndEncode(drillDownQuery);
     }
 
     /**
