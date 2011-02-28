@@ -42,17 +42,24 @@
                     %>
                     <tr valign="top">
                     <%
-                    for (Object obj : rowData.values()) {
+                    for (Map.Entry<String, Object> entry : rowData.entrySet()) {
                         %>
                         <td>
                             <%
-                                if (obj != null) {
-                                    String txt = obj.toString();
-                                    if (txt.startsWith("#") && txt.endsWith("#")){
-                                        txt = txt.substring(1, txt.length()-1);
-                                        %><a href="<%=txt%>" target="_blank"><%=txt%></a><%
+                                if (entry.getValue() != null) {
+                                    if (entry.getKey().equals("Committees")) {
+                                        List<String> committeeNamesList = (List<String>)entry.getValue();
+                                        for (String committeeName : committeeNamesList) {
+                                            %><%=committeeName%><br/><%
+                                        }
                                     } else {
-                                        %><%=txt%><%
+                                        String txt = entry.getValue().toString();
+                                        if (txt.startsWith("#") && txt.endsWith("#")){
+                                            txt = txt.substring(1, txt.length()-1);
+                                            %><a href="<%=txt%>" target="_blank"><%=txt%></a><%
+                                        } else {
+                                            %><%=txt%><%
+                                        }
                                     }
                                 } else {
                                     %>&nbsp;<%
