@@ -6,6 +6,7 @@
 package edu.temple.cla.papolicy.controllers;
 
 import edu.temple.cla.papolicy.Utility;
+import edu.temple.cla.papolicy.dao.StringMapper;
 import edu.temple.cla.papolicy.dao.TranscriptCommittee;
 import edu.temple.cla.papolicy.dao.TranscriptCommitteeMapper;
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ public class TranscriptDrillDownController extends AbstractController{
     private SimpleJdbcTemplate jdbcTemplate;
     private static final String transcriptJoinQuery =
             "SELECT * from Transcript_Committee join CommitteeAliases on committeeID=ID WHERE transcriptID='";
+    private static final String transcriptBillsQuery =
+            "SELECT BillID from Transcript_BillID WHERE TranscriptID='";
 
     /**
      * Create the ModelAndView
@@ -52,6 +55,10 @@ public class TranscriptDrillDownController extends AbstractController{
                     committeeNamesList.add(transcriptCommittee.getCommitteeAlias().getAlternateName());
                     row.put("Committees", committeeNamesList);
                 }
+                ParameterizedRowMapper<String> stringMapper = new StringMapper();
+                List<String> billIDList =
+                        jdbcTemplate.query(transcriptBillsQuery+transcriptId+"'", stringMapper);
+                row.put("Bills", billIDList);
             }
             Map<String, Object> theMap = new HashMap<String, Object>();
             theMap.put("theList", theList);

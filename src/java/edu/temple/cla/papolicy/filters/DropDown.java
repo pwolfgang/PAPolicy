@@ -67,7 +67,12 @@ public class DropDown extends Filter {
                 + " WHERE ID=" + parameterValue;
             ParameterizedRowMapper<DropDownItem> itemMapper = new DropDownItemMapper();
             List<DropDownItem> itemList = getJdbcTemplate().query(query, itemMapper);
-            filterQualifier = getDescription() + " is " + itemList.get(0).getDescription();
+            if (itemList.size() == 1) {
+                filterQualifier = getDescription() + " is " + itemList.get(0).getDescription();
+            } else {
+                filterQueryString = "";
+                filterQualifier = "";
+            }
         }
     }
     

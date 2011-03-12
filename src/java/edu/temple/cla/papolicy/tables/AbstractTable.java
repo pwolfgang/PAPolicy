@@ -7,6 +7,8 @@ package edu.temple.cla.papolicy.tables;
 
 import edu.temple.cla.papolicy.Units;
 import edu.temple.cla.papolicy.Utility;
+import edu.temple.cla.papolicy.dao.FilterMapper;
+import edu.temple.cla.papolicy.dao.TableMapper;
 import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.dao.YearValueMapper;
@@ -16,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
@@ -394,7 +397,9 @@ public abstract class AbstractTable implements Table {
         stb.append(query.substring(posFrom));
         int posGroup = stb.indexOf("GROUP BY");
         int posOrder = stb.indexOf("ORDER BY");
-        stb.delete(posGroup, posOrder);
+        if (posGroup != -1 && posOrder != -1) {
+            stb.delete(posGroup, posOrder);
+        }
         return stb.toString();
     }
 
@@ -438,5 +443,28 @@ public abstract class AbstractTable implements Table {
      public void setCodeColumn(String codeColumn) {
          this.codeColumn = codeColumn;
      }
+
+    public static Table getTable(String tableId, char qualifier,
+            HttpServletRequest request, SimpleJdbcTemplate jdbcTemplate)
+            throws DataAccessException, Error {
+        ParameterizedRowMapper<Table> tableMapper = new TableMapper();
+        ParameterizedRowMapper<Filter> filterMapper = new FilterMapper();
+        List<Table> aTableList = jdbcTemplate.query("SELECT * FROM Tables WHERE ID=" + tableId, tableMapper);
+        if (aTableList.size() != 1) {
+            throw new Error("TableID " + tableId + " not in database");
+        }
+        Table table = aTableList.get(0);
+        table = table.getSubTable(qualifier);
+        table.setAdditionalParameters(request);
+        String query = "SELECT * from Filters WHERE TableID=" + table.getId() + " ORDER BY ID";
+        List<Filter> filterList = jdbcTemplate.query(query, filterMapper);
+        for (Filter filter : filterList) {
+            filter.setJdbcTemplate(jdbcTemplate);
+            filter.setFilterParameterValues(request);
+        }
+        table.setFilterList(filterList);
+        table.setJdbcTemplate(jdbcTemplate);
+        return table;
+    }
 
 }

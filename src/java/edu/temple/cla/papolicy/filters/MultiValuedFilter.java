@@ -59,7 +59,9 @@ public class MultiValuedFilter extends Filter {
     public void setFilterParameterValues(HttpServletRequest request) {
         selectParameterValue = request.getParameter(selectParameterName);
         valuesParameterValues = request.getParameterValues(valuesParameterName);
-        buildFilterStrings();
+        if (selectParameterValue != null) {
+            buildFilterStrings();
+        }
     }
 
     public String getFilterQueryString() {

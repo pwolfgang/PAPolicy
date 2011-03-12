@@ -52,6 +52,11 @@
                                         for (String committeeName : committeeNamesList) {
                                             %><%=committeeName%><br/><%
                                         }
+                                    } else if (entry.getKey().equals("Bills")){
+                                        List<String> billsIdList = ((List<String>)entry.getValue());
+                                        for (String billId : billsIdList) {
+                                            %><a href="billDrillDown.spg?billId=<%=billId%>"><%=billId%></a><br/><%
+                                        }
                                     } else {
                                         String txt = entry.getValue().toString();
                                         if (txt.startsWith("#") && txt.endsWith("#")){

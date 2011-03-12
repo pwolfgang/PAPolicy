@@ -6,12 +6,10 @@ package edu.temple.cla.papolicy.controllers;
 
 import edu.temple.cla.papolicy.dao.TopicMapper;
 import edu.temple.cla.papolicy.dao.Topic;
-import edu.temple.cla.papolicy.dao.TableMapper;
-import edu.temple.cla.papolicy.dao.FilterMapper;
-import edu.temple.cla.papolicy.filters.Filter;
 import edu.temple.cla.papolicy.*;
 import edu.temple.cla.papolicy.chart.Chart;
 import edu.temple.cla.papolicy.chart.MyDataset;
+import edu.temple.cla.papolicy.tables.AbstractTable;
 import edu.temple.cla.papolicy.tables.Table;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,8 +37,6 @@ public class DisplayFormController extends AbstractController {
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         try {
-            ParameterizedRowMapper<Table> tableMapper = new TableMapper();
-            ParameterizedRowMapper<Filter> filterMapper = new FilterMapper();
             ParameterizedRowMapper<Topic> topicMapper = new TopicMapper();
             List<Table> tables = new ArrayList<Table>();
             String[] tableIds = request.getParameterValues("dataset");
@@ -54,24 +50,7 @@ public class DisplayFormController extends AbstractController {
                     qualifier = tableId.charAt(tableId.length() - 1);
                     tableId = tableId.substring(0, tableId.length() - 1);
                 }
-                List<Table> aTableList =
-                        jdbcTemplate.query("SELECT * FROM Tables WHERE ID=" + tableId,
-                        tableMapper);
-                if (aTableList.size() != 1) {
-                    throw new Error("TableID " + tableId + " not in database");
-                }
-                Table table = aTableList.get(0);
-                table = table.getSubTable(qualifier);
-                table.setAdditionalParameters(request);
-                String query = "SELECT * from Filters WHERE TableID=" + table.getId()
-                        + " ORDER BY ID";
-                List<Filter> filterList = jdbcTemplate.query(query, filterMapper);
-                for (Filter filter : filterList) {
-                    filter.setJdbcTemplate(jdbcTemplate);
-                    filter.setFilterParameterValues(request);
-                }
-                table.setFilterList(filterList);
-                table.setJdbcTemplate(jdbcTemplate);
+                Table table = AbstractTable.getTable(tableId, qualifier, request, jdbcTemplate);
                 tables.add(table);
             }
             TopicList topics = new TopicList(request.getParameterValues("subtopics"), jdbcTemplate);

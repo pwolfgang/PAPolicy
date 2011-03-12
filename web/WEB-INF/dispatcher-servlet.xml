@@ -23,6 +23,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="display.spg">displayFormController</prop>
                 <prop key="drilldown.spg">drillDownController</prop>
                 <prop key="transcriptdrilldown.spg">transcriptDrillDownController</prop>
+                <prop key="billDrillDown.spg">individualBillDrilldownController</prop>
                 <prop key="*.xlsx">downloadController</prop>
             </props>
         </property>
@@ -67,6 +68,10 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     </bean>
     <bean name="transcriptDrillDownController"
         class="edu.temple.cla.papolicy.controllers.TranscriptDrillDownController">
+            <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    <bean name="individualBillDrilldownController"
+        class="edu.temple.cla.papolicy.controllers.IndividualBillDrilldownController">
             <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
 

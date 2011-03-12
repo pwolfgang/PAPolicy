@@ -38,7 +38,9 @@ public class BinaryFilter extends Filter {
 
     public void setFilterParameterValues(HttpServletRequest request) {
         parameterValue = request.getParameter(parameterName);
-        buildFilterStrings();
+        if (parameterValue != null) {
+            buildFilterStrings();
+        }
     }
 
     public String getFilterQueryString() {

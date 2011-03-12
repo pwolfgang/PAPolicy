@@ -19,11 +19,10 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  */
 public class BillsCommittee extends Filter {
 
-    String parameterName;
-    String primaryName;
-    String parameterValue;
-    String primaryValue;
-
+    private String parameterName;
+    private String primaryName;
+    private String parameterValue;
+    private String primaryValue;
     private String filterQueryString;
     private String filterQualifier;
     private String chamberNumber;
@@ -121,7 +120,9 @@ public class BillsCommittee extends Filter {
     public void setFilterParameterValues(HttpServletRequest request) {
         parameterValue = request.getParameter(parameterName);
         primaryValue = request.getParameter(primaryName);
-        buildFilterStrings();
+        if (parameterValue != null) {
+            buildFilterStrings();
+        }
     }
 
 }
