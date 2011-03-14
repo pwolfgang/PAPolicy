@@ -56,9 +56,10 @@ public class TranscriptDrillDownController extends AbstractController{
                     row.put("Committees", committeeNamesList);
                 }
                 ParameterizedRowMapper<String> stringMapper = new StringMapper();
-                List<String> billIDList =
+                List<String> billIdList =
                         jdbcTemplate.query(transcriptBillsQuery+transcriptId+"'", stringMapper);
-                row.put("Bills", billIDList);
+                fixBillId(billIdList);
+                row.put("Bills", billIdList);
             }
             Map<String, Object> theMap = new HashMap<String, Object>();
             theMap.put("theList", theList);
@@ -76,5 +77,15 @@ public class TranscriptDrillDownController extends AbstractController{
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
+    private void fixBillId(List<String> billIdList) {
+        for (int i = 0; i < billIdList.size(); i++) {
+            String billId = billIdList.get(i);
+            int billYear = Integer.parseInt(billId.substring(0,4));
+            if (billYear % 2 == 0) {
+                billYear--;
+                billId = Integer.toString(billYear) + billId.substring(4);
+                billIdList.set(i, billId);
+            }
+        }
+    }
 }
