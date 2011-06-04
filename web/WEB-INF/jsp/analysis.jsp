@@ -205,7 +205,7 @@
                     Number of cases per year or legislative session
                     <br/>
                     <input type="radio" name="showResults" value="percent" />
-                    Percent of all activity per year or legislative
+                    Percent of all activity per year or legislative session
                 </td>
             </tr>
             <tr>
