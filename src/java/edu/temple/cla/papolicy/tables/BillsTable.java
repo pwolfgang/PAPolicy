@@ -118,7 +118,7 @@ public class BillsTable extends AbstractTable {
     }
 
     @Override
-    public String getTotalQueryString() {
+    public String getUnfilteredTotalQueryString() {
         StringBuilder stb = new StringBuilder();
         stb.append("SELECT ");
         stb.append(getYearColumn());
@@ -158,11 +158,6 @@ public class BillsTable extends AbstractTable {
                 stb.append(" Session LIKE('%-%-%')");
             }
         }
-        if (!stb.toString().endsWith(" WHERE ")
-                && getFilterQueryString().length() != 0) {
-            stb.append(" AND ");
-        }
-        stb.append(getFilterQueryString());
         return stb.toString();
     }
 

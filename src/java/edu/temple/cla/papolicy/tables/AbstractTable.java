@@ -43,7 +43,8 @@ public abstract class AbstractTable implements Table {
     private List<Filter> filterList;
     private SimpleJdbcTemplate jdbcTemplate;
     private String filterQueryString = null;
-    private String totalQueryString = null;
+    private String totalUnfilteredQueryString = null;
+    private String totalFilteredQueryString = null;
 
     /**
      * @return the id
@@ -239,23 +240,36 @@ public abstract class AbstractTable implements Table {
         // do nothing in base class
     }
 
-    public String getTotalQueryString() {
-        if (totalQueryString == null) {
+    public String getUnfilteredTotalQueryString() {
+        if (totalUnfilteredQueryString == null) {
             StringBuilder stb = new StringBuilder("SELECT ");
             stb.append(yearColumn);
             stb.append(" AS TheYear, count(ID) AS TheValue FROM ");
             stb.append(tableName);
             stb.append(" WHERE ");
-            stb.append(getFilterQueryString());
-            totalQueryString = stb.toString();
         }
-        return totalQueryString;
+        return totalUnfilteredQueryString;
+    }
+
+    public String getFilteredTotalQueryString() {
+        if (totalFilteredQueryString == null) {
+            StringBuilder stb = new StringBuilder(getUnfilteredTotalQueryString());
+            String filterQueryString = getFilterQueryString();
+            if (filterQueryString != null && !filterQueryString.isEmpty()) {
+                if (!getUnfilteredTotalQueryString().endsWith("WHERE ")) {
+                    stb.append(" AND ");
+                }
+                stb.append(getFilterQueryString());
+            }
+            totalFilteredQueryString = stb.toString();
+        }
+        return totalFilteredQueryString;
     }
 
     public String getTopicQueryString(Topic topic) {
-        StringBuilder stb = new StringBuilder(getTotalQueryString());
+        StringBuilder stb = new StringBuilder(getFilteredTotalQueryString());
         if (topic != null && topic.getCode() != 0) {
-            if (!getTotalQueryString().endsWith("WHERE ")) {
+            if (!getFilteredTotalQueryString().endsWith("WHERE ")) {
                 stb.append(" AND ");
             }
             if (isMajorOnly() || topic.getCode() >= 100) {
@@ -277,6 +291,10 @@ public abstract class AbstractTable implements Table {
     public Units getUnits(String showResults) {
         if ("percent".equals(showResults)) {
             return Units.PERCENT;
+        } else if ("percent_of_total".equals(showResults)){
+            return Units.PERCENT_OF_TOTAL;
+        } else if ("percent_of_filtered".equals(showResults)) {
+            return Units.PERCENT_OF_FILTERED;
         } else {
             return Units.COUNT;
         }

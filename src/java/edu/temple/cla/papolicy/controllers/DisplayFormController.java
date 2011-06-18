@@ -102,8 +102,9 @@ public class DisplayFormController extends AbstractController {
                 } else {
                     column.setValueMap(jdbcTemplate, yearRange.getMinYear(), yearRange.getMaxYear());
                 }
-                if (column.getUnits() == Units.PERCENT) {
-                    column.setTotalMap(jdbcTemplate, yearRange.getMinYear(), yearRange.getMaxYear());
+                if (column.getUnits() == Units.PERCENT || column.getUnits() == Units.PERCENT_OF_FILTERED || column.getUnits() == Units.PERCENT_OF_TOTAL) {
+                    column.setFilteredTotalMap(jdbcTemplate, yearRange.getMinYear(), yearRange.getMaxYear());
+                    column.setUnfilteredTotalMap(jdbcTemplate, yearRange.getMinYear(), yearRange.getMaxYear());
                 }
                 String countQuery =
                         column.getTopicCountQueryString(yearRange.getMinYear(), yearRange.getMaxYear());
@@ -130,6 +131,10 @@ public class DisplayFormController extends AbstractController {
                     } else if (column.getUnits() == Units.PERCENT) {
                         column.setDisplayedValue(rowKey, column.getPercent(currentMinYear,
                                 currentMaxYear));
+                    } else if (column.getUnits() == Units.PERCENT_OF_FILTERED) {
+                        column.setDisplayedValue(rowKey, column.getPercent(currentMinYear, currentMaxYear));
+                    } else if (column.getUnits() == Units.PERCENT_OF_TOTAL) {
+                        column.setDisplayedValue(rowKey, column.getPercentOfTotal(currentMinYear, currentMaxYear));
                     } else if (column.getUnits() == Units.PERCENT_CHANGE) {
                         column.setDisplayedValue(rowKey, column.getPercentChange(currentMinYear,
                                 currentMaxYear));

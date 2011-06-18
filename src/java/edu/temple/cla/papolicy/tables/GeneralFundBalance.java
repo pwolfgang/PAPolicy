@@ -73,7 +73,7 @@ public class GeneralFundBalance extends BudgetTable {
     }
 
     @Override
-    public String getTotalQueryString() {
+    public String getUnfilteredTotalQueryString() {
                 StringBuilder stb = new StringBuilder();
         stb.append("SELECT ");
         stb.append(getYearColumn());

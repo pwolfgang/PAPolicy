@@ -204,8 +204,11 @@
                     <input type="radio" name="showResults" value="count" checked />
                     Number of cases per year or legislative session
                     <br/>
-                    <input type="radio" name="showResults" value="percent" />
+                    <input type="radio" name="showResults" value="percent_of_total" />
                     Percent of all activity per year or legislative session
+                    <br/>
+                    <input type="radio" name="showResults" value="percent_of_filtered" />
+                    Percent of filtered activity per year or legislative session
                 </td>
             </tr>
             <tr>

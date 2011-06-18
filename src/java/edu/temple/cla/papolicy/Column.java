@@ -26,10 +26,12 @@ public class Column {
     private Topic topic;
     private String freeText;
     private String topicCountQueryString = null;
-    private String totalQueryString = null;
+    private String unfilteredTotalQueryString = null;
+    private String filteredTotalQueryString = null;
     private Units units;
     private SortedMap<Integer, Number> valueMap;
-    private SortedMap<Integer, Number> totalMap;
+    private SortedMap<Integer, Number> unfilteredTotalMap;
+    private SortedMap<Integer, Number> filteredTotalMap;
     private SortedMap<String, Number> displayedValueMap = new TreeMap<String, Number>();
     private SortedMap<String, String> drillDownMap = new TreeMap<String, String>();
     private Number prevValue = null;
@@ -59,15 +61,40 @@ public class Column {
         }
     }
 
-    public String getTotalQueryString() {
-        if (totalQueryString == null) {
-            totalQueryString = table.getTotalQueryString();
+    public String getFilteredTotalQueryString() {
+        if (filteredTotalQueryString == null) {
+            filteredTotalQueryString = table.getFilteredTotalQueryString();
         }
-        return totalQueryString;
+        return filteredTotalQueryString;
     }
 
-    public String getTotalQueryString(int startYear, int endYear) {
-        String result = getTotalQueryString();
+    public String getUnfilteredTotalQueryString() {
+        if (unfilteredTotalQueryString == null) {
+            unfilteredTotalQueryString = table.getUnfilteredTotalQueryString();
+        }
+        return unfilteredTotalQueryString;
+    }
+
+    public String getUnfilteredTotalQueryString(int startYear, int endYear) {
+        String result = getUnfilteredTotalQueryString();
+        if (!result.endsWith("WHERE ")) {
+            result = result + " AND ";
+        }
+        StringBuilder stb = new StringBuilder(result);
+        stb.append(table.getYearColumn());
+        stb.append(" BETWEEN ");
+        stb.append(startYear);
+        stb.append(" AND ");
+        stb.append(endYear);
+        stb.append(" GROUP BY ");
+        stb.append(table.getYearColumn());
+        stb.append(" ORDER BY ");
+        stb.append(table.getYearColumn());
+        return stb.toString();
+    }
+
+    public String getFilteredTotalQueryString(int startYear, int endYear) {
+        String result = getFilteredTotalQueryString();
         if (!result.endsWith("WHERE ")) {
             result = result + " AND ";
         }
@@ -128,9 +155,16 @@ public class Column {
         return returnVal;
     }
 
+    public Number getPercentOfTotal(int minYear, int maxYear) {
+        Number returnVal = table.getPercentForRange(valueMap.subMap(minYear, maxYear+1),
+                unfilteredTotalMap.subMap(minYear, maxYear+1));
+        return returnVal;
+    }
+
+
     public Number getPercent(int minYear, int maxYear) {
         Number returnVal = table.getPercentForRange(valueMap.subMap(minYear, maxYear+1),
-                totalMap.subMap(minYear, maxYear+1));
+                filteredTotalMap.subMap(minYear, maxYear+1));
         return returnVal;
     }
     
@@ -177,14 +211,24 @@ public class Column {
         }
     }
 
-    public void setTotalMap(SimpleJdbcTemplate jdbcTemplate, int minYear, int maxYear) {
-        String query = getTotalQueryString(minYear, maxYear);
+    public void setUnfilteredTotalMap(SimpleJdbcTemplate jdbcTemplate, int minYear, int maxYear) {
+        String query = getUnfilteredTotalQueryString(minYear, maxYear);
         List<YearValue> list = table.getYearValueList(jdbcTemplate, query);
-        totalMap = new TreeMap<Integer, Number>();
+        unfilteredTotalMap = new TreeMap<Integer, Number>();
         for (YearValue yv : list) {
-            totalMap.put(new Integer(yv.getYear()), yv.getValue());
+            unfilteredTotalMap.put(new Integer(yv.getYear()), yv.getValue());
         }
     }
+
+    public void setFilteredTotalMap(SimpleJdbcTemplate jdbcTemplate, int minYear, int maxYear) {
+        String query = getFilteredTotalQueryString(minYear, maxYear);
+        List<YearValue> list = table.getYearValueList(jdbcTemplate, query);
+        filteredTotalMap = new TreeMap<Integer, Number>();
+        for (YearValue yv : list) {
+            filteredTotalMap.put(new Integer(yv.getYear()), yv.getValue());
+        }
+    }
+
 
     public void setDisplayedValue(String key, Number value) {
         displayedValueMap.put(key, value);
@@ -205,7 +249,10 @@ public class Column {
             case COUNT : return retValue != null ? retValue.toString() : "null";
             case DOLLARS : return retValue != null ?
                 String.format("$%,.0f", retValue.doubleValue()) : "null";
-            case PERCENT : case PERCENT_CHANGE :
+            case PERCENT:
+            case PERCENT_CHANGE:
+            case PERCENT_OF_TOTAL:
+            case PERCENT_OF_FILTERED:
                 return retValue != null ?
                     String.format("%.1f%%", retValue.doubleValue()) : "null";
             case RANK:

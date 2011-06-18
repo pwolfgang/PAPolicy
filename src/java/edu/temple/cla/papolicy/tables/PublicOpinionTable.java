@@ -26,7 +26,7 @@ public class PublicOpinionTable extends StandardTable {
     Units units = null;
 
     @Override
-    public String getTotalQueryString() {
+    public String getUnfilteredTotalQueryString() {
         if (getUnits(null) == Units.PERCENT) {
             return "SELECT Year AS TheYear, AVG(Percentage) as TheValue FROM " +
                     getTableName()
@@ -41,11 +41,11 @@ public class PublicOpinionTable extends StandardTable {
     @Override
     public String getTopicQueryString(Topic topic) {
         if (topic != null && topic.getCode() != 0) {
-            return getTotalQueryString()
+            return getUnfilteredTotalQueryString()
                 + "Code="
                 + topic.getCode();
         } else {
-            return getTotalQueryString();
+            return getUnfilteredTotalQueryString();
         }
     }
 

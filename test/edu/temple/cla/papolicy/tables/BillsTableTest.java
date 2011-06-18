@@ -61,7 +61,7 @@ public class BillsTableTest {
         instance.billtype = "BILLS";
         instance.chamber = new String[]{"house"};
         String expected = "SELECT count(ID) FROM Bills_Data WHERE (Bill LIKE ('HB%'))";
-        assertEquals(expected, instance.getTotalQueryString());
+        assertEquals(expected, instance.getUnfilteredTotalQueryString());
     }
 
     @Test
@@ -72,7 +72,7 @@ public class BillsTableTest {
         instance.billtype = "BILLS";
         instance.chamber = new String[]{"senate"};
         String expected = "SELECT count(ID) FROM Bills_Data WHERE (Bill LIKE ('SB%'))";
-        assertEquals(expected, instance.getTotalQueryString());
+        assertEquals(expected, instance.getUnfilteredTotalQueryString());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class BillsTableTest {
         instance.billtype = "RES";
         instance.chamber = new String[]{"senate"};
         String expected = "SELECT count(ID) FROM Bills_Data WHERE (Bill LIKE ('SR%'))";
-        assertEquals(expected, instance.getTotalQueryString());
+        assertEquals(expected, instance.getUnfilteredTotalQueryString());
     }
 
     @Test
@@ -94,7 +94,7 @@ public class BillsTableTest {
         instance.billtype = "RES";
         instance.chamber = new String[]{"house"};
         String expected = "SELECT count(ID) FROM Bills_Data WHERE (Bill LIKE ('HR%'))";
-        assertEquals(expected, instance.getTotalQueryString());
+        assertEquals(expected, instance.getUnfilteredTotalQueryString());
     }
 
     @Test
@@ -105,7 +105,7 @@ public class BillsTableTest {
         instance.billtype = "RES";
         instance.chamber = new String[]{"house", "senate"};
         String expected = "SELECT count(ID) FROM Bills_Data WHERE (Bill LIKE ('HR%') OR Bill LIKE ('SR%'))";
-        assertEquals(expected, instance.getTotalQueryString());
+        assertEquals(expected, instance.getUnfilteredTotalQueryString());
     }
 
     @Test
@@ -116,7 +116,7 @@ public class BillsTableTest {
         instance.billtype = "BILLS";
         instance.chamber = new String[]{"house", "senate"};
         String expected = "SELECT count(ID) FROM Bills_Data WHERE (Bill LIKE ('HB%') OR Bill LIKE ('SB%'))";
-        assertEquals(expected, instance.getTotalQueryString());
+        assertEquals(expected, instance.getUnfilteredTotalQueryString());
     }
 
     @Test
@@ -127,7 +127,7 @@ public class BillsTableTest {
         instance.billtype = "BOTH";
         instance.chamber = new String[]{"house"};
         String expected = "SELECT count(ID) FROM Bills_Data WHERE (Bill LIKE ('HB%') OR Bill LIKE ('HR%'))";
-        assertEquals(expected, instance.getTotalQueryString());
+        assertEquals(expected, instance.getUnfilteredTotalQueryString());
     }
 
     @Test
@@ -138,7 +138,7 @@ public class BillsTableTest {
         instance.billtype = "BOTH";
         instance.chamber = new String[]{"senate"};
         String expected = "SELECT count(ID) FROM Bills_Data WHERE (Bill LIKE ('SB%') OR Bill LIKE ('SR%'))";
-        assertEquals(expected, instance.getTotalQueryString());
+        assertEquals(expected, instance.getUnfilteredTotalQueryString());
     }
 
     @Test
@@ -149,7 +149,7 @@ public class BillsTableTest {
         instance.billtype = "BOTH";
         instance.chamber = new String[]{"house", "senate"};
         String expected = "SELECT count(ID) FROM Bills_Data WHERE ";
-        assertEquals(expected, instance.getTotalQueryString());
+        assertEquals(expected, instance.getUnfilteredTotalQueryString());
     }
 
 }

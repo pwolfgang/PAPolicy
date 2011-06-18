@@ -133,7 +133,9 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
      void setAdditionalParameters(HttpServletRequest request);
 
-     String getTotalQueryString();
+     String getFilteredTotalQueryString();
+     
+     String getUnfilteredTotalQueryString();
 
      String getTopicQueryString(Topic topic);
 
