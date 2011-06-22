@@ -12,6 +12,7 @@ import edu.temple.cla.papolicy.chart.MyDataset;
 import edu.temple.cla.papolicy.tables.AbstractTable;
 import edu.temple.cla.papolicy.tables.Table;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -38,7 +39,7 @@ public class DisplayFormController extends AbstractController {
             HttpServletResponse response) throws Exception {
         try {
             ParameterizedRowMapper<Topic> topicMapper = new TopicMapper();
-            List<Table> tables = new ArrayList<Table>();
+            List<Table> tableList = new ArrayList<Table>();
             String[] tableIds = request.getParameterValues("dataset");
             if (tableIds == null) {
                 response.sendRedirect("analysis.spg?error=1");
@@ -50,8 +51,8 @@ public class DisplayFormController extends AbstractController {
                     qualifier = tableId.charAt(tableId.length() - 1);
                     tableId = tableId.substring(0, tableId.length() - 1);
                 }
-                Table table = AbstractTable.getTable(tableId, qualifier, request, jdbcTemplate);
-                tables.add(table);
+                Table[] tables = AbstractTable.getTable(tableId, qualifier, request, jdbcTemplate);
+                tableList.addAll(Arrays.asList(tables));
             }
             TopicList topics = new TopicList(request.getParameterValues("subtopics"), jdbcTemplate);
             String freeText = request.getParameter("freetext");
@@ -66,7 +67,7 @@ public class DisplayFormController extends AbstractController {
                     request.getParameter("span"));
             String showResults = request.getParameter("showResults");
             ArrayList<Column> columns = new ArrayList<Column>();
-            for (Table table : tables) {
+            for (Table table : tableList) {
                 if (table.isTopicSearchable()) {
                     if (table.isMajorOnly()) {
                         for (Topic topic : topics.getMajorTopics().values()) {

@@ -95,5 +95,18 @@ public abstract class Filter {
     public void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+    
+    /**
+     * Return an array of Filter instances when multiple filter choices
+     * have been selected.
+     * By default this method returns this enclosed in an array
+     */
+    public Filter[] getFilterChoices() {
+        return new Filter[] {this};
+    }
+    
+    public int getNumberOfFilterChoices() {
+        return 1;
+    }
 
 }

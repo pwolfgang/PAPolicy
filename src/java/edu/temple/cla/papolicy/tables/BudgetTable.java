@@ -185,4 +185,9 @@ public class BudgetTable extends AbstractTable {
             return list;
         }
     }
+    
+    @Override
+    public BudgetTable clone() {
+        return (BudgetTable)super.clone();
+    }
 }

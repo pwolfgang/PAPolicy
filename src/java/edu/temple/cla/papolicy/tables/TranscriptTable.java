@@ -6,7 +6,6 @@
 package edu.temple.cla.papolicy.tables;
 
 import edu.temple.cla.papolicy.Utility;
-import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.filters.Filter;
 import edu.temple.cla.papolicy.filters.HouseHearingsCommittee;
 import java.util.ArrayList;
@@ -69,6 +68,10 @@ public class TranscriptTable extends StandardTable {
         drillDownColumnsList.addAll(Arrays.asList(drillDownColumns));
         this.drillDownColumns = drillDownColumnsList.toArray(new String[drillDownColumnsList.size()]);
     }
-
+    
+    @Override
+    public TranscriptTable clone() {
+        return (TranscriptTable)super.clone();
+    }
 
 }

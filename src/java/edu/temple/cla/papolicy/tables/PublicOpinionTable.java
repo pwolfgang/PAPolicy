@@ -98,5 +98,11 @@ public class PublicOpinionTable extends StandardTable {
         }
         return list;
     }
+    
+    @Override
+    public PublicOpinionTable clone() {
+        
+        return (PublicOpinionTable) super.clone();
+    }
 
 }

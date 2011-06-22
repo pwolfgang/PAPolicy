@@ -104,4 +104,8 @@ public class GeneralFundBalance extends BudgetTable {
         return null;
     }
 
+    @Override
+    public GeneralFundBalance clone() {
+        return (GeneralFundBalance) super.clone();
+    }
 }

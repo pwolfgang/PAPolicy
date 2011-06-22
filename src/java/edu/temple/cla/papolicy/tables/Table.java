@@ -18,7 +18,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
  *
  * @author Paul Wolfgang
  */
- public interface Table {
+ public interface Table extends Cloneable {
     /**
      * @return the id
      */
@@ -215,5 +215,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
      void setNoteColumn(String noteColumn);
 
      String getNoteColumn();
-
+     
+     public Table clone();
+     
 }

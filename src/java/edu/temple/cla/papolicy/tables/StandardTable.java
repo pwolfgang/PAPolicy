@@ -24,4 +24,9 @@ public class StandardTable extends AbstractTable implements Table {
 "        <div id=\"note"+getId()+"\" class=\"nnoottee\"><p>"+getNoteColumn()+"</p></div>\n"+
 "        ";
     }
+    
+    @Override
+    public StandardTable clone() {
+        return (StandardTable) super.clone();
+   }
 }

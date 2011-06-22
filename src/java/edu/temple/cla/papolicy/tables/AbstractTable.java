@@ -462,7 +462,7 @@ public abstract class AbstractTable implements Table {
          this.codeColumn = codeColumn;
      }
 
-    public static Table getTable(String tableId, char qualifier,
+    public static Table[] getTable(String tableId, char qualifier,
             HttpServletRequest request, SimpleJdbcTemplate jdbcTemplate)
             throws DataAccessException, Error {
         ParameterizedRowMapper<Table> tableMapper = new TableMapper();
@@ -482,7 +482,61 @@ public abstract class AbstractTable implements Table {
         }
         table.setFilterList(filterList);
         table.setJdbcTemplate(jdbcTemplate);
-        return table;
+        //Scan filter list to see how many variations there may be.
+        int numVariations = 1;
+        for (Filter f : filterList) {
+            if (f.getNumberOfFilterChoices() != 1) {
+                numVariations *= f.getNumberOfFilterChoices();
+            }
+        }
+        if (numVariations == 1) {
+            return new Table[] {table};
+        }
+        List<Table> tableList = new ArrayList<Table>();
+        tableList.add(table);
+        while (expandChoices(tableList)) { 
+            // work done in the method expandChoices method
+        }
+        return tableList.toArray(new Table[tableList.size()]);
     }
-
+    
+    private static boolean expandChoices(List<Table> tableList) {
+        for (int i = 0; i < tableList.size(); i++) {
+            Table table = tableList.get(i);
+            List<Filter> filterList = table.getFilterList();
+            for (int j = 0; j < filterList.size(); j++) {
+                Filter filter = filterList.get(j);
+                if (filter.getNumberOfFilterChoices() != 1) {
+                    Table[] newTables = new Table[filter.getNumberOfFilterChoices()];
+                    Filter[] filters = filter.getFilterChoices();
+                    for (int k = 0; k < newTables.length; k++) {
+                        newTables[k] = table.clone();
+                        newTables[k].getFilterList().set(j, filters[k]);
+                    }
+                    tableList.remove(i);
+                    for (Table newTable : newTables) {
+                        tableList.add(i, newTable);
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;               
+    }
+    
+    @Override
+    public AbstractTable clone() {
+        try {
+            AbstractTable theClone = (AbstractTable)super.clone();
+            if (drillDownColumns != null) {
+                theClone.drillDownColumns = drillDownColumns.clone();
+            }
+            if (filterList != null) {
+                theClone.filterList = new ArrayList(filterList);
+            }
+            return theClone;
+        } catch (CloneNotSupportedException ex) {
+            throw new Error("CloneNotSupportedException should never be thrown");
+        }
+    }
 }

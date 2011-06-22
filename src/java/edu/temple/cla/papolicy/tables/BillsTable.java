@@ -185,5 +185,12 @@ public class BillsTable extends AbstractTable {
             return this;
         }
     }
+    
+    @Override
+    public BillsTable clone() {
+        BillsTable theClone = (BillsTable)super.clone();
+        theClone.chamber = chamber.clone();
+        return theClone;
+    }
 
 }

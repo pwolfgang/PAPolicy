@@ -59,8 +59,9 @@ public class BillsTableTest {
         instance.setFilterList(new ArrayList<Filter>());
         instance.setTableName("Bills_Data");
         instance.billtype = "BILLS";
-        instance.chamber = new String[]{"house"};
-        String expected = "SELECT count(ID) FROM Bills_Data WHERE (Bill LIKE ('HB%'))";
+        instance.chamber = new String[]{"House"};
+        instance.sessionType = "REGULAR";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE (Bill LIKE ('HB%')) AND  Session NOT LIKE('%-%-%')";
         assertEquals(expected, instance.getUnfilteredTotalQueryString());
     }
 
@@ -70,8 +71,9 @@ public class BillsTableTest {
         instance.setFilterList(new ArrayList<Filter>());
         instance.setTableName("Bills_Data");
         instance.billtype = "BILLS";
-        instance.chamber = new String[]{"senate"};
-        String expected = "SELECT count(ID) FROM Bills_Data WHERE (Bill LIKE ('SB%'))";
+        instance.chamber = new String[]{"Senate"};
+        instance.sessionType = "REGULAR";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE (Bill LIKE ('SB%')) AND  Session NOT LIKE('%-%-%')";
         assertEquals(expected, instance.getUnfilteredTotalQueryString());
     }
 
@@ -81,8 +83,9 @@ public class BillsTableTest {
         instance.setFilterList(new ArrayList<Filter>());
         instance.setTableName("Bills_Data");
         instance.billtype = "RES";
-        instance.chamber = new String[]{"senate"};
-        String expected = "SELECT count(ID) FROM Bills_Data WHERE (Bill LIKE ('SR%'))";
+        instance.chamber = new String[]{"Senate"};
+        instance.sessionType = "REGULAR";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE (Bill LIKE ('SR%')) AND  Session NOT LIKE('%-%-%')";
         assertEquals(expected, instance.getUnfilteredTotalQueryString());
     }
 
@@ -92,8 +95,9 @@ public class BillsTableTest {
         instance.setFilterList(new ArrayList<Filter>());
         instance.setTableName("Bills_Data");
         instance.billtype = "RES";
-        instance.chamber = new String[]{"house"};
-        String expected = "SELECT count(ID) FROM Bills_Data WHERE (Bill LIKE ('HR%'))";
+        instance.chamber = new String[]{"House"};
+        instance.sessionType = "REGULAR";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE (Bill LIKE ('HR%')) AND  Session NOT LIKE('%-%-%')";
         assertEquals(expected, instance.getUnfilteredTotalQueryString());
     }
 
@@ -103,8 +107,9 @@ public class BillsTableTest {
         instance.setFilterList(new ArrayList<Filter>());
         instance.setTableName("Bills_Data");
         instance.billtype = "RES";
-        instance.chamber = new String[]{"house", "senate"};
-        String expected = "SELECT count(ID) FROM Bills_Data WHERE (Bill LIKE ('HR%') OR Bill LIKE ('SR%'))";
+        instance.chamber = new String[]{"House", "Senate"};
+        instance.sessionType = "REGULAR";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE (Bill LIKE ('HR%') OR Bill LIKE ('SR%')) AND  Session NOT LIKE('%-%-%')";
         assertEquals(expected, instance.getUnfilteredTotalQueryString());
     }
 
@@ -114,8 +119,9 @@ public class BillsTableTest {
         instance.setFilterList(new ArrayList<Filter>());
         instance.setTableName("Bills_Data");
         instance.billtype = "BILLS";
-        instance.chamber = new String[]{"house", "senate"};
-        String expected = "SELECT count(ID) FROM Bills_Data WHERE (Bill LIKE ('HB%') OR Bill LIKE ('SB%'))";
+        instance.chamber = new String[]{"House", "Senate"};
+        instance.sessionType = "REGULAR";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE (Bill LIKE ('HB%') OR Bill LIKE ('SB%')) AND  Session NOT LIKE('%-%-%')";
         assertEquals(expected, instance.getUnfilteredTotalQueryString());
     }
 
@@ -125,8 +131,9 @@ public class BillsTableTest {
         instance.setFilterList(new ArrayList<Filter>());
         instance.setTableName("Bills_Data");
         instance.billtype = "BOTH";
-        instance.chamber = new String[]{"house"};
-        String expected = "SELECT count(ID) FROM Bills_Data WHERE (Bill LIKE ('HB%') OR Bill LIKE ('HR%'))";
+        instance.chamber = new String[]{"House"};
+        instance.sessionType = "REGULAR";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE (Bill LIKE ('HB%') OR Bill LIKE ('HR%')) AND  Session NOT LIKE('%-%-%')";
         assertEquals(expected, instance.getUnfilteredTotalQueryString());
     }
 
@@ -136,8 +143,9 @@ public class BillsTableTest {
         instance.setFilterList(new ArrayList<Filter>());
         instance.setTableName("Bills_Data");
         instance.billtype = "BOTH";
-        instance.chamber = new String[]{"senate"};
-        String expected = "SELECT count(ID) FROM Bills_Data WHERE (Bill LIKE ('SB%') OR Bill LIKE ('SR%'))";
+        instance.chamber = new String[]{"Senate"};
+        instance.sessionType = "REGULAR";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE (Bill LIKE ('SB%') OR Bill LIKE ('SR%')) AND  Session NOT LIKE('%-%-%')";
         assertEquals(expected, instance.getUnfilteredTotalQueryString());
     }
 
@@ -147,9 +155,23 @@ public class BillsTableTest {
         instance.setFilterList(new ArrayList<Filter>());
         instance.setTableName("Bills_Data");
         instance.billtype = "BOTH";
-        instance.chamber = new String[]{"house", "senate"};
-        String expected = "SELECT count(ID) FROM Bills_Data WHERE ";
+        instance.chamber = new String[]{"House", "Senate"};
+        instance.sessionType = "REGULAR";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE  Session NOT LIKE('%-%-%')";
         assertEquals(expected, instance.getUnfilteredTotalQueryString());
     }
 
+    
+    @Test
+    public void testClone() {
+        BillsTable instance = new BillsTable();
+        instance.setFilterList(new ArrayList<Filter>());
+        instance.setTableName("Bills_Data");
+        instance.billtype = "BOTH";
+        instance.chamber = new String[]{"house", "senate"};
+        BillsTable theClone = instance.clone();
+        assertEquals(instance.billtype, theClone.billtype);
+        assertArrayEquals(instance.chamber, theClone.chamber);
+    }
+    
 }

@@ -67,4 +67,14 @@ public class LawsTable extends BillsTable {
         billtype = request.getParameter("billtypea");
         sessionType = request.getParameter("sessiontypea");
     }
+    
+    @Override
+    public LawsTable clone() {
+        LawsTable theClone = (LawsTable)clone();
+        if (drillDownColumns != null) {
+            theClone.drillDownColumns = drillDownColumns.clone();
+        }
+        return theClone;
+    }
+    
 }
