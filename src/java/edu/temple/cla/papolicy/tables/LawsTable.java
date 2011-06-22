@@ -70,7 +70,7 @@ public class LawsTable extends BillsTable {
     
     @Override
     public LawsTable clone() {
-        LawsTable theClone = (LawsTable)clone();
+        LawsTable theClone = (LawsTable)super.clone();
         if (drillDownColumns != null) {
             theClone.drillDownColumns = drillDownColumns.clone();
         }

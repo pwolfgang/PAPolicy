@@ -32,8 +32,7 @@ public class Party extends Filter implements Cloneable {
 "        <br /><input type=\"radio\" name=\"F"+getId()+"\" value=\"NOFILTER\" checked=\"checked\" />&nbsp;no filter\n"+
 "              <input type=\"radio\" name=\"F"+getId()+"\" value=\"0\" />&nbsp;Republican\n"+
 "              <input type=\"radio\" name=\"F"+getId()+"\" value=\"1\" />&nbsp;Democrat\n"+
-"              <input type=\"radio\" name=\"F"+getId()+"\" value=\"2\" />&nbsp;Other\n"+
-"              <input type=\"radio\" name=\"F"+getId()+"\" value=\"ALL\" />&nbsp;All\n";                
+"              <input type=\"radio\" name=\"F"+getId()+"\" value=\"ALL\" />&nbsp;Both\n";                
     }
 
     public void setFilterParameterValues(HttpServletRequest request) {
@@ -55,25 +54,19 @@ public class Party extends Filter implements Cloneable {
         } else if ("1".equals(parameterValue)) { // Democrat
             filterQueryString = getColumnName() + "=1";
             filterQualifier = "Sponsored by a Democrat";
-        } else if ("2".equals(parameterValue)) { // Third Party
-            filterQueryString = getColumnName() + "=2";
-            filterQualifier = "Sponsored by a Member of a Third Party";
         }
     }
     
     @Override
     public Party[] getFilterChoices() {
         if ("ALL".equals(parameterValue)) {
-            Party[] result = new Party[3];
+            Party[] result = new Party[2];
             result[0] = clone();
             result[1] = clone();
-            result[2] = clone();
             result[0].parameterValue = "0";
+            result[0].buildFilterStrings();
             result[1].parameterValue = "1";
-            result[2].parameterValue = "2";
-            for (Party p : result) {
-                p.buildFilterStrings();
-            }
+            result[1].buildFilterStrings();
             return result;
         } else {
             return new Party[]{this};
@@ -82,7 +75,7 @@ public class Party extends Filter implements Cloneable {
     
     public int getNumberOfFilterChoices() {
         if ("ALL".equals(parameterValue)) {
-            return 3;
+            return 2;
         } else {
             return 1;
         }
