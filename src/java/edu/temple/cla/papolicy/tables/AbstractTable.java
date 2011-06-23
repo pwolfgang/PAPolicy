@@ -247,6 +247,7 @@ public abstract class AbstractTable implements Table {
             stb.append(" AS TheYear, count(ID) AS TheValue FROM ");
             stb.append(tableName);
             stb.append(" WHERE ");
+            totalUnfilteredQueryString = stb.toString();
         }
         return totalUnfilteredQueryString;
     }

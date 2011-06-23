@@ -32,8 +32,8 @@ public class Mention extends Filter {
         return ""+getDescription()+"\n"+
 "        <br /><input type=\"radio\" name=\"F"+getId()+"\" value=\""+BOTH+"\" checked=\"checked\" />&nbsp;no filter\n"+
 "              <input type=\"radio\" name=\"F"+getId()+"\" value=\"0\" />&nbsp;No Mention\n"+
-"              <input type=\"radio\" name=\"F"+getId()+"\" value=\"2\" />&nbsp;Mention\n"+
-"              <input type=\"radio\" name=\"F"+getId()+"\" value=\"1\" />&nbsp;Significant Mention";
+"              <input type=\"radio\" name=\"F"+getId()+"\" value=\"2\" />&nbsp;Mention\n";
+        
     }
 
     public void setFilterParameterValues(HttpServletRequest request) {
