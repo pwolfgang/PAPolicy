@@ -174,8 +174,12 @@ public class Column {
 
     public Number getPercentChange(int minYear, int maxYear) {
         Number currentValue = table.getValueForRange(valueMap.subMap(minYear, maxYear+1));
-        if (currentValue == null || prevValue == null) {
+        if (currentValue == null) {
             prevValue = null;
+            return null;
+        }
+        if (prevValue == null) {
+            prevValue = currentValue;
             return null;
         }
         Double pv = prevValue.doubleValue();
