@@ -29,8 +29,8 @@ public class IndividualBillDrilldownController extends AbstractController{
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
             HttpServletResponse response) {
         String billId = request.getParameter("billId");
-        Table billsTable = AbstractTable.getTable("5", ' ', request, jdbcTemplate)[0];
-        String initialQuery = "SELECT * FROM " + billsTable.getTableName() + " WHERE BillID='" + billId + "'";
+        Table billsTable = AbstractTable.getTable("3", ' ', request, jdbcTemplate)[0];
+        String initialQuery = "SELECT * FROM " + billsTable.getTableName() + " WHERE ID='" + billId + "'";
         String drillDownURL = billsTable.createDrillDownURL(initialQuery);
         try {
             response.sendRedirect(drillDownURL);
