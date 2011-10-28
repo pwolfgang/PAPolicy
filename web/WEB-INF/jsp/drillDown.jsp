@@ -47,12 +47,7 @@
                                             <%
                                                 if (obj != null) {
                                                     String txt = obj.toString();
-                                                    if (txt.startsWith("#") && txt.endsWith("#")) {
-                                                        txt = txt.substring(1, txt.length() - 1);
-                                                        %><a href="<%=txt%>" target="_blank"><%=txt%></a><%
-                                                    } else {
-                                                        %><%=txt%><%
-                                                    }
+                                                    %><%=edu.temple.cla.papolicy.Utility.reformatHyperlink(txt)%><%
                                                 } else {
                                                     %>&nbsp;<%
                                                 }

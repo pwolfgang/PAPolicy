@@ -30,4 +30,37 @@ public class UtilityTest {
         assertEquals(theString, uncompressed);
     }
 
+    /**
+     * Test of reformatHyperlink method, of class Utility.
+     */
+    @Test
+    public void hyperlinkWithNoSharpChars() {
+        String hyperlink = "ordinary text";
+        String expResult = "ordinary text";
+        String result = Utility.reformatHyperlink(hyperlink);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of reformatHyperlink method, of class Utility.
+     */
+    @Test
+    public void hyperlinkWithSharpChars() {
+        String hyperlink = "#dummyLink#";
+        String expResult = "<a href=\"dummyLink\">dummyLink</a>";
+        String result = Utility.reformatHyperlink(hyperlink);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of reformatHyperlink method, of class Utility.
+     */
+    @Test
+    public void hyperlinkWithSharpCharsAndText() {
+        String hyperlink = "dummyText#dummyLink#";
+        String expResult = "<a href=\"dummyLink\">dummyText</a>";
+        String result = Utility.reformatHyperlink(hyperlink);
+        assertEquals(expResult, result);
+    }
+    
 }
