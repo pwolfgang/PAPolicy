@@ -136,6 +136,8 @@ public class Download extends AbstractController{
             logger.error("Error reading table", ex);
         } catch (IOException ioex) {
             logger.error(ioex);
+        } catch (Throwable ex) {
+            logger.error("Unexpected fatal condition", ex);
         } finally {
             if (sheet != null) sheet.close();
             if (wb != null) wb.close();
