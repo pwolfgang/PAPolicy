@@ -61,6 +61,11 @@ public class BudgetTable extends AbstractTable {
         }
     }
 
+    @Override
+    public String getDownloadTitle() {
+        return "Total Spending Un-Adjusted Dollars (×1,000,000)";
+    }
+
     public String getAllocatedTotalQueryString() {
         return "SELECT " + getYearColumn() +
             ", Sum(BudgetTable.TheValue*Crosswalk.PercentMatch/100)/1000 AS " +
@@ -153,6 +158,7 @@ public class BudgetTable extends AbstractTable {
         }
     }
 
+
     @Override
     public List<YearValue> getYearValueList(SimpleJdbcTemplate jdbcTemplate, String query) {
         ParameterizedRowMapper<YearValue> mapper = new YearValueMapper();
@@ -189,5 +195,29 @@ public class BudgetTable extends AbstractTable {
     @Override
     public BudgetTable clone() {
         return (BudgetTable)super.clone();
+    }
+
+    /**
+     * Method to convert the SQL query that gets the count to a
+     * SQL query that gets all columns for download.
+     * For the BudgetTable only selected columns are extracted from
+     * the join that creates the allocated budget data.
+     * @param query The query that gets the count.
+     * @return Modified query that selects all columns.
+     */
+    @Override
+    public String createDownloadQuery(String query) {
+        int posFrom = query.indexOf("FROM");
+        StringBuilder stb = new StringBuilder("SELECT "
+                + getYearColumn() + ", MajorCode.Code, Crosswalk.FC, "
+                + "Crosswalk.OC, Crosswalk.PercentMatch, "
+                + "BudgetTable.TheValue/1000 as TotalAmount, "
+                + "BudgetTable.TheValue*Crosswalk.PercentMatch/100000 as AllocatedAmount ");
+        stb.append(query.substring(posFrom));
+        int posGroup = stb.indexOf("GROUP BY");
+        int posOrder = stb.indexOf("ORDER BY");
+        stb.delete(posGroup, posOrder);
+        stb.append(" , MajorCode.Code, Crosswalk.FC, Crosswalk.OC");
+        return stb.toString();
     }
 }

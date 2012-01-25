@@ -194,6 +194,11 @@ public abstract class AbstractTable implements Table {
         return stb.toString();
     }
 
+    @Override
+    public String getDownloadTitle() {
+        return toString();
+    }
+
     public StringBuilder getFilterQualifierString() {
         StringBuilder stb = new StringBuilder();
         ArrayList<String> filterQualifiers = new ArrayList<String>();
@@ -540,4 +545,5 @@ public abstract class AbstractTable implements Table {
             throw new Error("CloneNotSupportedException should never be thrown");
         }
     }
+
 }

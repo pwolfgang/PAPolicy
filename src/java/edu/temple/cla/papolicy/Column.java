@@ -61,6 +61,18 @@ public class Column {
         }
     }
 
+    public String getDownloadTitle() {
+        if (freeText == null && topic != null) {
+            return topic.getDescription() + " " + table.getDownloadTitle();
+        } else if (freeText != null && topic != null) {
+            return table.getDownloadTitle() + " about " + freeText + " in " + topic.getDescription();
+        } else if (freeText != null && topic == null) {
+            return table.getDownloadTitle() + " about " + freeText;
+        } else {
+            return table.getDownloadTitle();
+        }
+    }
+
     public String getFilteredTotalQueryString() {
         if (filteredTotalQueryString == null) {
             filteredTotalQueryString = table.getFilteredTotalQueryString();

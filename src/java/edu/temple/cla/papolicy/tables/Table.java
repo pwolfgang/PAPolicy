@@ -217,5 +217,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
      String getNoteColumn();
      
      public Table clone();
+
+     String getDownloadTitle();
      
 }
