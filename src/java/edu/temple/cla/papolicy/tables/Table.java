@@ -6,6 +6,7 @@
 package edu.temple.cla.papolicy.tables;
 
 import edu.temple.cla.papolicy.Units;
+import edu.temple.cla.papolicy.YearRange;
 import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.filters.Filter;
@@ -219,5 +220,8 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
      public Table clone();
 
      String getDownloadTitle();
-     
+
+     String getDownloadURL(String downloadTitle, String downloadQuery,
+             YearRange yearRange);
+
 }

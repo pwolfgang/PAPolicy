@@ -71,24 +71,24 @@ public class DisplayFormController extends AbstractController {
                 if (table.isTopicSearchable()) {
                     if (table.isMajorOnly()) {
                         for (Topic topic : topics.getMajorTopics().values()) {
-                            columns.add(new Column(table, topic, null, showResults));
+                            columns.add(new Column(table, topic, null, showResults, yearRange));
                             if (fFreeText && fRange && table.getTextColumn() != null) {
-                                columns.add(new Column(table, topic, freeText, showResults));
+                                columns.add(new Column(table, topic, freeText, showResults, yearRange));
                             }
                         }
                     } else {
                         for (Topic topic : topics.getSubTopics().values()) {
-                            columns.add(new Column(table, topic, null, showResults));
+                            columns.add(new Column(table, topic, null, showResults, yearRange));
                             if (fFreeText && fRange && table.getTextColumn() != null) {
-                                columns.add(new Column(table, topic, freeText, showResults));
+                                columns.add(new Column(table, topic, freeText, showResults, yearRange));
                             }
                         }
                     }
                 } else {
-                    columns.add(new Column(table, null, null, showResults));
+                    columns.add(new Column(table, null, null, showResults, yearRange));
                 }
                 if (fFreeText && !fRange && table.getTextColumn() != null) {
-                    columns.add(new Column(table, null, freeText, showResults));
+                    columns.add(new Column(table, null, freeText, showResults, yearRange));
                 }
             }
             Map<Units, ArrayList<Column>> columnMap = new HashMap<Units, ArrayList<Column>>();

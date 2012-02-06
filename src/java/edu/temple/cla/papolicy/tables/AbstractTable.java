@@ -7,17 +7,21 @@ package edu.temple.cla.papolicy.tables;
 
 import edu.temple.cla.papolicy.Units;
 import edu.temple.cla.papolicy.Utility;
+import edu.temple.cla.papolicy.YearRange;
 import edu.temple.cla.papolicy.dao.FilterMapper;
 import edu.temple.cla.papolicy.dao.TableMapper;
 import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.dao.YearValueMapper;
 import edu.temple.cla.papolicy.filters.Filter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
@@ -27,6 +31,8 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
  * @author Paul Wolfgang
  */
 public abstract class AbstractTable implements Table {
+    private static Logger logger = Logger.getLogger(AbstractTable.class);
+
     private int id;
     private String tableName;
     private String tableTitle;
@@ -544,6 +550,26 @@ public abstract class AbstractTable implements Table {
         } catch (CloneNotSupportedException ex) {
             throw new Error("CloneNotSupportedException should never be thrown");
         }
+    }
+
+    public String getDownloadURL(String downloadTitle, String downloadQuery, YearRange yearRange ) {
+        StringBuilder stb = new StringBuilder("<a href=\"");
+        StringBuilder stb2 = new StringBuilder(downloadTitle);
+        stb2.append(" ");
+        stb2.append(yearRange.getMinYear());
+        stb2.append("_");
+        stb2.append(yearRange.getMaxYear());
+        try {
+            stb.append(URLEncoder.encode(stb2.toString(), "UTF-8"));
+        } catch (UnsupportedEncodingException ex) {
+            logger.error(ex);
+        }
+        stb.append(".xlsx?query=");
+        stb.append(downloadQuery);
+        stb.append("\">");
+        stb.append(getDownloadTitle());
+        stb.append("</a><br/>");
+        return stb.toString();
     }
 
 }

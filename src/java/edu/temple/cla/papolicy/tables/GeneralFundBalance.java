@@ -49,9 +49,32 @@ public class GeneralFundBalance extends BudgetTable {
     @Override
     public String toString() {
         if (includeRainyDay)
-            return "General Fund Balance Including Rainy Day Fund";
+            return "General Fund Balance Including Rainy Day Fund "
+                    + getAxisTitle(getUnits(null));
         else
-            return "General Fund Balance";
+            return "General Fund Balance "+ getAxisTitle(getUnits(null));
+    }
+
+    @Override
+    public String getDownloadTitle() {
+        return "General Fund Balance Un-Adjusted Dollars (×1,000,000)";
+    }
+
+     /**
+     * Method to convert the SQL query that gets the count to a
+     * SQL query that gets all columns for download
+     * @param query The query that gets the count.
+     * @return Modified query that selects all columns.
+     */
+    @Override
+    public String createDownloadQuery(String query) {
+        int posFrom = query.indexOf("FROM");
+        StringBuilder stb = new StringBuilder("SELECT *");
+        stb.append(query.substring(posFrom));
+        int posGroup = stb.indexOf("GROUP BY");
+        int posOrder = stb.indexOf("ORDER BY");
+        stb.delete(posGroup, posOrder);
+        return stb.toString();
     }
 
     @Override

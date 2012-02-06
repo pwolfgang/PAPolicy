@@ -7,6 +7,8 @@ package edu.temple.cla.papolicy;
 import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.tables.Table;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,6 +16,7 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
+import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 /**
@@ -21,6 +24,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
  * @author Paul Wolfgang
  */
 public class Column {
+    private static Logger logger = Logger.getLogger(Column.class);
 
     private Table table;
     private Topic topic;
@@ -38,14 +42,16 @@ public class Column {
     private String downloadQuery = null;
     private Number minValue = null;
     private Number maxValue = null;
+    private YearRange yearRange = null;
 
     protected Column() {} // used for unit test purposes only
 
-    public Column(Table table, Topic topic, String freeText, String showResults) {
+    public Column(Table table, Topic topic, String freeText, String showResults, YearRange yearRange) {
         this.table = table;
         this.topic = topic;
         this.freeText = freeText;
         units = table.getUnits(showResults);
+        this.yearRange = yearRange;
     }
 
     @Override
@@ -71,6 +77,10 @@ public class Column {
         } else {
             return table.getDownloadTitle();
         }
+    }
+
+    public String getDownloadURL() {
+        return table.getDownloadURL(getDownloadTitle(), getDownloadQuery(), yearRange);
     }
 
     public String getFilteredTotalQueryString() {
