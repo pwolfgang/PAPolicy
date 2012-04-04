@@ -105,4 +105,23 @@ public class PublicOpinionTable extends StandardTable {
         return (PublicOpinionTable) super.clone();
     }
 
+
+    /**
+     * Method to return the value to be displayed in the results table.
+     * This is a special case for the PublicOpinion table to append an
+     * asterics after the value for the years 2008 and 2009
+     * @param key The string that contains the year(s)
+     * @param retValue The value for the year as a Number
+     * @param units The units
+     * @return The string to be displayed.
+     */
+    @Override
+    public String getDisplayedValue(String key, Number retValue, Units units) {
+        String result = super.getDisplayedValue(key, retValue, units);
+        if (key.contains("2008") || key.contains("2009")) {
+            result = "<span title=\"Most Important Problem data from 2008 and 2009 were constructed from national Gallup polls using only the responses of PA residents. Please see the User Guide for more information.\">"+ result + "*</span>";
+        }
+        return result;
+    }
+
 }

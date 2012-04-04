@@ -224,4 +224,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
      String getDownloadURL(String downloadTitle, String downloadQuery,
              YearRange yearRange);
 
+     String getDisplayedValue(String key, Number value, Units units);
+
 }

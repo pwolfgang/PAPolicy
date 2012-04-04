@@ -567,9 +567,35 @@ public abstract class AbstractTable implements Table {
         stb.append(".xlsx?query=");
         stb.append(downloadQuery);
         stb.append("\">");
-        stb.append(getDownloadTitle());
+        stb.append(downloadTitle);
         stb.append("</a><br/>");
         return stb.toString();
+    }
+
+    public String getDisplayedValue(String key, Number retValue, Units units) {
+        String result;
+        switch (units) {
+            case COUNT : 
+                result = (retValue != null ? retValue.toString() : "null");
+                break;
+            case DOLLARS :
+                result = (retValue != null ?
+                    String.format("$%,.0f", retValue.doubleValue()) : "null");
+                break;
+            case PERCENT:
+            case PERCENT_CHANGE:
+            case PERCENT_OF_TOTAL:
+            case PERCENT_OF_FILTERED:
+                result =  (retValue != null ?
+                    String.format("%.1f%%", retValue.doubleValue()) : "null");
+                break;
+            case RANK:
+                result = (retValue != null ?
+                    String.format("%.1f", retValue.doubleValue()) : "null");
+                break;
+            default: result = (retValue != null ? retValue.toString() : "null");
+        }
+        return result;
     }
 
 }

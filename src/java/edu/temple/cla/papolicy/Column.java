@@ -7,8 +7,6 @@ package edu.temple.cla.papolicy;
 import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.tables.Table;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -271,21 +269,7 @@ public class Column {
 
     public String getDisplayedValueString(String key) {
         Number retValue = getDisplayedValue(key);
-        switch (getUnits()) {
-            case COUNT : return retValue != null ? retValue.toString() : "null";
-            case DOLLARS : return retValue != null ?
-                String.format("$%,.0f", retValue.doubleValue()) : "null";
-            case PERCENT:
-            case PERCENT_CHANGE:
-            case PERCENT_OF_TOTAL:
-            case PERCENT_OF_FILTERED:
-                return retValue != null ?
-                    String.format("%.1f%%", retValue.doubleValue()) : "null";
-            case RANK:
-                return retValue != null ?
-                    String.format("%.1f", retValue.doubleValue()) : "null";
-            default: return retValue != null ? retValue.toString() : "null";
-        }
+        return getTable().getDisplayedValue(key, retValue, getUnits());
     }
 
     public String getDrillDown(String key) {
