@@ -1,14 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package edu.temple.cla.papolicy.filters;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * A binary filter presents the choice of either including or excluding 
+ * a filter. It also has the option to ignore, which is the default.
  * @author Paul Wolfgang
  */
 public class BinaryFilter extends Filter {
