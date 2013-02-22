@@ -61,7 +61,23 @@ public class BinaryFilterTest {
     }
 
     @Test
-    public void testGetFilterQualifier() {
+    public void testGetFilterQualifierBoth() {
+        setParameterValue("587");
+        String expected = "";
+        assertEquals(expected, filter.getFilterQualifier());
+    }
+    @Test
+    public void testGetFilterQualifierInclude() {
+        setParameterValue("1");
+        String expected = "Include Signed By Governor";
+        assertEquals(expected, filter.getFilterQualifier());
+    }
+    
+    @Test
+    public void testGetFilterQualifierExclude() {
+        setParameterValue("0");
+        String expected = "Exclude Signed By Governor";
+        assertEquals(expected, filter.getFilterQualifier());
     }
 
     private void setParameterValue(final String value) {
