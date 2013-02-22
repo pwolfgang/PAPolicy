@@ -31,10 +31,12 @@ public class BinaryFilterTest {
 
     @Test
     public void testGetFilterFormInput() {
-    }
-
-    @Test
-    public void testSetFilterParameterValues() {
+        String expected = "\n"
+                + "            Signed By Governor\n"
+                + "            <br /><input type=\"radio\" name=\"F414\" value=\"587\" checked=\"checked\" />&nbsp no filter\n"
+                + "                  <input type=\"radio\" name=\"F414\" value=\"0\" />&nbsp Exclude\n"
+                + "                  <input type=\"radio\" name=\"F414\" value=\"1\" />&nbsp Include";
+        assertEquals(expected, filter.getFilterFormInput());
     }
 
     @Test

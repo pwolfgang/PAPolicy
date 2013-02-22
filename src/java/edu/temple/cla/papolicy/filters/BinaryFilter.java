@@ -1,5 +1,8 @@
 package edu.temple.cla.papolicy.filters;
 
+import edu.temple.cla.papolicy.queryBuilder.Comparison;
+import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
+import edu.temple.cla.papolicy.queryBuilder.Expression;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -15,6 +18,7 @@ public class BinaryFilter extends Filter {
 
     private String filterQueryString;
     private String filterQualifier;
+    private Expression filterQuery;
 
     public BinaryFilter(int id, int tableId, String description, 
             String columnName, String tableReference, String additionalParam) {
@@ -40,18 +44,18 @@ public class BinaryFilter extends Filter {
     }
 
     public String getFilterQueryString() {
-        return filterQueryString;
+        return filterQuery.toString();
     }
 
     private void buildFilterStrings() {
         if (parameterValue.equals(BOTH)) {
-            filterQueryString = "";
+            filterQuery = new EmptyExpression();
             filterQualifier = "";
         } else if (parameterValue.equals("1")) {
-            filterQueryString = getColumnName() + "<>0";
+            filterQuery = new Comparison(getColumnName(), "<>", "0");
             filterQualifier = "Include " + getDescription();
         } else {
-            filterQueryString = getColumnName() + "=0";
+            filterQuery = new Comparison(getColumnName(), "=", "0");
             filterQualifier = "Exclude " + getDescription();
         }
     }
