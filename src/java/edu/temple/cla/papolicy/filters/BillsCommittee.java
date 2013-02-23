@@ -78,8 +78,10 @@ public class BillsCommittee extends Filter {
             filterQualifier = "";
         } else {
             StringBuilder stb = new StringBuilder();
-            stb.append("(");
             String ctyCode = parameterValue;
+            if (!"1".equals(primaryValue)) {
+                stb.append("(");
+            }
             stb.append("_");
             stb.append(ctyCode);
             stb.append("P<>0");
@@ -87,8 +89,8 @@ public class BillsCommittee extends Filter {
                 stb.append(" OR _");
                 stb.append(ctyCode);
                 stb.append("O<>0");
+                stb.append(")");
             }
-            stb.append(")");
             filterQueryString = stb.toString();
             ParameterizedRowMapper<CommitteeAlias> itemMapper = new CommitteeAliasMapper();
             String query = "SELECT * FROM " + getTableReference()
