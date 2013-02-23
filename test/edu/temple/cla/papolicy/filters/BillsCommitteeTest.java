@@ -62,7 +62,7 @@ public class BillsCommitteeTest {
     public void testGetFilterQueryStringPrimary() {
         setParameterValue("101", "1");
         String result = filter.getFilterQueryString();
-        assertEquals("(_101P<>0)", result);
+        assertEquals("_101P<>0", result);
     }
 
     @Test
