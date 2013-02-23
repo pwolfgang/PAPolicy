@@ -27,7 +27,6 @@ public class BillsCommittee extends Filter {
     private String primaryName;
     private String parameterValue;
     private String primaryValue;
-    private String filterQueryString;
     private String filterQualifier;
     private Expression filterQuery;
     private String chamberNumber;

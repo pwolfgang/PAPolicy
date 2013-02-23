@@ -15,8 +15,6 @@ public class BinaryFilter extends Filter {
     private String parameterName;
     private String parameterValue;
     private static final String BOTH = "587";
-
-    private String filterQueryString;
     private String filterQualifier;
     private Expression filterQuery;
 
