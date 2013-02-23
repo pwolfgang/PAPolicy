@@ -7,6 +7,10 @@ package edu.temple.cla.papolicy.filters;
 
 import edu.temple.cla.papolicy.dao.CommitteeAliasMapper;
 import edu.temple.cla.papolicy.dao.CommitteeAlias;
+import edu.temple.cla.papolicy.queryBuilder.Comparison;
+import edu.temple.cla.papolicy.queryBuilder.Disjunction;
+import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
+import edu.temple.cla.papolicy.queryBuilder.Expression;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -25,6 +29,7 @@ public class BillsCommittee extends Filter {
     private String primaryValue;
     private String filterQueryString;
     private String filterQualifier;
+    private Expression filterQuery;
     private String chamberNumber;
 
     public BillsCommittee(int id, int tableId, String description, 
@@ -69,29 +74,25 @@ public class BillsCommittee extends Filter {
     }
 
     public String getFilterQueryString() {
-        return filterQueryString;
+        return filterQuery.toString();
     }
 
     void buildFilterStrings() {
         if (parameterValue.equals("ALL")) {
-            filterQueryString = "";
+            filterQuery = new EmptyExpression();
             filterQualifier = "";
         } else {
             StringBuilder stb = new StringBuilder();
             String ctyCode = parameterValue;
-            if (!"1".equals(primaryValue)) {
-                stb.append("(");
+            Expression primary = new Comparison("_" + ctyCode + "P", "<>", "0");
+            if ("1".equals(primaryValue)) {
+                filterQuery = primary;
+            } else {
+                Disjunction disjunction = new Disjunction();
+                disjunction.addTerm(primary);
+                disjunction.addTerm(new Comparison("_" + ctyCode + "O", "<>", "0"));
+                filterQuery = disjunction;
             }
-            stb.append("_");
-            stb.append(ctyCode);
-            stb.append("P<>0");
-            if (!"1".equals(primaryValue)) {
-                stb.append(" OR _");
-                stb.append(ctyCode);
-                stb.append("O<>0");
-                stb.append(")");
-            }
-            filterQueryString = stb.toString();
             ParameterizedRowMapper<CommitteeAlias> itemMapper = new CommitteeAliasMapper();
             String query = "SELECT * FROM " + getTableReference()
                     + " WHERE CtyCode=\'" + ctyCode + "\'";
