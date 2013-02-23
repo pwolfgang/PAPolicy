@@ -33,4 +33,11 @@ public class CommitteeAliasMapper implements ParameterizedRowMapper<CommitteeAli
         }
         return item;
     }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (o == null) return false;
+        return (o.getClass() == this.getClass());
+    }
 }
