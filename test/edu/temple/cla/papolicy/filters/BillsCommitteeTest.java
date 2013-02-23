@@ -52,7 +52,6 @@ public class BillsCommitteeTest {
 
     @Test
     public void testGetFilterFormInput() {
-        System.out.println(filter.getFilterFormInput());
         String expected = " Referred to House Committee\n" +
 "<input name=\"hprimary\" value=\"1\" type=\"checkbox\"/> Primary Only\n" +
 "<br /><select name=\"F401\">\n" +
