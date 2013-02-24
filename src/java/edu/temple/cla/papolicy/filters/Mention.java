@@ -5,6 +5,9 @@
 
 package edu.temple.cla.papolicy.filters;
 
+import edu.temple.cla.papolicy.queryBuilder.Comparison;
+import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
+import edu.temple.cla.papolicy.queryBuilder.Expression;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -17,7 +20,7 @@ public class Mention extends Filter {
     private String parameterName;
     private String parameterValue;
 
-    private String filterQueryString;
+    private Expression filterQuery;
     private String filterQualifier;
 
     public Mention(int id, int tableId, String description,
@@ -42,18 +45,18 @@ public class Mention extends Filter {
     }
 
     public String getFilterQueryString() {
-        return filterQueryString;
+        return filterQuery.toString();
     }
 
     private void buildFilterStrings() {
         if (BOTH.equals(parameterValue)) {
-            filterQueryString = "";
+            filterQuery = new EmptyExpression();
             filterQualifier = "";
         } else if ("0".equals(parameterValue)) { // No Mention
-            filterQueryString = getColumnName() + "=0";
+            filterQuery = new Comparison(getColumnName(), "=", "0");
             filterQualifier = "No Mention of " + getDescription();
         } else { // Mention includes signficant mention
-            filterQueryString = getColumnName() + "<>0";
+            filterQuery = new Comparison(getColumnName(), "<>", "0");
             filterQualifier = "Mention of " + getDescription();
         }
     }
