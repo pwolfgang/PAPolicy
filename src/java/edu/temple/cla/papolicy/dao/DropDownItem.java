@@ -13,6 +13,13 @@ public class DropDownItem {
 
     private int ID;
     private String description;
+    
+    public DropDownItem() {};
+    
+    public DropDownItem(int ID, String description) {
+        this.ID = ID;
+        this.description = description;
+    }
 
     /**
      * @return the ID

@@ -116,7 +116,7 @@ public class MultiValuedFilter extends Filter {
                     qualifierBuilder.append(item.getDescription());
                     qualifierBuilder.append(joinOperator);
                 }
-                qualifierBuilder.delete(qualifierBuilder.length()-4, qualifierBuilder.length());
+                qualifierBuilder.delete(qualifierBuilder.length()-joinOperator.length(), qualifierBuilder.length());
                 filterQualifier = qualifierBuilder.toString();
             }
         }
