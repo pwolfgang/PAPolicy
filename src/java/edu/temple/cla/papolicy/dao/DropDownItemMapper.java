@@ -30,4 +30,12 @@ public class DropDownItemMapper implements ParameterizedRowMapper<DropDownItem> 
         }
         return item;
     }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        return this.getClass() == o.getClass();
+    }
+    
 }

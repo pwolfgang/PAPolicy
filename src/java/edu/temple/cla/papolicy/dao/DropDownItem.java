@@ -42,6 +42,4 @@ public class DropDownItem {
         this.description = description;
     }
 
-
-
 }
