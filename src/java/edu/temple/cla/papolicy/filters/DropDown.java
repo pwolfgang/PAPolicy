@@ -7,6 +7,9 @@ package edu.temple.cla.papolicy.filters;
 
 import edu.temple.cla.papolicy.dao.DropDownItemMapper;
 import edu.temple.cla.papolicy.dao.DropDownItem;
+import edu.temple.cla.papolicy.queryBuilder.Comparison;
+import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
+import edu.temple.cla.papolicy.queryBuilder.Expression;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
@@ -20,7 +23,7 @@ public class DropDown extends Filter {
     private String parameterName;
     private String parameterValue;
 
-    private String filterQueryString;
+    private Expression filterQuery;
     private String filterQualifier;
 
     public DropDown(int id, int tableId, String description,
@@ -54,15 +57,15 @@ public class DropDown extends Filter {
     }
 
     public String getFilterQueryString() {
-        return filterQueryString;
+        return filterQuery.toString();
     }
 
     private void buildFilterStrings() {
         if ("-1".equals(parameterValue)){
-            filterQueryString = "";
+            filterQuery = new EmptyExpression();
             filterQualifier = "";
         } else {
-            filterQueryString = getColumnName() + "=\'" + parameterValue + "\'";
+            filterQuery = new Comparison(getColumnName(), "=", "\'" + parameterValue + "\'");
             String query = "SELECT ID, Description FROM " + getTableReference()
                 + " WHERE ID=" + parameterValue;
             ParameterizedRowMapper<DropDownItem> itemMapper = new DropDownItemMapper();
@@ -70,8 +73,7 @@ public class DropDown extends Filter {
             if (itemList.size() == 1) {
                 filterQualifier = getDescription() + " is " + itemList.get(0).getDescription();
             } else {
-                filterQueryString = "";
-                filterQualifier = "";
+                filterQualifier = "Undefined";
             }
         }
     }
