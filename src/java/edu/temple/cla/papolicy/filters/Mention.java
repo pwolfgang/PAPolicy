@@ -52,9 +52,6 @@ public class Mention extends Filter {
         } else if ("0".equals(parameterValue)) { // No Mention
             filterQueryString = getColumnName() + "=0";
             filterQualifier = "No Mention of " + getDescription();
-        } else if ("1".equals(parameterValue)) { // Significant Mention
-            filterQueryString = getColumnName() + "=1";
-            filterQualifier = "Significant Mention of " + getDescription();
         } else { // Mention includes signficant mention
             filterQueryString = getColumnName() + "<>0";
             filterQualifier = "Mention of " + getDescription();
