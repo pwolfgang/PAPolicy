@@ -7,6 +7,9 @@ package edu.temple.cla.papolicy.filters;
 
 import edu.temple.cla.papolicy.dao.CommitteeName;
 import edu.temple.cla.papolicy.dao.CommitteeNameMapper;
+import edu.temple.cla.papolicy.queryBuilder.Comparison;
+import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
+import edu.temple.cla.papolicy.queryBuilder.Expression;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
@@ -18,6 +21,8 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 public class HouseHearingsCommittee extends Filter {
 
     private String ctyCode;
+    private Expression filterQuery;
+    private String filterQuallifierString;
 
     public HouseHearingsCommittee(int id, int tableId, String description,
             String columnName, String tableReference, String additionalParam) {
@@ -49,26 +54,33 @@ public class HouseHearingsCommittee extends Filter {
 
     public void setFilterParameterValues(HttpServletRequest request) {
         ctyCode = request.getParameter("F"+getId());
+        if (ctyCode != null && !ctyCode.equals("ALL")) {
+            filterQuery = new Comparison("CtyCode", "=", ctyCode);
+        } else {
+            filterQuery = new EmptyExpression();
+        }
+        setFilterQualifier();
     }
 
     public String getFilterQueryString() {
-        if (ctyCode != null && !ctyCode.equals("ALL")) {
-            return "CtyCode=" + ctyCode;
-        } else {
-            return "";
-        }
+        return filterQuery.toString();
     }
-
-    public String getFilterQualifier() {
+    
+    public void setFilterQualifier() {
         if (ctyCode != null && !ctyCode.equals("ALL")) {
             ParameterizedRowMapper<CommitteeName> itemMapper = new CommitteeNameMapper();
             String query = "SELECT * FROM "+getTableReference()+" WHERE CtyCode=" + ctyCode +";";
             List<CommitteeName> items = getJdbcTemplate().query(query, itemMapper);
             if (!items.isEmpty()) {
-                return ("Committee: " + items.get(0).getName());
+                filterQuallifierString = ("Committee: " + items.get(0).getName());
             }
+        } else {
+            filterQuallifierString = "";
         }
-        return "";
+    }
+    
+    public String getFilterQualifier() {
+        return filterQuallifierString;
     }
 
 }
