@@ -87,7 +87,9 @@ public class MultiValuedFilter extends Filter {
             }
             StringBuilder qstb = new StringBuilder();
             StringBuilder vstb = new StringBuilder();
-            qstb.append("(");
+            if (valuesParameterValues.length > 1) {
+                qstb.append("(");
+            }
             vstb.append("(");
             for (String value : valuesParameterValues) {
                 qstb.append(getColumnName());
@@ -99,7 +101,9 @@ public class MultiValuedFilter extends Filter {
             }
             qstb.delete(qstb.length()-joinOperator.length(), qstb.length());
             vstb.delete(vstb.length()-2, vstb.length());
-            qstb.append(")");
+            if (valuesParameterValues.length > 1) {
+                qstb.append(")");
+            }
             vstb.append(")");
             filterQueryString = qstb.toString();
             String query = "SELECT ID, Description FROM " + getTableReference()
