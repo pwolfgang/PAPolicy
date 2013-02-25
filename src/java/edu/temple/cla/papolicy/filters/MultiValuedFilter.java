@@ -7,6 +7,12 @@ package edu.temple.cla.papolicy.filters;
 
 import edu.temple.cla.papolicy.dao.DropDownItemMapper;
 import edu.temple.cla.papolicy.dao.DropDownItem;
+import edu.temple.cla.papolicy.queryBuilder.Comparison;
+import edu.temple.cla.papolicy.queryBuilder.Composite;
+import edu.temple.cla.papolicy.queryBuilder.Conjunction;
+import edu.temple.cla.papolicy.queryBuilder.Disjunction;
+import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
+import edu.temple.cla.papolicy.queryBuilder.Expression;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
@@ -23,7 +29,7 @@ public class MultiValuedFilter extends Filter {
     private String selectParameterValue;
     private String[] valuesParameterValues;
 
-    private String filterQueryString;
+    private Expression filterQuery;
     private String filterQualifier;
     
     public MultiValuedFilter(int id, int tableId, String description,
@@ -65,14 +71,15 @@ public class MultiValuedFilter extends Filter {
     }
 
     public String getFilterQueryString() {
-        return filterQueryString;
+        return filterQuery.toString();
     }
 
     private void buildFilterStrings() {
         if (BOTH.equals(selectParameterValue)) {
-            filterQueryString = "";
+            filterQuery = new EmptyExpression();
             filterQualifier = "";
         } else {
+            Composite composite;
             String comparisonOperator;
             String joinOperator;
             String qualifier;
@@ -80,32 +87,23 @@ public class MultiValuedFilter extends Filter {
                 comparisonOperator = "<>";
                 joinOperator = " AND ";
                 qualifier = "Exclude ";
+                composite = new Conjunction();
             } else {
                 comparisonOperator = "=";
                 joinOperator = " OR ";
                 qualifier = "Include ";
+                composite = new Disjunction();
             }
-            StringBuilder qstb = new StringBuilder();
             StringBuilder vstb = new StringBuilder();
-            if (valuesParameterValues.length > 1) {
-                qstb.append("(");
-            }
             vstb.append("(");
             for (String value : valuesParameterValues) {
-                qstb.append(getColumnName());
-                qstb.append(comparisonOperator);
-                qstb.append(value);
+                composite.addTerm(new Comparison(getColumnName(), comparisonOperator, value));
                 vstb.append(value);
-                qstb.append(joinOperator);
                 vstb.append(", ");
             }
-            qstb.delete(qstb.length()-joinOperator.length(), qstb.length());
             vstb.delete(vstb.length()-2, vstb.length());
-            if (valuesParameterValues.length > 1) {
-                qstb.append(")");
-            }
             vstb.append(")");
-            filterQueryString = qstb.toString();
+            filterQuery = composite;
             String query = "SELECT ID, Description FROM " + getTableReference()
                     + " WHERE ID IN " + vstb;
             String queryForAll = "SELECT ID, Description FROM " + getTableReference();
