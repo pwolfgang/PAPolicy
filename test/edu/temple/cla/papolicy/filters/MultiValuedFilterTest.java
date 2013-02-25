@@ -88,7 +88,7 @@ public class MultiValuedFilterTest {
     @Test
     public void testGetFilterQueryStringInclude2() {
         setParameterValues("1", new String[]{"2"});
-        String expected = "(Con_Ammend=2)";
+        String expected = "Con_Ammend=2";
         assertEquals(expected, filter.getFilterQueryString());
     }
     
