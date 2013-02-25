@@ -15,7 +15,14 @@ public class Deflator {
     private double GDP;
     private double priceIndex;
 
-
+    public Deflator(int year, double GDP, double priceIndex) {
+        this.year = year;
+        this.GDP = GDP;
+        this.priceIndex = priceIndex;
+    }
+    
+    public Deflator() {}
+    
     /**
      * @return the year
      */

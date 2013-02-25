@@ -70,11 +70,11 @@ public class BudgetFilters extends Filter {
     }
 
     public String getFilterQueryString() {
-        return null;
+        return "";
     }
 
     public String getFilterQualifier() {
-        return null;
+        return "";
     }
 
     public String getDisp() { return dispParameterValue;}
