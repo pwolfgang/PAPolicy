@@ -5,6 +5,9 @@
 
 package edu.temple.cla.papolicy.filters;
 
+import edu.temple.cla.papolicy.queryBuilder.Comparison;
+import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
+import edu.temple.cla.papolicy.queryBuilder.Expression;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -16,7 +19,7 @@ public class Party extends Filter implements Cloneable {
     private String parameterName;
     private String parameterValue;
 
-    private String filterQueryString;
+    private Expression filterQuery;
     private String filterQualifier;
 
     public Party(int id, int tableId, String description,
@@ -41,18 +44,18 @@ public class Party extends Filter implements Cloneable {
     }
 
     public String getFilterQueryString() {
-        return filterQueryString;
+        return filterQuery.toString();
     }
 
     private void buildFilterStrings() {
         if ("NOFILTER".equals(parameterValue)) {
-            filterQueryString = "";
+            filterQuery = new EmptyExpression();
             filterQualifier = "";
         } else if ("0".equals(parameterValue)) { // Republican
-            filterQueryString = getColumnName() + "=0";
+            filterQuery = new Comparison(getColumnName(), "=", "0");
             filterQualifier = "Sponsored by a Republican";
         } else if ("1".equals(parameterValue)) { // Democrat
-            filterQueryString = getColumnName() + "=1";
+            filterQuery = new Comparison(getColumnName(), "=", "1");
             filterQualifier = "Sponsored by a Democrat";
         }
     }
