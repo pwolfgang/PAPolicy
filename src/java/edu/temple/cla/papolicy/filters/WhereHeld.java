@@ -5,6 +5,9 @@
 
 package edu.temple.cla.papolicy.filters;
 
+import edu.temple.cla.papolicy.queryBuilder.Comparison;
+import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
+import edu.temple.cla.papolicy.queryBuilder.Expression;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -17,7 +20,7 @@ public class WhereHeld extends Filter {
     private String parameterName;
     private String parameterValue;
 
-    private String filterQueryString;
+    private Expression filterQuery;
     private String filterQualifier;
 
     public WhereHeld(int id, int tableId, String description,
@@ -41,18 +44,18 @@ public void setFilterParameterValues(HttpServletRequest request) {
     }
 
     public String getFilterQueryString() {
-        return filterQueryString;
+        return filterQuery.toString();
     }
 
     private void buildFilterStrings() {
         if (BOTH.equals(parameterValue)) {
-            filterQueryString = "";
+            filterQuery = new EmptyExpression();
             filterQualifier = "";
         } else if ("0".equals(parameterValue)) {
-            filterQueryString = getColumnName() + "=\'" + getAdditionalParam() + "\'";
+            filterQuery = new Comparison(getColumnName(), "=", "\'" + getAdditionalParam() + "\'");
             filterQualifier = "Held in " + getAdditionalParam();
         } else {
-            filterQueryString = getColumnName() + "<>\'" + getAdditionalParam() + "\'";
+            filterQuery = new Comparison(getColumnName(), "<>", "\'" + getAdditionalParam() + "\'");
             filterQualifier = "Held outside " + getAdditionalParam();
         }
     }
