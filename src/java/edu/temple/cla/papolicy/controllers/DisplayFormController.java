@@ -103,7 +103,9 @@ public class DisplayFormController extends AbstractController {
                 } else {
                     column.setValueMap(jdbcTemplate, yearRange.getMinYear(), yearRange.getMaxYear());
                 }
-                if (column.getUnits() == Units.PERCENT || column.getUnits() == Units.PERCENT_OF_FILTERED || column.getUnits() == Units.PERCENT_OF_TOTAL) {
+                if (column.getUnits() == Units.PERCENT 
+                        || column.getUnits() == Units.PERCENT_OF_FILTERED 
+                        || column.getUnits() == Units.PERCENT_OF_TOTAL) {
                     column.setFilteredTotalMap(jdbcTemplate, yearRange.getMinYear(), yearRange.getMaxYear());
                     column.setUnfilteredTotalMap(jdbcTemplate, yearRange.getMinYear(), yearRange.getMaxYear());
                 }

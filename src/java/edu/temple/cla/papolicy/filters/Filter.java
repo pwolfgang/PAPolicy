@@ -108,5 +108,20 @@ public abstract class Filter {
     public int getNumberOfFilterChoices() {
         return 1;
     }
+    
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        if (this.getClass() == o.getClass()) {
+            Filter other = (Filter) o;
+            return (getId() == other.getId() &&
+                    getTableId() == other.getTableId() &&
+                    getDescription().equals(other.getDescription()) &&
+                    getTableReference() == null ? other.getTableReference() == null : getTableReference().equals(other.getTableReference()) &&
+                    getAdditionalParam() == null ? other.getAdditionalParam() == null : getAdditionalParam().equals(other.getAdditionalParam()));
+        } else {
+            return false;
+        }
+    }
 
 }

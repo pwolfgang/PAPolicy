@@ -497,9 +497,7 @@ public abstract class AbstractTable implements Table {
         //Scan filter list to see how many variations there may be.
         int numVariations = 1;
         for (Filter f : filterList) {
-            if (f.getNumberOfFilterChoices() != 1) {
-                numVariations *= f.getNumberOfFilterChoices();
-            }
+            numVariations *= f.getNumberOfFilterChoices();
         }
         if (numVariations == 1) {
             return new Table[] {table};
