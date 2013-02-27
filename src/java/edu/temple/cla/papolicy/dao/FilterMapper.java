@@ -48,5 +48,11 @@ public class FilterMapper implements ParameterizedRowMapper<Filter> {
         }
         return null;
     }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) return false;
+        return this.getClass() == o.getClass();
+    }
 
 }

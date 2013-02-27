@@ -7,6 +7,8 @@ package edu.temple.cla.papolicy.tables;
 import edu.temple.cla.papolicy.Units;
 import edu.temple.cla.papolicy.Utility;
 import edu.temple.cla.papolicy.YearRange;
+import edu.temple.cla.papolicy.dao.FilterMapper;
+import edu.temple.cla.papolicy.dao.TableMapper;
 import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.dao.YearValueMapper;
@@ -14,6 +16,8 @@ import edu.temple.cla.papolicy.filters.BinaryFilter;
 import edu.temple.cla.papolicy.filters.Filter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
@@ -80,6 +84,10 @@ public class AbstractTableTest {
             result = "1";
             jdbcTemplate.query(anyString, new YearValueMapper());
             result = Arrays.asList(yearValues);
+            jdbcTemplate.query(anyString, new TableMapper());
+            result = Arrays.asList(new Table[]{testTable});
+            jdbcTemplate.query(anyString, new FilterMapper());
+            result = Arrays.asList(filterList);
         }};
         for (Filter filter:filterList) {
             filter.setFilterParameterValues(request);
@@ -208,12 +216,23 @@ public class AbstractTableTest {
 
     @Test
     public void testGetValueForRange() {
-        fail("Test not written");
+        SortedMap<Integer, Number> values = new TreeMap<>();
+        values.put(1, 100);
+        values.put(2, 200);
+        Integer expected = 300;
+        assertEquals(expected, testTable.getValueForRange(values));
     }
 
     @Test
     public void testGetPercentForRange() {
-        fail("Test not written");
+        SortedMap<Integer, Number> values = new TreeMap<>();
+        SortedMap<Integer, Number> totals = new TreeMap<>();
+        values.put(1, 100);
+        values.put(2, 200);
+        totals.put(1, 500);
+        totals.put(2, 500);
+        Double expected = 30.0;
+        assertEquals(expected, testTable.getPercentForRange(values, totals));
     }
 
     @Test
@@ -280,7 +299,8 @@ public class AbstractTableTest {
 
     @Test
     public void testGetTable() throws Exception {
-        fail("Test not written");
+        Table[] result = AbstractTable.getTable("6", '\u0000', request, jdbcTemplate);
+        assertEquals(testTable, result[0]);
     }
 
     @Test

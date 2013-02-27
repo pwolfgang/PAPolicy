@@ -53,4 +53,10 @@ public class TableMapper implements ParameterizedRowMapper<Table> {
         }
         return null;
     }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) return false;
+        return this.getClass() == o.getClass();
+    }
 }
