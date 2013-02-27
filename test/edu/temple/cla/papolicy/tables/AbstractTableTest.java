@@ -5,16 +5,22 @@
 package edu.temple.cla.papolicy.tables;
 
 import edu.temple.cla.papolicy.Units;
+import edu.temple.cla.papolicy.Utility;
+import edu.temple.cla.papolicy.YearRange;
 import edu.temple.cla.papolicy.dao.Topic;
+import edu.temple.cla.papolicy.dao.YearValue;
+import edu.temple.cla.papolicy.dao.YearValueMapper;
 import edu.temple.cla.papolicy.filters.BinaryFilter;
 import edu.temple.cla.papolicy.filters.Filter;
 import java.util.Arrays;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 /**
  *
@@ -30,8 +36,17 @@ public class AbstractTableTest {
         new BinaryFilter(504, 6, "Dealing with Taxes", "Tax", null, null),
         new BinaryFilter(505, 6, "Concerning the Elderly", "Elderly", null, null)
     };
+    private YearValue[] yearValues = new YearValue[] {
+        new YearValue(1979, 4),
+        new YearValue(1980, 5),
+        new YearValue(1981, 2),
+        new YearValue(1982, 4),
+        new YearValue(1983, 4)
+    };
     @Mocked
     HttpServletRequest request;
+    @Mocked
+    SimpleJdbcTemplate jdbcTemplate;
     
     public AbstractTableTest() {
     }
@@ -63,6 +78,8 @@ public class AbstractTableTest {
             result = "0";
             request.getParameter("F505");
             result = "1";
+            jdbcTemplate.query(anyString, new YearValueMapper());
+            result = Arrays.asList(yearValues);
         }};
         for (Filter filter:filterList) {
             filter.setFilterParameterValues(request);
@@ -207,7 +224,9 @@ public class AbstractTableTest {
 
     @Test
     public void testGetYearValueList() {
-        fail("Test not written");
+        List<YearValue> expected = Arrays.asList(yearValues);
+        List<YearValue> result = testTable.getYearValueList(jdbcTemplate, "query");
+        assertEquals(expected, result);
     }
 
     @Test
@@ -227,7 +246,18 @@ public class AbstractTableTest {
 
     @Test
     public void testCreateDrillDownURL() {
-        fail("Test not written");
+        Topic topic = new Topic();
+        topic.setCode(6);
+        topic.setDescription("Education");
+        String query = testTable.getTopicQueryString(topic) + 
+                " AND Year BETWEEN 1991 AND 2006 GROUP BY Year ORDER BY Year";
+        String expected = "drilldown.spg?query="
+                + "H4sIAAAAAAAAAD1OzQqCQBh8lblVsAfrIAgVWH5i5A9sgniSzRZbkt1Yl8ie"
+                + "vjLoNMwvc6KU9iVK5XrJUNhOafUSThnNUEthGTKj3ZUhEiNDeB6cFa1jiJUW"
+                + "_d5cPqVkvEvbK32DGJB-MeZFhlR2J2kfqpVhJ3U7cnk31g2oEuKEUjw3HsI8"
+                + "AvWXT31cb3_0P4z0cKT5zG-a2WJyvnewo7IiyrEMguWkrjzPR8Ej4tjVU-YN"
+                + "cCYED9MAAAA";
+        assertEquals(expected, testTable.createDrillDownURL(query));
     }
 
     @Test
@@ -255,12 +285,25 @@ public class AbstractTableTest {
 
     @Test
     public void testGetDownloadURL() {
-        fail("Test not written");
+        String tableName = testTable.getTableTitle();
+        YearRange yearRange = new YearRange(1991, 2006);
+        String downloadQuery = Utility.compressAndEncode("SELECT *FROM LegServiceAgencyReports WHERE Tax=0 AND " +
+                                    "Elderly<>0 AND FinalCode LIKE('6__') " +
+                                    "AND Year BETWEEN 1991 AND 2006 ORDER BY Year");
+        String expected = "<a href=\"Legislative+Service+Agency+Reports+1991_2006.xlsx?"
+                + "query=H4sIAAAAAAAAACWKywqCQBSGX-XfWa7GFoJggZcjRZPCOCCuZNCDCIPGFJFvH0z"
+                + "L79KSpEIjrFTzgOS5ZfdZRs5mXsdd8XNz7xe6KymCNt-zQFaXIDuxs3t6-WO1rMYW28SQ"
+                + "tzsdgngYgqMvPRuHnHRHVCNKksjbkxAxGlWSQt775wfXKREchgAAAA\">"
+                + "Legislative Service Agency Reports</a><br/>";
+        assertEquals(expected, testTable.getDownloadURL(tableName, downloadQuery, yearRange));      
     }
 
     @Test
     public void testGetDisplayedValue() {
-        fail("Test not written");
+        assertEquals("250", testTable.getDisplayedValue(null, new Integer(250), Units.COUNT));
+        assertEquals("$1,234", testTable.getDisplayedValue(null, new Double(1234.0), Units.DOLLARS));
+        assertEquals("5.3%", testTable.getDisplayedValue(null, new Double(5.3), Units.PERCENT));
+        assertEquals("5.5", testTable.getDisplayedValue(null, new Double(5.5), Units.RANK));
     }
 
 }
