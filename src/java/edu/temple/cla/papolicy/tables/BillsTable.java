@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 public class BillsTable extends AbstractTable {
 
     String[] chamber;
-    String billtype;
+    String billType;
     String sessionType;
 
 
@@ -88,7 +88,7 @@ public class BillsTable extends AbstractTable {
         if (chamber == null || chamber.length == 0) {
             chamber = new String[]{"House", "Senate"};
         }
-        billtype = request.getParameter("billtype");
+        billType = request.getParameter("billtype");
         sessionType = request.getParameter("sessiontype");
     }
 
@@ -99,9 +99,9 @@ public class BillsTable extends AbstractTable {
             stb.append(chamber[0]);
             stb.append(" ");
         }
-        if ("BILLS".equals(billtype)) {
+        if ("BILLS".equals(billType)) {
             stb.append("Bills");
-        } else if ("RES".equals(billtype)) {
+        } else if ("RES".equals(billType)) {
             stb.append("Resolutions");
         } else {
             stb.append("Bills and Resolutions");
@@ -125,10 +125,10 @@ public class BillsTable extends AbstractTable {
         stb.append(" AS TheYear, count(ID) AS TheValue FROM ");
         stb.append(getTableName());
         stb.append(" WHERE ");
-        if (!"BOTH".equals(billtype) || chamber.length != 2) {
+        if (!"BOTH".equals(billType) || chamber.length != 2) {
             StringBuilder chamberSelect = new StringBuilder("(");
             for (String aChamber : chamber) {
-                if ("BOTH".equals(billtype) || ("BILLS".equals(billtype))) {
+                if ("BOTH".equals(billType) || ("BILLS".equals(billType))) {
                     if (aChamber.equals("House")) {
                         chamberSelect.append("Bill LIKE ('HB%')");
                     } else {
@@ -136,7 +136,7 @@ public class BillsTable extends AbstractTable {
                     }
                     chamberSelect.append(" OR ");
                 }
-                if ("BOTH".equals(billtype) || ("RES".equals(billtype))) {
+                if ("BOTH".equals(billType) || ("RES".equals(billType))) {
                     if (aChamber.equals("House")) {
                         chamberSelect.append("Bill LIKE ('HR%')");
                     } else {

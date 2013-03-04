@@ -22,9 +22,9 @@ public class LawsTable extends BillsTable {
             stb.append(chamber[0]);
             stb.append(" ");
         }
-        if ("BILLS".equals(billtype)) {
+        if ("BILLS".equals(billType)) {
             stb.append("Acts");
-        } else if ("RES".equals(billtype)) {
+        } else if ("RES".equals(billType)) {
             stb.append("Adopted Resolutions");
         } else {
             stb.append("Acts and Resolutions");
@@ -64,7 +64,7 @@ public class LawsTable extends BillsTable {
         if (chamber == null || chamber.length == 0) {
             chamber = new String[]{"House", "Senate"};
         }
-        billtype = request.getParameter("billtypea");
+        billType = request.getParameter("billtypea");
         sessionType = request.getParameter("sessiontypea");
     }
     
