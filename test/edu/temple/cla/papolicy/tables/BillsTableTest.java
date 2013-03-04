@@ -51,6 +51,65 @@ public class BillsTableTest {
      */
     @Test
     public void testGetTitleBox() {
+        String expected = "\n<dl>\r\n" +
+"<dt><input type=\"checkbox\" name=\"dataset\" value=\"3\"\n" +
+"        id=\"t3\" onclick=\"expandBills(3);\" />\n" +
+"        <span class=\"strong\">Bills and Resolutions</span></dt>\r\n" +
+"\n" +
+"<div class=\"subtbl\" id=\"subtbl3\">\n" +
+"    <dd><input type=\"checkbox\" name=\"chamber\" value=\"House\" checked=\"checked\" />\n" +
+"        <span class=\"strong\">House</span>\n" +
+"    </dd>\n" +
+"    <dd><input type=\"checkbox\" name=\"chamber\" value=\"Senate\" checked=\"checked\" />\n" +
+"        <span class=\"strong\">Senate</span>\n" +
+"    </dd>\n" +
+"    <dd><input type=\"radio\" name=\"billtype\" value=\"BOTH\" checked=\"checked\" />\n" +
+"        <span class=\"strong\">Bills and Resolutions</span>\n" +
+"    </dd>\n" +
+"    <dd><input type=\"radio\" name=\"billtype\" value=\"BILLS\" />\n" +
+"        <span class=\"strong\">Bills</span>\n" +
+"    </dd>\n" +
+"    <dd><input type=\"radio\" name=\"billtype\" value=\"RES\" />\n" +
+"        <span class=\"strong\">Resolutions</span>\n" +
+"    </dd>\n" +
+"    <dd><input type=\"radio\" name=\"sessiontype\" value=\"REGULAR\" checked=\"checked\" />\n" +
+"        <span class=\"strong\">Regular Sessions Only</span></dd>\n" +
+"    <dd><input type=\"radio\" name=\"sessiontype\" value=\"SPECIAL\" />\n" +
+"        <span class=\"strong\">Special Sessions Only</span></dd>\n" +
+"    <dd><input type=\"radio\" name=\"sessiontype\" value=\"BOTH\" />\n" +
+"        <span class=\"strong\">Both Regular and Special Sessions</strong></dd>\n" +
+"</dl>\n" +
+"</div>\n" +
+"<dl><dt><input type=\"checkbox\" name=\"dataset\" value=\"3a\"\n" +
+"           id=\"t3a\" onclick='expandBills(\"3a\");' />\n" +
+"    <span class=\"strong\">Acts (Laws) and Adopted Resolutions</span></dt>\n" +
+"<div class=\"subtbl\" id=\"subtbl3a\">\n" +
+"    <dd><input type=\"checkbox\" name=\"chambera\" value=\"House\" checked=\"checked\" />\n" +
+"        <span class=\"strong\">House</span>\n" +
+"    </dd>\n" +
+"    <dd><input type=\"checkbox\" name=\"chambera\" value=\"Senate\" checked=\"checked\" />\n" +
+"        <span class=\"strong\">Senate</span>\n" +
+"    </dd>\n" +
+"    <dd><input type=\"radio\" name=\"billtypea\" value=\"BOTH\" checked=\"checked\" />\n" +
+"        <span class=\"strong\">Acts and Adopted Resolutions</span>\n" +
+"    </dd>\n" +
+"    <dd><input type=\"radio\" name=\"billtypea\" value=\"BILLS\" />\n" +
+"        <span class=\"strong\">Acts</span>\n" +
+"    </dd>\n" +
+"    <dd><input type=\"radio\" name=\"billtypea\" value=\"RES\" />\n" +
+"        <span class=\"strong\">Adopted Resolutions</span>\n" +
+"    </dd>\n" +
+"    <dd><input type=\"radio\" name=\"sessiontypea\" value=\"REGULAR\" checked=\"checked\" />\n" +
+"        <span class=\"strong\">Regular Sessions Only</span></dd>\n" +
+"    <dd><input type=\"radio\" name=\"sessiontypea\" value=\"SPECIAL\" />\n" +
+"        <span class=\"strong\">Special Sessions Only</span></dd>\n" +
+"    <dd><input type=\"radio\" name=\"sessiontypea\" value=\"BOTH\" />\n" +
+"        <span class=\"strong\">Both Regular and Special Sessions</strong></dd>\n" +
+"</dl>\n" +
+"</div>\n" +
+"</dt>\n" +
+"        ";
+        assertEquals(expected, testTable.getTitleBox());
     }
 
     /**
@@ -58,6 +117,8 @@ public class BillsTableTest {
      */
     @Test
     public void testToString() {
+        String expected = "Bills and Resolutions Regular and Special Sessions ";
+        assertEquals(expected, testTable.toString());
     }
 
     /**
