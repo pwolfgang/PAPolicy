@@ -380,7 +380,11 @@ public abstract class AbstractTable implements Table {
      * drill-down page
      */
     public void setDrillDownColumns(String[] drillDownColumns) {
-        this.drillDownColumns = drillDownColumns.clone();
+        if (drillDownColumns != null) {
+            this.drillDownColumns = drillDownColumns.clone();
+        } else {
+            this.drillDownColumns = null;
+        }
     }
 
     /**

@@ -42,8 +42,7 @@ public class BudgetTable extends AbstractTable {
 "          <input type=\"radio\" name=\"rainyDay\" value=\"0\" checked=\"checked\" />No\n"+
 "       </dd>\n"+
 "    </div>\n"+
-"</dl>\n"+
-"        ";
+"</dl>\n";
     }
 
     @Override
@@ -57,7 +56,7 @@ public class BudgetTable extends AbstractTable {
         if (units == Units.PERCENT) {
             return "Percent of Total Spending";
         } else {
-            return "Total Spending " + getAxisTitle(getUnits(null));
+            return "Total Spending " + getAxisTitle(units);
         }
     }
 
