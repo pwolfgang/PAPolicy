@@ -65,7 +65,7 @@ public class BudgetTable extends AbstractTable {
         return "Total Spending Un-Adjusted Dollars (×1,000,000)";
     }
 
-    public String getAllocatedTotalQueryString() {
+    private String getAllocatedTotalQueryString() {
         return "SELECT " + getYearColumn() +
             ", Sum(BudgetTable.TheValue*Crosswalk.PercentMatch/100)/1000 AS " +
             "TheValue " +
@@ -83,7 +83,7 @@ public class BudgetTable extends AbstractTable {
 
     @Override
     public String getFilteredTotalQueryString() {
-        return getUnfilteredTotalQueryString();
+        return getAllocatedTotalQueryString();
     }
 
     @Override
