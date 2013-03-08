@@ -4,25 +4,46 @@
  */
 package edu.temple.cla.papolicy;
 
+import edu.temple.cla.papolicy.dao.Topic;
+import edu.temple.cla.papolicy.tables.AbstractTableTest;
+import edu.temple.cla.papolicy.tables.Table;
+import javax.servlet.http.HttpServletRequest;
+import mockit.Mocked;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 /**
  *
  * @author Paul Wolfgang
  */
 public class ColumnTest {
+    @Mocked
+    HttpServletRequest request;
+    @Mocked
+    SimpleJdbcTemplate jdbcTemplate;
+    
+    private Column testColumn;
+    private Table testTable;
     
     public ColumnTest() {
     }
     
     @Before
     public void setUp() {
+        Topic topic = new Topic();
+        topic.setCode(6);
+        topic.setDescription("Education");
+        String freeText = "";
+        String showResults = "count";
+        YearRange yearRange = new YearRange(2000, 2005);
+        testColumn = new Column(testTable, topic, freeText, showResults, yearRange);
+        
     }
 
     @Test
     public void testToString() {
+        System.out.println(testColumn.toString());
     }
 
     @Test
