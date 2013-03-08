@@ -263,7 +263,13 @@ public class BudgetTableTest {
         testTable.setFilterList(Arrays.asList(new Filter[]{filter}));
         List<YearValue> expected = Arrays.asList(expectedValues);
         List<YearValue> actual = testTable.getYearValueList(jdbcTemplate, "dummy query");
-        assertEquals(expected, actual);
+        assertEquals("Sizes should be the same", expected.size(), actual.size());
+        for (int i = 0; i < expected.size(); i++) {
+            assertEquals("Years should be the same for item " + i, expected.get(i).getYear(), actual.get(i).getYear());
+            double expectedValue = expected.get(i).getValue().doubleValue();
+            double actualValue = expected.get(i).getValue().doubleValue();
+            assertEquals("Values should be the same for item " + i, expectedValue, actualValue, 1.0);
+        }
         
     }
 
