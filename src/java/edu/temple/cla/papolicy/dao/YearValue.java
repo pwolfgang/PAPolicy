@@ -31,7 +31,7 @@ public class YearValue {
         if (o == null) return false;
         if (this.getClass() == o.getClass()) {
             YearValue other = (YearValue) o;
-            return this.year == other.year && this.value == other.value;
+            return this.year == other.year && this.value.equals(other.value);
         } else {
             return false;
         }

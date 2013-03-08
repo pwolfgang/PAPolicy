@@ -140,10 +140,33 @@ public class PublicOpinionTableTest {
 
     @Test
     public void testClone() {
+        Object theClone = testTable.clone();
+        assertEquals(testTable.getClass(), theClone.getClass());
     }
 
     @Test
-    public void testGetDisplayedValue() {
+    public void testGetDisplayedValue2009() {
+        String expected = "<span title=\"Most Important Problem data from 2008 "
+                + "and 2009 were constructed from national Gallup polls using "
+                + "only the responses of PA residents. Please see the User Guide "
+                + "for more information.\">2.5%*</span>";
+        String actual = testTable.getDisplayedValue("2009-10", 2.5, Units.PERCENT);
+        assertEquals(expected, actual);
+    }
+
+    public void testGetDisplayedValue2008() {
+        String expected = "<span title=\"Most Important Problem data from 2008 "
+                + "and 2009 were constructed from national Gallup polls using "
+                + "only the responses of PA residents. Please see the User Guide "
+                + "for more information.\">1.0%*</span>";
+        String actual = testTable.getDisplayedValue("2008", 1.0, Units.PERCENT);
+        assertEquals(expected, actual);
+    }
+
+    public void testGetDisplayedValue2007() {
+        String expected = "10.0%";
+        String actual = testTable.getDisplayedValue("2007", 10, Units.PERCENT);
+        assertEquals(expected, expected);
     }
     
     private void setParameterValue(final String value) {
