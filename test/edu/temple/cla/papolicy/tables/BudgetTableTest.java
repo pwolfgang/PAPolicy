@@ -275,10 +275,26 @@ public class BudgetTableTest {
 
     @Test
     public void testClone() {
+        BudgetTable theClone = testTable.clone();
+        assertEquals(testTable.getClass(), theClone.getClass());
     }
 
     @Test
     public void testCreateDownloadQuery() {
+        String expected = "SELECT TheYear, MajorCode.Code, Crosswalk.FC, Crosswalk.OC, "
+                + "Crosswalk.PercentMatch, BudgetTable.TheValue/1000 as TotalAmount, "
+                + "BudgetTable.TheValue*Crosswalk.PercentMatch/100000 as AllocatedAmount "
+                + "FROM MajorCode INNER JOIN (Crosswalk INNER JOIN BudgetTable ON "
+                + "(Crosswalk.FC=BudgetTable.FC) AND (Crosswalk.OC=BudgetTable.OC)) "
+                + "ON MajorCode.Code = Crosswalk.PolicyCode WHERE MajorCode.Code=6 "
+                + "AND Year BETWEEN 1991 AND 2006 ORDER BY Year , MajorCode.Code, "
+                + "Crosswalk.FC, Crosswalk.OC";
+        Topic topic = new Topic();
+        topic.setCode(6);
+        topic.setDescription("Education");
+        String query = testTable.getTopicQueryString(topic) + 
+                " AND Year BETWEEN 1991 AND 2006 GROUP BY Year ORDER BY Year";
+        assertEquals(expected, testTable.createDownloadQuery(query));
     }
     
     private BudgetFilters createBudgetFiltersInstance(final String dispValue, final String adjust, final String baseYear) {

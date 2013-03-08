@@ -325,5 +325,17 @@ public class AbstractTableTest {
         assertEquals("5.3%", testTable.getDisplayedValue(null, new Double(5.3), Units.PERCENT));
         assertEquals("5.5", testTable.getDisplayedValue(null, new Double(5.5), Units.RANK));
     }
+    
+    @Test
+    public void testClone() {
+        Table theClone = testTable.clone();
+        assertEquals(theClone.getClass(), testTable.getClass());
+        assertEquals(testTable.getFilterList(), theClone.getFilterList());
+        if (testTable.getDrillDownColumns() == null) {
+            assertNull(theClone.getDrillDownColumns());
+        } else {
+            assertArrayEquals(testTable.getDrillDownColumns(), theClone.getDrillDownColumns());
+        }
+    }
 
 }
