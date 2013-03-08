@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
  * @author Paul Wolfgang
  */
 @RunWith(value=Parameterized.class)
-public class ColumnTest {
+public class FreeTextParseTest {
 
     private String expected;
     private String textColumn;
@@ -36,7 +36,7 @@ public class ColumnTest {
         });
     }
 
-    public ColumnTest(String expected, String textColumn, String freeText) {
+    public FreeTextParseTest(String expected, String textColumn, String freeText) {
         this.expected = expected;
         this.textColumn = textColumn;
         this.freeText = freeText;
