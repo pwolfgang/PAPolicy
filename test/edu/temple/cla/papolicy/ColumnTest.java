@@ -4,13 +4,23 @@
  */
 package edu.temple.cla.papolicy;
 
+import edu.temple.cla.papolicy.dao.FilterMapper;
+import edu.temple.cla.papolicy.dao.TableMapper;
 import edu.temple.cla.papolicy.dao.Topic;
-import edu.temple.cla.papolicy.tables.AbstractTableTest;
+import edu.temple.cla.papolicy.dao.YearValue;
+import edu.temple.cla.papolicy.dao.YearValueMapper;
+import edu.temple.cla.papolicy.filters.BinaryFilter;
+import edu.temple.cla.papolicy.filters.Filter;
+import edu.temple.cla.papolicy.tables.StandardTable;
 import edu.temple.cla.papolicy.tables.Table;
+import java.util.Arrays;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import mockit.Mocked;
+import mockit.NonStrictExpectations;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 /**
@@ -25,65 +35,157 @@ public class ColumnTest {
     
     private Column testColumn;
     private Table testTable;
+    private String[] drillDownColumns;
+    private Filter[] filterList = new Filter[]{
+        new BinaryFilter(501, 6, "Legislative Request", "LegRequest", null, null),
+        new BinaryFilter(502, 6, "Policy Recommendation", "Recommendation", null, null),
+        new BinaryFilter(504, 6, "Dealing with Taxes", "Tax", null, null),
+        new BinaryFilter(505, 6, "Concerning the Elderly", "Elderly", null, null)
+    };
+    private YearValue[] yearValues = new YearValue[] {
+        new YearValue(1979, 4),
+        new YearValue(1980, 5),
+        new YearValue(1981, 2),
+        new YearValue(1982, 4),
+        new YearValue(1983, 4)
+    };
     
     public ColumnTest() {
     }
     
     @Before
     public void setUp() {
+        drillDownColumns = new String[]{"Title", "Orginization", "Year", "Month", "Day", "Abstract", "FinalCode"};
+        testTable = new StandardTable();
+        testTable.setId(6);
+        testTable.setTableName("LegServiceAgencyReports");
+        testTable.setTableTitle("Legislative Service Agency Reports");
+        testTable.setMajorOnly(false);
+        testTable.setMinYear(1991);
+        testTable.setMaxYear(2006);
+        testTable.setTextColumn("Abstract");
+        testTable.setLinkColumn("Hyperlink");
+        testTable.setDrillDownColumns(drillDownColumns);
+        testTable.setCodeColumn("FinalCode");
+        testTable.setNoteColumn(null);
+        testTable.setYearColumn("Year");
+        new NonStrictExpectations() {{
+            request.getParameter("F501");
+            result = "587";
+            request.getParameter("F502");
+            result = "587";
+            request.getParameter("F504");
+            result = "0";
+            request.getParameter("F505");
+            result = "1";
+            jdbcTemplate.query(anyString, new YearValueMapper());
+            result = Arrays.asList(yearValues);
+            jdbcTemplate.query(anyString, new TableMapper());
+            result = Arrays.asList(new Table[]{testTable});
+            jdbcTemplate.query(anyString, new FilterMapper());
+            result = Arrays.asList(filterList);
+        }};
+        for (Filter filter:filterList) {
+            filter.setFilterParameterValues(request);
+        }
+        testTable.setFilterList(Arrays.asList(filterList));        
         Topic topic = new Topic();
         topic.setCode(6);
         topic.setDescription("Education");
-        String freeText = "";
+        String freeText = null;
         String showResults = "count";
-        YearRange yearRange = new YearRange(2000, 2005);
+        YearRange yearRange = new YearRange(1979, 1983);
         testColumn = new Column(testTable, topic, freeText, showResults, yearRange);
+        String countQuery =
+                testColumn.getTopicCountQueryString(yearRange.getMinYear(), yearRange.getMaxYear());
+        String downloadQuery = testColumn.getTable().createDownloadQuery(countQuery);
+        testColumn.setDownloadQuery(Utility.compressAndEncode(downloadQuery));
         
     }
 
     @Test
     public void testToString() {
-        System.out.println(testColumn.toString());
+        String expected = "Education Legislative Service Agency Reports Exclude Dealing with Taxes and Include Concerning the Elderly";
+        assertEquals(expected, testColumn.toString());
     }
 
     @Test
     public void testGetDownloadTitle() {
+        String expected = "Education Legislative Service Agency Reports Exclude Dealing with Taxes and Include Concerning the Elderly";
+        assertEquals(expected, testColumn.getDownloadTitle());
     }
 
     @Test
     public void testGetDownloadURL() {
+        String expected = "<a href=\"Education+Legislative+Service+Agency+"
+                + "Reports+Exclude+Dealing+with+Taxes+and+Include+Concerning+"
+                + "the+Elderly+1979_1983.xlsx?query=H4sIAAAAAAAAACWKywqCQBSGX-"
+                + "Xfma2SIBuowMuRoklhHBBXMuhBhEFjisi3D6bld6lJUqaxLVT1gOSxZveZek"
+                + "5GnvtV8XNx7xeaKymCNt_zDkmZg-zAzq6nyx-LaTY2WwaGvN1pExy6Lgh9ad"
+                + "k4pKQbohKRiIW3kTjuUamcFNLWPz8DkmhChgAAAA\">Education "
+                + "Legislative Service Agency Reports Exclude Dealing with "
+                + "Taxes and Include Concerning the Elderly</a><br/>";
+        assertEquals(expected, testColumn.getDownloadURL());
     }
 
     @Test
     public void testGetFilteredTotalQueryString_0args() {
+        String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM "
+                + "LegServiceAgencyReports WHERE Tax=0 AND Elderly<>0";
+        assertEquals(expected, testColumn.getFilteredTotalQueryString());
     }
 
     @Test
     public void testGetUnfilteredTotalQueryString_0args() {
+        String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM "
+                + "LegServiceAgencyReports WHERE ";
+        assertEquals(expected, testColumn.getUnfilteredTotalQueryString());
     }
 
     @Test
     public void testGetUnfilteredTotalQueryString_int_int() {
+        String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM "
+                + "LegServiceAgencyReports WHERE Year BETWEEN 1979 AND 1983 "
+                + "GROUP BY Year ORDER BY Year";
+        assertEquals(expected, testColumn.getUnfilteredTotalQueryString(1979, 1983));
     }
 
     @Test
     public void testGetFilteredTotalQueryString_int_int() {
+        String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM "
+                + "LegServiceAgencyReports WHERE Tax=0 AND Elderly<>0 AND Year "
+                + "BETWEEN 1979 AND 1983 GROUP BY Year ORDER BY Year";
+        assertEquals(expected, testColumn.getFilteredTotalQueryString(1979, 1983));
     }
 
     @Test
     public void testGetTopicCountQueryString_0args() {
+        String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM "
+                + "LegServiceAgencyReports WHERE Tax=0 AND Elderly<>0 AND "
+                + "FinalCode LIKE('6__')";
+        assertEquals(expected, testColumn.getTopicCountQueryString());
     }
 
     @Test
     public void testGetTopicCountQueryString_int_int() {
+        String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM "
+                + "LegServiceAgencyReports WHERE Tax=0 AND Elderly<>0 AND "
+                + "FinalCode LIKE('6__') AND Year BETWEEN 1979 AND 1983 "
+                + "GROUP BY Year ORDER BY Year";
+        assertEquals(expected, testColumn.getTopicCountQueryString(1979, 1983));
     }
 
     @Test
     public void testGetUnits() {
+        Units expected = Units.COUNT;
+        assertEquals(expected, testColumn.getUnits());
     }
 
     @Test
     public void testGetValue() {
+        testColumn.setValueMap(jdbcTemplate, 1979, 1983);
+        Integer expected = 2;
+        assertEquals(expected, testColumn.getValue(1981, 1981));
     }
 
     @Test
@@ -100,10 +202,6 @@ public class ColumnTest {
 
     @Test
     public void testGetPercentChange() {
-    }
-
-    @Test
-    public void testSetValueMap() {
     }
 
     @Test
