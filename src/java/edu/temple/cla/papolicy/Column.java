@@ -212,7 +212,7 @@ public class Column {
     public void setValueMap(SimpleJdbcTemplate jdbcTemplate, int minYear, int maxYear) {
         String query = getTopicCountQueryString(minYear, maxYear);
         List<YearValue> list = table.getYearValueList(jdbcTemplate, query);
-        valueMap = new TreeMap<Integer, Number>();
+        valueMap = new TreeMap<>();
         for (YearValue yv : list) {
             Number value = yv.getValue();
             if (value != null) {
