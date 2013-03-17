@@ -25,7 +25,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
  *
  * @author Paul Wolfgang
  */
-public class ColumnTest {
+public class LegServiceAgencyColumnTest {
     @Mocked
     HttpServletRequest request;
     private SimpleJdbcTemplate jdbcTemplate;
@@ -46,7 +46,7 @@ public class ColumnTest {
         new YearValue(1983, 4)
     };
     
-    public ColumnTest() {
+    public LegServiceAgencyColumnTest() {
     }
     
     @BeforeClass
@@ -118,8 +118,9 @@ public class ColumnTest {
                 + "Taxes+1979_1983.xlsx?query=H4sIAAAAAAAAAAt29XF1DlHQcgvy91XwS"
                 + "U0PTi0qy0xOdUxPzUuuDEotyC8qKVYI93ANclUISaywsTNQcPRzUXDLzEvMc"
                 + "c5PSVXw8fR21VA3NIqPV9cES0WmJhYpOLmGhLu6-ikYWppbgkUNLS2MFfyDX"
-                + "FyDFJwiwWoAbjEZo3kAAAA\">Law, Crime, and Family Issues "
-                + "Legislative Service Agency Reports Include Dealing with Taxes</a><br/>";
+                + "FyDFJwiFUIyUkHKADUvNcx8AAAA\">Law, Crime, and Family Issues "
+                + "Legislative Service Agency Reports Include Dealing with "
+                + "Taxes</a><br/>";
         assertEquals(expected, testColumn.getDownloadURL());
     }
 
@@ -141,7 +142,7 @@ public class ColumnTest {
     public void testGetUnfilteredTotalQueryString_int_int() {
         String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM "
                 + "LegServiceAgencyReports WHERE Year BETWEEN 1979 AND 1983 "
-                + "GROUP BY Year ORDER BY Year";
+                + "GROUP BY TheYear ORDER BY TheYear";
         assertEquals(expected, testColumn.getUnfilteredTotalQueryString(1979, 1983));
     }
 
@@ -149,7 +150,7 @@ public class ColumnTest {
     public void testGetFilteredTotalQueryString_int_int() {
         String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM "
                 + "LegServiceAgencyReports WHERE Tax<>0 AND Year "
-                + "BETWEEN 1979 AND 1983 GROUP BY Year ORDER BY Year";
+                + "BETWEEN 1979 AND 1983 GROUP BY TheYear ORDER BY TheYear";
         assertEquals(expected, testColumn.getFilteredTotalQueryString(1979, 1983));
     }
 
@@ -166,7 +167,7 @@ public class ColumnTest {
         String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM "
                 + "LegServiceAgencyReports WHERE Tax<>0 AND "
                 + "FinalCode LIKE('12__') AND Year BETWEEN 1979 AND 1983 "
-                + "GROUP BY Year ORDER BY Year";
+                + "GROUP BY TheYear ORDER BY TheYear";
         assertEquals(expected, testColumn.getTopicCountQueryString(1979, 1983));
     }
 
@@ -201,58 +202,9 @@ public class ColumnTest {
     }
 
     @Test
-    public void testGetPercentChange() {
-    }
-
-    @Test
-    public void testSetDisplayedValue() {
-    }
-
-    @Test
-    public void testSetDrillDown() {
-    }
-
-    @Test
-    public void testGetDisplayedValue() {
-    }
-
-    @Test
-    public void testGetDisplayedValueString() {
-    }
-
-    @Test
-    public void testGetDrillDown() {
-    }
-
-    @Test
-    public void testGetRowKeys() {
-    }
-
-    @Test
     public void testGetAxisTitle() {
+        String expected = "Number of Cases";
+        assertEquals(expected, testColumn.getAxisTitle());
     }
 
-    @Test
-    public void testGetTable() {
-    }
-
-    @Test
-    public void testGetDownloadQuery() {
-    }
-
-    @Test
-    public void testSetDownloadQuery() {
-    }
-
-    @Test
-    public void testGetMinValue() {
-    }
-
-    @Test
-    public void testGetMaxValue() {
-    }
-
-    @Test
-    public void testParseFreeText() {
-    }
 }

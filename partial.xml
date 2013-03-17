@@ -5,7 +5,7 @@
   <Filters ID="502" TableID="6" ColumnName="Recomendation" Description="Policy Recommendation" FilterClass="BinaryFilter"/>
   <Filters ID="504" TableID="6" ColumnName="Tax" Description="Dealing with Taxes" FilterClass="BinaryFilter"/>
   <Filters ID="505" TableID="6" ColumnName="Elderly" Description="Concerning the Elderly" FilterClass="BinaryFilter"/>
-  <LegServiceAgencyReports ID="274" Title="Faculty Output and Salary Costs of State-Related and State-Owned Colleges and Universities" Organization="Joint State Government Commission" Year="1983" Month="2" Day="0" Hyperlink="#http://jsg.legis.state.pa.us/11_16_feb%2083%20fac%20output_20091116084532.pdf#" Abstract="This 10th annual report summarizes the instructional outputs, instructional faculty salary costs, tuitions and Commonwealth instructional appropriations for Pennsylvania&apos;s State-related and State-owned universities--the Commonwealth&apos;s public universities during 1981-1982." LegRequest="1" Recomendation="0" Tax="0" Elderly="0" Comments="" Initials="DGL" FinalCode="601"/>
+  <LegServiceAgencyReports ID="274" Title="Faculty Output and Salary Costs of State-Related and State-Owned Colleges and Universities" Organization="Joint State Government Commission" Year="1983" Month="2" Day="0" Hyperlink="#http://jsg.legis.state.pa.us/11_16_feb%2083%20fac%20output_20091116084532.pdf#" Abstract="This 10th annual report summarizes the instructional outputs, instructional faculty salary costs, tuitions and Commonwealth instructional appropriations for Pennsylvania&apos;s State-related and State-owned universities--the Commonwealth&apos;s public universities during 1981-1982." LegRequest="1" Recomendation="0" Tax="0" Elderly="0" Initials="DGL" FinalCode="601"/>
   <LegServiceAgencyReports ID="275" Title="Probate, Estate and Fiduciaries Code: Proposed Amendments and Comments--1983" Organization="Joint State Government Commission" Year="1983" Month="10" Day="10" Hyperlink="#http://jsg.legis.state.pa.us/Probate%20Estates%201983.pdf#" Abstract="This report summarizes amendments to the Probate, Estates, and Fiduciaries Code." LegRequest="0" Recomendation="1" Tax="0" Elderly="0" Initials="DGL" FinalCode="1212"/>
   <LegServiceAgencyReports ID="276" Title="Proposed Commonwealth Procurement Code" Organization="Joint State Government Commission" Year="1983" Month="6" Day="0" Hyperlink="#http://jsg.legis.state.pa.us/11_16_june%2083_20091116083527.pdf#" Abstract="Pursuant to House Resolution 93 of 1981, this report studies possible changes to PA&apos;s agency procurement code. Suggestions include: creating a Procurement Policy Office, consolidate procurement laws into Title 62 of the PA Consolidated Statutes, and centralize certain procurements into the General Services agency." LegRequest="1" Recomendation="1" Tax="0" Elderly="0" Initials="DGL" FinalCode="2007"/>
   <LegServiceAgencyReports ID="277" Title="Separating Transportation from Fixed Utility Regulations under the Public Utility Commission" Organization="Joint State Government Commission" Year="1983" Month="10" Day="0" Hyperlink="#http://jsg.legis.state.pa.us/11_16_oct%2083%20separ%20trans_20091116081945.pdf#" Abstract="Pursuant to Senate Resolution 35 of 1983, this study was commissioned to examine the impact of separating the Public Utilities Commission into two separate entities: one to regulate transportation services, and the other to regulate electric, gas, water, and telephone companies." LegRequest="1" Recomendation="0" Tax="0" Elderly="0" Initials="DGL" FinalCode="2002"/>
@@ -24,4 +24,70 @@
   <LegServiceAgencyReports ID="290" Title="Faculty Output and Salary Costs of State-Related and State-Owned Colleges and Universities" Organization="Joint State Government Commission" Year="1979" Month="3" Day="0" Hyperlink="#http://jsg.legis.state.pa.us/11_16_march%201979%20faculty%20out_20091113135311.pdf#" Abstract="This report summarizes the instructional outputs, instructional faculty salary costs, tuitions and Commonwealth instructional appropriations for Pennsylvania&apos;s State-related and State-owned universities--the Commonwealth&apos;s public universities during 1977-1978." LegRequest="1" Recomendation="0" Tax="0" Elderly="0" Initials="DGL" FinalCode="601"/>
   <LegServiceAgencyReports ID="291" Title="Interim Report of the Select Task Force to Study Cost-of-Living Adjustments and Benefit Funding for the State and School Retirement Systems" Organization="Joint State Government Commission" Year="1979" Month="10" Day="15" Hyperlink="#http://jsg.legis.state.pa.us/Interim%20Report%20Cost%20of%20Living%20Adj%201979.pdf#" Abstract="Pursuant to Senate Resolution No. 6 of 1979, this report includes amendments and recommended changes to Titles 24 and 71 of the Pennsylvania Consolidated Statutes in regards to a cost of living adjustment for state and public school employees." LegRequest="1" Recomendation="1" Tax="0" Elderly="0" Initials="DGL" FinalCode="2004"/>
   <LegServiceAgencyReports ID="292" Title="Probate, Estates and Fiduciaries Code: Proposed Amendments and Comments, 1979: Including a Study of the Impact of Inheritance Taxes on Decedents&apos; Domicile" Organization="Joint State Government Commission" Year="1979" Month="5" Day="0" Hyperlink="#http://jsg.legis.state.pa.us/11_16_may%201979%20del_20091113140238.pdf#" Abstract="This report examines proposed changes to the Probate, Estates and Fiduciaries Code, this Includes a study of the impact of inheritance taxes on decedents&apos; estates, amongst other things." LegRequest="0" Recomendation="1" Tax="1" Elderly="0" Initials="DGL" FinalCode="1212"/>
+  <PennsylvaniaGeneralFundBalance ID="2" Year="1979" Beginning_Balance="0" Revenues="0" Adjustements="0" Total_Resources="5892" Expenditures="5861" Adjustments="0" Ending_Balance="30" Budget_Stabilization_Fund="0"/>
+  <PennsylvaniaGeneralFundBalance ID="3" Year="1980" Beginning_Balance="0" Revenues="6407" Adjustements="0" Total_Resources="6491" Expenditures="6424" Adjustments="0" Ending_Balance="68" Budget_Stabilization_Fund="0"/>
+  <PennsylvaniaGeneralFundBalance ID="4" Year="1981" Beginning_Balance="0" Revenues="6710" Adjustements="0" Total_Resources="6872" Expenditures="6802" Adjustments="0" Ending_Balance="72" Budget_Stabilization_Fund="0"/>
+  <PennsylvaniaGeneralFundBalance ID="5" Year="1982" Beginning_Balance="72" Revenues="7076" Adjustements="41" Total_Resources="7190" Expenditures="7182" Adjustments="0" Ending_Balance="8" Budget_Stabilization_Fund="0"/>
+  <PennsylvaniaGeneralFundBalance ID="6" Year="1983" Beginning_Balance="7" Revenues="7321" Adjustements="41" Total_Resources="7369" Expenditures="7604" Adjustments="0" Ending_Balance="-235" Budget_Stabilization_Fund="0"/>
+  <PennsylvaniaGeneralFundBalance ID="7" Year="1984" Beginning_Balance="-235" Revenues="8257" Adjustements="45" Total_Resources="8067" Expenditures="7991" Adjustments="0" Ending_Balance="76" Budget_Stabilization_Fund="0"/>
+  <PennsylvaniaGeneralFundBalance ID="8" Year="1985" Beginning_Balance="76" Revenues="8748" Adjustements="40" Total_Resources="8864" Expenditures="8559" Adjustments="0" Ending_Balance="305" Budget_Stabilization_Fund="0"/>
+  <PennsylvaniaGeneralFundBalance ID="9" Year="1986" Beginning_Balance="310" Revenues="9395" Adjustements="-152" Total_Resources="9553" Expenditures="9185" Adjustments="-155" Ending_Balance="213" Budget_Stabilization_Fund="25"/>
+  <PennsylvaniaGeneralFundBalance ID="10" Year="1987" Beginning_Balance="213" Revenues="9866" Adjustements="0" Total_Resources="10079" Expenditures="9681" Adjustments="-50" Ending_Balance="348" Budget_Stabilization_Fund="51"/>
+  <PennsylvaniaGeneralFundBalance ID="11" Year="1988" Beginning_Balance="348" Revenues="10264" Adjustements="0" Total_Resources="10612" Expenditures="10517" Adjustments="0" Ending_Balance="95" Budget_Stabilization_Fund="80"/>
+  <PennsylvaniaGeneralFundBalance ID="12" Year="1989" Beginning_Balance="95" Revenues="11260" Adjustements="0" Total_Resources="11355" Expenditures="10970" Adjustments="0" Ending_Balance="385" Budget_Stabilization_Fund="112"/>
+  <PennsylvaniaGeneralFundBalance ID="13" Year="1990" Beginning_Balance="385" Revenues="11571" Adjustements="0" Total_Resources="11956" Expenditures="11820" Adjustments="0" Ending_Balance="136" Budget_Stabilization_Fund="127"/>
+  <PennsylvaniaGeneralFundBalance ID="14" Year="1991" Beginning_Balance="136" Revenues="11831" Adjustements="0" Total_Resources="11967" Expenditures="12421" Adjustments="0" Ending_Balance="-454" Budget_Stabilization_Fund="2"/>
+  <PennsylvaniaGeneralFundBalance ID="15" Year="1992" Beginning_Balance="-454" Revenues="14220" Adjustements="0" Total_Resources="13766" Expenditures="13757" Adjustments="0" Ending_Balance="9" Budget_Stabilization_Fund="2"/>
+  <PennsylvaniaGeneralFundBalance ID="16" Year="1993" Beginning_Balance="9" Revenues="14169" Adjustements="0" Total_Resources="14178" Expenditures="13960" Adjustments="0" Ending_Balance="218" Budget_Stabilization_Fund="5"/>
+  <PennsylvaniaGeneralFundBalance ID="17" Year="1994" Beginning_Balance="218" Revenues="14996" Adjustements="56" Total_Resources="15270" Expenditures="14935" Adjustments="33" Ending_Balance="302" Budget_Stabilization_Fund="30"/>
+  <PennsylvaniaGeneralFundBalance ID="18" Year="1995" Beginning_Balance="302" Revenues="15765" Adjustements="148" Total_Resources="16215" Expenditures="15732" Adjustments="-54" Ending_Balance="429" Budget_Stabilization_Fund="66"/>
+  <PennsylvaniaGeneralFundBalance ID="19" Year="1996" Beginning_Balance="429" Revenues="15822" Adjustements="96" Total_Resources="16347" Expenditures="16279" Adjustments="88" Ending_Balance="156" Budget_Stabilization_Fund="211"/>
+  <PennsylvaniaGeneralFundBalance ID="20" Year="1997" Beginning_Balance="156" Revenues="16781" Adjustements="121" Total_Resources="17058" Expenditures="16548" Adjustments="-107" Ending_Balance="403" Budget_Stabilization_Fund="411"/>
+  <PennsylvaniaGeneralFundBalance ID="21" Year="1998" Beginning_Balance="403" Revenues="17213" Adjustements="103" Total_Resources="17719" Expenditures="17289" Adjustments="165" Ending_Balance="265" Budget_Stabilization_Fund="655"/>
+  <PennsylvaniaGeneralFundBalance ID="22" Year="1999" Beginning_Balance="265" Revenues="18583" Adjustements="118" Total_Resources="18966" Expenditures="18368" Adjustments="151" Ending_Balance="447" Budget_Stabilization_Fund="941"/>
+  <PennsylvaniaGeneralFundBalance ID="23" Year="2000" Beginning_Balance="448" Revenues="19442" Adjustements="124" Total_Resources="20014" Expenditures="19295" Adjustments="108" Ending_Balance="611" Budget_Stabilization_Fund="1097"/>
+  <PennsylvaniaGeneralFundBalance ID="24" Year="2001" Beginning_Balance="611" Revenues="19443" Adjustements="144" Total_Resources="20197" Expenditures="19862" Adjustments="0" Ending_Balance="335" Budget_Stabilization_Fund="1127"/>
+  <PennsylvaniaGeneralFundBalance ID="25" Year="2002" Beginning_Balance="335" Revenues="19093" Adjustements="1144" Total_Resources="20572" Expenditures="20429" Adjustments="0" Ending_Balance="143" Budget_Stabilization_Fund="0"/>
+  <PennsylvaniaGeneralFundBalance ID="26" Year="2003" Beginning_Balance="143" Revenues="20385" Adjustements="152" Total_Resources="20679" Expenditures="20400" Adjustments="70" Ending_Balance="209" Budget_Stabilization_Fund="70"/>
+  <PennsylvaniaGeneralFundBalance ID="27" Year="2004" Beginning_Balance="209" Revenues="21813" Adjustements="130" Total_Resources="22152" Expenditures="21885" Adjustments="190" Ending_Balance="77" Budget_Stabilization_Fund="260"/>
+  <PennsylvaniaGeneralFundBalance ID="28" Year="2005" Beginning_Balance="77" Revenues="23309" Adjustements="98" Total_Resources="23483" Expenditures="23054" Adjustments="64" Ending_Balance="365" Budget_Stabilization_Fund="329"/>
+  <PennsylvaniaGeneralFundBalance ID="29" Year="2006" Beginning_Balance="365" Revenues="24819" Adjustements="166" Total_Resources="25350" Expenditures="24665" Adjustments="171" Ending_Balance="514" Budget_Stabilization_Fund="512"/>
+  <PennsylvaniaGeneralFundBalance ID="30" Year="2007" Beginning_Balance="514" Revenues="26399" Adjustements="93" Total_Resources="27006" Expenditures="26319" Adjustments="156" Ending_Balance="531" Budget_Stabilization_Fund="713"/>
+  <PennsylvaniaGeneralFundBalance ID="31" Year="2008" Beginning_Balance="531" Revenues="26878" Adjustements="142" Total_Resources="27551" Expenditures="26968" Adjustments="0" Ending_Balance="583" Budget_Stabilization_Fund="742"/>
+  <PennsylvaniaGeneralFundBalance ID="32" Year="2009" Beginning_Balance="583" Revenues="24305" Adjustements="166" Total_Resources="25054" Expenditures="27084" Adjustments="0" Ending_Balance="-2030" Budget_Stabilization_Fund="755"/>
+  <PennsylvaniaGeneralFundBalance ID="33" Year="2010" Beginning_Balance="-2030" Revenues="26523" Adjustements="2854" Total_Resources="27346" Expenditures="27641" Adjustments="0" Ending_Balance="-294" Budget_Stabilization_Fund="1"/>
+  <Deflator Year="1977" GDP="1973.5" Price_Index="0.375" ID="1"/>
+  <Deflator Year="1978" GDP="2217.5" Price_Index="0.4003" ID="2"/>
+  <Deflator Year="1979" GDP="2501.4" Price_Index="0.4325" ID="3"/>
+  <Deflator Year="1980" GDP="2724.2" Price_Index="0.4707" ID="4"/>
+  <Deflator Year="1981" GDP="3057.0" Price_Index="0.5171" ID="5"/>
+  <Deflator Year="1982" GDP="3223.7" Price_Index="0.5525" ID="6"/>
+  <Deflator Year="1983" GDP="3440.7" Price_Index="0.5768" ID="7"/>
+  <Deflator Year="1984" GDP="3844.4" Price_Index="0.5981" ID="8"/>
+  <Deflator Year="1985" GDP="4146.3" Price_Index="0.6175" ID="9"/>
+  <Deflator Year="1986" GDP="4403.9" Price_Index="0.6318" ID="10"/>
+  <Deflator Year="1987" GDP="4651.4" Price_Index="0.6486" ID="11"/>
+  <Deflator Year="1988" GDP="5008.5" Price_Index="0.6694" ID="12"/>
+  <Deflator Year="1989" GDP="5399.5" Price_Index="0.6954" ID="13"/>
+  <Deflator Year="1990" GDP="5734.5" Price_Index="0.721" ID="14"/>
+  <Deflator Year="1991" GDP="5930.5" Price_Index="0.7483" ID="15"/>
+  <Deflator Year="1992" GDP="6242.0" Price_Index="0.7678" ID="16"/>
+  <Deflator Year="1993" GDP="6587.3" Price_Index="0.7848" ID="17"/>
+  <Deflator Year="1994" GDP="6976.6" Price_Index="0.8014" ID="18"/>
+  <Deflator Year="1995" GDP="7341.1" Price_Index="0.8184" ID="19"/>
+  <Deflator Year="1996" GDP="7718.3" Price_Index="0.8342" ID="20"/>
+  <Deflator Year="1997" GDP="8211.7" Price_Index="0.8495" ID="21"/>
+  <Deflator Year="1998" GDP="8663.0" Price_Index="0.8603" ID="22"/>
+  <Deflator Year="1999" GDP="9208.4" Price_Index="0.8717" ID="23"/>
+  <Deflator Year="2000" GDP="9821.0" Price_Index="0.8889" ID="24"/>
+  <Deflator Year="2001" GDP="10225.3" Price_Index="0.9099" ID="25"/>
+  <Deflator Year="2002" GDP="10543.9" Price_Index="0.9249" ID="26"/>
+  <Deflator Year="2003" GDP="10979.8" Price_Index="0.9442" ID="27"/>
+  <Deflator Year="2004" GDP="11685.6" Price_Index="0.9684" ID="28"/>
+  <Deflator Year="2005" GDP="12445.7" Price_Index="1.0" ID="29"/>
+  <Deflator Year="2006" GDP="13224.9" Price_Index="1.0342" ID="30"/>
+  <Deflator Year="2007" GDP="13891.8" Price_Index="1.0654" ID="31"/>
+  <Deflator Year="2008" GDP="14394.1" Price_Index="1.0898" ID="32"/>
+  <Deflator Year="2009" GDP="14097.5" Price_Index="1.1043" ID="33"/>
+  <Deflator Year="2010" GDP="14508.2" Price_Index="1.1127" ID="34"/>
 </dataset>

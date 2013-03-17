@@ -75,6 +75,30 @@ public class TestDatabase {
 "  FinalCode integer DEFAULT NULL,\n" +
 "  PRIMARY KEY (ID)\n" +
 ")";
+
+    private static String createPennsylvaniaGeneralFundBalance =
+"CREATE TABLE PennsylvaniaGeneralFundBalance (\n" +
+"  ID integer DEFAULT '0' NOT NULL,\n" +
+"  Year smallint DEFAULT NULL,\n" +
+"  Beginning_Balance smallint DEFAULT NULL,\n" +
+"  Revenues integer DEFAULT NULL,\n" +
+"  Adjustements integer DEFAULT NULL,\n" +
+"  Total_Resources integer DEFAULT NULL,\n" +
+"  Expenditures integer DEFAULT NULL,\n" +
+"  Adjustments integer DEFAULT NULL,\n" +
+"  Ending_Balance integer DEFAULT NULL,\n" +
+"  Budget_Stabilization_Fund integer DEFAULT NULL,\n" +
+"  PRIMARY KEY (ID)\n" +
+")";  
+    
+    private static String createDeflator =
+"CREATE TABLE Deflator (\n" +
+"  Year smallint DEFAULT NULL,\n" +
+"  GDP double DEFAULT NULL,\n" +
+"  Price_Index double DEFAULT NULL,\n" +
+"  ID smallint DEFAULT '0' NOT NULL ,\n" +
+"  PRIMARY KEY (ID)\n" +
+")";
     
     private static DataSource dataSource;
     
@@ -90,6 +114,8 @@ public class TestDatabase {
             s.executeUpdate(createTables);
             s.executeUpdate(createFilters);
             s.executeUpdate(createLegServiceAgencyReports);
+            s.executeUpdate(createPennsylvaniaGeneralFundBalance);
+            s.executeUpdate(createDeflator);
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -104,7 +130,9 @@ public class TestDatabase {
     
     public static void beforeTest() throws Exception {
         IDatabaseTester databaseTester = new JdbcDatabaseTester("org.hsqldb.jdbcDriver", "jdbc:hsqldb:mem:PAPolicy", "SA", "");
-        IDataSet dataSet = new FlatXmlDataSetBuilder().build(new FileInputStream("partial.xml"));
+        FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();
+        builder.setColumnSensing(true);
+        IDataSet dataSet = builder.build(new FileInputStream("partial.xml"));
         IDatabaseConnection connection = databaseTester.getConnection();
         DatabaseConfig config = connection.getConfig();
         config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new HsqldbDataTypeFactory());

@@ -106,10 +106,8 @@ public class Column {
         stb.append(startYear);
         stb.append(" AND ");
         stb.append(endYear);
-        stb.append(" GROUP BY ");
-        stb.append(table.getYearColumn());
-        stb.append(" ORDER BY ");
-        stb.append(table.getYearColumn());
+        stb.append(" GROUP BY TheYear");
+        stb.append(" ORDER BY TheYear");
         return stb.toString();
     }
 
@@ -124,10 +122,8 @@ public class Column {
         stb.append(startYear);
         stb.append(" AND ");
         stb.append(endYear);
-        stb.append(" GROUP BY ");
-        stb.append(table.getYearColumn());
-        stb.append(" ORDER BY ");
-        stb.append(table.getYearColumn());
+        stb.append(" GROUP BY TheYear");
+        stb.append(" ORDER BY TheYear");
         return stb.toString();
     }
 
@@ -156,10 +152,8 @@ public class Column {
         stb.append(startYear);
         stb.append(" AND ");
         stb.append(endYear);
-        stb.append(" GROUP BY ");
-        stb.append(table.getYearColumn());
-        stb.append(" ORDER BY ");
-        stb.append(table.getYearColumn());
+        stb.append(" GROUP BY TheYear");
+        stb.append(" ORDER BY TheYear");
         return stb.toString();
     }
 

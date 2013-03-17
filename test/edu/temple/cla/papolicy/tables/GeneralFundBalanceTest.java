@@ -147,7 +147,7 @@ public class GeneralFundBalanceTest {
 
     @Test
     public void testGetTopicQueryStringNoRainyDay() {
-        String expected = "SELECT Year AS TheYear, Ending_Balance  AS TheValue "
+        String expected = "SELECT Year AS TheYear, SUM(Ending_Balance)  AS TheValue "
                 + "FROM PennsylvaniaGeneralFundBalance WHERE ";
         Topic topic = new Topic();
         topic.setCode(6);
@@ -162,7 +162,7 @@ public class GeneralFundBalanceTest {
 
     @Test
     public void testGetTopicQueryStringRainyDay() {
-        String expected = "SELECT Year AS TheYear, Ending_Balance + Budget_Stabilization_Fund  "
+        String expected = "SELECT Year AS TheYear, SUM(Ending_Balance + Budget_Stabilization_Fund)  "
                 + "AS TheValue FROM PennsylvaniaGeneralFundBalance WHERE ";
         Topic topic = new Topic();
         topic.setCode(6);

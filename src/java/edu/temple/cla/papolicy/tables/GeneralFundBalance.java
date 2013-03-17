@@ -84,9 +84,9 @@ public class GeneralFundBalance extends BudgetTable {
         stb.append(getYearColumn());
         stb.append(" AS TheYear, ");
         if (includeRainyDay) {
-            stb.append("Ending_Balance + Budget_Stabilization_Fund ");
+            stb.append("SUM(Ending_Balance + Budget_Stabilization_Fund) ");
         } else {
-            stb.append("Ending_Balance ");
+            stb.append("SUM(Ending_Balance) ");
         }
         stb.append(" AS TheValue ");
         stb.append("FROM ");
