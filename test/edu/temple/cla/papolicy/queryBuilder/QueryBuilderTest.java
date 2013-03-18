@@ -105,7 +105,7 @@ public class QueryBuilderTest {
         qb.setBetween(new Between("a","3","7"));
         qb.setGroupBy("a");
         qb.setOrderBy("a");
-        assertEquals("SELECT a, b FROM BooBar WHERE a=5 AND b<>7 AND a BETWEEN 3 AND 5 GROUP BY a ORDER BY a", qb.build());
+        assertEquals("SELECT a, b FROM BooBar WHERE a=5 AND b<>5 AND a BETWEEN 3 AND 7 GROUP BY a ORDER BY a", qb.build());
     }
     
 }
