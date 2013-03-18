@@ -22,7 +22,7 @@ public class QueryBuilderTest {
     @Before
     public void setUp() {
         qb = new QueryBuilder();
-        qb.setDbName("BooBar");
+        qb.setTable("BooBar");
     }
     
     @Test

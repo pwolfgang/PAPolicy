@@ -5,6 +5,7 @@
 package edu.temple.cla.papolicy.queryBuilder;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -34,7 +35,7 @@ public class Composite implements Expression {
             }
         }
     }
-    
+
     /**
      * Determine if composite is empty
      */
@@ -48,6 +49,10 @@ public class Composite implements Expression {
     public List<Expression> getTerms() {
         return terms;
     }
+    
+    public boolean isEmptyExpression() {
+        return terms == null;
+    }
 
     /**
      * Return a string representation. If there are no terms, return an empty
@@ -59,22 +64,30 @@ public class Composite implements Expression {
     public String toString(String operator, boolean noParen) {
         if (terms == null) {
             return "";
-        } else if (terms.size() == 1) {
-            return terms.get(0).toString();
         } else {
-            StringBuilder sb = new StringBuilder();
-            if (!noParen) {
-                sb.append("(");
+            for (Iterator<Expression> itr = terms.iterator(); itr.hasNext();) {
+                Expression e = itr.next();
+                if (e.isEmptyExpression()) {
+                    itr.remove();
+                }
             }
-            sb.append(terms.get(0));
-            for (int i = 1; i < terms.size(); i++) {
-                sb.append(operator);
-                sb.append(terms.get(i));
+            if (terms.size() == 1) {
+                return terms.get(0).toString();
+            } else {
+                StringBuilder sb = new StringBuilder();
+                if (!noParen) {
+                    sb.append("(");
+                }
+                sb.append(terms.get(0));
+                for (int i = 1; i < terms.size(); i++) {
+                    sb.append(operator);
+                    sb.append(terms.get(i));
+                }
+                if (!noParen) {
+                    sb.append(")");
+                }
+                return sb.toString();
             }
-            if (!noParen) {
-                sb.append(")");
-            }
-            return sb.toString();
         }
     }
 }

@@ -9,10 +9,11 @@ import java.util.List;
  */
 public class QueryBuilder implements Cloneable {
     
-    private String dbName;
+    private String table;
     private List<String> columnNames;
     private Conjunction selectCriteria;
     private Conjunction filters;
+    private Expression topic;
     private Between between;
     private String groupBy;
     private String orderBy;
@@ -37,11 +38,12 @@ public class QueryBuilder implements Cloneable {
             }
         }
         sb.append("FROM ");
-        sb.append(dbName);
+        sb.append(table);
         Conjunction selectAndFilters = new Conjunction();
         selectAndFilters.addTerm(selectCriteria);
         selectAndFilters.addTerm(filters);
         selectAndFilters.addTerm(between);
+        selectAndFilters.addTerm(topic);
         if (!selectAndFilters.isEmpty()) {
             sb.append(" WHERE ");
             sb.append(selectAndFilters.toStringNoParen());
@@ -60,8 +62,8 @@ public class QueryBuilder implements Cloneable {
     /**
      * Set the database name
      */
-    public void setDbName(String dbName) {
-        this.dbName = dbName;
+    public void setTable(String table) {
+        this.table = table;
     }
     
     /**
@@ -107,6 +109,14 @@ public class QueryBuilder implements Cloneable {
     public void clearFilters() {
         filters = null;
     }
+    
+    /**
+     * Set the topic
+     * @param e The topic selection expression
+     */
+    public void setTopic(Expression e) {
+        topic = e;
+    };
     
     /**
      * Add a between criteria

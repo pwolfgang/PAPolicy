@@ -15,6 +15,8 @@ public interface Expression {
      * @return a string representation of the expression
      */
     @Override
-    public String toString();
+    String toString();
+    
+    boolean isEmptyExpression();
     
 }

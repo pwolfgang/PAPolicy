@@ -14,6 +14,10 @@ import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.dao.YearValueMapper;
 import edu.temple.cla.papolicy.filters.Filter;
+import edu.temple.cla.papolicy.queryBuilder.Comparison;
+import edu.temple.cla.papolicy.queryBuilder.Conjunction;
+import edu.temple.cla.papolicy.queryBuilder.Like;
+import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -48,9 +52,9 @@ public abstract class AbstractTable implements Table {
     private String noteColumn;
     private List<Filter> filterList;
     private SimpleJdbcTemplate jdbcTemplate;
-    private String filterQueryString = null;
-    private String totalUnfilteredQueryString = null;
-    private String totalFilteredQueryString = null;
+    private Conjunction filterQuery;
+    private QueryBuilder totalUnfilteredQuery;
+    private QueryBuilder totalFilteredQuery;
 
     /**
      * @return the id
@@ -224,25 +228,18 @@ public abstract class AbstractTable implements Table {
         return stb;
     }
 
-    public String getFilterQueryString() {
-        if (filterQueryString == null) {
-            StringBuilder stb = new StringBuilder();
-            ArrayList<String> filterQueryStrings = new ArrayList<String>();
+    public Conjunction getFilterQuery() {
+        if (filterQuery == null) {
+            filterQuery = new Conjunction();
             for (Filter filter : filterList) {
-                if (!"".equals(filter.getFilterQueryString())) {
-                    filterQueryStrings.add(filter.getFilterQueryString());
-                }
+                filterQuery.addTerm(filter.getFilterQuery());
             }
-            if (filterQueryStrings.size() != 0) {
-                stb.append(filterQueryStrings.get(0));
-                for (int i = 1; i < filterQueryStrings.size(); i++) {
-                    stb.append(" AND ");
-                    stb.append(filterQueryStrings.get(i));
-                }
-            }
-            filterQueryString = stb.toString();
         }
-        return filterQueryString;
+        return filterQuery;
+    }
+    
+    public String getFilterQueryString() {
+        return getFilterQuery().toStringNoParen();
     }
 
     public boolean isTopicSearchable() {return true;}
@@ -251,52 +248,47 @@ public abstract class AbstractTable implements Table {
         // do nothing in base class
     }
 
+    public QueryBuilder getUnfilteredTotalQuery() {
+        if (totalUnfilteredQuery == null) {
+            totalUnfilteredQuery = new QueryBuilder();
+            totalUnfilteredQuery.addColumn(yearColumn + " AS TheYear");
+            totalUnfilteredQuery.addColumn("count(ID) AS TheValue");
+            totalUnfilteredQuery.setTable(tableName);
+        }
+        return totalUnfilteredQuery;
+    }
+
     public String getUnfilteredTotalQueryString() {
-        if (totalUnfilteredQueryString == null) {
-            StringBuilder stb = new StringBuilder("SELECT ");
-            stb.append(yearColumn);
-            stb.append(" AS TheYear, count(ID) AS TheValue FROM ");
-            stb.append(tableName);
-            stb.append(" WHERE ");
-            totalUnfilteredQueryString = stb.toString();
-        }
-        return totalUnfilteredQueryString;
+        return getUnfilteredTotalQuery().build() + " WHERE ";
     }
 
+    public QueryBuilder getFilteredTotalQuery() {
+        if (totalFilteredQuery == null) {
+            totalFilteredQuery = getUnfilteredTotalQuery().clone();
+            totalFilteredQuery.addFilter(getFilterQuery());
+        }
+        return totalFilteredQuery;
+    }
+    
     public String getFilteredTotalQueryString() {
-        if (totalFilteredQueryString == null) {
-            StringBuilder stb = new StringBuilder(getUnfilteredTotalQueryString());
-            String filterQueryString = getFilterQueryString();
-            if (filterQueryString != null && !filterQueryString.isEmpty()) {
-                if (!getUnfilteredTotalQueryString().endsWith("WHERE ")) {
-                    stb.append(" AND ");
-                }
-                stb.append(getFilterQueryString());
-            }
-            totalFilteredQueryString = stb.toString();
-        }
-        return totalFilteredQueryString;
-    }
+        return getFilteredTotalQuery().build();
+    }    
 
-    public String getTopicQueryString(Topic topic) {
-        StringBuilder stb = new StringBuilder(getFilteredTotalQueryString());
+    public QueryBuilder getTopicQuery(Topic topic) {
+        QueryBuilder topicQuery = getFilteredTotalQuery().clone();
         if (topic != null && topic.getCode() != 0) {
-            if (!getFilteredTotalQueryString().endsWith("WHERE ")) {
-                stb.append(" AND ");
-            }
             if (isMajorOnly() || topic.getCode() >= 100) {
-                stb.append(getCodeColumn());
-                stb.append("=");
-                stb.append(topic.getCode());
+                topicQuery.setTopic(new Comparison(getCodeColumn(), "=", Integer.toString(topic.getCode())));
             } else {
-                stb.append(getCodeColumn());
-                stb.append(" LIKE('");
-                stb.append(topic.getCode());
-                stb.append("__')");
+                topicQuery.setTopic(new Like(getCodeColumn(), topic.getCode()));
             }
         }
-        return stb.toString();
+        return topicQuery;
     }
+    
+    public String getTopicQueryString(Topic topic) {
+        return getTopicQuery(topic).build();
+    }    
 
     public String getYearColumn() {return yearColumn;}
 

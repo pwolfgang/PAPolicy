@@ -17,4 +17,8 @@ public class Comparison implements Expression {
         return lhs+operator+rhs;
     }
 
+    @Override
+    public boolean isEmptyExpression() {
+        return false;
+    }
 }

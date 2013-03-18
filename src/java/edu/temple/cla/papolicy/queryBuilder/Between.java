@@ -17,5 +17,9 @@ public class Between implements Expression {
         return column + " BETWEEN " + lowValue + " AND " + hiValue;
     }
     
+    @Override
+    public boolean isEmptyExpression() {
+        return false;
+    }
 
 }
