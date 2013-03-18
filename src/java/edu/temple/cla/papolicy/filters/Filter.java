@@ -5,6 +5,7 @@
 
 package edu.temple.cla.papolicy.filters;
 
+import edu.temple.cla.papolicy.queryBuilder.Expression;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
@@ -21,6 +22,7 @@ public abstract class Filter {
     private String tableReference;
     private String additionalParam;
     private SimpleJdbcTemplate jdbcTemplate;
+    protected Expression filterQuery;
 
     public Filter(int id, int tableId, String description, String columnName,
             String tableReference, String additionalParam) {
@@ -78,7 +80,13 @@ public abstract class Filter {
 
     public abstract void setFilterParameterValues(HttpServletRequest request);
 
-    public abstract String getFilterQueryString();
+    public String getFilterQueryString() {
+        return filterQuery != null ? filterQuery.toString() : "";
+    }
+    
+    public Expression getFilterQuery() {
+        return filterQuery;
+    }
 
     public abstract String getFilterQualifier();
 

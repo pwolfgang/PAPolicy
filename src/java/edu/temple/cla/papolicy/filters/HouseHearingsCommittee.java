@@ -9,7 +9,6 @@ import edu.temple.cla.papolicy.dao.CommitteeName;
 import edu.temple.cla.papolicy.dao.CommitteeNameMapper;
 import edu.temple.cla.papolicy.queryBuilder.Comparison;
 import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
-import edu.temple.cla.papolicy.queryBuilder.Expression;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
@@ -21,7 +20,6 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 public class HouseHearingsCommittee extends Filter {
 
     private String ctyCode;
-    private Expression filterQuery;
     private String filterQuallifierString;
 
     public HouseHearingsCommittee(int id, int tableId, String description,
@@ -62,10 +60,6 @@ public class HouseHearingsCommittee extends Filter {
         setFilterQualifier();
     }
 
-    public String getFilterQueryString() {
-        return filterQuery.toString();
-    }
-    
     public void setFilterQualifier() {
         if (ctyCode != null && !ctyCode.equals("ALL")) {
             ParameterizedRowMapper<CommitteeName> itemMapper = new CommitteeNameMapper();

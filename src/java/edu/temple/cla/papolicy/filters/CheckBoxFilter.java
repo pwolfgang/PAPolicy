@@ -7,7 +7,6 @@ package edu.temple.cla.papolicy.filters;
 
 import edu.temple.cla.papolicy.queryBuilder.Comparison;
 import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
-import edu.temple.cla.papolicy.queryBuilder.Expression;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -19,7 +18,6 @@ public class CheckBoxFilter extends Filter {
     private String parameterName;
     private String parameterValue;
 
-    private Expression filterQuery;
     private String filterQualifier;
 
     public CheckBoxFilter(int id, int tableId, String description,
@@ -37,10 +35,6 @@ public class CheckBoxFilter extends Filter {
     public void setFilterParameterValues(HttpServletRequest request) {
         parameterValue = request.getParameter(parameterName);
         buildFilterStrings();
-    }
-
-    public String getFilterQueryString() {
-        return filterQuery.toString();
     }
 
     private void buildFilterStrings() {

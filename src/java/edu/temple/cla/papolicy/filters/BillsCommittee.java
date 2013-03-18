@@ -28,7 +28,6 @@ public class BillsCommittee extends Filter {
     private String parameterValue;
     private String primaryValue;
     private String filterQualifier;
-    private Expression filterQuery;
     private String chamberNumber;
 
     public BillsCommittee(int id, int tableId, String description, 
@@ -70,10 +69,6 @@ public class BillsCommittee extends Filter {
         }
         stb.append("</select>");
         return stb.toString();
-    }
-
-    public String getFilterQueryString() {
-        return filterQuery.toString();
     }
 
     void buildFilterStrings() {

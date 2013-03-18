@@ -9,7 +9,6 @@ import edu.temple.cla.papolicy.dao.DropDownItemMapper;
 import edu.temple.cla.papolicy.dao.DropDownItem;
 import edu.temple.cla.papolicy.queryBuilder.Comparison;
 import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
-import edu.temple.cla.papolicy.queryBuilder.Expression;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
@@ -23,7 +22,6 @@ public class DropDown extends Filter {
     private String parameterName;
     private String parameterValue;
 
-    private Expression filterQuery;
     private String filterQualifier;
 
     public DropDown(int id, int tableId, String description,

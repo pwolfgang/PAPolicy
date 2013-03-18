@@ -6,7 +6,6 @@
 package edu.temple.cla.papolicy.filters;
 
 import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
-import edu.temple.cla.papolicy.queryBuilder.Expression;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 public class PublicOpinionFilters extends Filter {
 
     private String mipdisp;
-    private Expression filterQuery;
 
     public PublicOpinionFilters(int id, int tableId, String description,
             String columnName, String tableReference, String additionalParam) {
@@ -34,11 +32,6 @@ public class PublicOpinionFilters extends Filter {
     @Override
     public void setFilterParameterValues(HttpServletRequest request){
         mipdisp = request.getParameter("mipdisp");
-    }
-
-    @Override
-    public String getFilterQueryString() {
-        return filterQuery.toString();
     }
 
     @Override

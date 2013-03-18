@@ -21,6 +21,7 @@ public class HearingsCommittee extends Filter {
             String columnName, String tableReference, String additionalParam) {
         super(id, tableId, description, columnName, tableReference,
                 additionalParam);
+        filterQuery = null;
     }
 
     @Override
@@ -47,10 +48,6 @@ public class HearingsCommittee extends Filter {
 
     public void setFilterParameterValues(HttpServletRequest request) {
 
-    }
-
-    public String getFilterQueryString() {
-        return "";
     }
 
     public String getFilterQualifier() {

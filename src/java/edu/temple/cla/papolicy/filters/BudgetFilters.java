@@ -7,8 +7,6 @@ package edu.temple.cla.papolicy.filters;
 
 import edu.temple.cla.papolicy.dao.DeflatorMapper;
 import edu.temple.cla.papolicy.dao.Deflator;
-import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
-import edu.temple.cla.papolicy.queryBuilder.Expression;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
@@ -25,7 +23,6 @@ public class BudgetFilters extends Filter {
     private String dispParameterValue;
     private String adjustParameterValue;
     private String baseYearParameterValue;
-    private Expression filterQuery;
 
     public BudgetFilters(int id, int tableId, String description,
             String columnName, String tableReference, String additionalParam) {
@@ -70,11 +67,6 @@ public class BudgetFilters extends Filter {
         dispParameterValue = request.getParameter(dispParameterName);
         adjustParameterValue = request.getParameter(adjustParameterName);
         baseYearParameterValue = request.getParameter(baseYearParameterName);
-    }
-
-    public String getFilterQueryString() {
-        filterQuery = new EmptyExpression();
-        return filterQuery.toString();
     }
 
     public String getFilterQualifier() {

@@ -12,7 +12,6 @@ import edu.temple.cla.papolicy.queryBuilder.Composite;
 import edu.temple.cla.papolicy.queryBuilder.Conjunction;
 import edu.temple.cla.papolicy.queryBuilder.Disjunction;
 import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
-import edu.temple.cla.papolicy.queryBuilder.Expression;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
@@ -29,7 +28,6 @@ public class MultiValuedFilter extends Filter {
     private String selectParameterValue;
     private String[] valuesParameterValues;
 
-    private Expression filterQuery;
     private String filterQualifier;
     
     public MultiValuedFilter(int id, int tableId, String description,
@@ -68,10 +66,6 @@ public class MultiValuedFilter extends Filter {
         if (selectParameterValue != null) {
             buildFilterStrings();
         }
-    }
-
-    public String getFilterQueryString() {
-        return filterQuery.toString();
     }
 
     private void buildFilterStrings() {

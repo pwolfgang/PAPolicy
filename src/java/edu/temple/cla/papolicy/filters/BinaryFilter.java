@@ -16,7 +16,6 @@ public class BinaryFilter extends Filter {
     private String parameterValue;
     private static final String BOTH = "587";
     private String filterQualifier;
-    private Expression filterQuery;
 
     public BinaryFilter(int id, int tableId, String description, 
             String columnName, String tableReference, String additionalParam) {
@@ -39,10 +38,6 @@ public class BinaryFilter extends Filter {
         if (parameterValue != null) {
             buildFilterStrings();
         }
-    }
-
-    public String getFilterQueryString() {
-        return filterQuery.toString();
     }
 
     private void buildFilterStrings() {

@@ -20,7 +20,6 @@ public class Mention extends Filter {
     private String parameterName;
     private String parameterValue;
 
-    private Expression filterQuery;
     private String filterQualifier;
 
     public Mention(int id, int tableId, String description,
@@ -42,10 +41,6 @@ public class Mention extends Filter {
     public void setFilterParameterValues(HttpServletRequest request) {
         parameterValue = request.getParameter(parameterName);
         buildFilterStrings();
-    }
-
-    public String getFilterQueryString() {
-        return filterQuery.toString();
     }
 
     private void buildFilterStrings() {
