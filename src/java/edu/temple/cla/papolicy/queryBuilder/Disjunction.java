@@ -1,8 +1,5 @@
 package edu.temple.cla.papolicy.queryBuilder;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * A disjunction is a composite whose terms are separated by OR
  * @author Paul Wolfgang
@@ -18,7 +15,7 @@ public class Disjunction extends Composite {
      */
     @Override
     public String toString() {
-        return toString(" OR ");
+        return toString(" OR ", false);
     }
 
 }

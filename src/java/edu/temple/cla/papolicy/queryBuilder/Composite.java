@@ -9,45 +9,71 @@ import java.util.List;
 
 /**
  * A composite is an expression that contains multiple terms
+ *
  * @author Paul Wolfgang
  */
 public class Composite implements Expression {
-    
+
     protected List<Expression> terms;
 
-    
     /**
      * Add a term
+     *
      * @param e the term to be added
      */
     public void addTerm(Expression e) {
-        if (terms == null) {
-            terms = new ArrayList<>();
+        if (e != null) {
+            if (terms == null) {
+                terms = new ArrayList<>();
+            }
+            if (this.getClass() == e.getClass()) { // Both same kind of Composite
+                Composite composite = (Composite) e;
+                terms.addAll(composite.getTerms());
+            } else {
+                terms.add(e);
+            }
         }
-        terms.add(e);
     }
     
     /**
-     * Return a string representation.
-     * If there are no terms, return an empty string
-     * If there is only one term, return that term
-     * Otherwise return the terms separated by OR
-     * @return 
+     * Determine if composite is empty
      */
-    public String toString(String operator) {
+    public boolean isEmpty() {
+        return terms == null || terms.isEmpty();
+    }
+
+    /**
+     * Get the list of terms
+     */
+    public List<Expression> getTerms() {
+        return terms;
+    }
+
+    /**
+     * Return a string representation. If there are no terms, return an empty
+     * string If there is only one term, return that term Otherwise return the
+     * terms separated by operator
+     *
+     * @return
+     */
+    public String toString(String operator, boolean noParen) {
         if (terms == null) {
             return "";
         } else if (terms.size() == 1) {
             return terms.get(0).toString();
         } else {
             StringBuilder sb = new StringBuilder();
-            sb.append("(");
+            if (!noParen) {
+                sb.append("(");
+            }
             sb.append(terms.get(0));
             for (int i = 1; i < terms.size(); i++) {
                 sb.append(operator);
                 sb.append(terms.get(i));
             }
-            sb.append(")");
+            if (!noParen) {
+                sb.append(")");
+            }
             return sb.toString();
         }
     }
