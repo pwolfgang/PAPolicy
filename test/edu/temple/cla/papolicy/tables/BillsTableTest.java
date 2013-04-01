@@ -135,7 +135,8 @@ public class BillsTableTest {
             result = "REGULAR";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE (Bill LIKE ('HB%')) AND  Session NOT LIKE('%-%-%')";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+                + "FROM Bills_Data WHERE Bill LIKE('HB%') AND Session NOT LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQueryString());
     }
 
@@ -150,7 +151,8 @@ public class BillsTableTest {
             result = "REGULAR";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE (Bill LIKE ('SB%')) AND  Session NOT LIKE('%-%-%')";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+                + "FROM Bills_Data WHERE Bill LIKE('SB%') AND Session NOT LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQueryString());
     }
 
@@ -165,7 +167,8 @@ public class BillsTableTest {
             result = "REGULAR";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE (Bill LIKE ('SR%')) AND  Session NOT LIKE('%-%-%')";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+                + "FROM Bills_Data WHERE Bill LIKE('SR%') AND Session NOT LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQueryString());
     }
 
@@ -180,7 +183,8 @@ public class BillsTableTest {
             result = "REGULAR";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE (Bill LIKE ('HR%')) AND  Session NOT LIKE('%-%-%')";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+                + "FROM Bills_Data WHERE Bill LIKE('HR%') AND Session NOT LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQueryString());
     }
 
@@ -195,7 +199,9 @@ public class BillsTableTest {
             result = "REGULAR";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE (Bill LIKE ('HR%') OR Bill LIKE ('SR%')) AND  Session NOT LIKE('%-%-%')";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+                + "FROM Bills_Data WHERE (Bill LIKE('HR%') OR Bill LIKE('SR%')) "
+                + "AND Session NOT LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQueryString());
     }
 
@@ -210,7 +216,9 @@ public class BillsTableTest {
             result = "REGULAR";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE (Bill LIKE ('HB%') OR Bill LIKE ('SB%')) AND  Session NOT LIKE('%-%-%')";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+                + "FROM Bills_Data WHERE (Bill LIKE('HB%') OR Bill LIKE('SB%')) "
+                + "AND Session NOT LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQueryString());
     }
     
@@ -225,7 +233,8 @@ public class BillsTableTest {
             result = "SPECIAL";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE (Bill LIKE ('HB%') OR Bill LIKE ('SB%')) AND  Session LIKE('%-%-%')";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+                + "FROM Bills_Data WHERE (Bill LIKE('HB%') OR Bill LIKE('SB%')) AND Session LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQueryString());
     }
 
@@ -240,7 +249,8 @@ public class BillsTableTest {
             result = "BOTH";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE (Bill LIKE ('HB%') OR Bill LIKE ('SB%'))";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+                + "FROM Bills_Data WHERE (Bill LIKE('HB%') OR Bill LIKE('SB%'))";
         assertEquals(expected, testTable.getUnfilteredTotalQueryString());
     }
 
@@ -255,7 +265,9 @@ public class BillsTableTest {
             result = "REGULAR";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE (Bill LIKE ('HB%') OR Bill LIKE ('HR%')) AND  Session NOT LIKE('%-%-%')";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+                + "FROM Bills_Data WHERE (Bill LIKE('HB%') OR Bill LIKE('HR%')) "
+                + "AND Session NOT LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQueryString());
     }
 
@@ -270,7 +282,9 @@ public class BillsTableTest {
             result = "REGULAR";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE (Bill LIKE ('SB%') OR Bill LIKE ('SR%')) AND  Session NOT LIKE('%-%-%')";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+                + "FROM Bills_Data WHERE (Bill LIKE('SB%') OR Bill LIKE('SR%')) "
+                + "AND Session NOT LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQueryString());
     }
 
@@ -285,7 +299,8 @@ public class BillsTableTest {
             result = "REGULAR";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue FROM Bills_Data WHERE  Session NOT LIKE('%-%-%')";
+        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+                + "FROM Bills_Data WHERE Session NOT LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQueryString());
     }
 

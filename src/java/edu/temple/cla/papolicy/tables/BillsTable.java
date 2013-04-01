@@ -5,6 +5,10 @@
 
 package edu.temple.cla.papolicy.tables;
 
+import edu.temple.cla.papolicy.queryBuilder.Conjunction;
+import edu.temple.cla.papolicy.queryBuilder.Disjunction;
+import edu.temple.cla.papolicy.queryBuilder.Like;
+import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -119,46 +123,38 @@ public class BillsTable extends AbstractTable {
 
     @Override
     public String getUnfilteredTotalQueryString() {
-        StringBuilder stb = new StringBuilder();
-        stb.append("SELECT ");
-        stb.append(getYearColumn());
-        stb.append(" AS TheYear, count(ID) AS TheValue FROM ");
-        stb.append(getTableName());
-        stb.append(" WHERE ");
+        QueryBuilder builder = new QueryBuilder();
+        builder.setTable(getTableName());
+        builder.addColumn(getYearColumn() + " AS TheYear");
+        builder.addColumn("count(ID) AS TheValue");
         if (!"BOTH".equals(billType) || chamber.length != 2) {
-            StringBuilder chamberSelect = new StringBuilder("(");
+            Disjunction chamberSelect = new Disjunction();
             for (String aChamber : chamber) {
                 if ("BOTH".equals(billType) || ("BILLS".equals(billType))) {
                     if (aChamber.equals("House")) {
-                        chamberSelect.append("Bill LIKE ('HB%')");
+                        chamberSelect.addTerm(new Like("Bill", "HB%"));
                     } else {
-                        chamberSelect.append("Bill LIKE ('SB%')");
+                        chamberSelect.addTerm(new Like("Bill", "SB%"));
                     }
-                    chamberSelect.append(" OR ");
                 }
                 if ("BOTH".equals(billType) || ("RES".equals(billType))) {
                     if (aChamber.equals("House")) {
-                        chamberSelect.append("Bill LIKE ('HR%')");
-                    } else {
-                        chamberSelect.append("Bill LIKE ('SR%')");
+                        chamberSelect.addTerm(new Like("Bill", "HR%")); 
+                   } else {
+                        chamberSelect.addTerm(new Like("Bill", "SR%"));
                     }
-                    chamberSelect.append(" OR ");
                 }
             }
-            stb.append(chamberSelect.subSequence(0, chamberSelect.length()-4));
-            stb.append(")");
+            builder.addToSelectCriteria(chamberSelect);
         }
         if (!sessionType.equals("BOTH")) {
-            if (!stb.toString().endsWith(" WHERE ")) {
-                stb.append(" AND ");
-            }
             if (sessionType.equals("REGULAR")) {
-                stb.append(" Session NOT LIKE('%-%-%')");
+                builder.addToSelectCriteria(new Like("Session", "%-%-%", true));
             } else {
-                stb.append(" Session LIKE('%-%-%')");
+                builder.addToSelectCriteria(new Like("Session", "%-%-%"));
             }
         }
-        return stb.toString();
+        return builder.build();
     }
 
     @Override
