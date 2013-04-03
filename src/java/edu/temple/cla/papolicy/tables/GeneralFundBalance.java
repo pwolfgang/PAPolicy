@@ -6,6 +6,7 @@
 package edu.temple.cla.papolicy.tables;
 
 import edu.temple.cla.papolicy.dao.Topic;
+import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -67,44 +68,43 @@ public class GeneralFundBalance extends BudgetTable {
      * @return Modified query that selects all columns.
      */
     @Override
-    public String createDownloadQuery(String query) {
-        int posFrom = query.indexOf("FROM");
-        StringBuilder stb = new StringBuilder("SELECT *");
-        stb.append(query.substring(posFrom));
-        int posGroup = stb.indexOf("GROUP BY");
-        int posOrder = stb.indexOf("ORDER BY");
-        stb.delete(posGroup, posOrder);
-        return stb.toString();
+    public QueryBuilder createDownloadQuery(QueryBuilder query) {
+        QueryBuilder builder = query.clone();
+        builder.clearColumns();
+        builder.clearGroupBy();
+        return builder;
+    }
+
+    @Override
+    public QueryBuilder getTopicQuery(Topic topic) {
+        QueryBuilder builder = new QueryBuilder();
+        builder.addColumn(getYearColumn() + " AS TheYear");
+        if (includeRainyDay) {
+            builder.addColumn("SUM(Ending_Balance + Budget_Stabilization_Fund) AS TheValue");
+        } else {
+            builder.addColumn("SUM(Ending_Balance) AS TheValue");
+        }
+        builder.setTable(getTableName());
+        return builder;
     }
 
     @Override
     public String getTopicQueryString(Topic topic) {
-        StringBuilder stb = new StringBuilder();
-        stb.append("SELECT ");
-        stb.append(getYearColumn());
-        stb.append(" AS TheYear, ");
-        if (includeRainyDay) {
-            stb.append("SUM(Ending_Balance + Budget_Stabilization_Fund) ");
-        } else {
-            stb.append("SUM(Ending_Balance) ");
-        }
-        stb.append(" AS TheValue ");
-        stb.append("FROM ");
-        stb.append(getTableName());
-        stb.append(" WHERE ");
-        return stb.toString();
+        return getTopicQuery(topic).build() + " WHERE ";
+    }
+
+    @Override
+    public QueryBuilder getUnfilteredTotalQuery() {
+        QueryBuilder builder = new QueryBuilder();
+        builder.addColumn(getYearColumn() + " AS TheYear");
+        builder.addColumn("Expenditures AS TheValue");
+        builder.setTable(getTableName());
+        return builder;
     }
 
     @Override
     public String getUnfilteredTotalQueryString() {
-                StringBuilder stb = new StringBuilder();
-        stb.append("SELECT ");
-        stb.append(getYearColumn());
-        stb.append(" AS TheYear, ");
-        stb.append("Expenditures AS TheValue FROM ");
-        stb.append(getTableName());
-        stb.append(" WHERE ");
-        return stb.toString();
+        return getUnfilteredTotalQuery().build() + " WHERE ";
     }
 
     @Override

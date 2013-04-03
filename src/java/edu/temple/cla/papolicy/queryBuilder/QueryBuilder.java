@@ -42,8 +42,8 @@ public class QueryBuilder implements Cloneable {
         Conjunction selectAndFilters = new Conjunction();
         selectAndFilters.addTerm(selectCriteria);
         selectAndFilters.addTerm(filters);
-        selectAndFilters.addTerm(between);
         selectAndFilters.addTerm(topic);
+        selectAndFilters.addTerm(between);
         if (!selectAndFilters.isEmpty()) {
             sb.append(" WHERE ");
             sb.append(selectAndFilters.toStringNoParen());
@@ -139,11 +139,19 @@ public class QueryBuilder implements Cloneable {
         this.groupBy = groupBy;
     }
     
+    public void clearGroupBy() {
+        this.groupBy = null;
+    }
+    
     /**
      * Set the order by column
      */
     public void setOrderBy(String orderBy) {
         this.orderBy = orderBy;
+    }
+    
+    public void clearOrderBy() {
+        this.orderBy = null;
     }
     
     @Override

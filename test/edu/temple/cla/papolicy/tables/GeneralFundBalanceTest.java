@@ -11,6 +11,8 @@ import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.dao.YearValueMapper;
 import edu.temple.cla.papolicy.filters.BudgetFilters;
 import edu.temple.cla.papolicy.filters.Filter;
+import edu.temple.cla.papolicy.queryBuilder.Between;
+import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
 import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import mockit.Expectations;
@@ -130,7 +132,7 @@ public class GeneralFundBalanceTest {
 
     @Test
     public void testCreateDownloadQuery() {
-        String expected = "SELECT *FROM PennsylvaniaGeneralFundBalance WHERE  "
+        String expected = "SELECT * FROM PennsylvaniaGeneralFundBalance WHERE "
                 + "Year BETWEEN 1991 AND 2006 ORDER BY Year";
         Topic topic = new Topic();
         topic.setCode(6);
@@ -140,14 +142,16 @@ public class GeneralFundBalanceTest {
             result = "0";
         }};
         testTable.setAdditionalParameters(request);
-        String query = testTable.getTopicQueryString(topic) + 
-                " Year BETWEEN 1991 AND 2006 GROUP BY Year ORDER BY Year";
-        assertEquals(expected, testTable.createDownloadQuery(query));
+        QueryBuilder query = testTable.getTopicQuery(topic).clone();
+        query.setBetween(new Between("Year", "1991", "2006"));
+        query.setGroupBy("Year");
+        query.setOrderBy("Year");
+        assertEquals(expected, testTable.createDownloadQuery(query).build());
     }
 
     @Test
     public void testGetTopicQueryStringNoRainyDay() {
-        String expected = "SELECT Year AS TheYear, SUM(Ending_Balance)  AS TheValue "
+        String expected = "SELECT Year AS TheYear, SUM(Ending_Balance) AS TheValue "
                 + "FROM PennsylvaniaGeneralFundBalance WHERE ";
         Topic topic = new Topic();
         topic.setCode(6);
@@ -162,7 +166,7 @@ public class GeneralFundBalanceTest {
 
     @Test
     public void testGetTopicQueryStringRainyDay() {
-        String expected = "SELECT Year AS TheYear, SUM(Ending_Balance + Budget_Stabilization_Fund)  "
+        String expected = "SELECT Year AS TheYear, SUM(Ending_Balance + Budget_Stabilization_Fund) "
                 + "AS TheValue FROM PennsylvaniaGeneralFundBalance WHERE ";
         Topic topic = new Topic();
         topic.setCode(6);

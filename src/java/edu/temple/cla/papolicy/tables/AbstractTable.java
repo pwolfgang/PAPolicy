@@ -406,27 +406,17 @@ public abstract class AbstractTable implements Table {
      * @return Modified query that selects the DrillDown columns and
      * link column if defined.
      */
-    protected String createDrillDownQuery(String query) {
-        int posFrom = query.indexOf("FROM");
-        StringBuilder stb = new StringBuilder("SELECT ");
-        stb.append(getDrillDownColumns()[0]);
-        for (int i = 1; i < getDrillDownColumns().length; i++) {
-            stb.append(", ");
-            stb.append(getDrillDownColumns()[i]);
+    protected QueryBuilder createDrillDownQuery(QueryBuilder query) {
+        QueryBuilder builder = query.clone();
+        builder.clearColumns();
+        for (String column:getDrillDownColumns()) {
+            builder.addColumn(column);
         }
         if (linkColumn != null) {
-            stb.append(", ");
-            stb.append(linkColumn);
-            stb.append(" as Link");
+            builder.addColumn(linkColumn + " as Link");
         }
-        stb.append(" ");
-        stb.append(query.substring(posFrom));
-        int posGroup = stb.indexOf("GROUP BY");
-        int posOrder = stb.indexOf("ORDER BY");
-        if (posGroup != -1 && posOrder != -1) {
-            stb.delete(posGroup, posOrder);
-        }
-        return stb.toString();
+        builder.clearGroupBy();
+        return builder;
     }
 
     /**
@@ -436,9 +426,10 @@ public abstract class AbstractTable implements Table {
      * @param query The query string that gets the count
      * @return the url that will invoke the DrillDownController
      */
-    public String createDrillDownURL(String query) {
-        String drillDownQuery = createDrillDownQuery(query);
-        return "drilldown.spg?query=" + Utility.compressAndEncode(drillDownQuery);
+    @Override
+    public String createDrillDownURL(QueryBuilder query) {
+        QueryBuilder drillDownQuery = createDrillDownQuery(query);
+        return "drilldown.spg?query=" + Utility.compressAndEncode(drillDownQuery.build());
     }
 
     /**
@@ -447,14 +438,12 @@ public abstract class AbstractTable implements Table {
      * @param query The query that gets the count.
      * @return Modified query that selects all columns.
      */
-    public String createDownloadQuery(String query) {
-        int posFrom = query.indexOf("FROM");
-        StringBuilder stb = new StringBuilder("SELECT *");
-        stb.append(query.substring(posFrom));
-        int posGroup = stb.indexOf("GROUP BY");
-        int posOrder = stb.indexOf("ORDER BY");
-        stb.delete(posGroup, posOrder);
-        return stb.toString();
+    @Override
+    public QueryBuilder createDownloadQuery(QueryBuilder query) {
+        QueryBuilder builder = query.clone();
+        builder.clearColumns();
+        builder.clearGroupBy();
+        return builder;
     }
 
     /**

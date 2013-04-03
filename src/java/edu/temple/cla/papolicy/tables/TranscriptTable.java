@@ -8,6 +8,7 @@ package edu.temple.cla.papolicy.tables;
 import edu.temple.cla.papolicy.Utility;
 import edu.temple.cla.papolicy.filters.Filter;
 import edu.temple.cla.papolicy.filters.HouseHearingsCommittee;
+import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,13 +21,17 @@ import java.util.List;
 public class TranscriptTable extends StandardTable {
 
     @Override
+    public QueryBuilder getUnfilteredTotalQuery() {
+        QueryBuilder builder = new QueryBuilder();
+        builder.addColumn(getYearColumn() + " AS TheYear");
+        builder.addColumn("count(ID) AS TheValue");
+        builder.setTable(getTableReference());
+        return builder;
+    }
+    
+    @Override
     public String getUnfilteredTotalQueryString() {
-        StringBuilder stb = new StringBuilder("SELECT ");
-        stb.append(getYearColumn());
-        stb.append(" AS TheYear, count(ID) AS TheValue FROM ");
-        stb.append(getTableReference());
-        stb.append(" WHERE ");
-        return stb.toString();
+        return getUnfilteredTotalQuery().build() + " WHERE ";
     }
 
     private String getTableReference() {
@@ -52,9 +57,9 @@ public class TranscriptTable extends StandardTable {
      * @return the url that will invoke the DrillDownController
      */
     @Override
-    public String createDrillDownURL(String query) {
-        String drillDownQuery = createDrillDownQuery(query);
-        return "transcriptdrilldown.spg?query=" + Utility.compressAndEncode(drillDownQuery);
+    public String createDrillDownURL(QueryBuilder query) {
+        QueryBuilder drillDownQuery = createDrillDownQuery(query).clone();
+        return "transcriptdrilldown.spg?query=" + Utility.compressAndEncode(drillDownQuery.build());
     }
 
     /**

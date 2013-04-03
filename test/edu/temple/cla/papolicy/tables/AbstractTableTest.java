@@ -14,6 +14,8 @@ import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.dao.YearValueMapper;
 import edu.temple.cla.papolicy.filters.BinaryFilter;
 import edu.temple.cla.papolicy.filters.Filter;
+import edu.temple.cla.papolicy.queryBuilder.Between;
+import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.SortedMap;
@@ -89,10 +91,10 @@ public class AbstractTableTest {
             jdbcTemplate.query(anyString, new FilterMapper());
             result = Arrays.asList(filterList);
         }};
+        testTable.setFilterList(Arrays.asList(filterList)); 
         for (Filter filter:filterList) {
             filter.setFilterParameterValues(request);
         }
-        testTable.setFilterList(Arrays.asList(filterList)); 
     }
 
     @Test
@@ -268,8 +270,10 @@ public class AbstractTableTest {
         Topic topic = new Topic();
         topic.setCode(6);
         topic.setDescription("Education");
-        String query = testTable.getTopicQueryString(topic) + 
-                " AND Year BETWEEN 1991 AND 2006 GROUP BY Year ORDER BY Year";
+        QueryBuilder query = testTable.getTopicQuery(topic).clone();
+        query.setBetween(new Between("Year", "1991", "2006"));
+        query.setGroupBy("Year");
+        query.setOrderBy("Year");
         String expected = "drilldown.spg?query="
                 + "H4sIAAAAAAAAAD1OzQqCQBh8lblVsAfrIAgVWH5i5A9sgniSzRZbkt1Yl8ie"
                 + "vjLoNMwvc6KU9iVK5XrJUNhOafUSThnNUEthGTKj3ZUhEiNDeB6cFa1jiJUW"
@@ -284,12 +288,14 @@ public class AbstractTableTest {
         Topic topic = new Topic();
         topic.setCode(6);
         topic.setDescription("Education");
-        String query = testTable.getTopicQueryString(topic) + 
-                " AND Year BETWEEN 1991 AND 2006 GROUP BY Year ORDER BY Year";
-        String expected = "SELECT *FROM LegServiceAgencyReports WHERE Tax=0 AND "
+        QueryBuilder query = testTable.getTopicQuery(topic).clone();
+        query.setBetween(new Between("Year", "1991", "2006"));
+        query.setGroupBy("Year");
+        query.setOrderBy("Year");
+        String expected = "SELECT * FROM LegServiceAgencyReports WHERE Tax=0 AND "
                 + "Elderly<>0 AND FinalCode LIKE('6__') "
                 + "AND Year BETWEEN 1991 AND 2006 ORDER BY Year";
-        assertEquals(expected, testTable.createDownloadQuery(query));
+        assertEquals(expected, testTable.createDownloadQuery(query).build());
     }
 
     @Test

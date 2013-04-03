@@ -5,7 +5,6 @@
 
 package edu.temple.cla.papolicy.tables;
 
-import edu.temple.cla.papolicy.queryBuilder.Conjunction;
 import edu.temple.cla.papolicy.queryBuilder.Disjunction;
 import edu.temple.cla.papolicy.queryBuilder.Like;
 import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
@@ -122,7 +121,7 @@ public class BillsTable extends AbstractTable {
     }
 
     @Override
-    public String getUnfilteredTotalQueryString() {
+    public QueryBuilder getUnfilteredTotalQuery() {
         QueryBuilder builder = new QueryBuilder();
         builder.setTable(getTableName());
         builder.addColumn(getYearColumn() + " AS TheYear");
@@ -154,7 +153,12 @@ public class BillsTable extends AbstractTable {
                 builder.addToSelectCriteria(new Like("Session", "%-%-%"));
             }
         }
-        return builder.build();
+        return builder;
+    }
+
+    @Override
+    public String getUnfilteredTotalQueryString() {
+        return getUnfilteredTotalQuery().build();
     }
 
     @Override

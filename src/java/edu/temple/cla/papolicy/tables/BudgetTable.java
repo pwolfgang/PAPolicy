@@ -13,6 +13,7 @@ import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.dao.YearValueMapper;
 import edu.temple.cla.papolicy.filters.BudgetFilters;
 import edu.temple.cla.papolicy.filters.Filter;
+import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
 import java.util.List;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
@@ -65,35 +66,36 @@ public class BudgetTable extends AbstractTable {
         return "Total Spending Un-Adjusted Dollars (×1,000,000)";
     }
 
-    private String getAllocatedTotalQueryString() {
-        return "SELECT " + getYearColumn() +
-            ", Sum(BudgetTable.TheValue*Crosswalk.PercentMatch/100)/1000 AS " +
-            "TheValue " +
-            "FROM MajorCode INNER JOIN " +
+    private QueryBuilder getAllocatedTotalQuery() {
+        QueryBuilder builder = new QueryBuilder();
+        builder.addColumn(getYearColumn());
+        builder.addColumn("Sum(BudgetTable.TheValue*Crosswalk.PercentMatch/100)/1000 AS TheValue");
+        builder.setTable("MajorCode INNER JOIN " +
             "(Crosswalk INNER JOIN " + getTableName() +" ON " +
             "(Crosswalk.FC=" + getTableName() + ".FC) AND " +
             "(Crosswalk.OC=" + getTableName() + ".OC)) " +
-            "ON MajorCode.Code = Crosswalk.PolicyCode ";
+            "ON MajorCode.Code = Crosswalk.PolicyCode");
+        return builder;
+    }
+
+    @Override
+    public QueryBuilder getUnfilteredTotalQuery() {
+        return getAllocatedTotalQuery();
     }
 
     @Override
     public String getUnfilteredTotalQueryString() {
-        return getAllocatedTotalQueryString();
+        return getUnfilteredTotalQuery().build();
+    }
+
+    @Override
+    public QueryBuilder getFilteredTotalQuery() {
+        return getAllocatedTotalQuery();
     }
 
     @Override
     public String getFilteredTotalQueryString() {
-        return getAllocatedTotalQueryString();
-    }
-
-    @Override
-    public String getTopicQueryString(Topic topic) {
-        if (topic != null && topic.getCode() != 0) {
-            return  getAllocatedTotalQueryString() + "WHERE MajorCode.Code=" +
-                    topic.getCode();
-        } else {
-            return getAllocatedTotalQueryString();
-        }
+        return getFilteredTotalQuery().build();
     }
 
     @Override
@@ -205,18 +207,19 @@ public class BudgetTable extends AbstractTable {
      * @return Modified query that selects all columns.
      */
     @Override
-    public String createDownloadQuery(String query) {
-        int posFrom = query.indexOf("FROM");
-        StringBuilder stb = new StringBuilder("SELECT "
-                + getYearColumn() + ", MajorCode.Code, Crosswalk.FC, "
-                + "Crosswalk.OC, Crosswalk.PercentMatch, "
-                + "BudgetTable.TheValue/1000 as TotalAmount, "
-                + "BudgetTable.TheValue*Crosswalk.PercentMatch/100000 as AllocatedAmount ");
-        stb.append(query.substring(posFrom));
-        int posGroup = stb.indexOf("GROUP BY");
-        int posOrder = stb.indexOf("ORDER BY");
-        stb.delete(posGroup, posOrder);
-        stb.append(" , MajorCode.Code, Crosswalk.FC, Crosswalk.OC");
-        return stb.toString();
+    public QueryBuilder createDownloadQuery(QueryBuilder query) {
+        QueryBuilder builder = query.clone();
+        builder.clearColumns();
+        builder.addColumn(getYearColumn());
+        builder.addColumn("MajorCode.Code");
+        builder.addColumn("Crosswalk.FC");
+        builder.addColumn("Crosswalk.OC");
+        builder.addColumn("Crosswalk.PercentMatch");
+        builder.addColumn("BudgetTable.TheValue/1000 as TotalAmount");
+        builder.addColumn("BudgetTable.TheValue*Crosswalk.PercentMatch/100000 as AllocatedAmount");
+        builder.clearGroupBy();
+        builder.clearOrderBy();
+        builder.setOrderBy("Year, MajorCode.Code, Crosswalk.FC, Crosswalk.OC");
+        return builder;
     }
 }

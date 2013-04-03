@@ -12,6 +12,8 @@ import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.dao.YearValueMapper;
 import edu.temple.cla.papolicy.filters.BudgetFilters;
 import edu.temple.cla.papolicy.filters.Filter;
+import edu.temple.cla.papolicy.queryBuilder.Between;
+import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
 import java.util.Arrays;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -142,7 +144,7 @@ public class BudgetTableTest {
     public void testGetUnfilteredTotalQueryString() {
         String expected = "SELECT TheYear, Sum(BudgetTable.TheValue*Crosswalk.PercentMatch/100)/1000 AS TheValue "
                 + "FROM MajorCode INNER JOIN (Crosswalk INNER JOIN BudgetTable ON (Crosswalk.FC=BudgetTable.FC) "
-                + "AND (Crosswalk.OC=BudgetTable.OC)) ON MajorCode.Code = Crosswalk.PolicyCode ";
+                + "AND (Crosswalk.OC=BudgetTable.OC)) ON MajorCode.Code = Crosswalk.PolicyCode";
         assertEquals(expected, testTable.getUnfilteredTotalQueryString());
     }
 
@@ -150,7 +152,7 @@ public class BudgetTableTest {
     public void testGetFilteredTotalQueryString() {
         String expected = "SELECT TheYear, Sum(BudgetTable.TheValue*Crosswalk.PercentMatch/100)/1000 AS TheValue "
                 + "FROM MajorCode INNER JOIN (Crosswalk INNER JOIN BudgetTable ON (Crosswalk.FC=BudgetTable.FC) "
-                + "AND (Crosswalk.OC=BudgetTable.OC)) ON MajorCode.Code = Crosswalk.PolicyCode ";
+                + "AND (Crosswalk.OC=BudgetTable.OC)) ON MajorCode.Code = Crosswalk.PolicyCode";
         assertEquals(expected, testTable.getFilteredTotalQueryString());
     }
 
@@ -162,7 +164,7 @@ public class BudgetTableTest {
         String expected = "SELECT TheYear, Sum(BudgetTable.TheValue*Crosswalk.PercentMatch/100)/1000 AS TheValue "
                 + "FROM MajorCode INNER JOIN (Crosswalk INNER JOIN BudgetTable ON (Crosswalk.FC=BudgetTable.FC) "
                 + "AND (Crosswalk.OC=BudgetTable.OC)) ON MajorCode.Code = Crosswalk.PolicyCode "
-                + "WHERE MajorCode.Code=6";
+                + "WHERE Code=6";
         assertEquals(expected, testTable.getTopicQueryString(topic));
     }
 
@@ -286,15 +288,17 @@ public class BudgetTableTest {
                 + "BudgetTable.TheValue*Crosswalk.PercentMatch/100000 as AllocatedAmount "
                 + "FROM MajorCode INNER JOIN (Crosswalk INNER JOIN BudgetTable ON "
                 + "(Crosswalk.FC=BudgetTable.FC) AND (Crosswalk.OC=BudgetTable.OC)) "
-                + "ON MajorCode.Code = Crosswalk.PolicyCode WHERE MajorCode.Code=6 "
-                + "AND Year BETWEEN 1991 AND 2006 ORDER BY Year , MajorCode.Code, "
+                + "ON MajorCode.Code = Crosswalk.PolicyCode WHERE Code=6 "
+                + "AND Year BETWEEN 1991 AND 2006 ORDER BY Year, MajorCode.Code, "
                 + "Crosswalk.FC, Crosswalk.OC";
         Topic topic = new Topic();
         topic.setCode(6);
         topic.setDescription("Education");
-        String query = testTable.getTopicQueryString(topic) + 
-                " AND Year BETWEEN 1991 AND 2006 GROUP BY Year ORDER BY Year";
-        assertEquals(expected, testTable.createDownloadQuery(query));
+        QueryBuilder query = testTable.getTopicQuery(topic);
+        query.setBetween(new Between("Year", "1991", "2006"));
+        query.setGroupBy("Year");
+        query.setOrderBy("Year");
+        assertEquals(expected, testTable.createDownloadQuery(query).build());
     }
     
     private BudgetFilters createBudgetFiltersInstance(final String dispValue, final String adjust, final String baseYear) {
