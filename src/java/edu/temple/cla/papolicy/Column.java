@@ -7,6 +7,11 @@ package edu.temple.cla.papolicy;
 import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.queryBuilder.Between;
+import edu.temple.cla.papolicy.queryBuilder.Composite;
+import edu.temple.cla.papolicy.queryBuilder.Conjunction;
+import edu.temple.cla.papolicy.queryBuilder.Disjunction;
+import edu.temple.cla.papolicy.queryBuilder.Expression;
+import edu.temple.cla.papolicy.queryBuilder.Like;
 import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
 import edu.temple.cla.papolicy.tables.Table;
 import java.util.ArrayList;
@@ -24,8 +29,8 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
  * @author Paul Wolfgang
  */
 public class Column {
-    private static Logger logger = Logger.getLogger(Column.class);
 
+    private static Logger logger = Logger.getLogger(Column.class);
     private Table table;
     private Topic topic;
     private String freeText;
@@ -44,7 +49,8 @@ public class Column {
     private Number maxValue = null;
     private YearRange yearRange = null;
 
-    protected Column() {} // used for unit test purposes only
+    protected Column() {
+    } // used for unit test purposes only
 
     public Column(Table table, Topic topic, String freeText, String showResults, YearRange yearRange) {
         this.table = table;
@@ -89,7 +95,7 @@ public class Column {
         }
         return filteredTotalQuery;
     }
-    
+
     public String getFilteredTotalQueryString() {
         return getFilteredTotalQuery().build();
     }
@@ -100,7 +106,7 @@ public class Column {
         }
         return unfilteredTotalQuery;
     }
-    
+
     public String getUnfilteredTotalQueryString() {
         return getUnfilteredTotalQuery().build() + " WHERE ";
     }
@@ -112,7 +118,7 @@ public class Column {
         builder.setOrderBy("TheYear");
         return builder;
     }
-    
+
     public String getUnfilteredTotalQueryString(int startYear, int endYear) {
         return getUnfilteredTotalQuery(startYear, endYear).build();
     }
@@ -124,16 +130,16 @@ public class Column {
         builder.setOrderBy("TheYear");
         return builder;
     }
-    
+
     public String getFilteredTotalQueryString(int startYear, int endYear) {
         return getFilteredTotalQuery(startYear, endYear).build();
     }
-    
+
     public QueryBuilder getTopicCountQuery() {
         if (topicCountQuery == null) {
             topicCountQuery = table.getTopicQuery(topic).clone();
             if (freeText != null) {
-                //TODO Refactor parseFreeText to return an expression
+                topicCountQuery.setFreeText(parseFreeText(table.getTextColumn(), freeText));
             }
         }
         return topicCountQuery;
@@ -142,7 +148,7 @@ public class Column {
     public String getTopicCountQueryString() {
         return getTopicCountQuery().build();
     }
-    
+
     public QueryBuilder getTopicCountQuery(int startYear, int endYear) {
         QueryBuilder builder = getTopicCountQuery().clone();
         builder.setBetween(new Between(table.getYearColumn(), startYear, endYear));
@@ -163,29 +169,28 @@ public class Column {
     }
 
     public Number getValue(int minYear, int maxYear) {
-        Number returnVal = table.getValueForRange(valueMap.subMap(minYear, maxYear+1));
+        Number returnVal = table.getValueForRange(valueMap.subMap(minYear, maxYear + 1));
         return returnVal;
     }
 
     public Number getPercentOfTotal(int minYear, int maxYear) {
-        Number returnVal = table.getPercentForRange(valueMap.subMap(minYear, maxYear+1),
-                unfilteredTotalMap.subMap(minYear, maxYear+1));
+        Number returnVal = table.getPercentForRange(valueMap.subMap(minYear, maxYear + 1),
+                unfilteredTotalMap.subMap(minYear, maxYear + 1));
         return returnVal;
     }
-
 
     public Number getPercent(int minYear, int maxYear) {
-        Number returnVal = table.getPercentForRange(valueMap.subMap(minYear, maxYear+1),
-                filteredTotalMap.subMap(minYear, maxYear+1));
+        Number returnVal = table.getPercentForRange(valueMap.subMap(minYear, maxYear + 1),
+                filteredTotalMap.subMap(minYear, maxYear + 1));
         return returnVal;
     }
-    
+
     public void setInitialPrevValue(int minYear, int maxYear) {
         prevValue = table.getValueForRange(valueMap.subMap(minYear, maxYear));
     }
 
     public Number getPercentChange(int minYear, int maxYear) {
-        Number currentValue = table.getValueForRange(valueMap.subMap(minYear, maxYear+1));
+        Number currentValue = table.getValueForRange(valueMap.subMap(minYear, maxYear + 1));
         if (currentValue == null) {
             prevValue = null;
             return null;
@@ -245,7 +250,6 @@ public class Column {
         }
     }
 
-
     public void setDisplayedValue(String key, Number value) {
         displayedValueMap.put(key, value);
     }
@@ -256,7 +260,7 @@ public class Column {
 
     public Number getDisplayedValue(String key) {
         return displayedValueMap.get(key);
-        
+
     }
 
     public String getDisplayedValueString(String key) {
@@ -276,7 +280,9 @@ public class Column {
         return table.getAxisTitle(getUnits());
     }
 
-    public Table getTable() {return table;}
+    public Table getTable() {
+        return table;
+    }
 
     /**
      * @return the downloadQuery
@@ -292,48 +298,64 @@ public class Column {
         this.downloadQueryString = downloadQueryString;
     }
 
-    public Number getMinValue() {return minValue;}
+    public Number getMinValue() {
+        return minValue;
+    }
 
-    public Number getMaxValue() {return maxValue;}
+    public Number getMaxValue() {
+        return maxValue;
+    }
 
     /**
      * Method to parse the free text and generate the query condition
+     *
      * @param textColumn The name of the text column
      * @param freeText the free text string
      */
-    public String parseFreeText(String textColumn, String freeText) {
+    public Expression parseFreeText(String textColumn, String freeText) {
         Pattern p = Pattern.compile("(\\\"[^\\\"]+\\\")|([^\\p{javaWhitespace}]+)");
         Scanner scan = new Scanner(freeText);
         List<String> list = new ArrayList<String>();
-        String t = null;
+        String t;
         while ((t = scan.findInLine(p)) != null) {
             list.add(t);
         }
-        boolean operatorNeeded = false;
-        StringBuilder stb = new StringBuilder("(");
-        for (String token : list) {
-            if (token.toLowerCase().equals("and")) {
-                stb.append(" AND ");
-                operatorNeeded = false;
-            } else if (token.toLowerCase().equals("or")) {
-                stb.append(" OR ");
-                operatorNeeded = false;
-            } else {
-                if (operatorNeeded) {
-                    stb.append(" AND ");
-                    operatorNeeded = false;
+        Expression result;
+        if (list.size() == 1) {
+            result = createLike(textColumn, list.get(0));
+        } else {
+            result = new Conjunction();
+            for (String token : list) {
+                switch (token.toLowerCase()) {
+                    case "and":
+                        if (result.getClass() != Conjunction.class) {
+                            Expression lhs = result;
+                            Conjunction c = new Conjunction();
+                            c.addTerm(lhs);
+                            result = c;
+                        }
+                        break;
+                    case "or":
+                        if (result.getClass() != Disjunction.class) {
+                            Expression lhs = result;
+                            Disjunction d = new Disjunction();
+                            d.addTerm(lhs);
+                            result = d;
+                        }
+                        break;
+                    default:
+                        Composite c = (Composite) result;
+                        c.addTerm(createLike(textColumn, token));
                 }
-                if (token.startsWith("\"")){
-                    token = token.substring(1, token.length()-1);
-                }
-                stb.append(textColumn);
-                stb.append(" LIKE(\"%");
-                stb.append(token);
-                stb.append("%\")");
-                operatorNeeded = true;
-           }
+            }
         }
-        stb.append(")");
-        return stb.toString();
+        return result;
+    }
+
+    private Like createLike(String textColumn, String token) {
+        if (token.startsWith("\"")) {
+            token = token.substring(1, token.length() - 1);
+        }
+        return new Like(textColumn, "%" + token + "%");
     }
 }

@@ -14,6 +14,7 @@ public class QueryBuilder implements Cloneable {
     private Conjunction selectCriteria;
     private Conjunction filters;
     private Expression topic;
+    private Expression freeText;
     private Between between;
     private String groupBy;
     private String orderBy;
@@ -43,6 +44,7 @@ public class QueryBuilder implements Cloneable {
         selectAndFilters.addTerm(selectCriteria);
         selectAndFilters.addTerm(filters);
         selectAndFilters.addTerm(topic);
+        selectAndFilters.addTerm(freeText);
         selectAndFilters.addTerm(between);
         if (!selectAndFilters.isEmpty()) {
             sb.append(" WHERE ");
@@ -117,6 +119,13 @@ public class QueryBuilder implements Cloneable {
     public void setTopic(Expression e) {
         topic = e;
     };
+    
+    /**
+     * Set Free Text
+     */
+    public void setFreeText(Expression e) {
+        freeText = e;
+    }
     
     /**
      * Add a between criteria
