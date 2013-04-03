@@ -9,6 +9,7 @@ import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.*;
 import edu.temple.cla.papolicy.chart.Chart;
 import edu.temple.cla.papolicy.chart.MyDataset;
+import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
 import edu.temple.cla.papolicy.tables.AbstractTable;
 import edu.temple.cla.papolicy.tables.Table;
 import java.util.ArrayList;
@@ -109,10 +110,10 @@ public class DisplayFormController extends AbstractController {
                     column.setFilteredTotalMap(jdbcTemplate, yearRange.getMinYear(), yearRange.getMaxYear());
                     column.setUnfilteredTotalMap(jdbcTemplate, yearRange.getMinYear(), yearRange.getMaxYear());
                 }
-                String countQuery =
-                        column.getTopicCountQueryString(yearRange.getMinYear(), yearRange.getMaxYear());
-                String downloadQuery = column.getTable().createDownloadQuery(countQuery);
-                column.setDownloadQuery(Utility.compressAndEncode(downloadQuery));
+                QueryBuilder countQuery =
+                        column.getTopicCountQuery(yearRange.getMinYear(), yearRange.getMaxYear());
+                QueryBuilder downloadQuery = column.getTable().createDownloadQuery(countQuery);
+                column.setDownloadQueryString(Utility.compressAndEncode(downloadQuery.build()));
                 columnsList.add(column);
                 columnMap.put(column.getUnits(), columnsList);
             }
@@ -125,8 +126,8 @@ public class DisplayFormController extends AbstractController {
                 for (int j = 0; j < columns.size(); j++) {
                     Column column = columns.get(j);
                     if (column.getUnits() == Units.COUNT) {
-                        String countQuery =
-                                column.getTopicCountQueryString(current.getMinYear(),
+                        QueryBuilder countQuery =
+                                column.getTopicCountQuery(current.getMinYear(),
                                 current.getMaxYear());
                         column.setDrillDown(rowKey, column.getTable().createDrillDownURL(countQuery));
                         column.setDisplayedValue(rowKey, column.getValue(currentMinYear,

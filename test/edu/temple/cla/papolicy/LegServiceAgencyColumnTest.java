@@ -9,6 +9,7 @@ import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.filters.BinaryFilter;
 import edu.temple.cla.papolicy.filters.Filter;
+import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
 import edu.temple.cla.papolicy.tables.StandardTable;
 import edu.temple.cla.papolicy.tables.Table;
 import java.util.Arrays;
@@ -91,10 +92,10 @@ public class LegServiceAgencyColumnTest {
         String showResults = "count";
         YearRange yearRange = new YearRange(1979, 1983);
         testColumn = new Column(testTable, topic, freeText, showResults, yearRange);
-        String countQuery =
-                testColumn.getTopicCountQueryString(yearRange.getMinYear(), yearRange.getMaxYear());
-        String downloadQuery = testColumn.getTable().createDownloadQuery(countQuery);
-        testColumn.setDownloadQuery(Utility.compressAndEncode(downloadQuery));
+        QueryBuilder countQuery =
+                testColumn.getTopicCountQuery(yearRange.getMinYear(), yearRange.getMaxYear());
+        QueryBuilder downloadQuery = testColumn.getTable().createDownloadQuery(countQuery);
+        testColumn.setDownloadQueryString(Utility.compressAndEncode(downloadQuery.build()));
         TestDatabase.beforeTest();
         jdbcTemplate = TestDatabase.getSimpleJdbcTemplate();
     }
@@ -107,7 +108,8 @@ public class LegServiceAgencyColumnTest {
 
     @Test
     public void testGetDownloadTitle() {
-        String expected = "Law, Crime, and Family Issues Legislative Service Agency Reports Include Dealing with Taxes";
+        String expected = "Law, Crime, and Family Issues Legislative Service "
+                + "Agency Reports Include Dealing with Taxes";
         assertEquals(expected, testColumn.getDownloadTitle());
     }
 
@@ -115,12 +117,13 @@ public class LegServiceAgencyColumnTest {
     public void testGetDownloadURL() {
         String expected = "<a href=\"Law%2C+Crime%2C+and+Family+Issues+"
                 + "Legislative+Service+Agency+Reports+Include+Dealing+with+"
-                + "Taxes+1979_1983.xlsx?query=H4sIAAAAAAAAAAt29XF1DlHQcgvy91XwS"
-                + "U0PTi0qy0xOdUxPzUuuDEotyC8qKVYI93ANclUISaywsTNQcPRzUXDLzEvMc"
-                + "c5PSVXw8fR21VA3NIqPV9cES0WmJhYpOLmGhLu6-ikYWppbgkUNLS2MFfyDX"
-                + "FyDFJwiFUIyUkHKADUvNcx8AAAA\">Law, Crime, and Family Issues "
+                + "Taxes+1979_1983.xlsx?query=H4sIAAAAAAAAAAt29XF1DlHQUnAL8vdV8E"
+                + "lND04tKstMTnVMT81LrgxKLcgvKilWCPdwDXJVCEmssLEzUHD0c1Fwy8xLzHH"
+                + "OT0lV8PH0dtVQNzSKj1fXBEtFpiYWKTi5hoS7uvopGFqaW4JFDS0tjBX8g1xc"
+                + "gxScIhVCMlJBygApFplufQAAAA\">Law, Crime, and Family Issues "
                 + "Legislative Service Agency Reports Include Dealing with "
                 + "Taxes</a><br/>";
+        System.out.println(testColumn.getDownloadURL());
         assertEquals(expected, testColumn.getDownloadURL());
     }
 

@@ -5,6 +5,8 @@
 
 package edu.temple.cla.papolicy.controllers;
 
+import edu.temple.cla.papolicy.queryBuilder.Comparison;
+import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
 import edu.temple.cla.papolicy.tables.AbstractTable;
 import edu.temple.cla.papolicy.tables.Table;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +32,9 @@ public class IndividualBillDrilldownController extends AbstractController{
             HttpServletResponse response) {
         String billId = request.getParameter("billId");
         Table billsTable = AbstractTable.getTable("3", ' ', request, jdbcTemplate)[0];
-        String initialQuery = "SELECT * FROM " + billsTable.getTableName() + " WHERE ID='" + billId + "'";
+        QueryBuilder initialQuery = new QueryBuilder();
+        initialQuery.setTable(billsTable.getTableName());
+        initialQuery.addToSelectCriteria(new Comparison("ID", "=", billId));
         String drillDownURL = billsTable.createDrillDownURL(initialQuery);
         try {
             response.sendRedirect(drillDownURL);

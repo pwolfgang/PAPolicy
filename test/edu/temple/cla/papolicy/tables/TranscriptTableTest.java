@@ -102,7 +102,7 @@ public class TranscriptTableTest {
         topic.setCode(6);
         topic.setDescription("Education");
         QueryBuilder query = testTable.getTopicQuery(topic).clone();
-        query.setBetween(new Between("Year", "1991", "2006"));
+        query.setBetween(new Between("Year", 1991, 2006));
         query.setGroupBy("Year");
         query.setOrderBy("Year");
         String expected = "transcriptdrilldown.spg?query=H4sIAAAAAAAAAE2OwQqCQBi"

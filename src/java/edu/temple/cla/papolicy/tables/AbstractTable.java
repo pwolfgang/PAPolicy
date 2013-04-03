@@ -535,7 +535,8 @@ public abstract class AbstractTable implements Table {
         }
     }
 
-    public String getDownloadURL(String downloadTitle, String downloadQuery, YearRange yearRange ) {
+    @Override
+    public String getDownloadURL(String downloadTitle, String downloadQueryString, YearRange yearRange ) {
         StringBuilder stb = new StringBuilder("<a href=\"");
         StringBuilder stb2 = new StringBuilder(downloadTitle);
         stb2.append(" ");
@@ -548,7 +549,7 @@ public abstract class AbstractTable implements Table {
             logger.error(ex);
         }
         stb.append(".xlsx?query=");
-        stb.append(downloadQuery);
+        stb.append(downloadQueryString);
         stb.append("\">");
         stb.append(downloadTitle);
         stb.append("</a><br/>");

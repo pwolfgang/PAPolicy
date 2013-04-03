@@ -7,6 +7,7 @@ package edu.temple.cla.papolicy;
 import edu.temple.cis.wolfgang.simpledbtest.TestDatabase;
 import edu.temple.cla.papolicy.filters.BudgetFilters;
 import edu.temple.cla.papolicy.filters.Filter;
+import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
 import edu.temple.cla.papolicy.tables.GeneralFundBalance;
 import edu.temple.cla.papolicy.tables.Table;
 import java.util.Arrays;
@@ -61,10 +62,10 @@ public class GeneralFundBalanceColumnTest {
         String showResults = "count";
         yearRange = new YearRange(1979, 2009);
         testColumn = new Column(testTable, null, freeText, showResults, yearRange);
-        String countQuery =
-                testColumn.getTopicCountQueryString(yearRange.getMinYear(), yearRange.getMaxYear());
-        String downloadQuery = testColumn.getTable().createDownloadQuery(countQuery);
-        testColumn.setDownloadQuery(Utility.compressAndEncode(downloadQuery));
+        QueryBuilder countQuery =
+                testColumn.getTopicCountQuery(yearRange.getMinYear(), yearRange.getMaxYear());
+        QueryBuilder downloadQuery = testColumn.getTable().createDownloadQuery(countQuery);
+        testColumn.setDownloadQueryString(Utility.compressAndEncode(downloadQuery.build()));
         TestDatabase.beforeTest();
         jdbcTemplate = TestDatabase.getSimpleJdbcTemplate();
     }

@@ -143,7 +143,7 @@ public class GeneralFundBalanceTest {
         }};
         testTable.setAdditionalParameters(request);
         QueryBuilder query = testTable.getTopicQuery(topic).clone();
-        query.setBetween(new Between("Year", "1991", "2006"));
+        query.setBetween(new Between("Year", 1991, 2006));
         query.setGroupBy("Year");
         query.setOrderBy("Year");
         assertEquals(expected, testTable.createDownloadQuery(query).build());

@@ -271,7 +271,7 @@ public class AbstractTableTest {
         topic.setCode(6);
         topic.setDescription("Education");
         QueryBuilder query = testTable.getTopicQuery(topic).clone();
-        query.setBetween(new Between("Year", "1991", "2006"));
+        query.setBetween(new Between("Year", 1991, 2006));
         query.setGroupBy("Year");
         query.setOrderBy("Year");
         String expected = "drilldown.spg?query="
@@ -289,7 +289,7 @@ public class AbstractTableTest {
         topic.setCode(6);
         topic.setDescription("Education");
         QueryBuilder query = testTable.getTopicQuery(topic).clone();
-        query.setBetween(new Between("Year", "1991", "2006"));
+        query.setBetween(new Between("Year", 1991, 2006));
         query.setGroupBy("Year");
         query.setOrderBy("Year");
         String expected = "SELECT * FROM LegServiceAgencyReports WHERE Tax=0 AND "

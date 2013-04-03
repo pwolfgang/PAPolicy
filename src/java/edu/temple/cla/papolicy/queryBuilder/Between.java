@@ -6,10 +6,10 @@ public class Between implements Expression {
     private String lowValue;
     private String hiValue;
     
-    public Between(String column, String lowValue, String hiValue) {
+    public Between(String column, int lowValue, int hiValue) {
         this.column = column;
-        this.lowValue = lowValue;
-        this.hiValue = hiValue;
+        this.lowValue = Integer.toString(lowValue);
+        this.hiValue = Integer.toString(hiValue);
     }
     
     @Override

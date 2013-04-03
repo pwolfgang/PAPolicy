@@ -6,6 +6,8 @@ package edu.temple.cla.papolicy;
 
 import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.YearValue;
+import edu.temple.cla.papolicy.queryBuilder.Between;
+import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
 import edu.temple.cla.papolicy.tables.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +29,9 @@ public class Column {
     private Table table;
     private Topic topic;
     private String freeText;
-    private String topicCountQueryString = null;
-    private String unfilteredTotalQueryString = null;
-    private String filteredTotalQueryString = null;
+    private QueryBuilder topicCountQuery = null;
+    private QueryBuilder unfilteredTotalQuery = null;
+    private QueryBuilder filteredTotalQuery = null;
     private Units units;
     private SortedMap<Integer, Number> valueMap;
     private SortedMap<Integer, Number> unfilteredTotalMap;
@@ -37,7 +39,7 @@ public class Column {
     private SortedMap<String, Number> displayedValueMap = new TreeMap<String, Number>();
     private SortedMap<String, String> drillDownMap = new TreeMap<String, String>();
     private Number prevValue = null;
-    private String downloadQuery = null;
+    private String downloadQueryString = null;
     private Number minValue = null;
     private Number maxValue = null;
     private YearRange yearRange = null;
@@ -78,83 +80,79 @@ public class Column {
     }
 
     public String getDownloadURL() {
-        return table.getDownloadURL(getDownloadTitle(), getDownloadQuery(), yearRange);
+        return table.getDownloadURL(getDownloadTitle(), getDownloadQueryString(), yearRange);
     }
 
+    public QueryBuilder getFilteredTotalQuery() {
+        if (filteredTotalQuery == null) {
+            filteredTotalQuery = table.getFilteredTotalQuery().clone();
+        }
+        return filteredTotalQuery;
+    }
+    
     public String getFilteredTotalQueryString() {
-        if (filteredTotalQueryString == null) {
-            filteredTotalQueryString = table.getFilteredTotalQueryString();
-        }
-        return filteredTotalQueryString;
+        return getFilteredTotalQuery().build();
     }
 
+    public QueryBuilder getUnfilteredTotalQuery() {
+        if (unfilteredTotalQuery == null) {
+            unfilteredTotalQuery = table.getUnfilteredTotalQuery().clone();
+        }
+        return unfilteredTotalQuery;
+    }
+    
     public String getUnfilteredTotalQueryString() {
-        if (unfilteredTotalQueryString == null) {
-            unfilteredTotalQueryString = table.getUnfilteredTotalQueryString();
-        }
-        return unfilteredTotalQueryString;
+        return getUnfilteredTotalQuery().build() + " WHERE ";
     }
 
+    public QueryBuilder getUnfilteredTotalQuery(int startYear, int endYear) {
+        QueryBuilder builder = getUnfilteredTotalQuery().clone();
+        builder.setBetween(new Between(table.getYearColumn(), startYear, endYear));
+        builder.setGroupBy("TheYear");
+        builder.setOrderBy("TheYear");
+        return builder;
+    }
+    
     public String getUnfilteredTotalQueryString(int startYear, int endYear) {
-        String result = getUnfilteredTotalQueryString();
-        if (!result.endsWith("WHERE ")) {
-            result = result + " AND ";
-        }
-        StringBuilder stb = new StringBuilder(result);
-        stb.append(table.getYearColumn());
-        stb.append(" BETWEEN ");
-        stb.append(startYear);
-        stb.append(" AND ");
-        stb.append(endYear);
-        stb.append(" GROUP BY TheYear");
-        stb.append(" ORDER BY TheYear");
-        return stb.toString();
+        return getUnfilteredTotalQuery(startYear, endYear).build();
     }
 
+    public QueryBuilder getFilteredTotalQuery(int startYear, int endYear) {
+        QueryBuilder builder = getFilteredTotalQuery().clone();
+        builder.setBetween(new Between(table.getYearColumn(), startYear, endYear));
+        builder.setGroupBy("TheYear");
+        builder.setOrderBy("TheYear");
+        return builder;
+    }
+    
     public String getFilteredTotalQueryString(int startYear, int endYear) {
-        String result = getFilteredTotalQueryString();
-        if (!result.endsWith("WHERE ")) {
-            result = result + " AND ";
+        return getFilteredTotalQuery(startYear, endYear).build();
+    }
+    
+    public QueryBuilder getTopicCountQuery() {
+        if (topicCountQuery == null) {
+            topicCountQuery = table.getTopicQuery(topic).clone();
+            if (freeText != null) {
+                //TODO Refactor parseFreeText to return an expression
+            }
         }
-        StringBuilder stb = new StringBuilder(result);
-        stb.append(table.getYearColumn());
-        stb.append(" BETWEEN ");
-        stb.append(startYear);
-        stb.append(" AND ");
-        stb.append(endYear);
-        stb.append(" GROUP BY TheYear");
-        stb.append(" ORDER BY TheYear");
-        return stb.toString();
+        return topicCountQuery;
     }
 
     public String getTopicCountQueryString() {
-        if (topicCountQueryString == null) {
-            topicCountQueryString = table.getTopicQueryString(topic);
-            if (freeText != null) {
-                if (!topicCountQueryString.endsWith(" WHERE ")) {
-                    topicCountQueryString = topicCountQueryString + " AND ";
-                }
-                topicCountQueryString = topicCountQueryString +
-                        parseFreeText(table.getTextColumn(), freeText);
-            }
-        }
-        return topicCountQueryString;
+        return getTopicCountQuery().build();
+    }
+    
+    public QueryBuilder getTopicCountQuery(int startYear, int endYear) {
+        QueryBuilder builder = getTopicCountQuery().clone();
+        builder.setBetween(new Between(table.getYearColumn(), startYear, endYear));
+        builder.setGroupBy("TheYear");
+        builder.setOrderBy("TheYear");
+        return builder;
     }
 
     public String getTopicCountQueryString(int startYear, int endYear) {
-        String result = getTopicCountQueryString();
-        if (!result.endsWith("WHERE ")) {
-            result = result + " AND ";
-        }
-        StringBuilder stb = new StringBuilder(result);
-        stb.append(table.getYearColumn());
-        stb.append(" BETWEEN ");
-        stb.append(startYear);
-        stb.append(" AND ");
-        stb.append(endYear);
-        stb.append(" GROUP BY TheYear");
-        stb.append(" ORDER BY TheYear");
-        return stb.toString();
+        return getTopicCountQuery(startYear, endYear).build();
     }
 
     /**
@@ -283,15 +281,15 @@ public class Column {
     /**
      * @return the downloadQuery
      */
-    public String getDownloadQuery() {
-        return downloadQuery;
+    public String getDownloadQueryString() {
+        return downloadQueryString;
     }
 
     /**
      * @param downloadQuery the downloadQuery to set
      */
-    public void setDownloadQuery(String downloadQuery) {
-        this.downloadQuery = downloadQuery;
+    public void setDownloadQueryString(String downloadQueryString) {
+        this.downloadQueryString = downloadQueryString;
     }
 
     public Number getMinValue() {return minValue;}

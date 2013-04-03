@@ -295,7 +295,7 @@ public class BudgetTableTest {
         topic.setCode(6);
         topic.setDescription("Education");
         QueryBuilder query = testTable.getTopicQuery(topic);
-        query.setBetween(new Between("Year", "1991", "2006"));
+        query.setBetween(new Between("Year", 1991, 2006));
         query.setGroupBy("Year");
         query.setOrderBy("Year");
         assertEquals(expected, testTable.createDownloadQuery(query).build());

@@ -234,7 +234,7 @@ public interface Table extends Cloneable {
 
     String getDownloadTitle();
 
-    String getDownloadURL(String downloadTitle, String downloadQuery,
+    String getDownloadURL(String downloadTitle, String downloadQueryString,
             YearRange yearRange);
 
     String getDisplayedValue(String key, Number value, Units units);

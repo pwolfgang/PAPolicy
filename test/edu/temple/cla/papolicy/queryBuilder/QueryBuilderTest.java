@@ -102,7 +102,7 @@ public class QueryBuilderTest {
         qb.addToSelectCriteria(criteria);        
         Expression filter = new Comparison("b", "<>", "5");
         qb.addFilter(filter);
-        qb.setBetween(new Between("a","3","7"));
+        qb.setBetween(new Between("a",3,7));
         qb.setGroupBy("a");
         qb.setOrderBy("a");
         assertEquals("SELECT a, b FROM BooBar WHERE a=5 AND b<>5 AND a BETWEEN 3 AND 7 GROUP BY a ORDER BY a", qb.build());
