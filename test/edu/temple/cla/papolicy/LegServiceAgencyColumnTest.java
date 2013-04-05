@@ -102,7 +102,8 @@ public class LegServiceAgencyColumnTest {
 
     @Test
     public void testToString() {
-        String expected = "Law, Crime, and Family Issues Legislative Service Agency Reports Include Dealing with Taxes";
+        String expected = "Law, Crime, and Family Issues Legislative Service "
+                + "Agency Reports Include Dealing with Taxes";
         assertEquals(expected, testColumn.toString());
     }
 
@@ -117,13 +118,12 @@ public class LegServiceAgencyColumnTest {
     public void testGetDownloadURL() {
         String expected = "<a href=\"Law%2C+Crime%2C+and+Family+Issues+"
                 + "Legislative+Service+Agency+Reports+Include+Dealing+with+"
-                + "Taxes+1979_1983.xlsx?query=H4sIAAAAAAAAAAt29XF1DlHQUnAL8vdV8E"
-                + "lND04tKstMTnVMT81LrgxKLcgvKilWCPdwDXJVCEmssLEzUHD0c1Fwy8xLzHH"
-                + "OT0lV8PH0dtVQNzSKj1fXBEtFpiYWKTi5hoS7uvopGFqaW4JFDS0tjBX8g1xc"
-                + "gxScIhVCMlJBygApFplufQAAAA\">Law, Crime, and Family Issues "
-                + "Legislative Service Agency Reports Include Dealing with "
-                + "Taxes</a><br/>";
-        System.out.println(testColumn.getDownloadURL());
+                + "Taxes+1979_1983.xlsx?query=H4sIAAAAAAAAAAt29XF1DlHQUnAL8v"
+                + "dV8ElND04tKstMTnVMT81LrgxKLcgvKilWCPdwDXJVCEmssLEzUHD0c1F"
+                + "wy8xLzHHOT0lV8PH0dtVQNzSKj1fXBEtFpiYWKTi5hoS7uvopGFqaW4JF"
+                + "DS0tjBX8g1xcgxScIsFqABcZf6d6AAAA\">Law, Crime, and Family "
+                + "Issues Legislative Service Agency Reports Include Dealing "
+                + "with Taxes</a><br/>";
         assertEquals(expected, testColumn.getDownloadURL());
     }
 
@@ -145,7 +145,7 @@ public class LegServiceAgencyColumnTest {
     public void testGetUnfilteredTotalQueryString_int_int() {
         String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM "
                 + "LegServiceAgencyReports WHERE Year BETWEEN 1979 AND 1983 "
-                + "GROUP BY TheYear ORDER BY TheYear";
+                + "GROUP BY Year ORDER BY Year";
         assertEquals(expected, testColumn.getUnfilteredTotalQueryString(1979, 1983));
     }
 
@@ -153,7 +153,7 @@ public class LegServiceAgencyColumnTest {
     public void testGetFilteredTotalQueryString_int_int() {
         String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM "
                 + "LegServiceAgencyReports WHERE Tax<>0 AND Year "
-                + "BETWEEN 1979 AND 1983 GROUP BY TheYear ORDER BY TheYear";
+                + "BETWEEN 1979 AND 1983 GROUP BY Year ORDER BY Year";
         assertEquals(expected, testColumn.getFilteredTotalQueryString(1979, 1983));
     }
 
@@ -170,7 +170,7 @@ public class LegServiceAgencyColumnTest {
         String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM "
                 + "LegServiceAgencyReports WHERE Tax<>0 AND "
                 + "FinalCode LIKE('12__') AND Year BETWEEN 1979 AND 1983 "
-                + "GROUP BY TheYear ORDER BY TheYear";
+                + "GROUP BY Year ORDER BY Year";
         assertEquals(expected, testColumn.getTopicCountQueryString(1979, 1983));
     }
 

@@ -114,8 +114,8 @@ public class Column {
     public QueryBuilder getUnfilteredTotalQuery(int startYear, int endYear) {
         QueryBuilder builder = getUnfilteredTotalQuery().clone();
         builder.setBetween(new Between(table.getYearColumn(), startYear, endYear));
-        builder.setGroupBy("TheYear");
-        builder.setOrderBy("TheYear");
+        builder.setGroupBy(table.getYearColumn());
+        builder.setOrderBy(table.getYearColumn());
         return builder;
     }
 
@@ -126,8 +126,8 @@ public class Column {
     public QueryBuilder getFilteredTotalQuery(int startYear, int endYear) {
         QueryBuilder builder = getFilteredTotalQuery().clone();
         builder.setBetween(new Between(table.getYearColumn(), startYear, endYear));
-        builder.setGroupBy("TheYear");
-        builder.setOrderBy("TheYear");
+        builder.setGroupBy(table.getYearColumn());
+        builder.setOrderBy(table.getYearColumn());
         return builder;
     }
 
@@ -152,8 +152,8 @@ public class Column {
     public QueryBuilder getTopicCountQuery(int startYear, int endYear) {
         QueryBuilder builder = getTopicCountQuery().clone();
         builder.setBetween(new Between(table.getYearColumn(), startYear, endYear));
-        builder.setGroupBy("TheYear");
-        builder.setOrderBy("TheYear");
+        builder.setGroupBy(table.getYearColumn());
+        builder.setOrderBy(table.getYearColumn());
         return builder;
     }
 
