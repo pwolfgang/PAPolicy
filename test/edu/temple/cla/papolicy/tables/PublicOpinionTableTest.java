@@ -78,15 +78,15 @@ public class PublicOpinionTableTest {
     @Test
     public void testGetUnfilteredTotalQueryStringPercent() {
         setParameterValue("0");
-        String expected = "SELECT Year AS TheYear, AVG(Percentage) as TheValue FROM PublicOpinion WHERE ";
-        assertEquals(expected,testTable.getUnfilteredTotalQueryString());
+        String expected = "SELECT Year AS TheYear, AVG(Percentage) AS TheValue FROM PublicOpinion";
+        assertEquals(expected,testTable.getUnfilteredTotalQuery().build());
     }
 
     @Test
     public void testGetUnfilteredTotalQueryStringRank() {
         setParameterValue("1");
-        String expected = "SELECT Year AS TheYear, AVG(25 - Rank_With_25) AS TheValue FROM PublicOpinion WHERE ";
-        assertEquals(expected,testTable.getUnfilteredTotalQueryString());
+        String expected = "SELECT Year AS TheYear, AVG(25 - Rank_With_25) AS TheValue FROM PublicOpinion";
+        assertEquals(expected,testTable.getUnfilteredTotalQuery().build());
     }
 
 
@@ -97,7 +97,7 @@ public class PublicOpinionTableTest {
         topic.setCode(6);
         topic.setDescription("Education");
         setParameterValue("1");
-        assertEquals(expected, testTable.getTopicQueryString(topic));
+        assertEquals(expected, testTable.getTopicQuery(topic).build());
     }
 
     @Test

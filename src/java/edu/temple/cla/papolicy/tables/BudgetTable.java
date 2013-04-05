@@ -8,7 +8,6 @@ package edu.temple.cla.papolicy.tables;
 import edu.temple.cla.papolicy.Units;
 import edu.temple.cla.papolicy.dao.Deflator;
 import edu.temple.cla.papolicy.dao.DeflatorMapper;
-import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.dao.YearValueMapper;
 import edu.temple.cla.papolicy.filters.BudgetFilters;
@@ -84,18 +83,8 @@ public class BudgetTable extends AbstractTable {
     }
 
     @Override
-    public String getUnfilteredTotalQueryString() {
-        return getUnfilteredTotalQuery().build();
-    }
-
-    @Override
     public QueryBuilder getFilteredTotalQuery() {
         return getAllocatedTotalQuery();
-    }
-
-    @Override
-    public String getFilteredTotalQueryString() {
-        return getFilteredTotalQuery().build();
     }
 
     @Override

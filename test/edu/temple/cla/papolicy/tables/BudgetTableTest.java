@@ -145,7 +145,7 @@ public class BudgetTableTest {
         String expected = "SELECT TheYear, Sum(BudgetTable.TheValue*Crosswalk.PercentMatch/100)/1000 AS TheValue "
                 + "FROM MajorCode INNER JOIN (Crosswalk INNER JOIN BudgetTable ON (Crosswalk.FC=BudgetTable.FC) "
                 + "AND (Crosswalk.OC=BudgetTable.OC)) ON MajorCode.Code = Crosswalk.PolicyCode";
-        assertEquals(expected, testTable.getUnfilteredTotalQueryString());
+        assertEquals(expected, testTable.getUnfilteredTotalQuery().build());
     }
 
     @Test
@@ -153,7 +153,7 @@ public class BudgetTableTest {
         String expected = "SELECT TheYear, Sum(BudgetTable.TheValue*Crosswalk.PercentMatch/100)/1000 AS TheValue "
                 + "FROM MajorCode INNER JOIN (Crosswalk INNER JOIN BudgetTable ON (Crosswalk.FC=BudgetTable.FC) "
                 + "AND (Crosswalk.OC=BudgetTable.OC)) ON MajorCode.Code = Crosswalk.PolicyCode";
-        assertEquals(expected, testTable.getFilteredTotalQueryString());
+        assertEquals(expected, testTable.getFilteredTotalQuery().build());
     }
 
     @Test
@@ -165,7 +165,7 @@ public class BudgetTableTest {
                 + "FROM MajorCode INNER JOIN (Crosswalk INNER JOIN BudgetTable ON (Crosswalk.FC=BudgetTable.FC) "
                 + "AND (Crosswalk.OC=BudgetTable.OC)) ON MajorCode.Code = Crosswalk.PolicyCode "
                 + "WHERE Code=6";
-        assertEquals(expected, testTable.getTopicQueryString(topic));
+        assertEquals(expected, testTable.getTopicQuery(topic).build());
     }
 
     @Test

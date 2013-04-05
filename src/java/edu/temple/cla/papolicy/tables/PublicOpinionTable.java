@@ -11,6 +11,8 @@ import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.dao.YearValueMapper;
 import edu.temple.cla.papolicy.filters.Filter;
 import edu.temple.cla.papolicy.filters.PublicOpinionFilters;
+import edu.temple.cla.papolicy.queryBuilder.Comparison;
+import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
@@ -26,27 +28,25 @@ public class PublicOpinionTable extends StandardTable {
     Units units = null;
 
     @Override
-    public String getUnfilteredTotalQueryString() {
+    public QueryBuilder getUnfilteredTotalQuery() {
+        QueryBuilder builder = new QueryBuilder();
+        builder.setTable(getTableName());
+        builder.addColumn("Year AS TheYear");
         if (getUnits(null) == Units.PERCENT) {
-            return "SELECT Year AS TheYear, AVG(Percentage) as TheValue FROM " +
-                    getTableName()
-                    + " WHERE ";
+            builder.addColumn("AVG(Percentage) AS TheValue");
         } else {
-            return "SELECT Year AS TheYear, AVG(25 - Rank_With_25) AS TheValue FROM " +
-                    getTableName()
-                    + " WHERE ";
+            builder.addColumn("AVG(25 - Rank_With_25) AS TheValue");
         }
+        return builder;
     }
 
     @Override
-    public String getTopicQueryString(Topic topic) {
+    public QueryBuilder getTopicQuery(Topic topic) {
+        QueryBuilder builder = getUnfilteredTotalQuery().clone();
         if (topic != null && topic.getCode() != 0) {
-            return getUnfilteredTotalQueryString()
-                + "Code="
-                + topic.getCode();
-        } else {
-            return getUnfilteredTotalQueryString();
+            builder.setTopic(new Comparison("Code", "=", Integer.toString(topic.getCode())));
         }
+        return builder;
     }
 
     @Override

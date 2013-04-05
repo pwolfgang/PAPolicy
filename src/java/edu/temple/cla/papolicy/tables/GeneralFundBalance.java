@@ -89,22 +89,12 @@ public class GeneralFundBalance extends BudgetTable {
     }
 
     @Override
-    public String getTopicQueryString(Topic topic) {
-        return getTopicQuery(topic).build() + " WHERE ";
-    }
-
-    @Override
     public QueryBuilder getUnfilteredTotalQuery() {
         QueryBuilder builder = new QueryBuilder();
         builder.addColumn(getYearColumn() + " AS TheYear");
         builder.addColumn("Expenditures AS TheValue");
         builder.setTable(getTableName());
         return builder;
-    }
-
-    @Override
-    public String getUnfilteredTotalQueryString() {
-        return getUnfilteredTotalQuery().build() + " WHERE ";
     }
 
     @Override

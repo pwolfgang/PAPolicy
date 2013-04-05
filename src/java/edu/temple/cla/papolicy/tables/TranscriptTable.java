@@ -29,11 +29,6 @@ public class TranscriptTable extends StandardTable {
         return builder;
     }
     
-    @Override
-    public String getUnfilteredTotalQueryString() {
-        return getUnfilteredTotalQuery().build() + " WHERE ";
-    }
-
     private String getTableReference() {
         List<Filter> filterList = getFilterList();
         boolean committeeFilterSelected = false;

@@ -157,11 +157,6 @@ public class BillsTable extends AbstractTable {
     }
 
     @Override
-    public String getUnfilteredTotalQueryString() {
-        return getUnfilteredTotalQuery().build();
-    }
-
-    @Override
     public String getYearColumn() {
         return "Year_Referred";
     }

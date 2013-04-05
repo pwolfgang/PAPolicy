@@ -59,6 +59,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @return the id
      */
+    @Override
     public int getId() {
         return id;
     }
@@ -66,6 +67,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @param id the id to set
      */
+    @Override
     public void setId(int id) {
         this.id = id;
     }
@@ -73,6 +75,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @return the tableName
      */
+    @Override
     public String getTableName() {
         return tableName;
     }
@@ -80,6 +83,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @param tableName the tableName to set
      */
+    @Override
     public void setTableName(String tableName) {
         this.tableName = tableName;
     }
@@ -87,6 +91,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @return the tableTitle
      */
+    @Override
     public String getTableTitle() {
         return tableTitle;
     }
@@ -94,6 +99,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @param tableTitle the tableTitle to set
      */
+    @Override
     public void setTableTitle(String tableTitle) {
         this.tableTitle = tableTitle;
     }
@@ -101,6 +107,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @return the majorOnly
      */
+    @Override
     public boolean isMajorOnly() {
         return majorOnly;
     }
@@ -108,6 +115,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @param majorOnly the majorOnly to set
      */
+    @Override
     public void setMajorOnly(boolean majorOnly) {
         this.majorOnly = majorOnly;
     }
@@ -115,6 +123,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @return the minYear
      */
+    @Override
     public int getMinYear() {
         return minYear;
     }
@@ -122,6 +131,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @param minYear the minYear to set
      */
+    @Override
     public void setMinYear(int minYear) {
         this.minYear = minYear;
     }
@@ -129,6 +139,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @return the maxYear
      */
+    @Override
     public int getMaxYear() {
         return maxYear;
     }
@@ -136,6 +147,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @param maxYear the maxYear to set
      */
+    @Override
     public void setMaxYear(int maxYear) {
         this.maxYear = maxYear;
     }
@@ -143,6 +155,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @return the filterList
      */
+    @Override
     public List<Filter> getFilterList() {
         return filterList;
     }
@@ -150,6 +163,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @return filterList.size()
      */
+    @Override
     public int getFilterListSize() {
         return filterList.size();
     }
@@ -157,6 +171,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @param filterList the filterList to set
      */
+    @Override
     public void setFilterList(List<Filter> filterList) {
         this.filterList = filterList;
     }
@@ -165,6 +180,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @param jdbcTemplate the jdbcTemplate to set
      */
+    @Override
     public void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -172,6 +188,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @return the qualifier
      */
+    @Override
     public char getQualifier() {
         return qualifier;
     }
@@ -179,6 +196,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @param qualifier the qualifier to set
      */
+    @Override
     public void setQualifier(char qualifier) {
         this.qualifier = qualifier;
     }
@@ -186,6 +204,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @return the textColumn
      */
+    @Override
     public String getTextColumn() {
         return textColumn;
     }
@@ -193,6 +212,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @param textColumn the textColumn to set
      */
+    @Override
     public void setTextColumn(String textColumn) {
         this.textColumn = textColumn;
     }
@@ -209,9 +229,10 @@ public abstract class AbstractTable implements Table {
         return toString();
     }
 
+    @Override
     public StringBuilder getFilterQualifierString() {
         StringBuilder stb = new StringBuilder();
-        ArrayList<String> filterQualifiers = new ArrayList<String>();
+        ArrayList<String> filterQualifiers = new ArrayList<>();
         for (Filter filter:filterList) {
             if (!"".equals(filter.getFilterQualifier())) {
                 filterQualifiers.add(filter.getFilterQualifier());
@@ -228,6 +249,7 @@ public abstract class AbstractTable implements Table {
         return stb;
     }
 
+    @Override
     public Conjunction getFilterQuery() {
         if (filterQuery == null) {
             filterQuery = new Conjunction();
@@ -238,16 +260,15 @@ public abstract class AbstractTable implements Table {
         return filterQuery;
     }
     
-    public String getFilterQueryString() {
-        return getFilterQuery().toStringNoParen();
-    }
-
+    @Override
     public boolean isTopicSearchable() {return true;}
 
+    @Override
     public void setAdditionalParameters(HttpServletRequest request) {
         // do nothing in base class
     }
 
+    @Override
     public QueryBuilder getUnfilteredTotalQuery() {
         if (totalUnfilteredQuery == null) {
             totalUnfilteredQuery = new QueryBuilder();
@@ -258,10 +279,7 @@ public abstract class AbstractTable implements Table {
         return totalUnfilteredQuery;
     }
 
-    public String getUnfilteredTotalQueryString() {
-        return getUnfilteredTotalQuery().build() + " WHERE ";
-    }
-
+    @Override
     public QueryBuilder getFilteredTotalQuery() {
         if (totalFilteredQuery == null) {
             totalFilteredQuery = getUnfilteredTotalQuery().clone();
@@ -270,10 +288,7 @@ public abstract class AbstractTable implements Table {
         return totalFilteredQuery;
     }
     
-    public String getFilteredTotalQueryString() {
-        return getFilteredTotalQuery().build();
-    }    
-
+    @Override
     public QueryBuilder getTopicQuery(Topic topic) {
         QueryBuilder topicQuery = getFilteredTotalQuery().clone();
         if (topic != null && topic.getCode() != 0) {
@@ -286,27 +301,23 @@ public abstract class AbstractTable implements Table {
         return topicQuery;
     }
     
-    public String getTopicQueryString(Topic topic) {
-        return getTopicQuery(topic).build();
-    }    
-
+    @Override
     public String getYearColumn() {return yearColumn;}
 
+    @Override
     public Units getUnits(String showResults) {
-        if ("percent".equals(showResults)) {
-            return Units.PERCENT;
-        } else if ("percent_of_total".equals(showResults)){
-            return Units.PERCENT_OF_TOTAL;
-        } else if ("percent_of_filtered".equals(showResults)) {
-            return Units.PERCENT_OF_FILTERED;
-        } else {
-            return Units.COUNT;
+        switch (showResults) {
+            case "percent": return Units.PERCENT;
+            case "percent_of_total": return Units.PERCENT_OF_TOTAL;
+            case "percent_of_filtered": return Units.PERCENT_OF_FILTERED;
+            default: return Units.COUNT;
         }
     }
 
     /**
      * @param yearColumn the yearColumn to set
      */
+    @Override
     public void setYearColumn(String yearColumn) {
         this.yearColumn = yearColumn;
     }
@@ -317,11 +328,13 @@ public abstract class AbstractTable implements Table {
      * @param qualifier A character ('A', 'B', etc.) that follows the table ID
      * @return The subtable as indicated by the qualifier character.
      */
-    public AbstractTable getSubTable(char qualifier) {
+    @Override
+    public Table getSubTable(char qualifier) {
         // The AbstractTable class has no subtables
         return this;
     }
 
+    @Override
     public Number getValueForRange(SortedMap<Integer, Number> valueMap) {
         Number sum = null;
         for (Map.Entry<Integer, Number> entry : valueMap.entrySet()) {
@@ -330,6 +343,7 @@ public abstract class AbstractTable implements Table {
         return sum;
     }
 
+    @Override
     public Number getPercentForRange(SortedMap<Integer, Number> valueMap,
             SortedMap<Integer, Number> totalMap) {
         Number sum = getValueForRange(valueMap);
@@ -350,10 +364,12 @@ public abstract class AbstractTable implements Table {
         return new Double(n1.doubleValue() + n2.doubleValue());
     }
 
+    @Override
     public String getAxisTitle(Units units) {
         return Units.getTitle(units);
     }
 
+    @Override
     public List<YearValue> getYearValueList(SimpleJdbcTemplate jdbcTemplate, String query) {
         ParameterizedRowMapper<YearValue> mapper = new YearValueMapper();
         List<YearValue> list = jdbcTemplate.query(query, mapper);
@@ -363,6 +379,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @return the drill-down columns
      */
+    @Override
     public String[] getDrillDownColumns() {
         return drillDownColumns;
     }
@@ -371,6 +388,7 @@ public abstract class AbstractTable implements Table {
      * @param drillDownColumns the array of columns to display in the
      * drill-down page
      */
+    @Override
     public void setDrillDownColumns(String[] drillDownColumns) {
         if (drillDownColumns != null) {
             this.drillDownColumns = drillDownColumns.clone();
@@ -382,6 +400,7 @@ public abstract class AbstractTable implements Table {
     /**
      * @return the linkColumn
      */
+    @Override
     public String getLinkColumn() {
         return linkColumn;
     }
@@ -389,14 +408,17 @@ public abstract class AbstractTable implements Table {
     /**
      * @param linkColumn the linkColumn to set
      */
+    @Override
     public void setLinkColumn(String linkColumn) {
         this.linkColumn = linkColumn;
     }
 
+    @Override
     public void setNoteColumn(String noteColumn) {
         this.noteColumn = noteColumn;
     }
 
+    @Override
     public String getNoteColumn() {return noteColumn != null ? noteColumn : "";}
 
     /**
@@ -450,11 +472,13 @@ public abstract class AbstractTable implements Table {
      * Method to get the Code column name
      * @return the Code column name
      */
+     @Override
      public String getCodeColumn() {return codeColumn;}
 
     /**
      * Method to set the Code column name
      */
+     @Override
      public void setCodeColumn(String codeColumn) {
          this.codeColumn = codeColumn;
      }
@@ -487,7 +511,7 @@ public abstract class AbstractTable implements Table {
         if (numVariations == 1) {
             return new Table[] {table};
         }
-        List<Table> tableList = new ArrayList<Table>();
+        List<Table> tableList = new ArrayList<>();
         tableList.add(table);
         while (expandChoices(tableList)) { 
             // work done in the method expandChoices method
@@ -556,6 +580,7 @@ public abstract class AbstractTable implements Table {
         return stb.toString();
     }
 
+    @Override
     public String getDisplayedValue(String key, Number retValue, Units units) {
         String result;
         switch (units) {

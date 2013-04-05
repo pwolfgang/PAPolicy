@@ -152,7 +152,7 @@ public class GeneralFundBalanceTest {
     @Test
     public void testGetTopicQueryStringNoRainyDay() {
         String expected = "SELECT Year AS TheYear, SUM(Ending_Balance) AS TheValue "
-                + "FROM PennsylvaniaGeneralFundBalance WHERE ";
+                + "FROM PennsylvaniaGeneralFundBalance";
         Topic topic = new Topic();
         topic.setCode(6);
         topic.setDescription("Education");
@@ -161,13 +161,13 @@ public class GeneralFundBalanceTest {
             result = "0";
         }};
         testTable.setAdditionalParameters(request);
-        assertEquals(expected, testTable.getTopicQueryString(topic));
+        assertEquals(expected, testTable.getTopicQuery(topic).build());
     }
 
     @Test
     public void testGetTopicQueryStringRainyDay() {
         String expected = "SELECT Year AS TheYear, SUM(Ending_Balance + Budget_Stabilization_Fund) "
-                + "AS TheValue FROM PennsylvaniaGeneralFundBalance WHERE ";
+                + "AS TheValue FROM PennsylvaniaGeneralFundBalance";
         Topic topic = new Topic();
         topic.setCode(6);
         topic.setDescription("Education");
@@ -176,14 +176,14 @@ public class GeneralFundBalanceTest {
             result = "1";
         }};
         testTable.setAdditionalParameters(request);
-        assertEquals(expected, testTable.getTopicQueryString(topic));
+        assertEquals(expected, testTable.getTopicQuery(topic).build());
     }
 
     @Test
     public void testGetUnfilteredTotalQueryString() {
         String expected = "SELECT Year AS TheYear, Expenditures AS TheValue FROM "
-                + "PennsylvaniaGeneralFundBalance WHERE ";
-        assertEquals(expected, testTable.getUnfilteredTotalQueryString());
+                + "PennsylvaniaGeneralFundBalance";
+        assertEquals(expected, testTable.getUnfilteredTotalQuery().build());
     }
 
     @Test
