@@ -30,6 +30,10 @@ public class Like implements Expression {
         return column + (not ? " NOT ": " ") + "LIKE('" + what + "')";
     }
     
+    public String toStringNoParen() {
+        return toString();
+    }
+    
     public boolean isEmptyExpression() {return false;}
 
 }

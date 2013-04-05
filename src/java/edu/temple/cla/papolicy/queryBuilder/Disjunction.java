@@ -17,5 +17,14 @@ public class Disjunction extends Composite {
     public String toString() {
         return toString(" OR ", false);
     }
+    
+    /**
+     * Disjunctions always need to be surrounded with parentheses
+     * @return The same result as toString.
+     */
+    @Override
+    public String toStringNoParen() {
+        return toString();
+    }
 
 }

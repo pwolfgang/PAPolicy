@@ -16,6 +16,11 @@ public class Comparison implements Expression {
     public String toString() {
         return lhs+operator+rhs;
     }
+    
+    @Override
+    public String toStringNoParen() {
+        return toString();
+    }
 
     @Override
     public boolean isEmptyExpression() {

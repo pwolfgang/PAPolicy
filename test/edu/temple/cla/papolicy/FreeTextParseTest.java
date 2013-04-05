@@ -28,8 +28,8 @@ public class FreeTextParseTest {
     public static Collection<String[]> getTextParameters() {
         return Arrays.asList(new String[][] {
             {"text LIKE(\'%foo%\')", "text", "foo"},
-            {"(text LIKE(\'%foo%\') AND text LIKE(\'%bar%\'))", "text", "foo bar"},
-            {"(text LIKE(\'%foo%\') AND text LIKE(\'%bar%\'))", "text", "foo and bar"},
+            {"text LIKE(\'%foo%\') AND text LIKE(\'%bar%\')", "text", "foo bar"},
+            {"text LIKE(\'%foo%\') AND text LIKE(\'%bar%\')", "text", "foo and bar"},
             {"(text LIKE(\'%foo%\') OR text LIKE(\'%bar%\'))", "text", "foo or bar"},
             {"text LIKE(\'%foo bar%\')", "text", "\"foo bar\""},
             {"(text LIKE(\'%foo bar%\') OR text LIKE(\'%baz%\'))", "text", "\"foo bar\" or baz"}
@@ -45,7 +45,7 @@ public class FreeTextParseTest {
     @Test
     public void testSingleToken() {
         Column column = new Column();
-        String result = column.parseFreeText(textColumn, freeText).toString();
+        String result = column.parseFreeText(textColumn, freeText).toStringNoParen();
         assertEquals(expected, result);
     }
 

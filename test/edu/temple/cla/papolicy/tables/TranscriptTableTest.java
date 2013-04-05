@@ -92,8 +92,8 @@ public class TranscriptTableTest {
     @Test
     public void testGetUnfilteredTotalQueryString() {
         String expected = "SELECT Year AS TheYear, count(ID) AS TheValue "
-                + "FROM Transcript_Committee join Transcript on transcriptID=ID WHERE ";
-        assertEquals(expected, testTable.getUnfilteredTotalQueryString());
+                + "FROM Transcript_Committee join Transcript on transcriptID=ID";
+        assertEquals(expected, testTable.getUnfilteredTotalQuery().build());
     }
 
     @Test

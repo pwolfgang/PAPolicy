@@ -18,6 +18,11 @@ public class Between implements Expression {
     }
     
     @Override
+    public String toStringNoParen() {
+        return toString();
+    }
+    
+    @Override
     public boolean isEmptyExpression() {
         return false;
     }

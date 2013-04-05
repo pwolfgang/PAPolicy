@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Paul Wolfgang
  */
-public class Composite implements Expression {
+public abstract class  Composite implements Expression {
 
     protected List<Expression> terms;
 
@@ -58,7 +58,8 @@ public class Composite implements Expression {
      * Return a string representation. If there are no terms, return an empty
      * string If there is only one term, return that term Otherwise return the
      * terms separated by operator
-     *
+     * @param The operator
+     * @noParen if true, then surrounding parentheses are not applied.
      * @return
      */
     public String toString(String operator, boolean noParen) {
@@ -90,4 +91,5 @@ public class Composite implements Expression {
             }
         }
     }
+    
 }

@@ -168,7 +168,7 @@ public class AbstractTableTest {
     @Test
     public void testGetFilterQueryString() {
         String expected = "Tax=0 AND Elderly<>0";
-        assertEquals(expected, testTable.getFilterQueryString());
+        assertEquals(expected, testTable.getFilterQuery().toStringNoParen());
     }
 
     @Test
@@ -178,14 +178,14 @@ public class AbstractTableTest {
 
     @Test
     public void testGetUnfilteredTotalQueryString() {
-        String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM LegServiceAgencyReports WHERE ";
-        assertEquals(expected, testTable.getUnfilteredTotalQueryString());
+        String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM LegServiceAgencyReports";
+        assertEquals(expected, testTable.getUnfilteredTotalQuery().build());
     }
 
     @Test
     public void testGetFilteredTotalQueryString() {
         String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM LegServiceAgencyReports WHERE Tax=0 AND Elderly<>0";
-        assertEquals(expected, testTable.getFilteredTotalQueryString());
+        assertEquals(expected, testTable.getFilteredTotalQuery().build());
     }
 
     @Test
@@ -195,7 +195,7 @@ public class AbstractTableTest {
         topic.setDescription("Education");
         String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM LegServiceAgencyReports" +
                 " WHERE Tax=0 AND Elderly<>0 AND FinalCode LIKE('6__')";
-        assertEquals(expected, testTable.getTopicQueryString(topic));
+        assertEquals(expected, testTable.getTopicQuery(topic).build());
     }
 
     @Test

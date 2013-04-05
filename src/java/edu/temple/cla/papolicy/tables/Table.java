@@ -131,24 +131,16 @@ public interface Table extends Cloneable {
 
     Conjunction getFilterQuery();
     
-    String getFilterQueryString();
-
     boolean isTopicSearchable();
 
     void setAdditionalParameters(HttpServletRequest request);
 
     QueryBuilder getFilteredTotalQuery();
     
-    String getFilteredTotalQueryString();
-
     QueryBuilder getUnfilteredTotalQuery();
-    
-    String getUnfilteredTotalQueryString();
 
     QueryBuilder getTopicQuery(Topic topic);
     
-    String getTopicQueryString(Topic topic);
-
     String getYearColumn();
 
     Units getUnits(String showResults);

@@ -17,6 +17,13 @@ public interface Expression {
     @Override
     String toString();
     
+    /**
+     * Return a string representation of the expression without surrounding
+     * parentheses
+     * @return A string representation without surrounding parentheses.
+     */
+    String toStringNoParen();
+    
     boolean isEmptyExpression();
     
 }

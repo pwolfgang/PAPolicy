@@ -18,7 +18,7 @@ public class Conjunction extends Composite {
         return toString(" AND ", false);
     }
 
-        /**
+    /**
      * Return a string representation.
      * If there are no terms, return an empty string
      * If there is only one term, return that term
