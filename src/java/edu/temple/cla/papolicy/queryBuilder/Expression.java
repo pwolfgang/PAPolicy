@@ -24,6 +24,10 @@ public interface Expression {
      */
     String toStringNoParen();
     
-    boolean isEmptyExpression();
+    /**
+     * Determine if this expression is empty.
+     * @return true if this expression is empty.
+     */
+    boolean isEmpty();
     
 }

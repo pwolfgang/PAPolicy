@@ -41,6 +41,7 @@ public abstract class  Composite implements Expression {
     /**
      * Determine if composite is empty
      */
+    @Override
     public boolean isEmpty() {
         return terms == null || terms.isEmpty();
     }
@@ -52,10 +53,6 @@ public abstract class  Composite implements Expression {
         return terms;
     }
     
-    public boolean isEmptyExpression() {
-        return terms == null;
-    }
-
     /**
      * Return a string representation. If there are no terms, return an empty
      * string If there is only one term, return that term Otherwise return the
@@ -70,7 +67,7 @@ public abstract class  Composite implements Expression {
         } else {
             for (Iterator<Expression> itr = terms.iterator(); itr.hasNext();) {
                 Expression e = itr.next();
-                if (e.isEmptyExpression()) {
+                if (e.isEmpty()) {
                     itr.remove();
                 }
             }

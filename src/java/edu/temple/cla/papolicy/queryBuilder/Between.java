@@ -23,7 +23,7 @@ public class Between implements Expression {
     }
     
     @Override
-    public boolean isEmptyExpression() {
+    public boolean isEmpty() {
         return false;
     }
 

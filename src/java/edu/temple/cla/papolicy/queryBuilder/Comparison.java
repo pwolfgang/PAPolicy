@@ -23,7 +23,7 @@ public class Comparison implements Expression {
     }
 
     @Override
-    public boolean isEmptyExpression() {
+    public boolean isEmpty() {
         return false;
     }
 }

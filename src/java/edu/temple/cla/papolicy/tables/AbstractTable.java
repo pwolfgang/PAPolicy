@@ -551,7 +551,7 @@ public abstract class AbstractTable implements Table {
                 theClone.drillDownColumns = drillDownColumns.clone();
             }
             if (filterList != null) {
-                theClone.filterList = new ArrayList(filterList);
+                theClone.filterList = new ArrayList<>(filterList);
             }
             return theClone;
         } catch (CloneNotSupportedException ex) {

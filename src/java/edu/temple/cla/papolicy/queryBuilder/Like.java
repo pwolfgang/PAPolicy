@@ -26,14 +26,17 @@ public class Like implements Expression {
         this(column, what, false);
     }
     
+    @Override
     public String toString() {
         return column + (not ? " NOT ": " ") + "LIKE('" + what + "')";
     }
     
+    @Override
     public String toStringNoParen() {
         return toString();
     }
     
-    public boolean isEmptyExpression() {return false;}
+    @Override
+    public boolean isEmpty() {return false;}
 
 }

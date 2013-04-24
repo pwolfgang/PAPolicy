@@ -17,6 +17,6 @@ public class EmptyExpression implements Expression {
     public String toStringNoParen() {return "";}
     
     @Override
-    public boolean isEmptyExpression() {return true;}
+    public boolean isEmpty() {return true;}
 
 }
