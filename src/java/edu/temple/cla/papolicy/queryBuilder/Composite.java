@@ -29,7 +29,9 @@ public abstract class  Composite implements Expression {
             }
             if (this.getClass() == e.getClass()) { // Both same kind of Composite
                 Composite composite = (Composite) e;
-                terms.addAll(composite.getTerms());
+                if (!composite.isEmpty()) {
+                    terms.addAll(composite.getTerms());
+                }
             } else {
                 terms.add(e);
             }
