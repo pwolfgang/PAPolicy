@@ -34,7 +34,8 @@ public class TranscriptTable extends StandardTable {
         boolean committeeFilterSelected = false;
         for (Filter filter : filterList) {
             if (filter.getClass() == HouseHearingsCommittee.class) {
-                committeeFilterSelected = true;
+                HouseHearingsCommittee houseHearingsFilter = (HouseHearingsCommittee)filter;
+                committeeFilterSelected |= houseHearingsFilter.isSelected();
             }
         }
         if (committeeFilterSelected) {

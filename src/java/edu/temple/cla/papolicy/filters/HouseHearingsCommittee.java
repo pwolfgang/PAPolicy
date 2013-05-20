@@ -21,6 +21,7 @@ public class HouseHearingsCommittee extends Filter {
 
     private String ctyCode;
     private String filterQuallifierString;
+    private boolean selected;
 
     public HouseHearingsCommittee(int id, int tableId, String description,
             String columnName, String tableReference, String additionalParam) {
@@ -49,13 +50,20 @@ public class HouseHearingsCommittee extends Filter {
         stb.append("</select>\n");
         return stb.toString();
     }
+    
+    public boolean isSelected() {
+        return selected;
+    }
 
+    @Override
     public void setFilterParameterValues(HttpServletRequest request) {
         ctyCode = request.getParameter("F"+getId());
         if (ctyCode != null && !ctyCode.equals("ALL")) {
             filterQuery = new Comparison("CtyCode", "=", ctyCode);
+            selected = true;
         } else {
             filterQuery = new EmptyExpression();
+            selected = false;
         }
         setFilterQualifier();
     }
