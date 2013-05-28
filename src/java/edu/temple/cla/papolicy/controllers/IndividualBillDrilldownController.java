@@ -34,7 +34,7 @@ public class IndividualBillDrilldownController extends AbstractController{
         Table billsTable = AbstractTable.getTable("3", ' ', request, jdbcTemplate)[0];
         QueryBuilder initialQuery = new QueryBuilder();
         initialQuery.setTable(billsTable.getTableName());
-        initialQuery.addToSelectCriteria(new Comparison("ID", "=", billId));
+        initialQuery.addToSelectCriteria(new Comparison("ID", "=", "\"" + billId + "\""));
         String drillDownURL = billsTable.createDrillDownURL(initialQuery);
         try {
             response.sendRedirect(drillDownURL);
