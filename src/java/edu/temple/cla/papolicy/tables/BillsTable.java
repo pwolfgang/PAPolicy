@@ -28,24 +28,26 @@ public class BillsTable extends AbstractTable {
     public String getTitleBox(){
         return "\n"+
 "<dl>\r\n<dt><input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"\"\n"+
-"        id=\"t"+getId()+"\" onclick=\"expandBills("+getId()+");\" />\n"+
-"        <span class=\"strong\">"+getTableTitle()+"</span></dt>\r\n\n"+
+"        id=\"t"+getId()+"\" onclick=\"expandBills("+getId()+");\" />\n"+                
+"        <label for=\"t"+getId()+"\"><span class=\"strong\">"+getTableTitle()+"</span></label></dt>\r\n\n"+
 "<div class=\"subtbl\" id=\"subtbl"+getId()+"\">\n"+
-"    <dd><input type=\"checkbox\" name=\"chamber\" value=\"House\" checked=\"checked\" />\n"+
-"        <span class=\"strong\">House</span>\n"+
+"    <dd><input type=\"checkbox\" name=\"chamber\" value=\"House\" id=\"houseChamber\" checked=\"checked\" />\n"+
+"        <label for=\"houseChamber\"><span class=\"strong\">House</span></label>\n"+
 "    </dd>\n"+
-"    <dd><input type=\"checkbox\" name=\"chamber\" value=\"Senate\" checked=\"checked\" />\n"+
-"        <span class=\"strong\">Senate</span>\n"+
+"    <dd><input type=\"checkbox\" name=\"chamber\" value=\"Senate\" id=\"senateChamber\" checked=\"checked\" />\n"+
+"        <label for=\"senateChamber\" <span class=\"strong\">Senate</span></label>\n"+
 "    </dd>\n"+
-"    <dd><input type=\"radio\" name=\"billtype\" value=\"BOTH\" checked=\"checked\" />\n"+
-"        <span class=\"strong\">Bills and Resolutions</span>\n"+
+     "<fieldset><legend>Type</legend>\n"+           
+"    <dd><input type=\"radio\" name=\"billtype\" value=\"BOTH\" id=\"billtypeBoth\" checked=\"checked\" />\n"+
+"        <label for=\"billtypeBoth\"><span class=\"strong\">Bills and Resolutions</span></label>\n"+
 "    </dd>\n"+
-"    <dd><input type=\"radio\" name=\"billtype\" value=\"BILLS\" />\n"+
-"        <span class=\"strong\">Bills</span>\n"+
+"    <dd><input type=\"radio\" name=\"billtype\" value=\"BILLS\" id=\"billtypeBills\" />\n"+
+"        <lable for=\"billtypeBills\"><span class=\"strong\">Bills</span></label>\n"+
 "    </dd>\n"+
-"    <dd><input type=\"radio\" name=\"billtype\" value=\"RES\" />\n"+
-"        <span class=\"strong\">Resolutions</span>\n"+
+"    <dd><input type=\"radio\" name=\"billtype\" value=\"RES\" id=\"billtypeRes\" />\n"+
+"        <lable for=\"billtypeRes\"><span class=\"strong\">Resolutions</span></label>\n"+
 "    </dd>\n"+
+     "</fieldset>\n"+           
 "    <dd><input type=\"radio\" name=\"sessiontype\" value=\"REGULAR\" checked=\"checked\" />\n"+
 "        <span class=\"strong\">Regular Sessions Only</span></dd>\n"+
 "    <dd><input type=\"radio\" name=\"sessiontype\" value=\"SPECIAL\" />\n"+
@@ -78,7 +80,7 @@ public class BillsTable extends AbstractTable {
 "    <dd><input type=\"radio\" name=\"sessiontypea\" value=\"SPECIAL\" />\n"+
 "        <span class=\"strong\">Special Sessions Only</span></dd>\n"+
 "    <dd><input type=\"radio\" name=\"sessiontypea\" value=\"BOTH\" />\n"+
-"        <span class=\"strong\">Both Regular and Special Sessions</strong></dd>\n"+
+"        <span class=\"strong\">Both Regular and Special Sessions</span></dd>\n"+
 "</dl>\n"+
 "</div>\n"+
 "</dt>\n"+
