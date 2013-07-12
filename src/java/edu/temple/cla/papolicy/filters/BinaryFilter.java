@@ -27,10 +27,14 @@ public class BinaryFilter extends Filter {
     @Override
     public String getFilterFormInput() {
         return "\n"+
-"            "+getDescription()+"\n"+
-"            <br /><input type=\"radio\" name=\""+parameterName+"\" value=\""+BOTH+"\" checked=\"checked\" />&nbsp no filter\n"+
-"                  <input type=\"radio\" name=\""+parameterName+"\" value=\"0\" />&nbsp Exclude\n"+
-"                  <input type=\"radio\" name=\""+parameterName+"\" value=\"1\" />&nbsp Include";
+"            <fieldset><legend>"+getDescription()+"</legend>\n"+
+"            <input type=\"radio\" name=\""+parameterName+"\" id=\""+parameterName+"B\" value=\""+BOTH+"\" checked=\"checked\" />"
+                + "&nbsp; <label for=\""+parameterName+"B\">no filter</label>\n"+
+"                  <input type=\"radio\" name=\""+parameterName+"\" id=\""+parameterName+"0\" value=\"0\" />"
+                + "&nbsp; <label for=\""+parameterName+"0\">Exclude</label>\n"+
+"                  <input type=\"radio\" name=\""+parameterName+"\" id=\""+parameterName+"1\" value=\"1\" />"
+                + "&nbsp; <label for=\""+parameterName+"1\">Include</label>\n" +
+"             </fieldset>\n";
         }
 
     public void setFilterParameterValues(HttpServletRequest request) {

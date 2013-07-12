@@ -65,9 +65,7 @@
                             <div id="filters${table.id}" class="filter">
                                 <%boolean first=true;%>
                                 <c:forEach var="filter" items="${table.filterList}">
-                                    <%if(first) first=false; else{%>
-                                    <br/>&nbsp;<br/><%}%>
-                                    &nbsp;&nbsp;${filter.filterFormInput}
+                                    ${filter.filterFormInput}
                                 </c:forEach>
                             </div>
                         </c:when>
