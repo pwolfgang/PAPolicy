@@ -25,8 +25,9 @@ public class PublicOpinionFilters extends Filter {
 
     @Override
     public String getFilterFormInput() {
-        return "Display as <input type=\"radio\" name=\"mipdisp\" value=\"0\" checked=\"checked\" />Percent\n"+
-"                <input type=\"radio\" name=\"mipdisp\" value=\"1\" />Rank";
+        return "<fieldset><legend>Display as</legend>"
+                + "<label><input type=\"radio\" name=\"mipdisp\" value=\"0\" checked=\"checked\" />Percent</label>\n"+
+"                <label><input type=\"radio\" name=\"mipdisp\" value=\"1\" />Rank</label></fieldset>";
     }
 
     @Override
