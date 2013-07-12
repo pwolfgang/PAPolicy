@@ -45,18 +45,18 @@ public class MultiValuedFilter extends Filter {
                 " ORDER BY ID";
         List<DropDownItem> items = getJdbcTemplate().query(query, itemMapper);
         StringBuilder stb = new StringBuilder();
-        stb.append(""+getDescription()+"\n"+
-"        <br /><input type=\"radio\" name=\""+selectParameterName+"\" value=\""+BOTH+"\" checked=\"checked\" />&nbsp;no filter\n"+
-"              <input type=\"radio\" name=\""+selectParameterName+"\" value=\"0\" />&nbsp;Exclude\n"+
-"              <input type=\"radio\" name=\""+selectParameterName+"\" value=\"1\" />&nbsp;Include\n"+
+        stb.append("<fieldset><legend>"+getDescription()+"</legend>\n"+
+"              <label><input type=\"radio\" name=\""+selectParameterName+"\" value=\""+BOTH+"\" checked=\"checked\" />&nbsp;no filter</label>\n"+
+"              <label><input type=\"radio\" name=\""+selectParameterName+"\" value=\"0\" />&nbsp;Exclude</label>\n"+
+"              <label><input type=\"radio\" name=\""+selectParameterName+"\" value=\"1\" />&nbsp;Include</label>\n"+
 "        <dl>");
         for (DropDownItem item : items) {
             if (item.getID() != 99) {
-                stb.append("<dd><input type=\"checkbox\" name=\""+valuesParameterName+"\" value=\""+item.getID()+"\" checked=\"checked\" />\n"+
-"                "+item.getDescription()+"</dd>");
+                stb.append("<dd><label><input type=\"checkbox\" name=\""+valuesParameterName+"\" value=\""+item.getID()+"\" checked=\"checked\" />\n"+
+"                "+item.getDescription()+"</label></dd>");
             }
         }
-        stb.append("</dl>");
+        stb.append("</dl></fieldset>");
         return stb.toString();
     }
 
