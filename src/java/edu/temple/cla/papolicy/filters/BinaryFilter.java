@@ -29,7 +29,7 @@ public class BinaryFilter extends Filter {
         return "\n"+
 "            <fieldset><legend>"+getDescription()+"</legend>\n"+
 "            <input type=\"radio\" name=\""+parameterName+"\" id=\""+parameterName+"B\" value=\""+BOTH+"\" checked=\"checked\" />"
-                + "&nbsp; <label for=\""+parameterName+"B\">no filter</label>\n"+
+                + "&nbsp; <label for=\""+parameterName+"B\">No Filter</label>\n"+
 "                  <input type=\"radio\" name=\""+parameterName+"\" id=\""+parameterName+"0\" value=\"0\" />"
                 + "&nbsp; <label for=\""+parameterName+"0\">Exclude</label>\n"+
 "                  <input type=\"radio\" name=\""+parameterName+"\" id=\""+parameterName+"1\" value=\"1\" />"

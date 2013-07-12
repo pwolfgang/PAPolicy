@@ -39,9 +39,9 @@ public class DropDown extends Filter {
                 " ORDER BY ID";
         List<DropDownItem> items = getJdbcTemplate().query(query, itemMapper);
         StringBuilder stb = new StringBuilder();
-        stb.append(getDescription());
-        stb.append("<br /><select name=\""+parameterName+"\">\n"+
-"                <option value=\"-1\" selected=\"selected\">no filter</option>");
+        stb.append("<label for=\""+parameterName+"\"><br/>"+getDescription()+"</label>");
+        stb.append("<br /><select name=\""+parameterName+"\" id=\""+parameterName+"\">\n"+
+"                <option value=\"-1\" selected=\"selected\">No Filter</option>\n");
         for (DropDownItem item : items) {
             stb.append("<option value=\""+item.getID()+"\">"+item.getDescription()+"</option>");
         }

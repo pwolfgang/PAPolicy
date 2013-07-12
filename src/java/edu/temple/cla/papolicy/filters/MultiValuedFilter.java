@@ -46,7 +46,7 @@ public class MultiValuedFilter extends Filter {
         List<DropDownItem> items = getJdbcTemplate().query(query, itemMapper);
         StringBuilder stb = new StringBuilder();
         stb.append("<fieldset><legend>"+getDescription()+"</legend>\n"+
-"              <label><input type=\"radio\" name=\""+selectParameterName+"\" value=\""+BOTH+"\" checked=\"checked\" />&nbsp;no filter</label>\n"+
+"              <label><input type=\"radio\" name=\""+selectParameterName+"\" value=\""+BOTH+"\" checked=\"checked\" />&nbsp;No Filter</label>\n"+
 "              <label><input type=\"radio\" name=\""+selectParameterName+"\" value=\"0\" />&nbsp;Exclude</label>\n"+
 "              <label><input type=\"radio\" name=\""+selectParameterName+"\" value=\"1\" />&nbsp;Include</label>\n"+
 "        <dl>");

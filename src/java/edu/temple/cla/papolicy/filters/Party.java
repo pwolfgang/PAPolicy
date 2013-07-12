@@ -29,11 +29,11 @@ public class Party extends Filter implements Cloneable {
 
     @Override
     public String getFilterFormInput() {
-        return ""+getDescription()+"\n"+
-"        <br /><input type=\"radio\" name=\"F"+getId()+"\" value=\"NOFILTER\" checked=\"checked\" />&nbsp;no filter\n"+
-"              <input type=\"radio\" name=\"F"+getId()+"\" value=\"0\" />&nbsp;Republican\n"+
-"              <input type=\"radio\" name=\"F"+getId()+"\" value=\"1\" />&nbsp;Democrat\n"+
-"              <input type=\"radio\" name=\"F"+getId()+"\" value=\"ALL\" />&nbsp;Both\n";                
+        return "<fieldset><legend>"+getDescription()+"</legend>\n"+
+"              <label><input type=\"radio\" name=\"F"+getId()+"\" value=\"NOFILTER\" checked=\"checked\" />&nbsp;Both</label>\n"+
+"              <label><input type=\"radio\" name=\"F"+getId()+"\" value=\"0\" />&nbsp;Republican</label>\n"+
+"              <label><input type=\"radio\" name=\"F"+getId()+"\" value=\"1\" />&nbsp;Democrat</label>\n"
+            + "</fieldset>";
     }
 
     public void setFilterParameterValues(HttpServletRequest request) {

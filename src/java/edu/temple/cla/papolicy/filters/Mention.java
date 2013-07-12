@@ -34,11 +34,11 @@ public class Mention extends Filter {
         return 
 "            <fieldset><legend>"+getDescription()+"</legend>\n"+
 "              <input type=\"radio\" name=\"F"+getId()+"\" value=\""+BOTH+"\" id=\"F"+getId()+"B\" checked=\"checked\" />"
-                + "<label for=\"F"+getId()+"B\">no filter</label>\n"+
+                + "<label for=\"F"+getId()+"B\">No Filter</label>\n"+
 "              <input type=\"radio\" name=\"F"+getId()+"\" value=\"0\" id=\"F"+getId()+"0\" />"
-                + "<label for=\"F"+getId()+"0\">no filter</label>\n"+
+                + "<label for=\"F"+getId()+"0\">No Mention</label>\n"+
 "              <input type=\"radio\" name=\"F"+getId()+"\" value=\"2\" id=\"F"+getId()+"2\" />"
-                + "<label for=\"F"+getId()+"2\">no filter</label>\n"
+                + "<label for=\"F"+getId()+"2\">Mention</label>\n"
                 + "</fieldset>\n";
         
     }
