@@ -19,7 +19,7 @@ public class StandardTable extends AbstractTable implements Table {
 "        <dl><dt>\n"+
 "            <input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"\"\n"+
 "                 id=\"t"+getId()+"\" onclick=\"expandFilters("+getId()+");expandNote("+getId()+");\" />\n"+
-"            <span class=\"strong\">"+getTableTitle()+"</span>\n"+
+"            <label for=\"t"+getId()+"\"><span class=\"strong\">"+getTableTitle()+"</span></label>\n"+
 "        </dt></dl>\n"+
 "        <div id=\"note"+getId()+"\" class=\"nnoottee\"><p>"+getNoteColumn()+"</p></div>\n"+
 "        ";
