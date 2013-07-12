@@ -35,18 +35,20 @@ public class BudgetFilters extends Filter {
         ParameterizedRowMapper<Deflator> itemMapper = new DeflatorMapper();
         List<Deflator> items = getJdbcTemplate().query(query, itemMapper);
         StringBuilder stb = new StringBuilder();
-        stb.append("<input type=\"radio\" name=\"disp\" value=\"0\" checked=\"checked\" />\n"+
-"                Display Dollar Values\n"+
-"                <br />&nbsp;&nbsp;<input type=\"radio\" name=\"disp\" value=\"1\" />\n"+
-"                Display Percent of Total Spending\n"+
-"                <br />&nbsp;&nbsp;<input type=\"radio\" name=\"disp\" value=\"2\" />\n"+
-"                Display Percent Change\n"+
-"                <br />\n"+
-"                <br />&nbsp;&nbsp;<input type=\"radio\" name=\"adjust\" value=\"0\" />\n"+
-"                Un-adjusted Dollars\n"+
-"                <br/>&nbsp;&nbsp;<input type=\"radio\" name=\"adjust\" value=\"1\" checked=\"checked\" />\n"+
-"                Inflation-adjusted Dollars Base Year\n"+
-"                <select name=\"baseYear\">\n"+
+        stb.append("<fieldset><legend>Display</legend>"
+                + "&nbsp;&nbsp;<label><input type=\"radio\" name=\"disp\" value=\"0\" checked=\"checked\" />\n"+
+"                Dollar Values</label>\n"+
+"                <br/>&nbsp;&nbsp;<label><input type=\"radio\" name=\"disp\" value=\"1\" />\n"+
+"                Percent of Total Spending</label>\n"+
+"                <br />&nbsp;&nbsp;<label><input type=\"radio\" name=\"disp\" value=\"2\" />\n"+
+"                Display Percent Change</label>\n"+
+"                </fieldset><br />\n"+
+"                <fieldset><legend>Inflation Adjustment</legend>" +                
+"                &nbsp;&nbsp;<label><input type=\"radio\" name=\"adjust\" value=\"0\" />\n"+
+"                Un-adjusted Dollars</label>\n"+
+"                <br/>&nbsp;&nbsp;<label><input type=\"radio\" name=\"adjust\" value=\"1\" checked=\"checked\" />\n"+
+"                Inflation-adjusted</label><label for=\"baseYear\"> Dollars Base Year</label>\n"+
+"                <select id=\"baseYear\" name=\"baseYear\">\n"+
 "        ");
         for (Deflator item : items) {
             stb.append("<option value=\""+item.getYear()+"\"");
@@ -58,7 +60,7 @@ public class BudgetFilters extends Filter {
             stb.append(item.getYear());
             stb.append("</option>");
         }
-        stb.append("</select>");
+        stb.append("</select></fieldset>");
         return stb.toString();
     }
 
