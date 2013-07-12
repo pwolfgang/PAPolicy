@@ -31,10 +31,15 @@ public class Mention extends Filter {
 
     @Override
     public String getFilterFormInput() {
-        return ""+getDescription()+"\n"+
-"        <br /><input type=\"radio\" name=\"F"+getId()+"\" value=\""+BOTH+"\" checked=\"checked\" />&nbsp;no filter\n"+
-"              <input type=\"radio\" name=\"F"+getId()+"\" value=\"0\" />&nbsp;No Mention\n"+
-"              <input type=\"radio\" name=\"F"+getId()+"\" value=\"2\" />&nbsp;Mention\n";
+        return 
+"            <fieldset><legend>"+getDescription()+"</legend>\n"+
+"              <input type=\"radio\" name=\"F"+getId()+"\" value=\""+BOTH+"\" id=\"F"+getId()+"B\" checked=\"checked\" />"
+                + "<label for=\"F"+getId()+"B\">no filter</label>\n"+
+"              <input type=\"radio\" name=\"F"+getId()+"\" value=\"0\" id=\"F"+getId()+"0\" />"
+                + "<label for=\"F"+getId()+"0\">no filter</label>\n"+
+"              <input type=\"radio\" name=\"F"+getId()+"\" value=\"2\" id=\"F"+getId()+"2\" />"
+                + "<label for=\"F"+getId()+"2\">no filter</label>\n"
+                + "</fieldset>\n";
         
     }
 

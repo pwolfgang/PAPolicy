@@ -30,10 +30,15 @@ public class WhereHeld extends Filter {
 
     @Override
     public String getFilterFormInput() {
-        return ""+getDescription()+"\n"+
-"        <br /><input type=\"radio\" name=\""+parameterName+"\" value=\""+BOTH+"\" checked=\"checked\" />&nbsp;Both\n"+
-"              <input type=\"radio\" name=\""+parameterName+"\" value=\"0\" />&nbsp;"+getAdditionalParam()+"\n"+
-"              <input type=\"radio\" name=\""+parameterName+"\" value=\"1\" />&nbsp;Outside "+getAdditionalParam()+"";
+        return 
+"       <fieldset><legend>"+getDescription()+"</legend>\n"+
+"              <input type=\"radio\" name=\""+parameterName+"\" value=\""+BOTH+"\" id=\""+parameterName+"B\" checked=\"checked\" />"
+                + "<label for=\""+parameterName+"B\">Both</label>\n"+
+"              <input type=\"radio\" name=\""+parameterName+"\" value=\"0\" id=\""+parameterName+"0\" />"
+                + "<label for=\""+parameterName+"0\">"+getAdditionalParam()+"</label>\n"+
+"              <input type=\"radio\" name=\""+parameterName+"\" value=\"1\" id=\""+parameterName+"1\" />"
+                + "<label for=\""+parameterName+"1\">Outside "+getAdditionalParam()+"</label>"
+      + "</fieldset>";
     }
 
 public void setFilterParameterValues(HttpServletRequest request) {
