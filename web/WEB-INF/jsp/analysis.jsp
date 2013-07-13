@@ -32,7 +32,7 @@
             <br /><span class="error">At least one dataset must be chosen!</span>
             <%}%>
         </p>
-        <form id="analysisForm" method="get" action="display.spg"> <%-- temporary change --%>
+        <form id="analysisForm" method="post" action="display.spg">
         <table class="border">
             <tr>
                 <td rowspan="<%=((java.util.List)request.getAttribute("tables")).size()+1%>">

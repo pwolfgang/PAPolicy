@@ -26,19 +26,19 @@ th {
 }
 
 .filter {
-    display: block;
+    display: none;
 }
 
 .subtbl {
-    display: block;
+    display: none;
 }
 
 .subcodelist {
-    display: block;
+    display: none;
 }
 
 .nnoottee {
-    display: block;
+    display: none;
 }
 
 .alert {
