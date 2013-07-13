@@ -34,6 +34,8 @@ public class YearRange {
             maxYear = Integer.parseInt(endSession);
         }
     }
+    
+    public boolean isSession() {return span;}
 
 
     /**

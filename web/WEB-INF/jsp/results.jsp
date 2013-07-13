@@ -19,7 +19,7 @@
     </head>
     <body>
         <%@include file="header.jspf"%>
-        <h3>To download the raw data as an Excel spreadsheet, click on the link</h3>
+        <p>To download the raw data as an Excel spreadsheet, click on the link</p>
         <c:forEach var="column" items="${columns}">
             ${column.downloadURL}
         </c:forEach>
@@ -33,7 +33,10 @@
         <table border="2">
             <tr>
                 <th>
-                    &nbsp;
+                    <c:choose>
+                        <c:when test="${yearRange.session}">Session</c:when>
+                        <c:otherwise>Year</c:otherwise>
+                    </c:choose>
                 </th>
                 <c:forEach var="column" items="${columns}">
                     <th>
