@@ -32,7 +32,7 @@
             <br /><span class="error">At least one dataset must be chosen!</span>
             <%}%>
         </p>
-        <form method="post" action="display.spg">
+        <form id="analysisForm" method="get" action="display.spg"> <%-- temporary change --%>
         <table class="border">
             <tr>
                 <td rowspan="<%=((java.util.List)request.getAttribute("tables")).size()+1%>">
@@ -109,34 +109,36 @@
                         </li>
                     </ul>
                     <p>
-                        <input type="checkbox" name="subtopics" value="${topicList}" />
+                        <label><input type="checkbox" name="subtopics" value="${topicList}" />
                             Search ALL Topics, or select specific topics/subtopics
-                            from the lists below:
+                            from the lists below:</label>
                     </p>
                     <c:forEach var="majorTopic" items="${topics}">
                         <div class="header">
                             <c:out value="${majorTopic.description}" />
                         </div>
-                        <input type="checkbox" name="subtopics" value="${majorTopic.code}"/>
-                               All subtopics in ${majorTopic.description}
-                        <br /><input type="checkbox"
+                            <label><input type="checkbox" name="subtopics" value="${majorTopic.code}"/>
+                               All subtopics in ${majorTopic.description}</label>
+                        <br /><label><input type="checkbox"
                              onclick="expandSubtopics(${majorTopic.code});"
                              id="x${majorTopic.code}" />
-                             Expand subtopics
-                        <select name="subtopics" multiple="multiple" class="selectSize subcodelist"
+                             Expand subtopics</label>
+                             <label><select name="subtopics" multiple="multiple" class="selectSize subcodelist"
                             id="s<c:out value="${majorTopic.code}" />" >
                             <c:forEach var="subTopic" items="${majorTopic.subTopics}">
                                 <option value="${subTopic.code}" >
                                     <c:out value="${subTopic.description}"/>
                                 </option>
                             </c:forEach>
-                        </select>
+                        </select></label>
                     </c:forEach>
                 </td>
             </tr>
             <tr>
-                <td>INCLUDE KEYWORD(S)</td>
-                <td><input type="text" name="freetext" value="" />
+                <td><label for="freetext">
+                INCLUDE KEYWORD(S)
+                </label></td>
+                <td><input type="text" id="freetext" name="freetext" value="" />
                 <br/>
                 <span class="smallRedText">
                     Note: the text descriptions for each record are very short
@@ -144,69 +146,71 @@
                 </span>
                 </td>
                 <td>
-                    <input name="range" value="1" checked type="radio" />
+                    <fieldset><legend>Search</legend>
+                        <label><input name="range" value="1" checked type="radio" />
                     <span class="smallText">
-                        search only selected topics/subtopics
-                    </span>
+                        Only selected topics/subtopics
+                    </span></label>
                     <br/>
-                    <input name="range" value="2" type="radio" />
+                    <label><input name="range" value="2" type="radio" />
                     <span class="smallText">
-                        search all topics/subtopics
-                    </span>
+                        All topics/subtopics
+                    </span></label>
+                    </fieldset>
                 </td>
-            </tr>
+            </tr>              
             <tr>
                 <td>
                     FOR THESE YEARS OR LEGISLATIVE SESSION:
                 </td>
                 <td>
                     <p>
-                        <input type="radio" name="span" value="years" checked />
-                        the years
+                        <label><input type="radio" name="span" value="years" checked />
+                        the years</label>
                     </p>
                     <p>
-                        from
-                        <select name="startYear">
+                        <label for="startYear">from</label>
+                        <select id="startYear" name="startYear">
                             ${yearRange.ascendingYears}
                         </select>
                         <br/>
                         <br/>
-                        to&nbsp;&nbsp;&nbsp;
-                        <select name="endYear">
+                        <label for="endYear">to&nbsp;&nbsp;&nbsp;</label>
+                        <select id="endYear" name="endYear">
                             ${yearRange.decendingYears}
                         </select>
                     </p>
                 </td>
                 <td>
                     <p>
-                       <input type="radio" name="span" value="sessions" />
-                       the Legislative Sessions
+                        <label><input type="radio" name="span" value="sessions" />
+                       the Legislative Sessions</label>
                     </p>
                      <p>
-                        from
-                        <select name="startSession">
+                         <label for="startSession">from</label>
+                        <select id="startSession" name="startSession">
                             ${yearRange.ascendingSessions}
                         </select>
                         <br/>
                         <br/>
-                        to&nbsp;&nbsp;&nbsp;
-                        <select name="endSession">
+                        <label for="endSession">to&nbsp;&nbsp;&nbsp;</label>
+                        <select id="endSession" name="endSession">
                             ${yearRange.decendingSessions}
                         </select>
                     </p>
                </td>
-            </tr>
+            </fieldset></tr>
             <tr>
                 <td>GRAPH AS:</td>
                 <td colspan="2">
-                    <input type="radio" name="showResults" value="count" checked />
-                    Number of cases per year or legislative session
+                    <label><input type="radio" name="showResults" value="count" checked />
+                    Number of cases per year or legislative session</label>
                     <br/>
-                    <input type="radio" name="showResults" value="percent_of_total" />
-                    Percent of all activity per year or legislative session
+                    <label><input type="radio" name="showResults" value="percent_of_total" />
+                    Percent of all activity per year or legislative session</label>
                     <br/>
-                    <input type="radio" name="showResults" value="percent_of_filtered" />
-                    Percent of filtered activity per year or legislative session
+                    <label><input type="radio" name="showResults" value="percent_of_filtered" />
+                    Percent of filtered activity per year or legislative session</label>
                 </td>
             </tr>
             <tr>
