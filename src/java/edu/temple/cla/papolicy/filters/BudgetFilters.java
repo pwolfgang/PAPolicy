@@ -55,7 +55,7 @@ public class BudgetFilters extends Filter {
             if (item.getYear() != 2000) {
                 stb.append(">");
             } else {
-                stb.append("selected=\"selected\">");
+                stb.append(" selected=\"selected\">");
             }
             stb.append(item.getYear());
             stb.append("</option>");

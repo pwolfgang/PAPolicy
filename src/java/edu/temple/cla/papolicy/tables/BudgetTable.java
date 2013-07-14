@@ -29,17 +29,19 @@ public class BudgetTable extends AbstractTable {
     @Override
     public String getTitleBox() {
         return "\n"+
-"<dl><label><input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"A\"\n"+
+"<dl><input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"A\"\n"+
 "        id=\"t"+getId()+"A\" onclick=\"expandBudget("+getId()+");\" />\n"+
-"    <span class=\"strong\">Total Spending All Funds</strong></label></dl>\n"+
-"<dl><label><input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"B\"\n"+
+"    <label for=\"t"+getId()+"A\"><span class=\"strong\">Total Spending All Funds</span></label></dl>\n"+
+"<dl><input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"B\"\n"+
 "        id=\"t"+getId()+"B\" onclick=\"expandBudget("+getId()+");\" />\n"+
-"    <span class=\"strong\">General Fund Balance<span></label>\n"+
+"    <label for=\"t"+getId()+"B\"><span class=\"strong\">General Fund Balance</span></label>\n"+
 "    <div class=\"subtbl\" id=\"subtbl"+getId()+"B\">\n"+
 "       <fieldset>" +
 "       <legend>Include Rainy Day Fund</legend>\n"+
-"          <label><input type=\"radio\" name=\"rainyDay\" value=\"1\" /> Yes</label>\n"+
-"          <label><input type=\"radio\" name=\"rainyDay\" value=\"0\" checked=\"checked\" />No</label>\n"+
+"          <input type=\"radio\" name=\"rainyDay\" value=\"1\" id=\"rainyDay1\"/>"
+                + "<label for=\"rainyDay1\">Yes</label>\n"+
+"          <input type=\"radio\" name=\"rainyDay\" value=\"0\" id=\"rainyDay0\" checked=\"checked\" />"
+                + "<label for=\"rainyDay0\">No</label>\n"+
 "       </fieldset>\n"+
 "    </div>\n"+
 "</dl>\n";

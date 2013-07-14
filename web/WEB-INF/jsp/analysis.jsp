@@ -117,20 +117,22 @@
                         <div class="header">
                             <c:out value="${majorTopic.description}" />
                         </div>
-                            <label><input type="checkbox" name="subtopics" value="${majorTopic.code}"/>
-                               All subtopics in ${majorTopic.description}</label>
-                        <br /><label><input type="checkbox"
+                            <input type="checkbox" name="subtopics" value="${majorTopic.code}" id="subtopics${majorTopic.code}"/>
+                               <label for="subtopics${majorTopic.code}">All subtopics in ${majorTopic.description}</label>
+                        <br /><input type="checkbox"
                              onclick="expandSubtopics(${majorTopic.code});"
                              id="x${majorTopic.code}" />
-                             Expand subtopics</label>
-                             <label><select name="subtopics" multiple="multiple" class="selectSize subcodelist"
-                            id="s<c:out value="${majorTopic.code}" />" >
-                            <c:forEach var="subTopic" items="${majorTopic.subTopics}">
-                                <option value="${subTopic.code}" >
-                                    <c:out value="${subTopic.description}"/>
-                                </option>
-                            </c:forEach>
-                        </select></label>
+                             <label for="x${majorTopic.code}">Expand subtopics</label>
+                             <div id="s${majorTopic.code}" class="subcodelist">
+                                 <label for="ss${majorTopic.code}">${majorTopic.description} Subtopics</label><br/>
+                                 <select name="subtopics" multiple="multiple" class="selectSize" id="ss${majorTopic.code}">
+                                     <c:forEach var="subTopic" items="${majorTopic.subTopics}">
+                                         <option value="${subTopic.code}" >
+                                             <c:out value="${subTopic.description}"/>
+                                         </option>
+                                     </c:forEach>
+                                 </select>
+                             </div>
                     </c:forEach>
                 </td>
             </tr>
@@ -147,13 +149,13 @@
                 </td>
                 <td>
                     <fieldset><legend>Search</legend>
-                        <label><input name="range" value="1" checked type="radio" />
-                    <span class="smallText">
+                        <input name="range" value="1" id="range1" checked="checked" type="radio" />
+                        <label for="range1"><span class="smallText">
                         Only selected topics/subtopics
                     </span></label>
                     <br/>
-                    <label><input name="range" value="2" type="radio" />
-                    <span class="smallText">
+                    <input name="range" value="2" id="range2" type="radio" />
+                    <label for="range2"><span class="smallText">
                         All topics/subtopics
                     </span></label>
                     </fieldset>
@@ -165,8 +167,8 @@
                 </td>
                 <td>
                     <p>
-                        <label><input type="radio" name="span" value="years" checked />
-                        the years</label>
+                        <input type="radio" name="span" value="years" id="spanYears" checked="checked" />
+                        <label for="spanYears">the years</label>
                     </p>
                     <p>
                         <label for="startYear">from</label>
@@ -183,8 +185,8 @@
                 </td>
                 <td>
                     <p>
-                        <label><input type="radio" name="span" value="sessions" />
-                       the Legislative Sessions</label>
+                        <input type="radio" name="span" value="sessions" id="spanSessions" />
+                        <label for="spanSessions">the Legislative Sessions</label>
                     </p>
                      <p>
                          <label for="startSession">from</label>
@@ -199,7 +201,7 @@
                         </select>
                     </p>
                </td>
-            </fieldset></tr>
+            </tr>
             <tr>
                 <td>GRAPH AS:</td>
                 <td colspan="2">
