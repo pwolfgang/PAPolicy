@@ -17,82 +17,101 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 /**
- *
+ * The Table interface defines the methods for each of the datasets.
+ * For each of the datasets methods are required to generate the html used
+ * to display the datasets selection, collect the selection information
+ * from the form submittal, and generate the database query.
  * @author Paul Wolfgang
  */
 public interface Table extends Cloneable {
 
     /**
+     * The unique identifier of this table as defined in the Tables table
      * @return the id
      */
     int getId();
 
     /**
+     * The table identifier is set when the class is loaded, either for
+     * initial display of the analysis form, or when the request is processed.
      * @param id the id to set
      */
     void setId(int id);
 
     /**
+     * Return the table name as defined in the Tables table
      * @return the tableName
      */
     String getTableName();
 
     /**
+     * The table name is set when the class is loaded.
      * @param tableName the tableName to set
      */
     void setTableName(String tableName);
 
     /**
+     * The table title as defined in the Tables table
      * @return the tableTitle
      */
     String getTableTitle();
 
     /**
+     * The table title is set when the class is loaded.
      * @param tableTitle the tableTitle to set
      */
     void setTableTitle(String tableTitle);
 
     /**
+     * This data set is only searchable by major topic.
      * @return the majorOnly
      */
     boolean isMajorOnly();
 
     /**
+     * Set when the class is loaded.
      * @param majorOnly the majorOnly to set
      */
     void setMajorOnly(boolean majorOnly);
 
     /**
+     * The minimum year for which data is available
      * @return the minYear
      */
     int getMinYear();
 
     /**
+     * Set when the class is loaded
      * @param minYear the minYear to set
      */
     void setMinYear(int minYear);
 
     /**
+     * The maximum year for which data is available
      * @return the maxYear
      */
     int getMaxYear();
 
     /**
+     * Set when the class is loaded
      * @param maxYear the maxYear to set
      */
     void setMaxYear(int maxYear);
 
     /**
+     * The list of filters is defined in the Filters table
      * @return the filterList
      */
     List<Filter> getFilterList();
 
     /**
+     * Return the number of filters
      * @return filterList.size()
      */
     int getFilterListSize();
 
     /**
+     * The filter list is set when the class is loaded.
      * @param filterList the filterList to set
      */
     void setFilterList(List<Filter> filterList);
@@ -103,11 +122,13 @@ public interface Table extends Cloneable {
     String getTitleBox();
 
     /**
+     * The jdbcTemplate is set when the class is loaded.
      * @param jdbcTemplate the jdbcTemplate to set
      */
     void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate);
 
     /**
+     * 
      * @return the qualifier
      */
     char getQualifier();
