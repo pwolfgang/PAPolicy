@@ -25,7 +25,8 @@ import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 /**
- *
+ * The Column class encapsulates the data to be displayed in each column
+ * of the results page. A column is created for each dataset-topic pair.
  * @author Paul Wolfgang
  */
 public class Column {
@@ -52,6 +53,14 @@ public class Column {
     protected Column() {
     } // used for unit test purposes only
 
+    /**
+     * Construct a Column object
+     * @param table The table (dataset) that contains the data
+     * @param topic The selected topic
+     * @param freeText The free text (if any) that refined or is in addition to the topic
+     * @param showResults The indicator as to how the results are to be displayed
+     * @param yearRange The range of years (or legislative sessions)
+     */
     public Column(Table table, Topic topic, String freeText, String showResults, YearRange yearRange) {
         this.table = table;
         this.topic = topic;
@@ -60,6 +69,12 @@ public class Column {
         this.yearRange = yearRange;
     }
 
+    /**
+     * Generate a string representation of this column.  This string is used
+     * in the display. It combines the description of the table with either
+     * the topic, free text, or both.
+     * @return String to display in the column heading and graph label.
+     */
     @Override
     public String toString() {
         if (freeText == null && topic != null) {
@@ -73,6 +88,13 @@ public class Column {
         }
     }
 
+    /**
+     * Generate a string that is used in the download link.  It is similar to
+     * the result of toString except that the text used for the table is
+     * specific for download.
+     * @return String to use as the dowload link.
+     * 
+     */
     public String getDownloadTitle() {
         if (freeText == null && topic != null) {
             return topic.getDescription() + " " + table.getDownloadTitle();
