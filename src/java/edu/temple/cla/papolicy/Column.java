@@ -42,8 +42,8 @@ public class Column {
     private SortedMap<Integer, Number> valueMap;
     private SortedMap<Integer, Number> unfilteredTotalMap;
     private SortedMap<Integer, Number> filteredTotalMap;
-    private SortedMap<String, Number> displayedValueMap = new TreeMap<String, Number>();
-    private SortedMap<String, String> drillDownMap = new TreeMap<String, String>();
+    private SortedMap<String, Number> displayedValueMap = new TreeMap<>();
+    private SortedMap<String, String> drillDownMap = new TreeMap<>();
     private Number prevValue = null;
     private String downloadQueryString = null;
     private Number minValue = null;
@@ -92,7 +92,7 @@ public class Column {
      * Generate a string that is used in the download link.  It is similar to
      * the result of toString except that the text used for the table is
      * specific for download.
-     * @return String to use as the dowload link.
+     * @return String to use as the download link.
      * 
      */
     public String getDownloadTitle() {
@@ -107,10 +107,23 @@ public class Column {
         }
     }
 
+    /**
+     * Construct and return the URL to download the data.  This is delegated
+     * to the table with the yearRange.  The returned string contains the
+     * an compressed encoded query string that will select the data to be
+     * downloaded.
+     * @return URL to download the data.
+     */
     public String getDownloadURL() {
         return table.getDownloadURL(getDownloadTitle(), getDownloadQueryString(), yearRange);
     }
 
+    /**
+     * The filteredTotalQuery is the query that selects the filtered data
+     * for all topics. Creation is delegated to the table and the result is
+     * cached.
+     * @return QueryBuilder object that will select the filtered data for all topics.
+     */
     public QueryBuilder getFilteredTotalQuery() {
         if (filteredTotalQuery == null) {
             filteredTotalQuery = table.getFilteredTotalQuery().clone();
@@ -118,10 +131,20 @@ public class Column {
         return filteredTotalQuery;
     }
 
+    /**
+     * Construct the query string that selects the filtered data for all topics.
+     * @return The query string that selects the filtered  data for all topics.
+     * @depreciated
+     */
     public String getFilteredTotalQueryString() {
         return getFilteredTotalQuery().build();
     }
 
+    /**
+     * The unfilteredTotalQuery is the query that selects the data for all topics
+     * with no filters applied.
+     * @return The QueryBuilder object that will select the un-filtered data for all topics.
+     */
     public QueryBuilder getUnfilteredTotalQuery() {
         if (unfilteredTotalQuery == null) {
             unfilteredTotalQuery = table.getUnfilteredTotalQuery().clone();
@@ -129,10 +152,21 @@ public class Column {
         return unfilteredTotalQuery;
     }
 
+    /**
+     * Construct the query string that selects all data for all topics.
+     * @return A query string that selects all data for all topics
+     * @depreciated
+     */
     public String getUnfilteredTotalQueryString() {
         return getUnfilteredTotalQuery().build() + " WHERE ";
     }
 
+    /**
+     * Create an unfilteredTotalQuery that selects data for a given year range
+     * @param startYear The start year
+     * @param endYear The end year
+     * @return QueryBuilder object that will select data for a given year.
+     */
     public QueryBuilder getUnfilteredTotalQuery(int startYear, int endYear) {
         QueryBuilder builder = getUnfilteredTotalQuery().clone();
         builder.setBetween(new Between(table.getYearColumn(), startYear, endYear));
@@ -141,10 +175,23 @@ public class Column {
         return builder;
     }
 
+    /**
+     * Create a query string that will select the data for a given year range
+     * @param startYear The start year
+     * @param endYear The end year
+     * @return A query string that selects all data for a given year range
+     * @depreciated
+     */
     public String getUnfilteredTotalQueryString(int startYear, int endYear) {
         return getUnfilteredTotalQuery(startYear, endYear).build();
     }
 
+    /**
+     * Create a filteredtotalQuery for a given year range
+     * @param startYear The start year
+     * @param endYear The end year
+     * @return QueryBuilder object that will select the filtered data for a given year range.
+     */
     public QueryBuilder getFilteredTotalQuery(int startYear, int endYear) {
         QueryBuilder builder = getFilteredTotalQuery().clone();
         builder.setBetween(new Between(table.getYearColumn(), startYear, endYear));
@@ -153,6 +200,13 @@ public class Column {
         return builder;
     }
 
+    /**
+     * Generate the query string to select the filtered data for a given year range
+     * @param startYear The start year
+     * @param endYear The end year
+     * @return A query string to select the filtered data for a given year range
+     * @depreciated
+     */
     public String getFilteredTotalQueryString(int startYear, int endYear) {
         return getFilteredTotalQuery(startYear, endYear).build();
     }
