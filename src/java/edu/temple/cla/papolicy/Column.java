@@ -211,6 +211,13 @@ public class Column {
         return getFilteredTotalQuery(startYear, endYear).build();
     }
 
+    /**
+     * The topic count query selects the count of the items with a particular
+     * policy code or major policy code. It also selects items that match
+     * the free text.  Computation is delegated to the table, and the results
+     * are cached.
+     * @return QueryBuilder object that selects the items for a topic and/or free text.
+     */
     public QueryBuilder getTopicCountQuery() {
         if (topicCountQuery == null) {
             topicCountQuery = table.getTopicQuery(topic).clone();
@@ -221,10 +228,21 @@ public class Column {
         return topicCountQuery;
     }
 
+    /**
+     * Generate the query string that selects the items for a topic and/or free text.
+     * @return Query string that selects the items for a topic and/or free text.
+     * @depreciated
+     */
     public String getTopicCountQueryString() {
         return getTopicCountQuery().build();
     }
 
+    /**
+     * Create a topic count query for a particular range of years
+     * @param startYear The start year
+     * @param endYear The end year
+     * @return QueryBuilder to select topic items for a given year range
+     */
     public QueryBuilder getTopicCountQuery(int startYear, int endYear) {
         QueryBuilder builder = getTopicCountQuery().clone();
         builder.setBetween(new Between(table.getYearColumn(), startYear, endYear));
@@ -233,38 +251,81 @@ public class Column {
         return builder;
     }
 
+    /**
+     * Generate the query string to select items for a particular topic for a given year range.
+     * @param startYear
+     * @param endYear
+     * @return The query string to select items for a particular topic for a given year range.
+     * @depreciated
+     */
     public String getTopicCountQueryString(int startYear, int endYear) {
         return getTopicCountQuery(startYear, endYear).build();
     }
 
     /**
+     * The units that this column is to be displayed in.
      * @return the units
      */
     public Units getUnits() {
         return units;
     }
 
+    /**
+     * Compute the value (sum of count, or average) for a given year range.
+     * Calculation is delegated to the table
+     * @param minYear The start year
+     * @param maxYear The end year
+     * @return The value for a given year range.
+     */
     public Number getValue(int minYear, int maxYear) {
         Number returnVal = table.getValueForRange(valueMap.subMap(minYear, maxYear + 1));
         return returnVal;
     }
 
+    /**
+     * Compute the percentage of the total for a given year range. Computation
+     * is delegated to the table.
+     * @param minYear Start year
+     * @param maxYear End year
+     * @return The percentage of the total for a given year range.
+     */
     public Number getPercentOfTotal(int minYear, int maxYear) {
         Number returnVal = table.getPercentForRange(valueMap.subMap(minYear, maxYear + 1),
                 unfilteredTotalMap.subMap(minYear, maxYear + 1));
         return returnVal;
     }
 
+    /**
+     * Compute the percent of filtered for a given year range. Computation is
+     * delegated to the table.
+     * @param minYear The start year
+     * @param maxYear The end year
+     * @return The percent of filtered for a given year range.
+     */
     public Number getPercent(int minYear, int maxYear) {
         Number returnVal = table.getPercentForRange(valueMap.subMap(minYear, maxYear + 1),
                 filteredTotalMap.subMap(minYear, maxYear + 1));
         return returnVal;
     }
 
+    /**
+     * Sets the initial value to be used when calculating percent changed. This
+     * may be the sum of values for a given year range or the year range may
+     * only be one year. Calculation is delegated to the tabel.
+     * @param minYear Start year
+     * @param maxYear End year
+     */
     public void setInitialPrevValue(int minYear, int maxYear) {
         prevValue = table.getValueForRange(valueMap.subMap(minYear, maxYear));
     }
 
+    /**
+     * Compute the percentage change from the previous value to the current
+     * value. The value may be the sum of a year range. 
+     * @param minYear Start year
+     * @param maxYear End year
+     * @return The percentage change from the previous value to the current value.
+     */
     public Number getPercentChange(int minYear, int maxYear) {
         Number currentValue = table.getValueForRange(valueMap.subMap(minYear, maxYear + 1));
         if (currentValue == null) {
@@ -282,6 +343,12 @@ public class Column {
         return result;
     }
 
+    /**
+     * Load the data from the filtered topic selection query into a SortedMap indexed by year.
+     * @param jdbcTemplate The jdbcTemplate that maps the query to YearValue
+     * @param minYear The start year
+     * @param maxYear The end year
+     */
     public void setValueMap(SimpleJdbcTemplate jdbcTemplate, int minYear, int maxYear) {
         String query = getTopicCountQueryString(minYear, maxYear);
         List<YearValue> list = table.getYearValueList(jdbcTemplate, query);
@@ -308,6 +375,12 @@ public class Column {
         }
     }
 
+    /**
+     * Load the data from the un-filtered total selection query into a SortedMap indexed by year.
+     * @param jdbcTemplate The jdbcTemplate that maps the query to YearValue
+     * @param minYear The start year
+     * @param maxYear The end year
+     */
     public void setUnfilteredTotalMap(SimpleJdbcTemplate jdbcTemplate, int minYear, int maxYear) {
         String query = getUnfilteredTotalQueryString(minYear, maxYear);
         List<YearValue> list = table.getYearValueList(jdbcTemplate, query);
@@ -317,6 +390,12 @@ public class Column {
         }
     }
 
+    /**
+     * Load the data from the filtered total selection query into a SortedMap indexed by year.
+     * @param jdbcTemplate The jdbcTemplate that maps the query to YearValue
+     * @param minYear The start year
+     * @param maxYear The end year
+     */
     public void setFilteredTotalMap(SimpleJdbcTemplate jdbcTemplate, int minYear, int maxYear) {
         String query = getFilteredTotalQueryString(minYear, maxYear);
         List<YearValue> list = table.getYearValueList(jdbcTemplate, query);
@@ -326,41 +405,80 @@ public class Column {
         }
     }
 
+    /**
+     * Set the value to be displayed or a given row in the column.
+     * @param key The row key (year or session)
+     * @param value The value to be displayed
+     */
     public void setDisplayedValue(String key, Number value) {
         displayedValueMap.put(key, value);
     }
 
+    /**
+     * Set the drilldown URL for a given row.
+     * @param key The row key (year or session)
+     * @param value The drilldown URL
+     */
     public void setDrillDown(String key, String value) {
         drillDownMap.put(key, value);
     }
 
+    /**
+     * Get the displayed value for a given row
+     * @param key The key for the row (year or session)
+     * @return The displayed value for a given row
+     */
     public Number getDisplayedValue(String key) {
         return displayedValueMap.get(key);
 
     }
 
+    /**
+     * Convert the displayed value into a string. Delegated to the table
+     * that applies the correct units format.
+     * @param key The key for the row (year or session)
+     * @return The string to place in the results table.
+     */
     public String getDisplayedValueString(String key) {
         Number retValue = getDisplayedValue(key);
         return getTable().getDisplayedValue(key, retValue, getUnits());
     }
 
+    /**
+     * Get the drilldown URL for a given row.
+     * @param key The key for the row (year or session)
+     * @return The drilldown URL for a given row.
+     */
     public String getDrillDown(String key) {
         return drillDownMap.get(key);
     }
 
+    /**
+     * Get the set of keys that index the rows. This is a sorted set.
+     * @return The set of keys that index the rows.
+     */
     public Set<String> getRowKeys() {
         return displayedValueMap.keySet();
     }
 
+    /**
+     * Get the axis title. Delegated to the table and is a function of the units.
+     * @return The axis title.
+     */
     public String getAxisTitle() {
         return table.getAxisTitle(getUnits());
     }
 
+    /**
+     * Get the corresponding table object.
+     * @return The corresponding table object.
+     */
     public Table getTable() {
         return table;
     }
 
     /**
+     * Get the download query string. The value has been cached.
      * @return the downloadQuery
      */
     public String getDownloadQueryString() {
@@ -368,16 +486,27 @@ public class Column {
     }
 
     /**
+     * Set the download query string.
      * @param downloadQuery the downloadQuery to set
      */
     public void setDownloadQueryString(String downloadQueryString) {
         this.downloadQueryString = downloadQueryString;
     }
 
+    /**
+     * The minimum value of the data in a given column. This is used to scale
+     * the graph.
+     * @return The minimum value of the data in a given column
+     */
     public Number getMinValue() {
         return minValue;
     }
 
+    /**
+     * The maximum value of the data in a given column. This is used to scale
+     * the graph.
+     * @return The maximum value of the data in a given column.
+     */
     public Number getMaxValue() {
         return maxValue;
     }
@@ -391,7 +520,7 @@ public class Column {
     public Expression parseFreeText(String textColumn, String freeText) {
         Pattern p = Pattern.compile("(\\\"[^\\\"]+\\\")|([^\\p{javaWhitespace}]+)");
         Scanner scan = new Scanner(freeText);
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         String t;
         while ((t = scan.findInLine(p)) != null) {
             list.add(t);
@@ -428,6 +557,12 @@ public class Column {
         return result;
     }
 
+    /**
+     * Create a Like expression to select a given key word.
+     * @param textColumn The column in the table to search.
+     * @param token The key word or phrase to be sought.
+     * @return 
+     */
     private Like createLike(String textColumn, String token) {
         if (token.startsWith("\"")) {
             token = token.substring(1, token.length() - 1);
