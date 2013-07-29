@@ -180,7 +180,7 @@
                                 <br/>
                                 <label for="endYear">to&nbsp;&nbsp;&nbsp;</label>
                                 <select id="endYear" name="endYear">
-                                    ${yearRange.decendingYears}
+                                    ${yearRange.descendingYears}
                                 </select>
                             </p>
                         </td>
@@ -198,7 +198,7 @@
                                 <br/>
                                 <label for="endSession">to&nbsp;&nbsp;&nbsp;</label>
                                 <select id="endSession" name="endSession">
-                                    ${yearRange.decendingSessions}
+                                    ${yearRange.descendingSessions}
                                 </select>
                             </p>
                         </td>
