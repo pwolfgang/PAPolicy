@@ -37,7 +37,7 @@ import org.jfree.data.general.DatasetUtilities;
 import org.jfree.data.general.PieDataset;
 
 /**
- *
+ * Class to create and return a chart image.
  * @author Paul Wolfgang
  */
 public class Chart extends HttpServlet {
@@ -46,6 +46,11 @@ public class Chart extends HttpServlet {
 
     private static final Logger logger = Logger.getLogger(Chart.class);
 
+    /**
+     * Create a line plot of the data.
+     * @param datasets The list of data sets to be included in the plot.
+     * @return A CategoryPlot object representing the data as a lines.
+     */
     private static CategoryPlot createLinePlot(List<MyDataset> datasets) {
         CategoryPlot plot = new CategoryPlot();
         int index = 0;
@@ -79,6 +84,11 @@ public class Chart extends HttpServlet {
     }
 
 
+    /**
+     * Create a bar-chart of the data
+     * @param dataset The dataset to be plotted
+     * @return A CategoryPlot object representing the data
+     */
     private static CategoryPlot createBarPlot(MyDataset dataset) {
         CategoryPlot plot = new CategoryPlot();
         ValueAxis rangeAxis = null;
@@ -100,11 +110,22 @@ public class Chart extends HttpServlet {
         return plot;
     }
 
+    /**
+     * Create a pie-chart of the data
+     * @param dataset The dataset to be plotted.
+     * @return A PiePlot object representing the data
+     */
     private static PiePlot createPiePlot(PieDataset dataset) {
         PiePlot plot = new PiePlot(dataset);
         return plot;
     }
 
+    /**
+     * Respond to get requests by copying the requested image file to the
+     * response OutputStream.
+     * @param request The HttpServletRequest object 
+     * @param response The HttpServletResponse object
+     */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         String fileName = request.getParameter("dataset");
@@ -122,8 +143,11 @@ public class Chart extends HttpServlet {
 
     /**
      * Method to create the chart and write it as a .png file to a temporary
-     * location.
-     * @param datasets The arraylist of datasets to be graphed
+     * location. If multiple datasets are provided, then a line chart is created.
+     * If a single dataset is presented, if there are multiple topics, but only
+     * one year (or session) then a pie chart is created. It there is a single
+     * dataset and only one topic, then a bar chart.
+     * @param datasets The list of datasets to be graphed
      * @return The name of the file containing the chart image
      */
     public static String createChart(List<MyDataset> datasets) {
@@ -157,6 +181,11 @@ public class Chart extends HttpServlet {
         }
     }
 
+    /**
+     * Create an array of axis labels for the RANK units.
+     * @param maxValue The maximum value of the units to be created.
+     * @return An array consisting of the strings "1st", "2nd", "3rd", "4th", etc.
+     */
     private static String[] createAxisLables(double maxValue) {
         int maxValueInt = (int)Math.floor(maxValue);
         String[] result = new String[maxValueInt];
