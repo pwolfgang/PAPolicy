@@ -20,14 +20,22 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
  */
 public class TopicList {
 
-    private Map<Integer, Topic> majorTopics = new TreeMap<Integer, Topic>();
+    private Map<Integer, Topic> majorTopics = new TreeMap<>();
 
-    private Map<Integer, Topic> subTopics = new TreeMap<Integer, Topic>();
+    private Map<Integer, Topic> selectedTopics = new TreeMap<>();
 
+    /**
+     * Construct a TopicsList from the response string. If the response is 
+     * null, then a special AllTopics topic is selected.  If sub-topics are
+     * selected, then the corresponding major topic is added to the 
+     * majorTopics list.
+     * @param topics The response string from the form submittal.
+     * @param jdbcTemplate The jcbcTemplate used to access the database.
+     */
     public TopicList(String[] topics, SimpleJdbcTemplate jdbcTemplate) {
         if (topics == null) {
             majorTopics.put(0, new AllTopics());
-            subTopics.put(0, new AllTopics());
+            selectedTopics.put(0, new AllTopics());
             return;
         }
         if (topics[0].contains(",")) {
@@ -37,7 +45,7 @@ public class TopicList {
             int code = Integer.parseInt(topic);
             int majorCode = code > 100 ? code / 100 : code;
             majorTopics.put(majorCode, null);
-            subTopics.put(code, null);
+            selectedTopics.put(code, null);
         }
 
         // Build comma separated list of major topics
@@ -49,9 +57,9 @@ public class TopicList {
         stb.delete(stb.length()-2, stb.length());
         String majorTopicsSelected = stb.toString();
 
-        // Build comma separated list of major topics within subtopics
+        // Build comma separated list of major topics within selected topics
         stb = new StringBuilder();
-        for (Integer code : subTopics.keySet()) {
+        for (Integer code : selectedTopics.keySet()) {
             if (code < 100) {
                 stb.append(code);
                 stb.append(", ");
@@ -60,11 +68,11 @@ public class TopicList {
         if (stb.length() > 0) {
             stb.delete(stb.length() - 2, stb.length());
         }
-        String majorTopicsInSubtopics = stb.toString();
+        String majorTopicsInSelectedTopics = stb.toString();
 
         // Build comma separated list of subtopics only
         stb = new StringBuilder();
-        for (Integer code : subTopics.keySet()) {
+        for (Integer code : selectedTopics.keySet()) {
             if (code >= 100) {
                 stb.append(code);
                 stb.append(", ");
@@ -75,7 +83,7 @@ public class TopicList {
         }
         String subTopicsOnly = stb.toString();
 
-        // Update the maps to includ the Topics
+        // Update the maps to include the Topic descriptions
         ParameterizedRowMapper<Topic> topicMapper = new TopicMapper();
         String query = "SELECT * FROM MajorCode WHERE Code IN ("
                 + majorTopicsSelected + ")";
@@ -84,12 +92,12 @@ public class TopicList {
             majorTopics.put(aTopic.getCode(), aTopic);
         }
 
-        if (majorTopicsInSubtopics.length() > 0) {
+        if (majorTopicsInSelectedTopics.length() > 0) {
             query = "SELECT * FROM MajorCode WHERE Code IN ("
-                    + majorTopicsInSubtopics + ")";
+                    + majorTopicsInSelectedTopics + ")";
             topicList = jdbcTemplate.query(query, topicMapper);
             for (Topic aTopic : topicList) {
-                subTopics.put(aTopic.getCode(), aTopic);
+                selectedTopics.put(aTopic.getCode(), aTopic);
             }
         }
 
@@ -98,13 +106,21 @@ public class TopicList {
                     + subTopicsOnly + ")";
             topicList = jdbcTemplate.query(query, topicMapper);
             for (Topic aTopic : topicList) {
-                subTopics.put(aTopic.getCode(), aTopic);
+                selectedTopics.put(aTopic.getCode(), aTopic);
             }
         }
     }
 
+    /**
+     * Get the selected major topics.
+     * @return The selected major topics.
+     */
     public Map<Integer, Topic> getMajorTopics() {return majorTopics;}
 
-    public Map<Integer, Topic> getSubTopics() {return subTopics;}
+    /**
+     * Get all selected topics.
+     * @return All selected topics.
+     */
+    public Map<Integer, Topic> getSelectedTopics() {return selectedTopics;}
 
 }

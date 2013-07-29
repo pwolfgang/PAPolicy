@@ -78,7 +78,7 @@ public class DisplayFormController extends AbstractController {
                             }
                         }
                     } else {
-                        for (Topic topic : topics.getSubTopics().values()) {
+                        for (Topic topic : topics.getSelectedTopics().values()) {
                             columns.add(new Column(table, topic, null, showResults, yearRange));
                             if (fFreeText && fRange && table.getTextColumn() != null) {
                                 columns.add(new Column(table, topic, freeText, showResults, yearRange));
