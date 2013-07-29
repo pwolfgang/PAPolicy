@@ -6,7 +6,7 @@
 package edu.temple.cla.papolicy;
 
 /**
- *
+ * Enumeration of the units that the results may be expressed in.
  * @author Paul Wolfgang
  */
  public enum Units {
