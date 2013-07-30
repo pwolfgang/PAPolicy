@@ -138,18 +138,17 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><label for="freetext">
-                                INCLUDE KEYWORD(S)
-                            </label></td>
-                        <td><input type="text" id="freetext" name="freetext" value="" />
+                        <td colspan="3"><fieldset><legend>
+                                FREE TEXT
+                                </legend>
+                        <label for="freetext">Key word(s)</label>
+                        <input type="text" size="100" id="freetext" name="freetext" value="" />
                             <br/>
                             <span class="smallRedText">
                                 Note: the text descriptions for each record are very short
                                 and generally not sufficient for accurate keyword search.
                             </span>
-                        </td>
-                        <td>
-                            <fieldset><legend>Free Text Search</legend>
+                            <fieldset><legend>Search</legend>
                                 <input name="range" value="1" id="range1" checked="checked" type="radio" />
                                 <label for="range1"><span class="smallText">
                                         Only selected topics/subtopics
@@ -160,16 +159,19 @@
                                         All topics/subtopics
                                     </span></label>
                             </fieldset>
+                        </fieldset>
                         </td>
                     </tr>              
                     <tr>
-                        <td>
-                            FOR THESE YEARS OR LEGISLATIVE SESSION:
-                        </td>
-                        <td>
+                        <td colspan="3">
+                            <fieldset><legend>
+                            GROUP BY
+                                </legend>
+                                <div style="display:table-cell; width:50%">
+                                    <fieldset><legend>Years</legend>
                             <p>
                                 <input type="radio" name="span" value="years" id="spanYears" checked="checked" />
-                                <label for="spanYears">the years</label>
+                                <label for="spanYears">years</label>
                             </p>
                             <p>
                                 <label for="startYear">from</label>
@@ -183,11 +185,14 @@
                                     ${yearRange.descendingYears}
                                 </select>
                             </p>
-                        </td>
-                        <td>
+                                    </fieldset>
+                                </div>
+                                <div style="display:table-cell; width:50%">
+                                    <fieldset>
+                                        <legend>Legislative Sessions</legend>
                             <p>
                                 <input type="radio" name="span" value="sessions" id="spanSessions" />
-                                <label for="spanSessions">the Legislative Sessions</label>
+                                <label for="spanSessions">Legislative Sessions</label>
                             </p>
                             <p>
                                 <label for="startSession">from</label>
@@ -201,11 +206,14 @@
                                     ${yearRange.descendingSessions}
                                 </select>
                             </p>
+                                    </fieldset>
+                                </div>
+                            </fieldset>
                         </td>
                     </tr>
                     <tr>
-                        <td>GRAPH AS:</td>
-                        <td colspan="2">
+                        <td colspan="3">
+                            <fieldset><legend>GRAPH AS:</legend>
                             <input type="radio" name="showResults" value="count" id="showResultsC" checked="checked" />
                             <label for="showResultsC">Number of cases per year or legislative session</label>
                             <br/>
