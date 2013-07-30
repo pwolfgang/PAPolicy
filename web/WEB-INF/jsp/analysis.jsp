@@ -149,6 +149,7 @@
                             </span>
                         </td>
                         <td>
+                            <fieldset><legend>Free Text Search</legend>
                                 <input name="range" value="1" id="range1" checked="checked" type="radio" />
                                 <label for="range1"><span class="smallText">
                                         Only selected topics/subtopics
@@ -158,6 +159,7 @@
                                 <label for="range2"><span class="smallText">
                                         All topics/subtopics
                                     </span></label>
+                            </fieldset>
                         </td>
                     </tr>              
                     <tr>
