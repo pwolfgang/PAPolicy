@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 /**
- *
+ * Controller to respond to drilldown requests.
  * @author Paul Wolfgang
  */
 public class DrillDownController extends AbstractController {
@@ -26,16 +26,22 @@ public class DrillDownController extends AbstractController {
     private SimpleJdbcTemplate jdbcTemplate;
 
     /**
-     * Create the ModelAndView
+     * Populate the view map and forward to the drillDown jsp page.
+     * @param request The HTTP request object
+     * @param response The HTTP response object (not used)
+     * @return A ModelAndView object that includes the map and drillDown.jsp as the view.
      */
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
             HttpServletResponse response) {
         try {
+            // Decode the query from the request
             String codedQuery = request.getParameter("query");
             String query = Utility.decodeAndDecompress(codedQuery);
+            // Execute the query
             List<Map<String, Object>> theList = jdbcTemplate.queryForList(query);
-            Map<String, Object> theMap = new HashMap<String, Object>();
+            // Put the query results in the map.
+            Map<String, Object> theMap = new HashMap<>();
             theMap.put("theList", theList);
             return new ModelAndView("drillDown", theMap);
         } catch (Exception ex) {
@@ -45,6 +51,8 @@ public class DrillDownController extends AbstractController {
     }
 
     /**
+     * Set the jdbcTemplate from the parameter in the dispatcher-servlet.xml file.
+     * (Called by the Spring framework.)
      * @param jdbcTemplate the jdbcTemplate to set
      */
     public void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate) {
