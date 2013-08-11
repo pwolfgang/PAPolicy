@@ -16,7 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 /**
- * This controller handles requests to download budget data.
+ * This controller handles requests to download budget data.  This controller
+ * is currently not used and is not complete. The general download controller
+ * currently us used to download budget data.  Note that budget data that
+ * is downloaded by the general download controller is not adjusted for inflation.
  * @author Paul Wolfgang
  */
 public class BudgetDownload extends AbstractController{

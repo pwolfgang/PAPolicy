@@ -24,7 +24,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="drilldown.spg">drillDownController</prop>
                 <prop key="transcriptdrilldown.spg">transcriptDrillDownController</prop>
                 <prop key="billDrillDown.spg">individualBillDrilldownController</prop>
-                <prop key="*Total%20Spending*">budgetDownloadController</prop>
+<!--            <prop key="*Total+Spending*">budgetDownloadController</prop>   currently not used -->
                 <prop key="*.xlsx">downloadController</prop>
             </props>
         </property>
