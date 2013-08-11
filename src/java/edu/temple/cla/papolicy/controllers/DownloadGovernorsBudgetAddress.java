@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 /**
- *
+ * Class to respond to requests to download a selected governor&apos;s budget address
  * @author Paul Wolfgang
  */
 public class DownloadGovernorsBudgetAddress extends HttpServlet {
@@ -76,6 +76,11 @@ public class DownloadGovernorsBudgetAddress extends HttpServlet {
         }
     } 
 
+    /**
+     * Initialize the path where the governor&apos;s budget address files are located.
+     * Value is specified in the web.xml file.
+     * @throws ServletException 
+     */
     @Override
     public void init() throws ServletException {
         path = getServletConfig().getInitParameter("path");
