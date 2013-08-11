@@ -17,7 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 /**
- *
+ * Controller to respond to drilldown requests for a specific bill which
+ * is listed in the Transcript drilldown results.
  * @author Paul
  */
 public class IndividualBillDrilldownController extends AbstractController{
@@ -25,18 +26,26 @@ public class IndividualBillDrilldownController extends AbstractController{
     private SimpleJdbcTemplate jdbcTemplate;
 
     /**
-     * Create the ModelAndView
+     * Create the ModelAndView.
+     * @param request The HTTP request object
+     * @param response The HTTP response object, used to redirect to the DrillDown controller.
+     * @return null.
      */
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
             HttpServletResponse response) {
+        // Get the requested bill id.
         String billId = request.getParameter("billId");
+        // Load the BillsTable.
         Table billsTable = AbstractTable.getTable("3", ' ', request, jdbcTemplate)[0];
+        // Create a select query for the specified bill.
         QueryBuilder initialQuery = new QueryBuilder();
         initialQuery.setTable(billsTable.getTableName());
         initialQuery.addToSelectCriteria(new Comparison("ID", "=", "\"" + billId + "\""));
+        // Convert this query to a drilldown URL.
         String drillDownURL = billsTable.createDrillDownURL(initialQuery);
         try {
+            // Forward to DrillDown controller.
             response.sendRedirect(drillDownURL);
         } catch (Exception ex) {
             logger.error("Error when setting redirect " + drillDownURL, ex);
@@ -44,6 +53,11 @@ public class IndividualBillDrilldownController extends AbstractController{
         return null;
     }
 
+    /**
+     * Set the jdbcTemplate from the parameter in the dispatcher-servlet.xml file.
+     * (Called by the Spring framework.)
+     * @param jdbcTemplate the jdbcTemplate to set
+     */
     public void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
