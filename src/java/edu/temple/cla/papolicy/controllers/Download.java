@@ -22,7 +22,7 @@ import org.springframework.web.servlet.mvc.AbstractController;
 import static java.sql.Types.*;
 
 /**
- *
+ * Controller to download requested datasets as ms-excel spreadsheet.
  * @author Paul Wolfgang
  */
 public class Download extends AbstractController {
@@ -31,11 +31,15 @@ public class Download extends AbstractController {
     private DataSource dataSource;
 
     /**
-     * Create the ModelAndView
+     * Respond to the http get request.
+     * @param request The request object
+     * @param response The response object
+     * @return null to indicate no view.
      */
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
             HttpServletResponse response) {
+        // Extract the query from the request.
         String query = Utility.decodeAndDecompress(request.getParameter("query"));
         response.setContentType("application/ms-excel");
         Connection conn = null;
@@ -59,10 +63,12 @@ public class Download extends AbstractController {
             wb = new MyWorkbook(response.getOutputStream());
             sheet = wb.getWorksheet();
             sheet.startRow();
+            // for each column in the query results, create a spreadsheet column
             for (int i = 0; i < numColumns; i++) {
                 sheet.addCell(columnNames[i]);
             }
             sheet.endRow();
+            // For each row in the query results, create a spreadsheet row
             while (rs.next()) {
                 addRowToSheet(sheet, numColumns, columnTypes, rs);
             }
@@ -104,7 +110,13 @@ public class Download extends AbstractController {
         }
         return null;
     }
-
+    /**
+     * Method to add a row to the spreadsheet
+     * @param sheet The spreadsheet object
+     * @param numColumns Number of columns
+     * @param columnTypes Array of column types
+     * @param rs The result set pointing to the current row.
+     */
     private void addRowToSheet(MyWorksheet sheet, int numColumns, int[] columnTypes, ResultSet rs) {
         sheet.startRow();
         for (int i = 0; i < numColumns; i++) {
@@ -144,6 +156,13 @@ public class Download extends AbstractController {
         sheet.endRow();
     }
 
+    /**
+     * Method to add an integer value to a cell in the spreadsheet
+     * @param sheet The spreadsheet object
+     * @param i The column index
+     * @param rs The result set
+     * @throws SQLException 
+     */
     private void addIntValue(MyWorksheet sheet, int i, ResultSet rs)
             throws SQLException {
         int intValue = rs.getInt(i + 1);
@@ -154,6 +173,13 @@ public class Download extends AbstractController {
         }
     }
 
+    /**
+     * Method to add a long integer value to a cell in the spreadsheet
+     * @param sheet The spreadsheet object
+     * @param i The column index
+     * @param rs The result set
+     * @throws SQLException 
+     */
     private void addLongValue(MyWorksheet sheet, int i, ResultSet rs)
             throws SQLException {
         long longValue = rs.getLong(i + 1);
@@ -165,6 +191,13 @@ public class Download extends AbstractController {
 
     }
 
+    /**
+     * Method to add a double value to a cell in the spreadsheet
+     * @param sheet The spreadsheet object
+     * @param i The column index
+     * @param rs The result set
+     * @throws SQLException 
+     */
     private void addDoubleValue(MyWorksheet sheet, int i, ResultSet rs)
             throws SQLException {
         double doubleValue = rs.getDouble(i + 1);
@@ -175,6 +208,13 @@ public class Download extends AbstractController {
         }
     }
 
+    /**
+     * Method to add a date value to a cell in the spreadsheet
+     * @param sheet The spreadsheet object
+     * @param i The column index
+     * @param rs The result set
+     * @throws SQLException 
+     */
     private void addDateValue(MyWorksheet sheet, int i, ResultSet rs)
             throws SQLException {
         String dateString = rs.getString(i + 1);
@@ -185,6 +225,13 @@ public class Download extends AbstractController {
         }
     }
 
+    /**
+     * Method to add a string value to a cell in the spreadsheet
+     * @param sheet The spreadsheet object
+     * @param i The column index
+     * @param rs The result set
+     * @throws SQLException 
+     */
     private void addStringValue(MyWorksheet sheet, int i, ResultSet rs)
             throws SQLException {
         String stringValue = rs.getString(i + 1);
@@ -196,12 +243,17 @@ public class Download extends AbstractController {
     }
 
     /**
+     * Method to set the datasource object. (Called by Spring framework)
      * @param datasource the datasource to set
      */
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
+    /**
+     * Method to return the datasource object. (Probably not used).
+     * @return The datasource
+     */
     public DataSource getDataSource() {
         return dataSource;
     }
