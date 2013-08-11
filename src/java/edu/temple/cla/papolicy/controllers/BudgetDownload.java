@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 /**
- *
+ * This controller handles requests to download budget data.
  * @author Paul Wolfgang
  */
 public class BudgetDownload extends AbstractController{
@@ -26,7 +26,7 @@ public class BudgetDownload extends AbstractController{
     private DataSource dataSource;
 
     /**
-     * Create the ModelAndView
+     * Method to handle the http request.  
      */
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
