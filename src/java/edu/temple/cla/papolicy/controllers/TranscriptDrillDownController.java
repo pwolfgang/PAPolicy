@@ -22,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 /**
- *
+ * Controller to respond to requests for drilldown of transcript (house hearing) data
  * @author Paul Wolfgang
  */
 public class TranscriptDrillDownController extends AbstractController{
@@ -34,7 +34,11 @@ public class TranscriptDrillDownController extends AbstractController{
             "SELECT BillID from Transcript_BillID WHERE TranscriptID='";
 
     /**
-     * Create the ModelAndView
+     * Create the ModelAndView. The model will contain the referenced transcript
+     * and the committess and bills referenced.
+     * @param request The HTTP request object
+     * @param reaponse The HTTP response object
+     * @return Model containing the data and a reference to the TranscriptDrillDown jsp page
      */
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
@@ -61,7 +65,7 @@ public class TranscriptDrillDownController extends AbstractController{
                 fixBillId(billIdList);
                 row.put("Bills", billIdList);
             }
-            Map<String, Object> theMap = new HashMap<String, Object>();
+            Map<String, Object> theMap = new HashMap<>();
             theMap.put("theList", theList);
             return new ModelAndView("transcriptDrillDown", theMap);
         } catch (Exception ex) {
@@ -71,12 +75,20 @@ public class TranscriptDrillDownController extends AbstractController{
     }
 
     /**
+     * Set the jdbcTemplate from the parameter in the dispatcher-servlet.xml file.
+     * (Called by the Spring framework.)
      * @param jdbcTemplate the jdbcTemplate to set
      */
     public void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * Method to fix each bill id in the bill id list.  The transcript database
+     * may reference a bill by the year it was introduced, but the bills database
+     * references bills by the year the session started which is always odd.
+     * @param billIdList The list of bill ids to be modified.
+     */
     private void fixBillId(List<String> billIdList) {
         for (int i = 0; i < billIdList.size(); i++) {
             String billId = billIdList.get(i);
