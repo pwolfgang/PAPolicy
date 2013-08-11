@@ -27,7 +27,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 /**
- *
+ * Controller to generate the model and view to display the results of an
+ * analysis query.
  * @author Paul Wolfgang
  */
 public class DisplayFormController extends AbstractController {
@@ -35,10 +36,19 @@ public class DisplayFormController extends AbstractController {
     private static Logger logger = Logger.getLogger(DisplayFormController.class);
     private SimpleJdbcTemplate jdbcTemplate;
 
+    /**
+     * Respond to the http post request.
+     * @param request The request object
+     * @param response The response object (not used).
+     * @return A model that contains the data to be displayed and a direction to
+     * the results.jsp page.
+     * @throws Exception 
+     */
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         try {
+            // Load the selected table objects
             ParameterizedRowMapper<Topic> topicMapper = new TopicMapper();
             List<Table> tableList = new ArrayList<Table>();
             String[] tableIds = request.getParameterValues("dataset");
@@ -55,9 +65,12 @@ public class DisplayFormController extends AbstractController {
                 Table[] tables = AbstractTable.getTable(tableId, qualifier, request, jdbcTemplate);
                 tableList.addAll(Arrays.asList(tables));
             }
+            // Load the selected topics.
             TopicList topics = new TopicList(request.getParameterValues("subtopics"), jdbcTemplate);
+            // Get the freeText.
             String freeText = request.getParameter("freetext");
             boolean fFreeText = freeText != null && !freeText.equals("");
+            // Get the display range and span (years or legislative session)
             String range = request.getParameter("range");
             boolean fRange = "1".equals(range);
             String span = request.getParameter("span");
@@ -66,8 +79,10 @@ public class DisplayFormController extends AbstractController {
                     request.getParameter("startSession"),
                     request.getParameter("endSession"),
                     request.getParameter("span"));
+            // Get the units to be displayed.
             String showResults = request.getParameter("showResults");
-            ArrayList<Column> columns = new ArrayList<Column>();
+            // Create a column for each dataset/topic pair and dataset/freetext.
+            List<Column> columns = new ArrayList<>();
             for (Table table : tableList) {
                 if (table.isTopicSearchable()) {
                     if (table.isMajorOnly()) {
@@ -92,9 +107,10 @@ public class DisplayFormController extends AbstractController {
                     columns.add(new Column(table, null, freeText, showResults, yearRange));
                 }
             }
-            Map<Units, ArrayList<Column>> columnMap = new HashMap<Units, ArrayList<Column>>();
+            // Group the columns by units. (Budget data and public opinion have their own units)
+            Map<Units, List<Column>> columnMap = new HashMap<>();
             for (Column column : columns) {
-                ArrayList<Column> columnsList = columnMap.get(column.getUnits());
+                List<Column> columnsList = columnMap.get(column.getUnits());
                 if (columnsList == null) {
                     columnsList = new ArrayList<Column>();
                 }
@@ -117,6 +133,7 @@ public class DisplayFormController extends AbstractController {
                 columnsList.add(column);
                 columnMap.put(column.getUnits(), columnsList);
             }
+            // Poplulate each row of each column.
             Iterator<YearOrSession> itr = yearRange.iterator();
             while (itr.hasNext()) {
                 YearOrSession current = itr.next();
@@ -148,16 +165,18 @@ public class DisplayFormController extends AbstractController {
                     }
                 }
             }
-
-            Map<String, Object> theMap = new HashMap<String, Object>();
+            // Create and load the model map.
+            Map<String, Object> theMap = new HashMap<>();
             theMap.put("yearRange", yearRange);
             theMap.put("columns", columns);
-            ArrayList<MyDataset> datasetList = new ArrayList<MyDataset>();
-            for (Map.Entry<Units, ArrayList<Column>> entry : columnMap.entrySet()) {
+            // Create MyDataset objects for each group of columns with common units
+            List<MyDataset> datasetList = new ArrayList<>();
+            for (Map.Entry<Units, List<Column>> entry : columnMap.entrySet()) {
                 Units unit = entry.getKey();
-                ArrayList<Column> theColumns = entry.getValue();
+                List<Column> theColumns = entry.getValue();
                 datasetList.add(new MyDataset(theColumns));
             }
+            // Add the chart to the map.
             theMap.put("dataset", Chart.createChart(datasetList));
             return new ModelAndView("results", theMap);
         } catch (Exception ex) {
@@ -166,6 +185,10 @@ public class DisplayFormController extends AbstractController {
         }
     }
 
+    /**
+     * Sets the jdbcTemplate for database access.  Called by Spring framework
+     * @param jdbcTemplate The jdbcTemplate object.
+     */
     public void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
