@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 /**
- *
+ * Servlet to download a selected senate hearing file.
  * @author Paul Wolfgang
  */
 public class SenateHearings extends HttpServlet {
@@ -74,6 +74,11 @@ public class SenateHearings extends HttpServlet {
         }
     }
 
+    /**
+     * Initialize the path where the governor&apos;s budget address files are located.
+     * Value is specified in the web.xml file.
+     * @throws ServletException 
+     */
     @Override
     public void init() {
         path = getServletConfig().getInitParameter("path");
