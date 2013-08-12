@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 /**
- *
+ * Map a query of the Tables table to a Table object.
  * @author Paul Wolfgang
  */
 public class TableMapper implements ParameterizedRowMapper<Table> {
@@ -21,6 +21,13 @@ public class TableMapper implements ParameterizedRowMapper<Table> {
     public TableMapper() {
     }
 
+    /**
+     * Create a new Table object based on the contents of the current row.
+     * @param rs ResultSet set to the current row of the table
+     * @param rowNum index of the current row (not used)
+     * @return The mapped object.
+     * @throws SQLException 
+     */
     @Override
     public Table mapRow(ResultSet rs, int rowNum) throws SQLException {
         String packageName = "edu.temple.cla.papolicy.tables";
@@ -54,9 +61,25 @@ public class TableMapper implements ParameterizedRowMapper<Table> {
         return null;
     }
     
+    /**
+     * Determine of two ParameterizedRowmapper objects are equal.  Since
+     * the row mapper is stateless, equality of class is sufficient.
+     * @param o
+     * @return 
+     */
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null) return false;
         return this.getClass() == o.getClass();
+    }
+
+    /**
+     * Since all RowMapper objects of the same class are equal,
+     * the hashCode is the hashCode of the class object.
+     */
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

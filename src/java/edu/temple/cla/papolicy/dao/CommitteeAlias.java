@@ -6,7 +6,8 @@
 package edu.temple.cla.papolicy.dao;
 
 /**
- *
+ * CommitteeAlias represents the table that contains the different names
+ * that a committee had over its lifetime.
  * @author Paul Wolfgang
  */
 public class CommitteeAlias {
@@ -19,6 +20,7 @@ public class CommitteeAlias {
     private int endYear;
 
     /**
+     * Unique ID used as primary key.
      * @return the ID
      */
     public int getID() {
@@ -26,6 +28,7 @@ public class CommitteeAlias {
     }
 
     /**
+     * Unique ID used as primary key.
      * @param ID the ID to set
      */
     public void setID(int ID) {
@@ -33,6 +36,7 @@ public class CommitteeAlias {
     }
 
     /**
+     * The committee code. Unique ID of the committee.
      * @return the ctyCode
      */
     public int getCtyCode() {
@@ -40,6 +44,7 @@ public class CommitteeAlias {
     }
 
     /**
+     * The committee code.
      * @param ctyCode the ctyCode to set
      */
     public void setCtyCode(int ctyCode) {
@@ -47,6 +52,7 @@ public class CommitteeAlias {
     }
 
     /**
+     * The committee current name.
      * @return the name
      */
     public String getName() {
@@ -54,6 +60,7 @@ public class CommitteeAlias {
     }
 
     /**
+     * The committee current name.
      * @param name the name to set
      */
     public void setName(String name) {
@@ -61,6 +68,7 @@ public class CommitteeAlias {
     }
 
     /**
+     * An alternate name for this committee.
      * @return the alternateName
      */
     public String getAlternateName() {
@@ -68,6 +76,7 @@ public class CommitteeAlias {
     }
 
     /**
+     * An alternate name for this committee.
      * @param alternateName the alternateName to set
      */
     public void setAlternateName(String alternateName) {
@@ -75,6 +84,7 @@ public class CommitteeAlias {
     }
 
     /**
+     * The year that the committee started using this alternate name.
      * @return the startYear
      */
     public int getStartYear() {
@@ -82,6 +92,7 @@ public class CommitteeAlias {
     }
 
     /**
+     * The year that the committee started using this alternate name.
      * @param startYear the startYear to set
      */
     public void setStartYear(int startYear) {
@@ -89,6 +100,7 @@ public class CommitteeAlias {
     }
 
     /**
+     * The last year that the committee used this alternate name.
      * @return the endYear
      */
     public int getEndYear() {
@@ -96,6 +108,7 @@ public class CommitteeAlias {
     }
 
     /**
+     * The last year that the committee used this alternate name.
      * @param endYear the endYear to set
      */
     public void setEndYear(int endYear) {
