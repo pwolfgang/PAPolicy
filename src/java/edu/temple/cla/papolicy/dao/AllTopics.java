@@ -5,17 +5,20 @@
 
 package edu.temple.cla.papolicy.dao;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
- *
+ * This is a special Topic class that represents the selection of
+ * all topics.  If no topic is selected, then all filtered records
+ * for the selected tables are selected.
  * @author Paul Wolfgang
  */
 public class AllTopics extends Topic {
 
      /**
-     * @return the code
+      * This topic has the topic code of zero.
+     * @return 0
      */
     @Override
     public int getCode() {
@@ -23,7 +26,8 @@ public class AllTopics extends Topic {
     }
 
     /**
-     * @return the description
+     * This topic has the description "All topics"
+     * @return "All topics"
      */
     @Override
     public String getDescription() {
@@ -31,11 +35,12 @@ public class AllTopics extends Topic {
     }
 
     /**
-     * @return the subTopics
+     * This topic has no subtopics.
+     * @return an empty list.
      */
     @Override
     public List<Topic> getSubTopics() {
-        return new ArrayList<Topic>();
+        return Collections.emptyList();
     }
 
 }
