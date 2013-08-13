@@ -32,31 +32,33 @@ public class BinaryFilterTest {
     @Test
     public void testGetFilterFormInput() {
         String expected = "\n"
-                + "            Signed By Governor\n"
-                + "            <br /><input type=\"radio\" name=\"F414\" value=\"587\" checked=\"checked\" />&nbsp no filter\n"
-                + "                  <input type=\"radio\" name=\"F414\" value=\"0\" />&nbsp Exclude\n"
-                + "                  <input type=\"radio\" name=\"F414\" value=\"1\" />&nbsp Include";
+                + "            <fieldset><legend>Signed By Governor</legend>\n"
+                + "                  <input type=\"radio\" name=\"F414\" id=\"F414B\" value=\"587\" checked=\"checked\" />&nbsp; <label for=\"F414B\">No Filter</label>\n"
+                + "                  <input type=\"radio\" name=\"F414\" id=\"F4140\" value=\"0\" />&nbsp; <label for=\"F4140\">Exclude</label>\n"
+                + "                  <input type=\"radio\" name=\"F414\" id=\"F4141\" value=\"1\" />&nbsp; <label for=\"F4141\">Include</label>\n"
+                + "            </fieldset>\n";
+
         assertEquals(expected, filter.getFilterFormInput());
     }
 
     @Test
     public void testGetFilterQueryStringBoth() {
         setParameterValue("587");
-        String result = filter.getFilterQueryString();
+        String result = filter.getFilterQuery().toString();
         assertEquals("", result);
     }
 
     @Test
     public void testGetFilterQueryStringInclude() {
         setParameterValue("1");
-        String result = filter.getFilterQueryString();
+        String result = filter.getFilterQuery().toString();
         assertEquals("SignedbyGov<>0", result);
     }
 
     @Test
     public void testGetFilterQueryStringExclude() {
         setParameterValue("0");
-        String result = filter.getFilterQueryString();
+        String result = filter.getFilterQuery().toString();
         assertEquals("SignedbyGov=0", result);
     }
 

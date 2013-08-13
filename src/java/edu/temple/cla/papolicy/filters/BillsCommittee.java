@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 /**
- *
+ * Filter to select the committee(s) that held hearings on a bill.
  * @author Paul Wolfgang
  */
 public class BillsCommittee extends Filter {
@@ -30,6 +30,15 @@ public class BillsCommittee extends Filter {
     private String filterQualifier;
     private String chamberNumber;
 
+    /**
+     * Construct a BillsCommittee object
+     * @param id The unique id
+     * @param tableId The table ID
+     * @param description The description
+     * @param columnName Null -- not used by this class
+     * @param tableReference Reference to the CommitteeAliases table
+     * @param additionalParam House or Senate
+     */
     public BillsCommittee(int id, int tableId, String description, 
             String columnName, String tableReference, String additionalParam) {
         super(id, tableId, description, columnName, tableReference,
@@ -44,6 +53,11 @@ public class BillsCommittee extends Filter {
         }
     }
 
+    /**
+     * The BillsCommittee filter is a dropdown selection of all of the
+     * chamber specific committee names.
+     * @return HTML to generate the dropdown form input.
+     */
     @Override
     public String getFilterFormInput() {
         ParameterizedRowMapper<CommitteeAlias> itemMapper = new CommitteeAliasMapper();
@@ -72,7 +86,13 @@ public class BillsCommittee extends Filter {
         return stb.toString();
     }
 
-    void buildFilterStrings() {
+    /**
+     * Method to build the filter query. If ALL is selected, then there is not
+     * filter. If the primary checkbox is selected, then only bills to which
+     * the selected committee is the first committee the bill is referred to is
+     * selected, otherwise first (primary) and other are selected.
+     */
+    private void buildFilterQuery() {
         if (parameterValue.equals("ALL")) {
             filterQuery = new EmptyExpression();
             filterQualifier = "";
@@ -113,13 +133,23 @@ public class BillsCommittee extends Filter {
         }
     }
 
+    /**
+     * Return a string that describes the selected filter.
+     * @return A string that describes the selected filter.
+     */
+    @Override
     public String getFilterQualifier() {return filterQualifier;}
 
+    /**
+     * Set the filter parameter values from the HTTP request
+     * @param request The HTTP request object.
+     */
+    @Override
     public void setFilterParameterValues(HttpServletRequest request) {
         parameterValue = request.getParameter(parameterName);
         primaryValue = request.getParameter(primaryName);
         if (parameterValue != null) {
-            buildFilterStrings();
+            buildFilterQuery();
         }
     }
 

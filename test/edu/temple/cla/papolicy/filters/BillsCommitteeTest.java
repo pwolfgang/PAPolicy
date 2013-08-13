@@ -52,32 +52,32 @@ public class BillsCommitteeTest {
 
     @Test
     public void testGetFilterFormInput() {
-        String expected = " Referred to House Committee\n" +
-"<input name=\"hprimary\" value=\"1\" type=\"checkbox\"/> Primary Only\n" +
-"<br /><select name=\"F401\">\n" +
+        String expected = "<fieldset><legend>Referred to House Committee</legend>\n" +
+"<label><input name=\"hprimary\" value=\"1\" type=\"checkbox\"/> Primary Only</label>\n" +
+"<br/><label><select name=\"F401\">Name\n" +
 "<option value=\"ALL\">ALL COMMITTEES</option>\n" +
-"<option value=\"101\">Aging and Older Adult Services</option></select>";
+"<option value=\"101\">Aging and Older Adult Services</option>\n</select></label></fieldset>";
         assertEquals(expected, filter.getFilterFormInput());
     }
 
     @Test
     public void testGetFilterQueryStringAll() {
         setParameterValue("ALL", null);
-        String result = filter.getFilterQueryString();
+        String result = filter.getFilterQuery().toString();
         assertEquals("", result);
     }
 
     @Test
     public void testGetFilterQueryBoth() {
         setParameterValue("101", "0");
-        String result = filter.getFilterQueryString();
+        String result = filter.getFilterQuery().toString();
         assertEquals("(_101P<>0 OR _101O<>0)", result);
     }
 
     @Test
     public void testGetFilterQueryStringPrimary() {
         setParameterValue("101", "1");
-        String result = filter.getFilterQueryString();
+        String result = filter.getFilterQuery().toString();
         assertEquals("_101P<>0", result);
     }
 
