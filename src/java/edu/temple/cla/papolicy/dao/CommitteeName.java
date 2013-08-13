@@ -6,7 +6,7 @@
 package edu.temple.cla.papolicy.dao;
 
 /**
- *
+ * CommitteeNames maps the committee codes to the current committee names.
  * @author Paul Wolfgang
  */
 public class CommitteeName {
@@ -15,6 +15,7 @@ public class CommitteeName {
     private String name;
 
     /**
+     * The ctyCode is the unique code assigned to this committee
      * @return the ctyCode
      */
     public int getCtyCode() {
@@ -22,6 +23,7 @@ public class CommitteeName {
     }
 
     /**
+     * The ctyCode is the unique code assigned to this committee
      * @param ctyCode the ctyCode to set
      */
     public void setCtyCode(int ctyCode) {
@@ -29,6 +31,7 @@ public class CommitteeName {
     }
 
     /**
+     * The name is the current name of this committee.
      * @return the name
      */
     public String getName() {
@@ -36,6 +39,7 @@ public class CommitteeName {
     }
 
     /**
+     * The name is the current name of this committee.
      * @param name the name to set
      */
     public void setName(String name) {

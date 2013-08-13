@@ -6,7 +6,10 @@
 package edu.temple.cla.papolicy.dao;
 
 /**
- *
+ * The Deflator is the chained GDP deflator using the data from the
+ * Office of Management of the Budget. It provides inflation adjustments relative
+ * to a base year.
+ * http://www.whitehouse.gov/sites/default/files/omb/budget/fy2013/assets/hist.pdf
  * @author Paul Wolfgang
  */
 public class Deflator {
@@ -24,6 +27,7 @@ public class Deflator {
     public Deflator() {}
     
     /**
+     * The fiscal year
      * @return the year
      */
     public int getYear() {
@@ -31,6 +35,7 @@ public class Deflator {
     }
 
     /**
+     * The fiscal year
      * @param year the year to set
      */
     public void setYear(int year) {
@@ -38,6 +43,7 @@ public class Deflator {
     }
 
     /**
+     * Gross Domestic Product in billions of dollars (un adjusted)
      * @return the GDP
      */
     public double getGDP() {
@@ -45,6 +51,7 @@ public class Deflator {
     }
 
     /**
+     * Gross Domestic Product in billions of dollars (un adjusted)
      * @param GDP the GDP to set
      */
     public void setGDP(double GDP) {
@@ -52,6 +59,7 @@ public class Deflator {
     }
 
     /**
+     * Chained price index with 2005=1
      * @return the priceIndex
      */
     public double getPriceIndex() {
@@ -59,6 +67,7 @@ public class Deflator {
     }
 
     /**
+     * Chained price index with 2005=1
      * @param priceIndex the priceIndex to set
      */
     public void setPriceIndex(double priceIndex) {

@@ -6,7 +6,7 @@
 package edu.temple.cla.papolicy.dao;
 
 /**
- *
+ * The one to many relationship table for transcripts to committees.
  * @author Paul Wolfgang
  */
 public class TranscriptCommittee {
@@ -14,6 +14,7 @@ public class TranscriptCommittee {
     private CommitteeAlias committeeAlias;
 
     /**
+     * The unique ID for this transcript record.
      * @return the transcriptID
      */
     public int getTranscriptID() {
@@ -21,6 +22,7 @@ public class TranscriptCommittee {
     }
 
     /**
+     * The unique ID for this transcript record.
      * @param transcriptID the transcriptID to set
      */
     public void setTranscriptID(int transcriptID) {
@@ -28,6 +30,7 @@ public class TranscriptCommittee {
     }
 
     /**
+     * The committee alias of the committee
      * @return the committeeAlias
      */
     public CommitteeAlias getCommitteeAlias() {
@@ -35,6 +38,7 @@ public class TranscriptCommittee {
     }
 
     /**
+     * The committee alias of the committee
      * @param committeeAlias the committeeAlias to set
      */
     public void setCommitteeAlias(CommitteeAlias committeeAlias) {

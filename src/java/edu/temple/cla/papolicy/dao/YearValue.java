@@ -6,7 +6,7 @@
 package edu.temple.cla.papolicy.dao;
 
 /**
- *
+ * A year-value pair
  * @author Paul Wolfgang
  */
 public class YearValue {
@@ -18,14 +18,32 @@ public class YearValue {
         this.value = value;
     }
 
+    /**
+     * The year
+     * @return the year.
+     */
     public int getYear() {return year;}
 
+    /**
+     * The value
+     * @return the value
+     */
     public Number getValue() {return value;}
 
+    /**
+     * Set the value
+     * @param value the value to be set
+     */
     public void setValue(Number value) {
         this.value = value;
     }
     
+    /**
+     * Determine of two YearValue objects are equal
+     * @param o The other object
+     * @return true if the year and value are equal
+     */
+    @Override
     public boolean equals(Object o) {
         if (o == this) return true;
         if (o == null) return false;
@@ -37,10 +55,20 @@ public class YearValue {
         }
     }
     
+    /**
+     * Hash code is combination of value and year.
+     * @return hash code.
+     */
+    @Override
     public int hashCode() {
         return value.hashCode() * 31 + year;
     }
     
+    /**
+     * Return a string representation
+     * @return a string representation
+     */
+    @Override
     public String toString() {
         return year + ":" + value;
     }

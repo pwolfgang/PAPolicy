@@ -8,7 +8,8 @@ package edu.temple.cla.papolicy.dao;
 import java.util.List;
 
 /**
- *
+ * A topic consists of a major topic and a list of subtopics for each
+ * major topic.
  * @author Paul Wolfgang
  */
 public class Topic {
@@ -18,6 +19,7 @@ public class Topic {
     private List<Topic> subTopics;
 
     /**
+     * The unique topic code
      * @return the code
      */
     public int getCode() {
@@ -25,6 +27,7 @@ public class Topic {
     }
 
     /**
+     * The unique topic code
      * @param code the code to set
      */
     public void setCode(int code) {
@@ -32,6 +35,7 @@ public class Topic {
     }
 
     /**
+     * The text to display for this topic
      * @return the description
      */
     public String getDescription() {
@@ -39,6 +43,7 @@ public class Topic {
     }
 
     /**
+     * The text to display for this topic
      * @param description the description to set
      */
     public void setDescription(String description) {
@@ -46,6 +51,7 @@ public class Topic {
     }
 
     /**
+     * The list of subtopics.
      * @return the subTopics
      */
     public List<Topic> getSubTopics() {
@@ -53,6 +59,7 @@ public class Topic {
     }
 
     /**
+     * The list of subtopics.
      * @param subTopics the subTopics to set
      */
     public void setSubTopics(List<Topic> subTopics) {

@@ -6,7 +6,8 @@
 package edu.temple.cla.papolicy.dao;
 
 /**
- *
+ * A DropDownItem is an item to be displayed in a drop down menu from a filter
+ * or as multiple check boxes in a filter.
  * @author Paul Wolfgang
  */
 public class DropDownItem {
@@ -22,6 +23,7 @@ public class DropDownItem {
     }
 
     /**
+     * The unique id for this item
      * @return the ID
      */
     public int getID() {
@@ -29,6 +31,7 @@ public class DropDownItem {
     }
 
     /**
+     * The unique id for this item
      * @param ID the ID to set
      */
     public void setID(int ID) {
@@ -36,6 +39,7 @@ public class DropDownItem {
     }
 
     /**
+     * The text to be displayed.
      * @return the description
      */
     public String getDescription() {
@@ -43,6 +47,7 @@ public class DropDownItem {
     }
 
     /**
+     * The text to be displayed.
      * @param description the description to set
      */
     public void setDescription(String description) {
