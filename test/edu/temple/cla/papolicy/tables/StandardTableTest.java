@@ -44,11 +44,12 @@ public class StandardTableTest {
 "        <dl><dt>\n" +
 "            <input type=\"checkbox\" name=\"dataset\" value=\"6\"\n" +
 "                 id=\"t6\" onclick=\"expandFilters(6);expandNote(6);\" />\n" +
-"            <span class=\"strong\">Legislative Service Agency Reports</span>\n" +
+"            <label for=\"t6\"><span class=\"strong\">Legislative Service Agency Reports</span></label>\n" +
 "        </dt></dl>\n" +
 "        <div id=\"note6\" class=\"nnoottee\"><p></p></div>\n" +
 "        ";
-        assertEquals(expected, testTable.getTitleBox());
+        String result = testTable.getTitleBox();
+        assertEquals(expected, result);
     }
 
     @Test

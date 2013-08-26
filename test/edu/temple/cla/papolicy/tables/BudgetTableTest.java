@@ -90,18 +90,19 @@ public class BudgetTableTest {
         String expected = "\n" +
 "<dl><input type=\"checkbox\" name=\"dataset\" value=\"11A\"\n" +
 "        id=\"t11A\" onclick=\"expandBudget(11);\" />\n" +
-"    <span class=\"strong\">Total Spending All Funds</strong></dl>\n" +
+"    <label for=\"t11A\"><span class=\"strong\">Total Spending All Funds</span></label></dl>\n" +
 "<dl><input type=\"checkbox\" name=\"dataset\" value=\"11B\"\n" +
 "        id=\"t11B\" onclick=\"expandBudget(11);\" />\n" +
-"    <span class=\"strong\">General Fund Balance<span>\n" +
+"    <label for=\"t11B\"><span class=\"strong\">General Fund Balance</span></label>\n" +
 "    <div class=\"subtbl\" id=\"subtbl11B\">\n" +
-"       <dd>\n" +
-"       Include Rainy Day Fund\n" +
-"       <br /><input type=\"radio\" name=\"rainyDay\" value=\"1\" /> Yes\n" +
-"          <input type=\"radio\" name=\"rainyDay\" value=\"0\" checked=\"checked\" />No\n" +
-"       </dd>\n" +
+"       <fieldset>       <legend>Include Rainy Day Fund</legend>\n" +
+"          <input type=\"radio\" name=\"rainyDay\" value=\"1\" id=\"rainyDay1\"/><label for=\"rainyDay1\">Yes</label>\n" +
+"          <input type=\"radio\" name=\"rainyDay\" value=\"0\" id=\"rainyDay0\" checked=\"checked\" /><label for=\"rainyDay0\">No</label>\n" +
+"       </fieldset>\n" +
 "    </div>\n" +
 "</dl>\n";
+        String result = testTable.getTitleBox();
+        System.out.println(result);
         assertEquals(expected, testTable.getTitleBox());
     }
 
@@ -289,7 +290,7 @@ public class BudgetTableTest {
                 + "FROM MajorCode INNER JOIN (Crosswalk INNER JOIN BudgetTable ON "
                 + "(Crosswalk.FC=BudgetTable.FC) AND (Crosswalk.OC=BudgetTable.OC)) "
                 + "ON MajorCode.Code = Crosswalk.PolicyCode WHERE Code=6 "
-                + "AND Year BETWEEN 1991 AND 2006 ORDER BY Year, MajorCode.Code, "
+                + "AND Year BETWEEN 1991 AND 2006 ORDER BY TheYear, MajorCode.Code, "
                 + "Crosswalk.FC, Crosswalk.OC";
         Topic topic = new Topic();
         topic.setCode(6);

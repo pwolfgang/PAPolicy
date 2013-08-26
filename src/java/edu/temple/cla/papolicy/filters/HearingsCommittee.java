@@ -21,7 +21,6 @@ public class HearingsCommittee extends Filter {
             String columnName, String tableReference, String additionalParam) {
         super(id, tableId, description, columnName, tableReference,
                 additionalParam);
-        filterQuery = null;
     }
 
     @Override
@@ -37,10 +36,10 @@ public class HearingsCommittee extends Filter {
         List<CommitteeAlias> items = getJdbcTemplate().query(query, itemMapper);
         StringBuilder stb = new StringBuilder();
         stb.append("<label>"+getAdditionalParam()+" Hearings\n"+
-"                <br /><select name=\"F"+getId()+"\">\"\n"+
+"                <br /><select name=\"F"+getId()+"\">\n"+
 "                <option value=\"ALL\" selected=\"selected\">ALL COMMITTEES</option>\n");
         for (CommitteeAlias item : items) {
-            stb.append("<option value=\""+item.getCtyCode()+"\">"+item.getAlternateName()+"</option>/n");
+            stb.append("<option value=\""+item.getCtyCode()+"\">"+item.getAlternateName()+"</option>\n");
         }
         stb.append("</select></label><br/>");
         return stb.toString();

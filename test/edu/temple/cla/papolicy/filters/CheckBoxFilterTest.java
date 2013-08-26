@@ -31,7 +31,7 @@ public class CheckBoxFilterTest {
 
     @Test
     public void testGetFilterFormInput() {
-        String expected = "<input type=\"checkbox\" name=\"F403\" value=\"1\" /> Conference Committee";
+        String expected = "<label><input type=\"checkbox\" name=\"F403\" value=\"1\" /> Conference Committee</label>\n";
         assertEquals(expected, filter.getFilterFormInput());
     }
 
@@ -39,14 +39,14 @@ public class CheckBoxFilterTest {
     public void testGetFilterQueryStringNotChecked() {
         setParameterValue(null);
         String expected = "";
-        assertEquals(expected, filter.getFilterQueryString());
+        assertEquals(expected, filter.getFilterQuery().toString());
     }
 
     @Test
     public void testGetFilterQueryStringChecked() {
         setParameterValue("1");
         String expected = "_300<>0";
-        assertEquals(expected, filter.getFilterQueryString());
+        assertEquals(expected, filter.getFilterQuery().toString());
     }
 
     @Test

@@ -27,9 +27,9 @@ public class BillsTable extends AbstractTable {
     @Override
     public String getTitleBox(){
         return "\n"+
-"<dl>\r\n<dt><input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"\"\n"+
+"<dl>\n<dt><input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"\"\n"+
 "        id=\"t"+getId()+"\" onclick=\"expandBills("+getId()+");\" />\n"+                
-"        <label for=\"t"+getId()+"\"><span class=\"strong\">"+getTableTitle()+"</span></label></dt>\r\n\n"+
+"        <label for=\"t"+getId()+"\"><span class=\"strong\">"+getTableTitle()+"</span></label></dt>\n\n"+
 "<div class=\"subtbl\" id=\"subtbl"+getId()+"\">\n"+
 "    <fieldset><legend>Chamber</legend>\n"+              
 "    <dd><input type=\"checkbox\" name=\"chamber\" value=\"House\" id=\"houseChamber\" checked=\"checked\" />\n"+

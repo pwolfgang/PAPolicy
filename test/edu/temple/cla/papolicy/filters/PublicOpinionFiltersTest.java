@@ -32,8 +32,9 @@ public class PublicOpinionFiltersTest {
     @Test
     public void testGetFilterFormInput() {
         System.out.println("getFilterFormInput");
-        String expResult = "Display as <input type=\"radio\" name=\"mipdisp\" value=\"0\" checked=\"checked\" />Percent\n" +
-"                <input type=\"radio\" name=\"mipdisp\" value=\"1\" />Rank";
+        String expResult = "<fieldset><legend>Display as</legend>"
+                + "<label><input type=\"radio\" name=\"mipdisp\" value=\"0\" checked=\"checked\" />Percent</label>\n" +
+"                <label><input type=\"radio\" name=\"mipdisp\" value=\"1\" />Rank</label></fieldset>";
         String result = filter.getFilterFormInput();
         assertEquals(expResult, result);
     }
@@ -44,7 +45,7 @@ public class PublicOpinionFiltersTest {
         System.out.println("getFilterQueryString");
         PublicOpinionFilters instance = filter;
         String expResult = "";
-        String result = instance.getFilterQueryString();
+        String result = instance.getFilterQuery().toString();
         assertEquals(expResult, result);
     }
 

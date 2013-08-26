@@ -48,26 +48,26 @@ public class HouseHearingsCommitteeTest {
 
     @Test
     public void testGetFilterFormInput() {
-        String expected = "House Hearings\n" +
-"                <br />\n" +
+        String expected = "<label>House Hearings\n" +
+"                <br/>\n" +
 "<select name=\"F1201\">\"\n" +
 "                <option value=\"ALL\" selected=\"selected\">ALL COMMITTEES</option>\n" +
 "<option value=\"101\">Aging and Older Adult Services</option>\n" +
-"</select>\n";
+"</select></label><br/>\n";
         assertEquals(expected, filter.getFilterFormInput());
     }
 
     @Test
     public void testGetFilterQueryStringAll() {
         setParameterValue("ALL");
-        String result = filter.getFilterQueryString();
+        String result = filter.getFilterQuery().toString();
         assertEquals("", result);
     }
 
     @Test
     public void testGetFilterQuery101() {
         setParameterValue("101");
-        String result = filter.getFilterQueryString();
+        String result = filter.getFilterQuery().toString();
         assertEquals("CtyCode=101", result);
     }
 

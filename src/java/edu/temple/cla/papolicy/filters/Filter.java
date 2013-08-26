@@ -5,6 +5,7 @@
 
 package edu.temple.cla.papolicy.filters;
 
+import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
 import edu.temple.cla.papolicy.queryBuilder.Expression;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
@@ -44,6 +45,7 @@ public abstract class Filter {
         this.columnName = columnName;
         this.tableReference = tableReference;
         this.additionalParam = additionalParam;
+        this.filterQuery = new EmptyExpression();
     }
 
     /**

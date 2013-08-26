@@ -34,11 +34,11 @@ public class PartyTest {
 
     @Test
     public void testGetFilterFormInput() {
-        String expected = "Sponsor Party\n" +
-"        <br /><input type=\"radio\" name=\"F407\" value=\"NOFILTER\" checked=\"checked\" />&nbsp;no filter\n" +
-"              <input type=\"radio\" name=\"F407\" value=\"0\" />&nbsp;Republican\n" +
-"              <input type=\"radio\" name=\"F407\" value=\"1\" />&nbsp;Democrat\n" +
-"              <input type=\"radio\" name=\"F407\" value=\"ALL\" />&nbsp;Both\n";
+        String expected = "<fieldset><legend>Sponsor Party</legend>\n" +
+"              <label><input type=\"radio\" name=\"F407\" value=\"NOFILTER\" checked=\"checked\" />&nbsp;Both</label>\n" +
+"              <label><input type=\"radio\" name=\"F407\" value=\"0\" />&nbsp;Republican</label>\n" +
+"              <label><input type=\"radio\" name=\"F407\" value=\"1\" />&nbsp;Democrat</label>\n"
+                + "</fieldset>";
         assertEquals(expected,filter.getFilterFormInput());
     }
 
@@ -46,19 +46,19 @@ public class PartyTest {
     public void testGetFilterQueryStringNoFilter() {
         setParameterValue("NOFILTER");
         String expected = "";
-        assertEquals(expected, filter.getFilterQueryString());
+        assertEquals(expected, filter.getFilterQuery().toString());
     }
 
     @Test
     public void testGetFilterQueryStringRep() {
         setParameterValue("0");
-        assertEquals(repQuery, filter.getFilterQueryString());
+        assertEquals(repQuery, filter.getFilterQuery().toString());
     }
 
     @Test
     public void testGetFilterQueryStringDem() {
         setParameterValue("1");
-        assertEquals(demQuery, filter.getFilterQueryString());
+        assertEquals(demQuery, filter.getFilterQuery().toString());
     }
 
     @Test
@@ -74,9 +74,9 @@ public class PartyTest {
         setParameterValue("ALL");
         Filter[] choices = filter.getFilterChoices();
         assertEquals(2, choices.length);
-        assertEquals(repQuery, choices[0].getFilterQueryString());
+        assertEquals(repQuery, choices[0].getFilterQuery().toString());
         assertEquals(repQualifier, choices[0].getFilterQualifier());
-        assertEquals(demQuery, choices[1].getFilterQueryString());
+        assertEquals(demQuery, choices[1].getFilterQuery().toString());
         assertEquals(demQualifier, choices[1].getFilterQualifier());
     }
 

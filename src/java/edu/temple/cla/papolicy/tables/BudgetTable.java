@@ -210,7 +210,7 @@ public class BudgetTable extends AbstractTable {
         builder.addColumn("BudgetTable.TheValue*Crosswalk.PercentMatch/100000 as AllocatedAmount");
         builder.clearGroupBy();
         builder.clearOrderBy();
-        builder.setOrderBy(getYearColumn() + " , MajorCode.Code, Crosswalk.FC, Crosswalk.OC");
+        builder.setOrderBy(getYearColumn() + ", MajorCode.Code, Crosswalk.FC, Crosswalk.OC");
         return builder;
     }
 }

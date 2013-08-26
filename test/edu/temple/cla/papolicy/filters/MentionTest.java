@@ -31,10 +31,13 @@ public class MentionTest {
 
     @Test
     public void testGetFilterFormInput() {
-        String expected = "Executive\n" +
-"        <br /><input type=\"radio\" name=\"F301\" value=\"587\" checked=\"checked\" />&nbsp;no filter\n" +
-"              <input type=\"radio\" name=\"F301\" value=\"0\" />&nbsp;No Mention\n" +
-"              <input type=\"radio\" name=\"F301\" value=\"2\" />&nbsp;Mention\n";
+        String expected = "            <fieldset><legend>Executive</legend>\n" +
+"              <input type=\"radio\" name=\"F301\" value=\"587\" id=\"F301B\" checked=\"checked\" /><label for=\"F301B\">No Filter</label>\n" +
+"              <input type=\"radio\" name=\"F301\" value=\"0\" id=\"F3010\" /><label for=\"F3010\">No Mention</label>\n" +
+"              <input type=\"radio\" name=\"F301\" value=\"2\" id=\"F3012\" /><label for=\"F3012\">Mention</label>\n" +
+"</fieldset>\n" +
+"";
+        String result = filter.getFilterFormInput();
         assertEquals(expected, filter.getFilterFormInput());
     }
 
@@ -42,21 +45,21 @@ public class MentionTest {
     public void testGetFilterQueryStringNoFilter() {
         setParameterValue("587");
         String expected = "";
-        assertEquals(expected, filter.getFilterQueryString());
+        assertEquals(expected, filter.getFilterQuery().toString());
     }
 
     @Test
     public void testGetFilterQueryStringNoMention() {
         setParameterValue("0");
         String expected = "_Exec_=0";
-        assertEquals(expected, filter.getFilterQueryString());
+        assertEquals(expected, filter.getFilterQuery().toString());
     }
     
     @Test
     public void testGetFilterQueryStringMention() {
         setParameterValue("2");
         String expected = "_Exec_<>0";
-        assertEquals(expected, filter.getFilterQueryString());
+        assertEquals(expected, filter.getFilterQuery().toString());
     }
 
     @Test

@@ -64,46 +64,51 @@ public class MultiValuedFilterTest {
 
     @Test
     public void testGetFilterFormInput() {
-        String expected = "Constitution Ammendment\n" +
-"        <br /><input type=\"radio\" name=\"F406\" value=\"587\" checked=\"checked\" />&nbsp;no filter\n" +
-"              <input type=\"radio\" name=\"F406\" value=\"0\" />&nbsp;Exclude\n" +
-"              <input type=\"radio\" name=\"F406\" value=\"1\" />&nbsp;Include\n" +
-"        <dl><dd><input type=\"checkbox\" name=\"V406\" value=\"0\" checked=\"checked\" />\n" +
-"                Not Passed by Legislature</dd><dd><input type=\"checkbox\" name=\"V406\" value=\"1\" checked=\"checked\" />\n" +
-"                Passed Once by Legislature</dd><dd><input type=\"checkbox\" name=\"V406\" value=\"2\" checked=\"checked\" />\n" +
-"                Passed Twice in Consecutive Sessions</dd><dd><input type=\"checkbox\" name=\"V406\" value=\"3\" checked=\"checked\" />\n" +
-"                Approved by the Voters</dd><dd><input type=\"checkbox\" name=\"V406\" value=\"4\" checked=\"checked\" />\n" +
-"                Defeated by the Voters</dd><dd><input type=\"checkbox\" name=\"V406\" value=\"5\" checked=\"checked\" />\n" +
-"                Partially approved by Voters</dd></dl>";
-        assertEquals(expected, filter.getFilterFormInput());
+        String expected = "<fieldset><legend>Constitution Ammendment</legend>\n" +
+"              <label><input type=\"radio\" name=\"F406\" value=\"587\" checked=\"checked\" />&nbsp;No Filter</label>\n" +
+"              <label><input type=\"radio\" name=\"F406\" value=\"0\" />&nbsp;Exclude</label>\n" +
+"              <label><input type=\"radio\" name=\"F406\" value=\"1\" />&nbsp;Include</label>\n" +
+"        <dl><dd><label><input type=\"checkbox\" name=\"V406\" value=\"0\" checked=\"checked\" />\n" +
+"                Not Passed by Legislature</label></dd>"
+                + "<dd><label><input type=\"checkbox\" name=\"V406\" value=\"1\" checked=\"checked\" />\n" +
+"                Passed Once by Legislature</label></dd>"
+                + "<dd><label><input type=\"checkbox\" name=\"V406\" value=\"2\" checked=\"checked\" />\n" +
+"                Passed Twice in Consecutive Sessions</label></dd>"
+                + "<dd><label><input type=\"checkbox\" name=\"V406\" value=\"3\" checked=\"checked\" />\n" +
+"                Approved by the Voters</label></dd><dd><label><input type=\"checkbox\" name=\"V406\" value=\"4\" checked=\"checked\" />\n" +
+"                Defeated by the Voters</label></dd><dd><label><input type=\"checkbox\" name=\"V406\" value=\"5\" checked=\"checked\" />\n" +
+"                Partially approved by Voters</label></dd></dl></fieldset>" +
+"";
+        String result = filter.getFilterFormInput();
+        assertEquals(expected, result);
     }
 
     @Test
     public void testGetFilterQueryStringNoFilter() {
         setParameterValues("587", null);
         String expected = "";
-        assertEquals(expected, filter.getFilterQueryString());
+        assertEquals(expected, filter.getFilterQuery().toString());
     }
     
     @Test
     public void testGetFilterQueryStringInclude2() {
         setParameterValues("1", new String[]{"2"});
         String expected = "Con_Ammend=2";
-        assertEquals(expected, filter.getFilterQueryString());
+        assertEquals(expected, filter.getFilterQuery().toString());
     }
     
     @Test
     public void testGetFilterQueryStringExclude234() {
         setParameterValues("0", new String[]{"2", "3", "4"});
         String expected = "(Con_Ammend<>2 AND Con_Ammend<>3 AND Con_Ammend<>4)";
-        assertEquals(expected, filter.getFilterQueryString());
+        assertEquals(expected, filter.getFilterQuery().toString());
     }
 
     @Test
     public void testGetFilterQueryStringInclude234() {
         setParameterValues("1", new String[]{"2", "3", "4"});
         String expected = "(Con_Ammend=2 OR Con_Ammend=3 OR Con_Ammend=4)";
-        assertEquals(expected, filter.getFilterQueryString());
+        assertEquals(expected, filter.getFilterQuery().toString());
     }
 
     @Test

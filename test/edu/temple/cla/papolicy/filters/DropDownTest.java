@@ -47,9 +47,11 @@ public class DropDownTest {
 
     @Test
     public void testGetFilterFormInput() {
-        String expected = "Senate Last Action<br /><select name=\"F405\">\n" +
-"                <option value=\"-1\" selected=\"selected\">no filter</option><option value=\"2\">Passed on Floor</option></select>";
-        assertEquals(expected, filter.getFilterFormInput());
+        String expected = "<label for=\"F405\"><br/>Senate Last Action</label><br /><select name=\"F405\" id=\"F405\">\n" +
+"                <option value=\"-1\" selected=\"selected\">No Filter</option>\n" +
+"<option value=\"2\">Passed on Floor</option></select>";
+        String result = filter.getFilterFormInput();
+        assertEquals(expected, result);
     }
 
 

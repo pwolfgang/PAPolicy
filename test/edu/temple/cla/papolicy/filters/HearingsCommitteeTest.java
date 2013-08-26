@@ -8,7 +8,6 @@ import edu.temple.cla.papolicy.dao.CommitteeAlias;
 import edu.temple.cla.papolicy.dao.CommitteeAliasMapper;
 import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
-import mockit.Expectations;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
 import org.junit.Test;
@@ -52,16 +51,18 @@ public class HearingsCommitteeTest {
 
     @Test
     public void testGetFilterFormInput() {
-        String expected = "Senate Hearings\n" +
-"                <br /><select name=\"F102>\"\n" +
-"                <option value=\"ALL\" selected=\"selected\">ALL COMMITTEES</option><option value=\"201\">Aging and Youth</option></select>";
+        String expected = "<label>Senate Hearings\n" +
+"                <br /><select name=\"F102\">\n" +
+"                <option value=\"ALL\" selected=\"selected\">ALL COMMITTEES</option>\n"
+                + "<option value=\"201\">Aging and Youth</option>\n"
+                + "</select></label><br/>";
         assertEquals(expected, filter.getFilterFormInput());
     }
 
     @Test
     public void testGetFilterQueryString() {
         String expected = "";
-        String result = filter.getFilterQueryString();
+        String result = filter.getFilterQuery().toString();
         assertEquals(expected, result);
     }
 

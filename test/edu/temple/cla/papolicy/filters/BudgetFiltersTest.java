@@ -8,7 +8,6 @@ import edu.temple.cla.papolicy.dao.Deflator;
 import edu.temple.cla.papolicy.dao.DeflatorMapper;
 import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
-import mockit.Expectations;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
 import org.junit.Before;
@@ -63,19 +62,26 @@ public class BudgetFiltersTest {
     public void testGetFilterFormInput() {
         System.out.println("getFilterFormInput");
         BudgetFilters instance = filter;
-        String expResult = "<input type=\"radio\" name=\"disp\" value=\"0\" checked=\"checked\" />\n" +
-"                Display Dollar Values\n" +
-"                <br />&nbsp;&nbsp;<input type=\"radio\" name=\"disp\" value=\"1\" />\n" +
-"                Display Percent of Total Spending\n" +
-"                <br />&nbsp;&nbsp;<input type=\"radio\" name=\"disp\" value=\"2\" />\n" +
-"                Display Percent Change\n" +
-"                <br />\n" +
-"                <br />&nbsp;&nbsp;<input type=\"radio\" name=\"adjust\" value=\"0\" />\n" +
-"                Un-adjusted Dollars\n" +
-"                <br/>&nbsp;&nbsp;<input type=\"radio\" name=\"adjust\" value=\"1\" checked=\"checked\" />\n" +
-"                Inflation-adjusted Dollars Base Year\n" +
-"                <select name=\"baseYear\">\n" +
-"        <option value=\"1997\">1997</option><option value=\"1998\">1998</option><option value=\"1999\">1999</option><option value=\"2000\"selected=\"selected\">2000</option><option value=\"2001\">2001</option><option value=\"2002\">2002</option></select>";
+        String expResult = "<fieldset><legend>Display</legend>&nbsp;&nbsp;"
+                + "<label><input type=\"radio\" name=\"disp\" value=\"0\" checked=\"checked\" />\n" +
+"                Dollar Values</label>\n" +
+"                <br/>&nbsp;&nbsp;<label><input type=\"radio\" name=\"disp\" value=\"1\" />\n" +
+"                Percent of Total Spending</label>\n" +
+"                <br />&nbsp;&nbsp;<label><input type=\"radio\" name=\"disp\" value=\"2\" />\n" +
+"                Display Percent Change</label>\n" +
+"                </fieldset><br />\n" +
+"                <fieldset><legend>Inflation Adjustment</legend>                "
+                + "&nbsp;&nbsp;<label><input type=\"radio\" name=\"adjust\" value=\"0\" />\n" +
+"                Un-adjusted Dollars</label>\n" +
+"                <br/>&nbsp;&nbsp;<label><input type=\"radio\" name=\"adjust\" value=\"1\" checked=\"checked\" />\n" +
+"                Inflation-adjusted</label><label for=\"baseYear\"> Dollars Base Year</label>\n" +
+"                <select id=\"baseYear\" name=\"baseYear\">\n" +
+"        <option value=\"1997\">1997</option><option value=\"1998\">1998</option>"
+                + "<option value=\"1999\">1999</option>"
+                + "<option value=\"2000\" selected=\"selected\">2000</option>"
+                + "<option value=\"2001\">2001</option>"
+                + "<option value=\"2002\">2002</option></select></fieldset>" +
+"";
         String result = instance.getFilterFormInput();
         assertEquals(expResult, result);
     }
@@ -85,7 +91,7 @@ public class BudgetFiltersTest {
         System.out.println("getFilterQueryString");
         BudgetFilters instance = filter;
         String expResult = "";
-        String result = instance.getFilterQueryString();
+        String result = instance.getFilterQuery().toString();
         assertEquals(expResult, result);
     }
 
