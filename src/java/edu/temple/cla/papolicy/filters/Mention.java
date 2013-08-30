@@ -11,7 +11,11 @@ import edu.temple.cla.papolicy.queryBuilder.Expression;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * The mention filter is similar to the binary filter.  Originally three options
+ * were available: no mention, mention, and significant mention, but the
+ * significant mention option has been eliminated. However, some data is still
+ * coded for significant mention. Therefore, the separate filter class is
+ * still needed.
  * @author Paul Wolfgang
  */
 public class Mention extends Filter {
@@ -22,6 +26,15 @@ public class Mention extends Filter {
 
     private String filterQualifier;
 
+    /**
+     * Construct a BinaryFilter object
+     * @param id The unique id
+     * @param tableId The id of the referencing table
+     * @param description The description of this filter
+     * @param columnName The column name to base the filter on.
+     * @param tableReference Not used, NULL
+     * @param additionalParam Not used, NULL
+     */
     public Mention(int id, int tableId, String description,
             String columnName, String tableReference, String additionalParam) {
         super(id, tableId, description, columnName, tableReference,
@@ -29,6 +42,11 @@ public class Mention extends Filter {
         parameterName = "F" + getId();
     }
 
+    /**
+     * Construct the filter form input as a set of three radio buttons: 
+     * No Filter, No Mention, Mention.
+     * @return HTML to generate the form input.
+     */
     @Override
     public String getFilterFormInput() {
         return 
@@ -43,11 +61,19 @@ public class Mention extends Filter {
         
     }
 
+    /**
+     * Method to capture the form input
+     * @param request HTTP request object
+     */
+    @Override
     public void setFilterParameterValues(HttpServletRequest request) {
         parameterValue = request.getParameter(parameterName);
         buildFilterStrings();
     }
 
+    /**
+     * Method to build the filter expression and the filter qualifier string.
+     */
     private void buildFilterStrings() {
         if (BOTH.equals(parameterValue)) {
             filterQuery = new EmptyExpression();
@@ -61,6 +87,10 @@ public class Mention extends Filter {
         }
     }
 
+    /**
+     * Method to return the description of this filter
+     * @return Description of this filter
+     */
     public String getFilterQualifier() {
         return filterQualifier;
     }

@@ -17,7 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 /**
- *
+ * A multivalued filter consists of a set of radio buttons
+ * labeled No Filter, Include, Exclude and a series of check boxes giving
+ * the choices to either include or exclude. The choices are given in a
+ * table specified by the tableReference attribute.
  * @author Paul Wolfgang
  */
 public class MultiValuedFilter extends Filter {
@@ -30,6 +33,15 @@ public class MultiValuedFilter extends Filter {
 
     private String filterQualifier;
     
+    /**
+     * Construct a MultiValuedFilter object
+     * @param id unique ID
+     * @param tableId Table containing the dataset
+     * @param description Description of the filter
+     * @param columnName Column containing the data to be filtered
+     * @param tableReference Table containing the filter choices
+     * @param additionalParam not used.
+     */
     public MultiValuedFilter(int id, int tableId, String description,
             String columnName, String tableReference, String additionalParam) {
         super(id, tableId, description, columnName, tableReference,
@@ -38,6 +50,11 @@ public class MultiValuedFilter extends Filter {
         valuesParameterName = "V" + getId();
     }
 
+    /**
+     * Construct the html to display the filter form. Filter consists of
+     * radio buttons: No Filter, Exclude, Include, and a set of check boxes.
+     * @return HTML to display the filter form.
+     */
     @Override
     public String getFilterFormInput() {
         ParameterizedRowMapper<DropDownItem> itemMapper = new DropDownItemMapper();
@@ -60,6 +77,10 @@ public class MultiValuedFilter extends Filter {
         return stb.toString();
     }
 
+    /**
+     * Capture the values from the filter form and build the filter.
+     * @param request HTTP request object with form input data.
+     */
     public void setFilterParameterValues(HttpServletRequest request) {
         selectParameterValue = request.getParameter(selectParameterName);
         valuesParameterValues = request.getParameterValues(valuesParameterName);
@@ -68,6 +89,9 @@ public class MultiValuedFilter extends Filter {
         }
     }
 
+    /**
+     * Build the filter query and filter qualifier string.
+     */
     private void buildFilterStrings() {
         if (BOTH.equals(selectParameterValue)) {
             filterQuery = new EmptyExpression();
@@ -118,6 +142,11 @@ public class MultiValuedFilter extends Filter {
         }
     }
 
+    /**
+     * Method to return the description of this filter
+     * @return Description of this filter
+     */
+    @Override
     public String getFilterQualifier() {
         return filterQualifier;
     }

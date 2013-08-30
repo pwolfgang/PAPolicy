@@ -102,7 +102,6 @@ public class BudgetTableTest {
 "    </div>\n" +
 "</dl>\n";
         String result = testTable.getTitleBox();
-        System.out.println(result);
         assertEquals(expected, testTable.getTitleBox());
     }
 
