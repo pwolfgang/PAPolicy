@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * A composite is an expression that contains multiple terms
- *
+ * 
  * @author Paul Wolfgang
  */
 public abstract class  Composite implements Expression {
@@ -39,7 +39,8 @@ public abstract class  Composite implements Expression {
     }
 
     /**
-     * Determine if composite is empty
+     * Determine if composite is empty.
+     * @return true if the composite is null or empty.
      */
     @Override
     public boolean isEmpty() {
@@ -47,7 +48,8 @@ public abstract class  Composite implements Expression {
     }
 
     /**
-     * Get the list of terms
+     * Get the list of terms.
+     * @return the list of terms.
      */
     public List<Expression> getTerms() {
         return terms;
@@ -55,7 +57,7 @@ public abstract class  Composite implements Expression {
     
     /**
      * Return a string representation. If there are no terms, return an empty
-     * string If there is only one term, return that term Otherwise return the
+     * string. If there is only one term, return that term. Otherwise return the
      * terms separated by operator
      * @param The operator
      * @noParen if true, then surrounding parentheses are not applied.

@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class to build SQL queries
+ * Class to build SQL queries.
+ * The query consists of a table, a list of column names, a selection
+ * criteria, groupBy column expression, and orderBy column expression.
+ * The selection criteria may contain a filter list, a topic, free text,
+ * and a year range. These are all anded together.
  * @author Paul Wolfgang
  */
 public class QueryBuilder implements Cloneable {
@@ -62,14 +66,16 @@ public class QueryBuilder implements Cloneable {
     }
     
     /**
-     * Set the database name
+     * Set the table name
+     * @param table the table name.
      */
     public void setTable(String table) {
         this.table = table;
     }
     
     /**
-     * Add a column name
+     * Add a column name to the list of columns.
+     * @param columnName to be added.
      */
     public void addColumn(String columnName) {
         if (columnNames == null) {
@@ -79,14 +85,15 @@ public class QueryBuilder implements Cloneable {
     }
     
     /**
-     * Clear the list of columns
+     * Clear the list of columns.
      */
     public void clearColumns() {
         columnNames = null;
     }
     
     /**
-     * Add a condition to the select criteria
+     * Add a condition to the select criteria.
+     * @param e The expression to be added.
      */
     public void addToSelectCriteria(Expression e) {
         if (selectCriteria == null) {
@@ -96,7 +103,8 @@ public class QueryBuilder implements Cloneable {
     }
     
     /**
-     * Add a filter
+     * Add a filter to the filters list.
+     * @param e The expression to be added.
      */
     public void addFilter(Expression e) {
         if (filters == null) {
@@ -106,14 +114,14 @@ public class QueryBuilder implements Cloneable {
     }
     
     /**
-     * Clear filters
+     * Clear the filter list.
      */
     public void clearFilters() {
         filters = null;
     }
     
     /**
-     * Set the topic
+     * Set the topic.
      * @param e The topic selection expression
      */
     public void setTopic(Expression e) {
@@ -121,48 +129,63 @@ public class QueryBuilder implements Cloneable {
     };
     
     /**
-     * Set Free Text
+     * Set Free Text.
+     * @param e The free text selection expression.
      */
     public void setFreeText(Expression e) {
         freeText = e;
     }
     
     /**
-     * Add a between criteria
+     * Add a between criteria.
+     * @param between The between criteria to be added.
      */
     public void setBetween(Between between) {
         this.between = between;
     }
     
     /**
-     * Clear between
+     * Clear between.
      */
     public void clearBetween() {
         between = null;
     }
     
     /**
-     * Set the group by column
+     * Set the group by column.
+     * @param groupBy the group by column
      */
     public void setGroupBy(String groupBy) {
         this.groupBy = groupBy;
     }
     
+    /**
+     * Clear the groupBy.
+     */
     public void clearGroupBy() {
         this.groupBy = null;
     }
     
     /**
-     * Set the order by column
+     * Set the order by column.
+     * @param orderBy the order by column
      */
     public void setOrderBy(String orderBy) {
         this.orderBy = orderBy;
     }
     
+    /**
+     * Clear the orderBy.
+     */
     public void clearOrderBy() {
         this.orderBy = null;
     }
     
+    /**
+     * Make a copy of this QueryBuilder object.
+     * Since all fields are immutable, a shallow copy is adequate.
+     * @return A copy of this object.
+     */
     @Override
     public QueryBuilder clone() {
         try {
