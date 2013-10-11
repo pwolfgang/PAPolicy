@@ -140,7 +140,9 @@ public abstract class Filter {
     
     /**
      * Return an array of Filter instances when multiple filter choices
-     * have been selected.
+     * have been selected. This feature allows for a filter to be used to
+     * select all variations which will be displayed in separate columns
+     * in the result table. 
      * By default this method returns this enclosed in an array
      */
     public Filter[] getFilterChoices() {
