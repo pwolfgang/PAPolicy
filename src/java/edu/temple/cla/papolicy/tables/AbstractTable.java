@@ -31,7 +31,8 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 /**
- *
+ * The AbstractTable provides default implementation of the Table interface.
+ * The only method not implemented is getTitleBox.
  * @author Paul Wolfgang
  */
 public abstract class AbstractTable implements Table {
@@ -57,6 +58,7 @@ public abstract class AbstractTable implements Table {
     private QueryBuilder totalFilteredQuery;
 
     /**
+     * Get the ID
      * @return the id
      */
     @Override
@@ -65,6 +67,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Set the ID
      * @param id the id to set
      */
     @Override
@@ -73,6 +76,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Return the table name
      * @return the tableName
      */
     @Override
@@ -81,6 +85,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Set the table name
      * @param tableName the tableName to set
      */
     @Override
@@ -89,6 +94,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Get the table title
      * @return the tableTitle
      */
     @Override
@@ -97,6 +103,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Set the table title
      * @param tableTitle the tableTitle to set
      */
     @Override
@@ -105,7 +112,8 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
-     * @return the majorOnly
+     * Get majorOnly
+     * @return majorOnly
      */
     @Override
     public boolean isMajorOnly() {
@@ -113,7 +121,8 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
-     * @param majorOnly the majorOnly to set
+     * Set majorOnly
+     * @param majorOnly the value majorOnly to set
      */
     @Override
     public void setMajorOnly(boolean majorOnly) {
@@ -121,6 +130,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Get the minYear
      * @return the minYear
      */
     @Override
@@ -129,6 +139,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Set the minYear
      * @param minYear the minYear to set
      */
     @Override
@@ -137,6 +148,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Get the maxYear
      * @return the maxYear
      */
     @Override
@@ -145,6 +157,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Set the maxYear
      * @param maxYear the maxYear to set
      */
     @Override
@@ -153,6 +166,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Get the filterList
      * @return the filterList
      */
     @Override
@@ -161,6 +175,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Get the filterList size
      * @return filterList.size()
      */
     @Override
@@ -169,6 +184,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Set the filterList
      * @param filterList the filterList to set
      */
     @Override
@@ -178,6 +194,7 @@ public abstract class AbstractTable implements Table {
 
 
     /**
+     * Set the jdbcTemplate
      * @param jdbcTemplate the jdbcTemplate to set
      */
     @Override
@@ -186,6 +203,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Get the qualifier
      * @return the qualifier
      */
     @Override
@@ -194,6 +212,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Set the qualifier
      * @param qualifier the qualifier to set
      */
     @Override
@@ -202,6 +221,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Get the textColumn
      * @return the textColumn
      */
     @Override
@@ -210,6 +230,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Set the textColumn
      * @param textColumn the textColumn to set
      */
     @Override
@@ -217,6 +238,10 @@ public abstract class AbstractTable implements Table {
         this.textColumn = textColumn;
     }
 
+    /**
+     * Return a String representation of the table
+     * @return The tableTitle followed by the filterQualifierString
+     */
     @Override
     public String toString() {
         StringBuilder stb = new StringBuilder(tableTitle);
@@ -224,11 +249,19 @@ public abstract class AbstractTable implements Table {
         return stb.toString();
     }
 
+    /**
+     * Get the title to be used in the download
+     * @return same as toString
+     */
     @Override
     public String getDownloadTitle() {
         return toString();
     }
 
+    /**
+     * The filterQualifierString is the list of all filters that were applied.
+     * @return filterQualifierString
+     */
     @Override
     public StringBuilder getFilterQualifierString() {
         StringBuilder stb = new StringBuilder();
@@ -249,6 +282,10 @@ public abstract class AbstractTable implements Table {
         return stb;
     }
 
+    /**
+     * Construct the query expression that applies the filters
+     * @return conjunction of the selected filters
+     */
     @Override
     public Conjunction getFilterQuery() {
         if (filterQuery == null) {
@@ -260,14 +297,27 @@ public abstract class AbstractTable implements Table {
         return filterQuery;
     }
     
+    /**
+     * Indicate if this table can be searched by topic.
+     * @return true is the default
+     */
     @Override
     public boolean isTopicSearchable() {return true;}
 
+    /**
+     * Capture additional parameters for this table. By default this method
+     * does nothing
+     * @param request The HTTP request object. 
+     */
     @Override
     public void setAdditionalParameters(HttpServletRequest request) {
         // do nothing in base class
     }
 
+    /**
+     * Construct a query for this table that does not apply any filters.
+     * @return unfilteredQuery 
+     */
     @Override
     public QueryBuilder getUnfilteredTotalQuery() {
         if (totalUnfilteredQuery == null) {
@@ -279,6 +329,10 @@ public abstract class AbstractTable implements Table {
         return totalUnfilteredQuery;
     }
 
+    /**
+     * Construct a query for this table that does applies the filters.
+     * @return filteredQuery
+     */
     @Override
     public QueryBuilder getFilteredTotalQuery() {
         if (totalFilteredQuery == null) {
@@ -288,6 +342,11 @@ public abstract class AbstractTable implements Table {
         return totalFilteredQuery;
     }
     
+    /**
+     * Construct a query for this table that selects by topic code.
+     * @param topic The topic code to be selected
+     * @return typicQuery
+     */
     @Override
     public QueryBuilder getTopicQuery(Topic topic) {
         QueryBuilder topicQuery = getFilteredTotalQuery().clone();
@@ -301,9 +360,18 @@ public abstract class AbstractTable implements Table {
         return topicQuery;
     }
     
+    /**
+     * Get the column that contains the year
+     * @return year column
+     */
     @Override
     public String getYearColumn() {return yearColumn;}
 
+    /**
+     * Get the units used to display the results.
+     * @param showResults the showResults parameter from the analysis form
+     * @return The units used to display the results.
+     */
     @Override
     public Units getUnits(String showResults) {
         switch (showResults) {
@@ -315,6 +383,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Set the yearColumn
      * @param yearColumn the yearColumn to set
      */
     @Override
@@ -334,6 +403,11 @@ public abstract class AbstractTable implements Table {
         return this;
     }
 
+    /**
+     * Compute the sum of values within a range of years.
+     * @param valueMap The map of values by year
+     * @return The sum of values within the range
+     */
     @Override
     public Number getValueForRange(SortedMap<Integer, Number> valueMap) {
         Number sum = null;
@@ -343,6 +417,12 @@ public abstract class AbstractTable implements Table {
         return sum;
     }
 
+    /**
+     * Compute the percent (selected vs total)  of values within a range of years.
+     * @param valueMap The map of values by year
+     * @param totalMap The map of totals by year
+     * @return The percent within the range
+     */
     @Override
     public Number getPercentForRange(SortedMap<Integer, Number> valueMap,
             SortedMap<Integer, Number> totalMap) {
@@ -354,6 +434,12 @@ public abstract class AbstractTable implements Table {
         return null;
     }
 
+    /**
+     * Utility method to add two Numbers. Null values are treated as zero.
+     * @param n1 First number.
+     * @param n2 Second number.
+     * @return n1 + n2 or null if both are null.
+     */
     static protected Number add(Number n1, Number n2) {
         if (n1 == null && n2 == null) return null;
         if (n1 == null) return n2;
@@ -364,11 +450,22 @@ public abstract class AbstractTable implements Table {
         return new Double(n1.doubleValue() + n2.doubleValue());
     }
 
+    /**
+     * Get the axis title. Delegated to the units object.
+     * @param units Display units
+     * @return The axis title.
+     */
     @Override
     public String getAxisTitle(Units units) {
         return Units.getTitle(units);
     }
 
+    /**
+     * Apply the query and get the values for each year.
+     * @param jdbcTemplate the jdbcTemplate to access the database
+     * @param query the query to be applied
+     * @return A list of YearValue objects from the query
+     */
     @Override
     public List<YearValue> getYearValueList(SimpleJdbcTemplate jdbcTemplate, String query) {
         ParameterizedRowMapper<YearValue> mapper = new YearValueMapper();
@@ -377,6 +474,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Get the drillDown columns
      * @return the drill-down columns
      */
     @Override
@@ -385,6 +483,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Set the drillDown columns
      * @param drillDownColumns the array of columns to display in the
      * drill-down page
      */
@@ -398,6 +497,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Get the linkColumn.
      * @return the linkColumn
      */
     @Override
@@ -406,6 +506,7 @@ public abstract class AbstractTable implements Table {
     }
 
     /**
+     * Set the linkColumn.
      * @param linkColumn the linkColumn to set
      */
     @Override
@@ -413,11 +514,19 @@ public abstract class AbstractTable implements Table {
         this.linkColumn = linkColumn;
     }
 
+    /**
+     * Set the noteColumn.
+     * @param noteColumn the noteColumn value to be set.
+     */
     @Override
     public void setNoteColumn(String noteColumn) {
         this.noteColumn = noteColumn;
     }
 
+    /**
+     * Get the noteColumn
+     * @return the noteColumn
+     */
     @Override
     public String getNoteColumn() {return noteColumn != null ? noteColumn : "";}
 
@@ -477,13 +586,24 @@ public abstract class AbstractTable implements Table {
 
     /**
      * Method to set the Code column name
+     * @param codeColumn the codeColumn to be set
      */
      @Override
      public void setCodeColumn(String codeColumn) {
          this.codeColumn = codeColumn;
      }
 
-    public static Table[] getTable(String tableId, char qualifier,
+     /**
+      * Load the selected table object and associated filters.
+      * @param tableId The table id
+      * @param qualifier The qualifier to select subtable
+      * @param request HTTP request from the form
+      * @param jdbcTemplate jdbcTemplate to access the database
+      * @return The selected filter object encapsulated in an array.
+      * @throws DataAccessException If there is a problem querying the database
+      * @throws Error If the table does not exist in the database
+      */
+     public static Table[] getTable(String tableId, char qualifier,
             HttpServletRequest request, SimpleJdbcTemplate jdbcTemplate)
             throws DataAccessException, Error {
         ParameterizedRowMapper<Table> tableMapper = new TableMapper();
@@ -519,7 +639,14 @@ public abstract class AbstractTable implements Table {
         return tableList.toArray(new Table[tableList.size()]);
     }
     
-    private static boolean expandChoices(List<Table> tableList) {
+     /**
+      * Method to expand the list of tables to account for multiple filter
+      * value choices. (This method was added to allow for comparison of
+      * filter choices, but is no longer used.)
+      * @param tableList The list of selected tables
+      * @return true if there are no more expansions to be performed.
+      */
+     private static boolean expandChoices(List<Table> tableList) {
         for (int i = 0; i < tableList.size(); i++) {
             Table table = tableList.get(i);
             List<Filter> filterList = table.getFilterList();
@@ -543,6 +670,10 @@ public abstract class AbstractTable implements Table {
         return false;               
     }
     
+    /**
+     * Make a deep copy of this table object
+     * @return a copy of this table object
+     */
     @Override
     public AbstractTable clone() {
         try {
@@ -559,6 +690,13 @@ public abstract class AbstractTable implements Table {
         }
     }
 
+    /**
+     * Construct the URL to perform the download
+     * @param downloadTitle The title
+     * @param downloadQueryString The query
+     * @param yearRange The range of years
+     * @return URL to perform the download
+     */
     @Override
     public String getDownloadURL(String downloadTitle, String downloadQueryString, YearRange yearRange ) {
         StringBuilder stb = new StringBuilder("<a href=\"");
@@ -580,6 +718,13 @@ public abstract class AbstractTable implements Table {
         return stb.toString();
     }
 
+    /**
+     * Construct the displayed value string.
+     * @param key Not used 
+     * @param retValue The value returned from the query
+     * @param units Unit to display
+     * @return Formatted value based on units.
+     */
     @Override
     public String getDisplayedValue(String key, Number retValue, Units units) {
         String result;

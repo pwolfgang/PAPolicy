@@ -109,7 +109,8 @@ public class PublicOpinionTable extends StandardTable {
     /**
      * Method to return the value to be displayed in the results table.
      * This is a special case for the PublicOpinion table to append an
-     * asterisk after the value for the years 2008 and 2009
+     * asterisk after the value for the years 2008 and 2009 and to add
+     * a title attribute.
      * @param key The string that contains the year(s)
      * @param retValue The value for the year as a Number
      * @param units The units
