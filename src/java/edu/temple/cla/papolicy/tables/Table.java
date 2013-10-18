@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.temple.cla.papolicy.tables;
 
 import edu.temple.cla.papolicy.Units;
@@ -21,6 +17,9 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
  * For each of the datasets methods are required to generate the html used
  * to display the datasets selection, collect the selection information
  * from the form submittal, and generate the database query.
+ * Table objects are created and initialized from the Tables table in the
+ * database. All table objects are loaded to create the analysis form. Selected
+ * table objects are loaded when the request is processed.
  * @author Paul Wolfgang
  */
 public interface Table extends Cloneable {
@@ -118,6 +117,7 @@ public interface Table extends Cloneable {
 
     /**
      * Method to generate the HTML code for the title box.
+     * @return HTML code for the title box
      */
     String getTitleBox();
 
@@ -128,45 +128,90 @@ public interface Table extends Cloneable {
     void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate);
 
     /**
-     * 
+     * The qualifier is used to distinguish subtables.
      * @return the qualifier
      */
     char getQualifier();
 
     /**
+     * Set the qualifier. This is set from the HTML form when the
+     * table object is created.
      * @param qualifier the qualifier to set
      */
     void setQualifier(char qualifier);
 
     /**
+     * Return the text column.
      * @return the textColumn
      */
     String getTextColumn();
 
     /**
+     * The textColumn is set when the table object is loaded or created
+     * by the constructor.
      * @param textColumn the textColumn to set
      */
     void setTextColumn(String textColumn);
 
+    /**
+     * The filter qualifier string is appended to the table title to
+     * identify which filters have been applied.
+     * @return the filterQualifierString
+     */
     StringBuilder getFilterQualifierString();
 
+    /**
+     * The filterQuery is the condition expression that selects the filtered items.
+     * @return filterQuery
+     */
     Conjunction getFilterQuery();
     
+    /**
+     * Indicate if this table represents topic searchable data.
+     * @return true if this table is topic searchable.
+     */
     boolean isTopicSearchable();
 
+    /**
+     * Method to capture additional parameters from the HTTP request.
+     * @param request HTTP request.
+     */
     void setAdditionalParameters(HttpServletRequest request);
 
+    /**
+     * The filtered total query selects all filtered items from the table in a given date range.
+     * @return filteredTotalQuery
+     */
     QueryBuilder getFilteredTotalQuery();
     
+    /**
+     * The unfiltered total query selects all items from the table in a given date range.
+     * @return 
+     */
     QueryBuilder getUnfilteredTotalQuery();
 
+    /**
+     * The topic query selects from the filtered items those which match the topic
+     * @param topic The topic code to be searched
+     * @return topicQuery
+     */
     QueryBuilder getTopicQuery(Topic topic);
     
+    /**
+     * Get the yearColumn
+     * @return yearColumn
+     */
     String getYearColumn();
 
+    /**
+     * Get the units.
+     * @param showResults The showResults parameter from the form
+     * @return units based on the showResults parameter
+     */
     Units getUnits(String showResults);
 
     /**
+     * The yearColumn is set when the table is loaded.
      * @param yearColumn the yearColumn to set
      */
     void setYearColumn(String yearColumn);
@@ -180,32 +225,57 @@ public interface Table extends Cloneable {
      */
     Table getSubTable(char qualifier);
 
+    /**
+     * Compute the value for a range of years. Generally the sum.
+     * @param valueMap Map of years to counts (for most tables)
+     * @return the value for the range
+     */
     Number getValueForRange(SortedMap<Integer, Number> valueMap);
 
+    /**
+     * Compute the percent value for a range of years.
+     * @param valueMap Map of years to counts
+     * @param totalMap Map of years to total
+     * @return percent for the range.
+     */
     Number getPercentForRange(SortedMap<Integer, Number> valueMap,
             SortedMap<Integer, Number> totalMap);
 
+    /**
+     * Generate the axis title
+     * @param units of the axis
+     * @return axis title
+     */
     String getAxisTitle(Units units);
 
-    List<YearValue> getYearValueList(SimpleJdbcTemplate jdbcTemplate, String query);
+    /**
+     * Perform a query of the database and return the result as a list
+     * @param query query to be executed
+     * @return Result of query as a list of Year-Values.
+     */
+    List<YearValue> getYearValueList(String query);
 
     /**
+     * Return the drill-down columns
      * @return the drill-down columns
      */
     String[] getDrillDownColumns();
 
     /**
+     * Set the drill-down columns. Set when the table is loaded.
      * @param drillDownColumns the array of columns to display in the drill-down
      * page
      */
     void setDrillDownColumns(String[] drillDownColumns);
 
     /**
+     * Get the linkColumn.
      * @return the linkColumn
      */
     String getLinkColumn();
 
     /**
+     * Set the linkColumn. Set when the table is loaded.
      * @param linkColumn the linkColumn to set
      */
     void setLinkColumn(String linkColumn);
@@ -235,20 +305,51 @@ public interface Table extends Cloneable {
     String getCodeColumn();
 
     /**
-     * Method to set the Code column name
+     * Method to set the Code column name. Called when table is loaded.
+     * @param codeColumn value to be set
      */
     void setCodeColumn(String codeColumn);
 
+    /**
+     * Method to set the note column. Called when table is loaded.
+     * @param noteColumn 
+     */
     void setNoteColumn(String noteColumn);
 
+    /**
+     * Get the note column
+     * @return noteColumn
+     */
     String getNoteColumn();
 
+    /**
+     * Make a deep copy of this Table object
+     * @return copy of this Table object
+     */
     public Table clone();
 
+    /**
+     * Return the title for the download file
+     * @return title for the download file
+     */
     String getDownloadTitle();
 
+    /**
+     * Generate and return the URL to perform the download
+     * @param downloadTitle title to appear in the URL
+     * @param downloadQueryString query to perform the download less year range
+     * @param yearRange Range of years to download.
+     * @return 
+     */
     String getDownloadURL(String downloadTitle, String downloadQueryString,
             YearRange yearRange);
 
+    /**
+     * Format the value for display in the analysis table
+     * @param key Key (year) 
+     * @param value Value to be displayed
+     * @param units Units
+     * @return A string to be included in the analysis table.
+     */
     String getDisplayedValue(String key, Number value, Units units);
 }

@@ -43,6 +43,7 @@ public class GeneralFundBalanceColumnTest {
 //    
     @Before
     public void setUp() throws Exception {
+        jdbcTemplate = TestDatabase.getSimpleJdbcTemplate();
         testTable = new GeneralFundBalance();
         testTable.setId(11);
         testTable.setTableName("BudgetTable");
@@ -56,6 +57,7 @@ public class GeneralFundBalanceColumnTest {
         testTable.setCodeColumn("Code");
         testTable.setNoteColumn(null);
         testTable.setYearColumn("TheYear");
+        testTable.setJdbcTemplate(jdbcTemplate);
         BudgetFilters filter = createBudgetFiltersInstance("2", "0", "2000");
         testTable.setFilterList(Arrays.asList(new Filter[]{filter}));
         String freeText = null;
@@ -67,7 +69,6 @@ public class GeneralFundBalanceColumnTest {
         QueryBuilder downloadQuery = testColumn.getTable().createDownloadQuery(countQuery);
         testColumn.setDownloadQueryString(Utility.compressAndEncode(downloadQuery.build()));
         TestDatabase.beforeTest();
-        jdbcTemplate = TestDatabase.getSimpleJdbcTemplate();
     }
 
     @Test
@@ -85,7 +86,7 @@ public class GeneralFundBalanceColumnTest {
 
     @Test
     public void testGetPercentChange() {
-      testColumn.setValueMap(jdbcTemplate, yearRange.getMinYear() - 2, yearRange.getMaxYear());
+      testColumn.setValueMap(yearRange.getMinYear() - 2, yearRange.getMaxYear());
       testColumn.setInitialPrevValue(yearRange.getMinYearPredicessor(), yearRange.getMinYear());
       Number expected1979 = null;
       Number expected1980 = new Double(126.7);
@@ -100,14 +101,14 @@ public class GeneralFundBalanceColumnTest {
     
     @Test
     public void testGetMinValue() {
-      testColumn.setValueMap(jdbcTemplate, yearRange.getMinYear() - 2, yearRange.getMaxYear());
+      testColumn.setValueMap(yearRange.getMinYear() - 2, yearRange.getMaxYear());
       Number expected = new Integer(-2030);
       assertEquals(expected, testColumn.getMinValue());
     }
 
     @Test
     public void testGetMaxValue() {
-      testColumn.setValueMap(jdbcTemplate, yearRange.getMinYear() - 2, yearRange.getMaxYear());
+      testColumn.setValueMap(yearRange.getMinYear() - 2, yearRange.getMaxYear());
       Number expected = new Integer(611);
       assertEquals(expected, testColumn.getMaxValue());
     }

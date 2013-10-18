@@ -73,6 +73,7 @@ public class PublicOpinionTableTest {
             jdbcTemplate.query(anyString, new YearValueMapper());
             result = Arrays.asList(yearValues);            
         }};
+        testTable.setJdbcTemplate(jdbcTemplate);
     }
 
     @Test
@@ -134,7 +135,7 @@ public class PublicOpinionTableTest {
     public void testGetYearValueList() {
         List<YearValue> expected = Arrays.asList(yearValuesExpected);
         setParameterValue("1");
-        List<YearValue> result = testTable.getYearValueList(jdbcTemplate, "query");
+        List<YearValue> result = testTable.getYearValueList("query");
         assertEquals(expected, result);
     }
 

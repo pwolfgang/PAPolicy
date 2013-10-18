@@ -115,16 +115,16 @@ public class DisplayFormController extends AbstractController {
                     columnsList = new ArrayList<Column>();
                 }
                 if (column.getUnits() == Units.PERCENT_CHANGE) {
-                    column.setValueMap(jdbcTemplate, yearRange.getMinYear() - 2, yearRange.getMaxYear());
+                    column.setValueMap(yearRange.getMinYear() - 2, yearRange.getMaxYear());
                     column.setInitialPrevValue(yearRange.getMinYearPredicessor(), yearRange.getMinYear());
                 } else {
-                    column.setValueMap(jdbcTemplate, yearRange.getMinYear(), yearRange.getMaxYear());
+                    column.setValueMap(yearRange.getMinYear(), yearRange.getMaxYear());
                 }
                 if (column.getUnits() == Units.PERCENT 
                         || column.getUnits() == Units.PERCENT_OF_FILTERED 
                         || column.getUnits() == Units.PERCENT_OF_TOTAL) {
-                    column.setFilteredTotalMap(jdbcTemplate, yearRange.getMinYear(), yearRange.getMaxYear());
-                    column.setUnfilteredTotalMap(jdbcTemplate, yearRange.getMinYear(), yearRange.getMaxYear());
+                    column.setFilteredTotalMap(yearRange.getMinYear(), yearRange.getMaxYear());
+                    column.setUnfilteredTotalMap(yearRange.getMinYear(), yearRange.getMaxYear());
                 }
                 QueryBuilder countQuery =
                         column.getTopicCountQuery(yearRange.getMinYear(), yearRange.getMaxYear());

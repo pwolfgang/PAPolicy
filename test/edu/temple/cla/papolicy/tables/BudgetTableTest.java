@@ -83,6 +83,7 @@ public class BudgetTableTest {
             jdbcTemplate.query(anyString, new DeflatorMapper());
             result = Arrays.asList(deflatorValues);
         }};
+        testTable.setJdbcTemplate(jdbcTemplate);
     }
 
     @Test
@@ -264,7 +265,7 @@ public class BudgetTableTest {
         BudgetFilters filter = createBudgetFiltersInstance("0", "1", "1981");
         testTable.setFilterList(Arrays.asList(new Filter[]{filter}));
         List<YearValue> expected = Arrays.asList(expectedValues);
-        List<YearValue> actual = testTable.getYearValueList(jdbcTemplate, "dummy query");
+        List<YearValue> actual = testTable.getYearValueList("dummy query");
         assertEquals("Sizes should be the same", expected.size(), actual.size());
         for (int i = 0; i < expected.size(); i++) {
             assertEquals("Years should be the same for item " + i, expected.get(i).getYear(), actual.get(i).getYear());

@@ -88,7 +88,7 @@ public class PublicOpinionTable extends StandardTable {
     }
 
     @Override
-    public List<YearValue> getYearValueList(SimpleJdbcTemplate jdbcTemplate, String query) {
+    public List<YearValue> getYearValueList(String query) {
         ParameterizedRowMapper<YearValue> mapper = new YearValueMapper();
         List<YearValue> list = jdbcTemplate.query(query, mapper);
         if (getUnits(null) == Units.RANK) {

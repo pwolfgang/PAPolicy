@@ -22,7 +22,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 /**
  * The Column class encapsulates the data to be displayed in each column
@@ -345,13 +344,12 @@ public class Column {
 
     /**
      * Load the data from the filtered topic selection query into a SortedMap indexed by year.
-     * @param jdbcTemplate The jdbcTemplate that maps the query to YearValue
      * @param minYear The start year
      * @param maxYear The end year
      */
-    public void setValueMap(SimpleJdbcTemplate jdbcTemplate, int minYear, int maxYear) {
+    public void setValueMap(int minYear, int maxYear) {
         String query = getTopicCountQueryString(minYear, maxYear);
-        List<YearValue> list = table.getYearValueList(jdbcTemplate, query);
+        List<YearValue> list = table.getYearValueList(query);
         valueMap = new TreeMap<>();
         for (YearValue yv : list) {
             Number value = yv.getValue();
@@ -377,13 +375,12 @@ public class Column {
 
     /**
      * Load the data from the un-filtered total selection query into a SortedMap indexed by year.
-     * @param jdbcTemplate The jdbcTemplate that maps the query to YearValue
      * @param minYear The start year
      * @param maxYear The end year
      */
-    public void setUnfilteredTotalMap(SimpleJdbcTemplate jdbcTemplate, int minYear, int maxYear) {
+    public void setUnfilteredTotalMap(int minYear, int maxYear) {
         String query = getUnfilteredTotalQueryString(minYear, maxYear);
-        List<YearValue> list = table.getYearValueList(jdbcTemplate, query);
+        List<YearValue> list = table.getYearValueList(query);
         unfilteredTotalMap = new TreeMap<Integer, Number>();
         for (YearValue yv : list) {
             unfilteredTotalMap.put(new Integer(yv.getYear()), yv.getValue());
@@ -392,13 +389,12 @@ public class Column {
 
     /**
      * Load the data from the filtered total selection query into a SortedMap indexed by year.
-     * @param jdbcTemplate The jdbcTemplate that maps the query to YearValue
      * @param minYear The start year
      * @param maxYear The end year
      */
-    public void setFilteredTotalMap(SimpleJdbcTemplate jdbcTemplate, int minYear, int maxYear) {
+    public void setFilteredTotalMap(int minYear, int maxYear) {
         String query = getFilteredTotalQueryString(minYear, maxYear);
-        List<YearValue> list = table.getYearValueList(jdbcTemplate, query);
+        List<YearValue> list = table.getYearValueList(query);
         filteredTotalMap = new TreeMap<Integer, Number>();
         for (YearValue yv : list) {
             filteredTotalMap.put(new Integer(yv.getYear()), yv.getValue());

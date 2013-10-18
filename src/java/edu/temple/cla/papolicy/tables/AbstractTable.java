@@ -52,7 +52,7 @@ public abstract class AbstractTable implements Table {
     private char qualifier;
     private String noteColumn;
     private List<Filter> filterList;
-    private SimpleJdbcTemplate jdbcTemplate;
+    protected SimpleJdbcTemplate jdbcTemplate;
     private Conjunction filterQuery;
     private QueryBuilder totalUnfilteredQuery;
     private QueryBuilder totalFilteredQuery;
@@ -462,12 +462,11 @@ public abstract class AbstractTable implements Table {
 
     /**
      * Apply the query and get the values for each year.
-     * @param jdbcTemplate the jdbcTemplate to access the database
      * @param query the query to be applied
      * @return A list of YearValue objects from the query
      */
     @Override
-    public List<YearValue> getYearValueList(SimpleJdbcTemplate jdbcTemplate, String query) {
+    public List<YearValue> getYearValueList(String query) {
         ParameterizedRowMapper<YearValue> mapper = new YearValueMapper();
         List<YearValue> list = jdbcTemplate.query(query, mapper);
         return list;

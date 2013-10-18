@@ -57,6 +57,8 @@ public class LegServiceAgencyColumnTest {
     
     @Before
     public void setUp() throws Exception {
+        TestDatabase.beforeTest();
+        jdbcTemplate = TestDatabase.getSimpleJdbcTemplate();
         drillDownColumns = new String[]{"Title", "Orginization", "Year", "Month", "Day", "Abstract", "FinalCode"};
         testTable = new StandardTable();
         testTable.setId(6);
@@ -71,6 +73,7 @@ public class LegServiceAgencyColumnTest {
         testTable.setCodeColumn("FinalCode");
         testTable.setNoteColumn(null);
         testTable.setYearColumn("Year");
+        testTable.setJdbcTemplate(jdbcTemplate);
         new NonStrictExpectations() {{
             request.getParameter("F501");
             result = "587";
@@ -96,8 +99,6 @@ public class LegServiceAgencyColumnTest {
                 testColumn.getTopicCountQuery(yearRange.getMinYear(), yearRange.getMaxYear());
         QueryBuilder downloadQuery = testColumn.getTable().createDownloadQuery(countQuery);
         testColumn.setDownloadQueryString(Utility.compressAndEncode(downloadQuery.build()));
-        TestDatabase.beforeTest();
-        jdbcTemplate = TestDatabase.getSimpleJdbcTemplate();
     }
 
     @Test
@@ -182,23 +183,23 @@ public class LegServiceAgencyColumnTest {
 
     @Test
     public void testGetValue() {
-        testColumn.setValueMap(jdbcTemplate, 1979, 1983);
+        testColumn.setValueMap(1979, 1983);
         Integer expected = 1;
         assertEquals(expected, testColumn.getValue(1981, 1981));
     }
 
     @Test
     public void testGetPercentOfTotal() {
-        testColumn.setValueMap(jdbcTemplate, 1979, 1983);
-        testColumn.setUnfilteredTotalMap(jdbcTemplate, 1979, 1983);
+        testColumn.setValueMap(1979, 1983);
+        testColumn.setUnfilteredTotalMap(1979, 1983);
         double expected = 25;
         assertEquals(expected, testColumn.getPercentOfTotal(1979, 1979).doubleValue(), 0.05);
     }
 
     @Test
     public void testGetPercent() {
-        testColumn.setValueMap(jdbcTemplate, 1979, 1983);
-        testColumn.setFilteredTotalMap(jdbcTemplate, 1979, 1983);
+        testColumn.setValueMap(1979, 1983);
+        testColumn.setFilteredTotalMap(1979, 1983);
         double expected = 100.0;
         assertEquals(expected, testColumn.getPercent(1979, 1979).doubleValue(), 0.05);
         

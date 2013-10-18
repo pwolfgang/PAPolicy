@@ -91,6 +91,7 @@ public class AbstractTableTest {
             jdbcTemplate.query(anyString, new FilterMapper());
             result = Arrays.asList(filterList);
         }};
+        testTable.setJdbcTemplate(jdbcTemplate);
         testTable.setFilterList(Arrays.asList(filterList)); 
         for (Filter filter:filterList) {
             filter.setFilterParameterValues(request);
@@ -246,7 +247,7 @@ public class AbstractTableTest {
     @Test
     public void testGetYearValueList() {
         List<YearValue> expected = Arrays.asList(yearValues);
-        List<YearValue> result = testTable.getYearValueList(jdbcTemplate, "query");
+        List<YearValue> result = testTable.getYearValueList("query");
         assertEquals(expected, result);
     }
 
