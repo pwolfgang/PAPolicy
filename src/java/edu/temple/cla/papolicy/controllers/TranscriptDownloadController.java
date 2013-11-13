@@ -1,31 +1,39 @@
 package edu.temple.cla.papolicy.controllers;
 
-import java.io.IOException;
-import org.apache.log4j.Logger;
-import edu.temple.cis.wolfgang.mycreatexlsx.MyWorksheet;
+import static edu.temple.cla.papolicy.controllers.DownloadAndDrilldownUtil.getCommitteeNames;
+import static edu.temple.cla.papolicy.controllers.DownloadAndDrilldownUtil.getBillIdList;
 import edu.temple.cis.wolfgang.mycreatexlsx.MyWorkbook;
+import edu.temple.cis.wolfgang.mycreatexlsx.MyWorksheet;
 import edu.temple.cla.papolicy.Utility;
 import static edu.temple.cla.papolicy.controllers.DownloadAndDrilldownUtil.addColumn;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import org.apache.log4j.Logger;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 /**
- * Class to generate the excel workbook of the selected data.
+ * Class to generate the excel spreadsheet of the Transcript (House Hearing)
+ * data. This controller duplicates what the standard download controller does
+ * and then adds columns to identify the committee(s) and bill(s).
  *
  * @author Paul Wolfgang
  */
-public class Download extends AbstractController {
+public class TranscriptDownloadController extends AbstractController {
 
-    private static Logger logger = Logger.getLogger(Download.class);
+    private static final Logger logger = Logger.getLogger(TranscriptDownloadController.class);
     private DataSource dataSource;
+    private SimpleJdbcTemplate jdbcTemplate;
 
     /**
      * Create the ModelAndView
@@ -54,24 +62,35 @@ public class Download extends AbstractController {
             rs = stmt.executeQuery(query);
             rsmd = rs.getMetaData();
             int numColumns = rsmd.getColumnCount();
-            String[] columnNames = new String[numColumns];
-            int[] columnTypes = new int[numColumns];
+            String[] columnNames = new String[numColumns + 2];
+            int[] columnTypes = new int[numColumns + 2];
             for (int i = 0; i < numColumns; i++) {
                 columnNames[i] = rsmd.getColumnName(i + 1);
                 columnTypes[i] = rsmd.getColumnType(i + 1);
             }
+            columnNames[numColumns] = "Committees";
+            columnTypes[numColumns] = Types.VARCHAR;
+            columnNames[numColumns + 1] = "Bills";
+            columnTypes[numColumns + 1] = Types.VARCHAR;
             wb = new MyWorkbook(response.getOutputStream());
             sheet = wb.getWorksheet();
             sheet.startRow();
-            for (int i = 0; i < numColumns; i++) {
+            for (int i = 0; i < numColumns + 2; i++) {
                 sheet.addCell(columnNames[i]);
             }
             sheet.endRow();
             while (rs.next()) {
+                String transcriptId = rs.getString("ID");
                 sheet.startRow();
                 for (int i = 0; i < numColumns; i++) {
                     addColumn(columnTypes[i], i, sheet, rs);
                 }
+                List<String> committeeNamesList = getCommitteeNames(jdbcTemplate, transcriptId);
+                String committeeNames = formatNames(committeeNamesList);
+                sheet.addCell(committeeNames);
+                List<String> billIdList = getBillIdList(jdbcTemplate, transcriptId);
+                String billIds = formatNames(billIdList);
+                sheet.addCell(billIds);
                 sheet.endRow();
             }
             sheet.close();
@@ -117,7 +136,22 @@ public class Download extends AbstractController {
         this.dataSource = dataSource;
     }
 
-    public DataSource getDataSource() {
-        return dataSource;
+    public void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    private String formatNames(List<String> names) {
+        if (names.isEmpty()) {
+            return "";
+        }
+        if (names.size() == 1) {
+            return names.get(0);
+        }
+        StringBuilder stb = new StringBuilder(names.get(0));
+        for (int i = 1; i < names.size(); i++) {
+            stb.append("\n");
+            stb.append(names.get(i));
+        }
+        return stb.toString();
     }
 }

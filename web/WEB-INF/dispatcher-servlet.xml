@@ -25,6 +25,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="transcriptdrilldown.spg">transcriptDrillDownController</prop>
                 <prop key="billDrillDown.spg">individualBillDrilldownController</prop>
                 <prop key="*Total%20Spending*">budgetDownloadController</prop>
+                <prop key="*House+Hearings*">transcriptDownloadController</prop>
                 <prop key="*.xlsx">downloadController</prop>
             </props>
         </property>
@@ -87,6 +88,12 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
     <bean name="budgetDownloadController"
         class="edu.temple.cla.papolicy.controllers.BudgetDownload">
             <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean name="transcriptDownloadController"
+        class="edu.temple.cla.papolicy.controllers.TranscriptDownloadController">
+            <property name="dataSource" ref="dataSource"/>
+            <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
 
 </beans>
