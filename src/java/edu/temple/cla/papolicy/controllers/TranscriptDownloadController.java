@@ -89,6 +89,7 @@ public class TranscriptDownloadController extends AbstractController {
                 String committeeNames = formatNames(committeeNamesList);
                 sheet.addCell(committeeNames);
                 List<String> billIdList = getBillIdList(jdbcTemplate, transcriptId);
+                formatBillIds(billIdList);
                 String billIds = formatNames(billIdList);
                 sheet.addCell(billIds);
                 sheet.endRow();
@@ -154,4 +155,24 @@ public class TranscriptDownloadController extends AbstractController {
         }
         return stb.toString();
     }
+    
+    private void formatBillIds(List<String> billIds) {
+        for (int i = 0; i < billIds.size(); i++) {
+            billIds.set(i, formatBillId(billIds.get(i)));
+        }
+    }
+    
+    private String formatBillId(String billId) {
+        String sessionYear = billId.substring(0, 4);
+        String specialSession = billId.substring(4, 5);
+        String type = billId.substring(5,7);
+        int number = Integer.parseInt(billId.substring(7));
+        if (!"0".equals(specialSession)) {
+            return String.format("%s-%s %s %d",
+                    sessionYear, specialSession, type, number);
+        } else {
+            return String.format("%s %s %d", sessionYear, type, number);
+        }
+    }
+        
 }
