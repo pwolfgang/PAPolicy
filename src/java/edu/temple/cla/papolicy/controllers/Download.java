@@ -111,13 +111,12 @@ public class Download extends AbstractController {
     }
 
     /**
-     * @param datasource the datasource to set
+     * Method to set the DataSource. This method is called by the Spring
+     * framework.
+     * @param dataSource the datasource to set
      */
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    public DataSource getDataSource() {
-        return dataSource;
-    }
 }

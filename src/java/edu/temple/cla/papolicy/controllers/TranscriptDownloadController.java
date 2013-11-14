@@ -131,16 +131,31 @@ public class TranscriptDownloadController extends AbstractController {
     }
 
     /**
-     * @param datasource the datasource to set
+     * Method to set the data source. This is called by the Spring framework.
+     *
+     * @param dataSource the datasource to set
      */
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
+    /**
+     * Method to set the jdbcTemplate. This is called by the Spring framework.
+     *
+     * @param jdbcTemplate the jdbcTemplate to set
+     */
     public void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * Method to format the list of names into a single string. An empty list
+     * is converted to the empty string. A list with one name is converted
+     * to its first entry, and a list with more than one name is converted
+     * to a comma separated list
+     * @param names The List<String> to be formated
+     * @return The formatted string.
+     */
     private String formatNames(List<String> names) {
         if (names.isEmpty()) {
             return "";
@@ -155,17 +170,30 @@ public class TranscriptDownloadController extends AbstractController {
         }
         return stb.toString();
     }
-    
+
+    /**
+     * Method to format the list of BillIDs Each billId is converted in place
+     * @param billIds The List<String> to be converted
+     */
     private void formatBillIds(List<String> billIds) {
         for (int i = 0; i < billIds.size(); i++) {
             billIds.set(i, formatBillId(billIds.get(i)));
         }
     }
-    
+
+    /**
+     * Method to convert a billId from yyyysxxnnnn into either yyyy xx nn or
+     * yyyy-s xx nn where yyyy is the session start year s is the special session
+     * number xx is the type (HB, HR, SB, SR) and nnnn is the leading zero
+     * padded bill number. If s is zero, then it is omitted. The leading
+     * zeros are also omitted from the bill number.
+     * @param billId String to be converted
+     * @return Converted result.
+     */
     private String formatBillId(String billId) {
         String sessionYear = billId.substring(0, 4);
         String specialSession = billId.substring(4, 5);
-        String type = billId.substring(5,7);
+        String type = billId.substring(5, 7);
         int number = Integer.parseInt(billId.substring(7));
         if (!"0".equals(specialSession)) {
             return String.format("%s-%s %s %d",
@@ -174,5 +202,5 @@ public class TranscriptDownloadController extends AbstractController {
             return String.format("%s %s %d", sessionYear, type, number);
         }
     }
-        
+
 }

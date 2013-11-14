@@ -65,6 +65,13 @@ public class DownloadAndDrilldownUtil {
         }
     }
 
+    /**
+     * Method to add an int value to a worksheet
+     * @param sheet The worksheet
+     * @param i The column index
+     * @param rs Result set containing the data
+     * @throws SQLException 
+     */
     private static void addIntValue(MyWorksheet sheet, int i, ResultSet rs)
             throws SQLException {
         int intValue = rs.getInt(i + 1);
@@ -75,6 +82,13 @@ public class DownloadAndDrilldownUtil {
         }
     }
 
+    /**
+     * Method to add a long value to a worksheet
+     * @param sheet The worksheet
+     * @param i The column index
+     * @param rs Result set containing the data
+     * @throws SQLException 
+     */
     private static void addLongValue(MyWorksheet sheet, int i, ResultSet rs)
             throws SQLException {
         long longValue = rs.getLong(i + 1);
@@ -86,6 +100,13 @@ public class DownloadAndDrilldownUtil {
 
     }
 
+    /**
+     * Method to add a double value to a worksheet
+     * @param sheet The worksheet
+     * @param i The column index
+     * @param rs Result set containing the data
+     * @throws SQLException 
+     */
     private static void addDoubleValue(MyWorksheet sheet, int i, ResultSet rs)
             throws SQLException {
         double doubleValue = rs.getDouble(i + 1);
@@ -96,6 +117,13 @@ public class DownloadAndDrilldownUtil {
         }
     }
 
+    /**
+     * Method to add a date value to a worksheet
+     * @param sheet The worksheet
+     * @param i The column index
+     * @param rs Result set containing the data
+     * @throws SQLException 
+     */
     private static void addDateValue(MyWorksheet sheet, int i, ResultSet rs)
             throws SQLException {
         String dateString = rs.getString(i + 1);
@@ -106,6 +134,13 @@ public class DownloadAndDrilldownUtil {
         }
     }
 
+    /**
+     * Method to add a string value to a worksheet
+     * @param sheet The worksheet
+     * @param i The column index
+     * @param rs Result set containing the data
+     * @throws SQLException 
+     */
     private static void addStringValue(MyWorksheet sheet, int i, ResultSet rs)
             throws SQLException {
         String stringValue = rs.getString(i + 1);
@@ -133,6 +168,12 @@ public class DownloadAndDrilldownUtil {
         }
     }
 
+    /**
+     * Method to get the committees that are referenced by a given transcript
+     * @param jdbcTemplate JdbcTemplate to access the database
+     * @param transcriptId ID of the transcript
+     * @return List of committees
+     */
     static List<String> getCommitteeNames(SimpleJdbcTemplate jdbcTemplate,
             String transcriptId) {
         List<TranscriptCommittee> committeeList
@@ -145,6 +186,12 @@ public class DownloadAndDrilldownUtil {
         return committeeNames;
     }
 
+    /**
+     * Method to get the billIds that are referenced by a given transcript
+     * @param jdbcTemplate JdbcTemplate to access the database
+     * @param transcriptId ID of the transcript
+     * @return List of billIds
+     */
     static List<String> getBillIdList(SimpleJdbcTemplate jdbcTemplate,
             String transcriptId) {
         List<String> billIdList
