@@ -149,7 +149,7 @@ public class TranscriptDownloadController extends AbstractController {
         }
         StringBuilder stb = new StringBuilder(names.get(0));
         for (int i = 1; i < names.size(); i++) {
-            stb.append("\n");
+            stb.append(", ");
             stb.append(names.get(i));
         }
         return stb.toString();
