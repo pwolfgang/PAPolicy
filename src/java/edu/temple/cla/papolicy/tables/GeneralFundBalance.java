@@ -96,6 +96,12 @@ public class GeneralFundBalance extends BudgetTable {
         builder.setTable(getTableName());
         return builder;
     }
+    
+    @Override
+    public QueryBuilder getFilteredTotalQuery() {
+        return getUnfilteredTotalQuery();
+    }
+    
 
     @Override
     public String getYearColumn() {
