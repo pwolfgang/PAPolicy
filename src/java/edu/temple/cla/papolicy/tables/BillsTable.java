@@ -27,73 +27,73 @@ public class BillsTable extends AbstractTable {
     @Override
     public String getTitleBox(){
         return "\n"+
-"<dl>\n<dt><input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"\"\n"+
+"\n<input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"\"\n"+
 "        id=\"t"+getId()+"\" onclick=\"expandBills("+getId()+");\" />\n"+                
-"        <label for=\"t"+getId()+"\"><span class=\"strong\">"+getTableTitle()+"</span></label></dt>\n\n"+
+"        <label for=\"t"+getId()+"\"><span class=\"strong\">"+getTableTitle()+"</span></label>\n\n"+
 "<div class=\"subtbl\" id=\"subtbl"+getId()+"\">\n"+
 "    <fieldset><legend>Chamber</legend>\n"+              
-"    <dd><input type=\"checkbox\" name=\"chamber\" value=\"House\" id=\"houseChamber\" checked=\"checked\" />\n"+
+"    <input type=\"checkbox\" name=\"chamber\" value=\"House\" id=\"houseChamber\" checked=\"checked\" />\n"+
 "        <label for=\"houseChamber\"><span class=\"strong\">House</span></label>\n"+
-"    </dd>\n"+
-"    <dd><input type=\"checkbox\" name=\"chamber\" value=\"Senate\" id=\"senateChamber\" checked=\"checked\" />\n"+
+"    \n"+
+"    <input type=\"checkbox\" name=\"chamber\" value=\"Senate\" id=\"senateChamber\" checked=\"checked\" />\n"+
 "        <label for=\"senateChamber\"><span class=\"strong\">Senate</span></label>\n"+
-"    </dd>"+
+"    "+
 "    </fieldset>\n"+
      "<fieldset><legend>Type</legend>\n"+           
-"    <dd><input type=\"radio\" name=\"billtype\" value=\"BOTH\" id=\"billtypeBoth\" checked=\"checked\" />\n"+
+"    <input type=\"radio\" name=\"billtype\" value=\"BOTH\" id=\"billtypeBoth\" checked=\"checked\" />\n"+
 "        <label for=\"billtypeBoth\"><span class=\"strong\">Bills and Resolutions</span></label>\n"+
-"    </dd>\n"+
-"    <dd><input type=\"radio\" name=\"billtype\" value=\"BILLS\" id=\"billtypeBills\" />\n"+
+"    \n"+
+"    <input type=\"radio\" name=\"billtype\" value=\"BILLS\" id=\"billtypeBills\" />\n"+
 "        <label for=\"billtypeBills\"><span class=\"strong\">Bills</span></label>\n"+
-"    </dd>\n"+
-"    <dd><input type=\"radio\" name=\"billtype\" value=\"RES\" id=\"billtypeRes\" />\n"+
+"    \n"+
+"    <input type=\"radio\" name=\"billtype\" value=\"RES\" id=\"billtypeRes\" />\n"+
 "        <label for=\"billtypeRes\"><span class=\"strong\">Resolutions</span></label>\n"+
-"    </dd>\n"+
+"    \n"+
 "    </fieldset>\n"+
 "    <fieldset><legend>Session Type</legend>\n"+                
-"    <dd><input type=\"radio\" name=\"sessiontype\" value=\"REGULAR\" id=\"regularSessions\" checked=\"checked\" />\n"+
-"        <label for=\"regularSessions\"><span class=\"strong\">Regular Sessions Only</span></label></dd>\n"+
-"    <dd><input type=\"radio\" name=\"sessiontype\" value=\"SPECIAL\" id=\"specialSessions\"/>\n"+
-"        <label for=\"specialSessions\"><span class=\"strong\">Special Sessions Only</span></label></dd>\n"+
-"    <dd><input type=\"radio\" name=\"sessiontype\" value=\"BOTH\" id=\"bothSessionTypes\"/>\n"+
-"        <label for=\"bothSessionTypes\"><span class=\"strong\">Both Regular and Special Sessions</span></label></dd>\n"+
+"    <input type=\"radio\" name=\"sessiontype\" value=\"REGULAR\" id=\"regularSessions\" checked=\"checked\" />\n"+
+"        <label for=\"regularSessions\"><span class=\"strong\">Regular Sessions Only</span></label>\n"+
+"    <input type=\"radio\" name=\"sessiontype\" value=\"SPECIAL\" id=\"specialSessions\"/>\n"+
+"        <label for=\"specialSessions\"><span class=\"strong\">Special Sessions Only</span></label>\n"+
+"    <input type=\"radio\" name=\"sessiontype\" value=\"BOTH\" id=\"bothSessionTypes\"/>\n"+
+"        <label for=\"bothSessionTypes\"><span class=\"strong\">Both Regular and Special Sessions</span></label>\n"+
 "    </fieldset>\n"+
 "</div>\n"+
-"</dl>\n"+
-"<dl>\n"+
-"<dt><input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"a\"\n"+
+"\n"+
+"\n"+
+"<br/><input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"a\"\n"+
 "           id=\"t"+getId()+"a\" onclick=\'expandBills(\""+getId()+"a\");\' />\n"+
 "    <label for=\"t"+getId()+"a\"><span class=\"strong\">Acts (Laws) and Adopted Resolutions</span></label></dt>\n"+
 "<div class=\"subtbl\" id=\"subtbl"+getId()+"a\">\n"+
 "    <fieldset><legend>Chamber</legend>\n"+              
-"    <dd><input type=\"checkbox\" name=\"chambera\" value=\"House\" id=\"houseChambera\" checked=\"checked\" />\n"+
+"    <input type=\"checkbox\" name=\"chambera\" value=\"House\" id=\"houseChambera\" checked=\"checked\" />\n"+
 "        <label for=\"houseChambera\"><span class=\"strong\">House</span></label>\n"+
-"    </dd>\n"+
-"    <dd><input type=\"checkbox\" name=\"chambera\" value=\"Senate\" id=\"senateChambera\" checked=\"checked\" />\n"+
+"    \n"+
+"    <input type=\"checkbox\" name=\"chambera\" value=\"Senate\" id=\"senateChambera\" checked=\"checked\" />\n"+
 "        <label for=\"senateChambera\"><span class=\"strong\">Senate</span></label>\n"+
-"    </dd>"+
+"    "+
 "    </fieldset>\n"+
      "<fieldset><legend>Type</legend>\n"+           
-"    <dd><input type=\"radio\" name=\"billtypea\" value=\"BOTH\" id=\"billtypeBotha\" checked=\"checked\" />\n"+
+"    <input type=\"radio\" name=\"billtypea\" value=\"BOTH\" id=\"billtypeBotha\" checked=\"checked\" />\n"+
 "        <label for=\"billtypeBotha\"><span class=\"strong\">Acts and Adopted Resolutions</span></label>\n"+
-"    </dd>\n"+
-"    <dd><input type=\"radio\" name=\"billtypea\" value=\"BILLS\" id=\"billtypeBillsa\" />\n"+
+"    \n"+
+"    <input type=\"radio\" name=\"billtypea\" value=\"BILLS\" id=\"billtypeBillsa\" />\n"+
 "        <label for=\"billtypeBillsa\"><span class=\"strong\">Acts</span></label>\n"+
-"    </dd>\n"+
-"    <dd><input type=\"radio\" name=\"billtypea\" value=\"RES\" id=\"billtypeResa\" />\n"+
+"    \n"+
+"    <input type=\"radio\" name=\"billtypea\" value=\"RES\" id=\"billtypeResa\" />\n"+
 "        <label for=\"billtypeResa\"><span class=\"strong\">Adopted Resolutions</span></label>\n"+
-"    </dd>\n"+
+"    \n"+
 "    </fieldset>\n"+
 "    <fieldset><legend>Session Type</legend>\n"+                
-"    <dd><input type=\"radio\" name=\"sessiontypea\" value=\"REGULAR\" id=\"regularSessionsa\" checked=\"checked\" />\n"+
-"        <label for=\"regularSessionsa\"><span class=\"strong\">Regular Sessions Only</span></label></dd>\n"+
-"    <dd><input type=\"radio\" name=\"sessiontypea\" value=\"SPECIAL\" id=\"specialSessionsa\"/>\n"+
-"        <label for=\"specialSessionsa\"><span class=\"strong\">Special Sessions Only</span></label></dd>\n"+
-"    <dd><input type=\"radio\" name=\"sessiontypea\" value=\"BOTH\" id=\"bothSessionTypesa\"/>\n"+
-"        <label for=\"bothSessionTypesa\"><span class=\"strong\">Both Regular and Special Sessions</span></label></dd>\n"+
+"    <input type=\"radio\" name=\"sessiontypea\" value=\"REGULAR\" id=\"regularSessionsa\" checked=\"checked\" />\n"+
+"        <label for=\"regularSessionsa\"><span class=\"strong\">Regular Sessions Only</span></label>\n"+
+"    <input type=\"radio\" name=\"sessiontypea\" value=\"SPECIAL\" id=\"specialSessionsa\"/>\n"+
+"        <label for=\"specialSessionsa\"><span class=\"strong\">Special Sessions Only</span></label>\n"+
+"    <input type=\"radio\" name=\"sessiontypea\" value=\"BOTH\" id=\"bothSessionTypesa\"/>\n"+
+"        <label for=\"bothSessionTypesa\"><span class=\"strong\">Both Regular and Special Sessions</span></label>\n"+
 "    </fieldset>\n"+
 "</div>\n"+
-"</dl>\n"+
+"\n"+
 "        ";
     }
 

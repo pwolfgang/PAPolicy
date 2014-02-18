@@ -36,8 +36,16 @@
             <form id="analysisForm" method="post" action="display.spg">
                 <table class="border">
                     <tr>
+                        <th></th>
+                        <th width="38%">DATASETS TO SEARCH:</th>
+                        <th width="50%">DATASET FILTERS
+                            <br/><span class="smallText">
+                                Pre-set to default values
+                            </span>
+                        </th>
+                    </tr>
+                    <tr>
                         <td rowspan="<%=((java.util.List) request.getAttribute("tables")).size() + 1%>">
-                            <p>DATASETS TO SEARCH:</p>
                             <p class="smallText">
                                 Keep scrolling down the page to select:
                             </p>
@@ -48,12 +56,6 @@
                             </ul>
 
                         </td>
-                        <td width="34%">&nbsp;</td>
-                        <th width="50%">DATASET FILTERS
-                            <br/><span class="smallText">
-                                Pre-set to default values
-                            </span>
-                        </th>
                     </tr>
                     <c:forEach var="table" items="${tables}">
                         <tr>
