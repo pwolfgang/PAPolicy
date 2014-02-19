@@ -27,10 +27,10 @@ public class BudgetTable extends AbstractTable {
     @Override
     public String getTitleBox() {
         return "\n"+
-"<dl><input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"A\"\n"+
+"<input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"A\"\n"+
 "        id=\"t"+getId()+"A\" onclick=\"expandBudget("+getId()+");\" />\n"+
-"    <label for=\"t"+getId()+"A\"><span class=\"strong\">Total Spending All Funds</span></label></dl>\n"+
-"<dl><input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"B\"\n"+
+"    <label for=\"t"+getId()+"A\"><span class=\"strong\">Total Spending All Funds</span></label>\n"+
+"<br/><input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"B\"\n"+
 "        id=\"t"+getId()+"B\" onclick=\"expandBudget("+getId()+");\" />\n"+
 "    <label for=\"t"+getId()+"B\"><span class=\"strong\">General Fund Balance</span></label>\n"+
 "    <div class=\"subtbl\" id=\"subtbl"+getId()+"B\">\n"+
@@ -42,7 +42,7 @@ public class BudgetTable extends AbstractTable {
                 + "<label for=\"rainyDay0\">No</label>\n"+
 "       </fieldset>\n"+
 "    </div>\n"+
-"</dl>\n";
+"\n";
     }
 
     /**

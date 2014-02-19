@@ -66,14 +66,14 @@ public class MultiValuedFilter extends Filter {
 "              <label><input type=\"radio\" name=\""+selectParameterName+"\" value=\""+BOTH+"\" checked=\"checked\" />&nbsp;No Filter</label>\n"+
 "              <label><input type=\"radio\" name=\""+selectParameterName+"\" value=\"0\" />&nbsp;Exclude</label>\n"+
 "              <label><input type=\"radio\" name=\""+selectParameterName+"\" value=\"1\" />&nbsp;Include</label>\n"+
-"        <dl>");
+"        ");
         for (DropDownItem item : items) {
             if (item.getID() != 99) {
-                stb.append("<dd><label><input type=\"checkbox\" name=\""+valuesParameterName+"\" value=\""+item.getID()+"\" checked=\"checked\" />\n"+
-"                "+item.getDescription()+"</label></dd>");
+                stb.append("<br/><label><input type=\"checkbox\" name=\""+valuesParameterName+"\" value=\""+item.getID()+"\" checked=\"checked\" />\n"+
+"                "+item.getDescription()+"</label>");
             }
         }
-        stb.append("</dl></fieldset>");
+        stb.append("</fieldset>");
         return stb.toString();
     }
 

@@ -18,11 +18,11 @@ public class StandardTable extends AbstractTable implements Table {
      */
     public String getTitleBox() {
         return "\n"+
-"        <dl><dt>\n"+
+"        \n"+
 "            <input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"\"\n"+
 "                 id=\"t"+getId()+"\" onclick=\"expandFilters("+getId()+");expandNote("+getId()+");\" />\n"+
 "            <label for=\"t"+getId()+"\"><span class=\"strong\">"+getTableTitle()+"</span></label>\n"+
-"        </dt></dl>\n"+
+"        \n"+
 "        <div id=\"note"+getId()+"\" class=\"nnoottee\"><p>"+getNoteColumn()+"</p></div>\n"+
 "        ";
     }

@@ -23,7 +23,7 @@ public class GeneralFundBalance extends BudgetTable {
     @Override
     public String getTitleBox() {
         StringBuilder stb = new StringBuilder();
-        stb.append("<dl><dt><input type=\"checkbox\" name=\"dataset\" value=\"");
+        stb.append("<input type=\"checkbox\" name=\"dataset\" value=\"");
         stb.append(getId());
         stb.append("\"/><span class=\"strong\">");
         stb.append(getTableTitle());
@@ -33,7 +33,7 @@ public class GeneralFundBalance extends BudgetTable {
         stb.append("<input type=\"radio\" name=\"rainyDay\" value=\"1\" />");
         stb.append("Yes");
         stb.append("</span></dd>");
-        stb.append("</span></dt></dl>");
+        stb.append("</span>");
         return stb.toString();
     }
 
