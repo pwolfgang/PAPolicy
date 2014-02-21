@@ -29,7 +29,7 @@ public class CheckBoxFilter extends Filter {
 
     @Override
     public String getFilterFormInput() {
-        return "<label><input type=\"checkbox\" name=\""+parameterName+"\" value=\"1\" /> "+getDescription()+"</label>\n";
+        return "<input type=\"checkbox\" id=\""+parameterName+"\" name=\""+parameterName+"\" value=\"1\" /><lable>"+getDescription()+"</label>\n";
     }
 
     public void setFilterParameterValues(HttpServletRequest request) {

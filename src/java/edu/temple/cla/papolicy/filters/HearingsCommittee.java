@@ -49,13 +49,13 @@ public class HearingsCommittee extends Filter {
         String query = "SELECT * FROM "+getTableReference()+" WHERE CtyCode LIKE('"+chamberNumber+"%%') ORDER BY AlternateName";
         List<CommitteeAlias> items = getJdbcTemplate().query(query, itemMapper);
         StringBuilder stb = new StringBuilder();
-        stb.append("<label>"+getAdditionalParam()+" Hearings\n"+
-"                <br /><select name=\"F"+getId()+"\">\n"+
+        stb.append("<label for=\"F"+getId()+"\">"+getAdditionalParam()+" Hearings</label>\n"+
+"                <br /><select name=\"F"+getId()+"\" id=\"F"+getId()+"\">\n"+
 "                <option value=\"ALL\" selected=\"selected\">ALL COMMITTEES</option>\n");
         for (CommitteeAlias item : items) {
             stb.append("<option value=\""+item.getCtyCode()+"\">"+item.getAlternateName()+"</option>\n");
         }
-        stb.append("</select></label><br/>");
+        stb.append("</select><br/>");
         return stb.toString();
     }
 

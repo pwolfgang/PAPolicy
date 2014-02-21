@@ -26,8 +26,8 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 public class MultiValuedFilter extends Filter {
 
     private static final String BOTH = "587";
-    private String selectParameterName;
-    private String valuesParameterName;
+    private final String selectParameterName;
+    private final String valuesParameterName;
     private String selectParameterValue;
     private String[] valuesParameterValues;
 
@@ -63,9 +63,15 @@ public class MultiValuedFilter extends Filter {
         List<DropDownItem> items = getJdbcTemplate().query(query, itemMapper);
         StringBuilder stb = new StringBuilder();
         stb.append("<fieldset><legend>"+getDescription()+"</legend>\n"+
-"              <label><input type=\"radio\" name=\""+selectParameterName+"\" value=\""+BOTH+"\" checked=\"checked\" />&nbsp;No Filter</label>\n"+
-"              <label><input type=\"radio\" name=\""+selectParameterName+"\" value=\"0\" />&nbsp;Exclude</label>\n"+
-"              <label><input type=\"radio\" name=\""+selectParameterName+"\" value=\"1\" />&nbsp;Include</label>\n"+
+"              <input type=\"radio\" id=\""+selectParameterName+"BOTH\" "
+                + "name=\""+selectParameterName+"\" value=\""+BOTH+"\" checked=\"checked\" />"
+                + "&nbsp;<label for=\""+selectParameterName+"BOTH\">No Filter</label>\n"+
+"              <input type=\"radio\" id=\""+selectParameterName+"0\" "
+                + "name=\""+selectParameterName+"\" value=\"0\" />"
+                + "&nbsp;<label for=\""+selectParameterName+"0\">Exclude</label>\n"+
+"              <input type=\"radio\" id=\""+selectParameterName+"1\" "
+                + "name=\""+selectParameterName+"\" value=\"1\" />"
+                + "&nbsp;<label for=\""+selectParameterName+"1\">Include</label>\n"+
 "        ");
         for (DropDownItem item : items) {
             if (item.getID() != 99) {
