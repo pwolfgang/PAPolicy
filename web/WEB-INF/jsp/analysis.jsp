@@ -224,6 +224,7 @@
                             <br/>
                             <input type="radio" name="showResults" value="percent_of_filtered" id="showResultsPF"/>
                             <label for="showResultsPF">Percent of filtered activity per year or legislative session</label>
+                            </fieldset>
                         </td>
                     </tr>
                     <tr>
