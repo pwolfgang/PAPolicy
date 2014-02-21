@@ -63,7 +63,7 @@ public class BillsTable extends AbstractTable {
 "\n"+
 "<br/><input type=\"checkbox\" name=\"dataset\" value=\""+getId()+"a\"\n"+
 "           id=\"t"+getId()+"a\" onclick=\'expandBills(\""+getId()+"a\");\' />\n"+
-"    <label for=\"t"+getId()+"a\"><span class=\"strong\">Acts (Laws) and Adopted Resolutions</span></label></dt>\n"+
+"    <label for=\"t"+getId()+"a\"><span class=\"strong\">Acts (Laws) and Adopted Resolutions</span></label>\n"+
 "<div class=\"subtbl\" id=\"subtbl"+getId()+"a\">\n"+
 "    <fieldset><legend>Chamber</legend>\n"+              
 "    <input type=\"checkbox\" name=\"chambera\" value=\"House\" id=\"houseChambera\" checked=\"checked\" />\n"+

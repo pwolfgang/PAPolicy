@@ -98,17 +98,20 @@ th {
 }
 
 .navigation {
+    display : table-row;
     width: 600px;
     background: #9e1b32;
 }
 
 .mylink {
+    border : solid;
+    border-color : #9e1b32;
+    display : table-cell;
     width : 50%;
     color : #ffffff;
 }
 
 .mylink a {
     color : #ffffff;
-    text-decoration: none;
     font-weight : bold;
 }

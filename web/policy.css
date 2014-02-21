@@ -165,8 +165,8 @@ img.filler	{
 
 a:link 		{color: #000066; text-decoration: underline;}
 a:visited 	{color: #990000; text-decoration: underline;}
-a:hover 	{color: #990000; text-decoration: none;}
-a:active 	{color: #000000; text-decoration: none;}
+a:hover 	{color: #990000; text-decoration: underline;}
+a:active 	{color: #000000; text-decoration: underline;}
 
 a.highlight:link, a.highlight:visited {color: #cc0000; text-decoration: underline;}
 a.highlight:hover 	{color: #000; text-decoration: none;}
