@@ -72,7 +72,7 @@ public class BillsCommittee extends Filter {
                 .append("<br/><label for=\"").append(parameterName).append("\">Name</label>")
                 .append("<select name=\"").append(parameterName).append("\" ")
                 .append("id=\"").append(parameterName).append("\">")
-                .append("<option value=\"ALL\">ALL COMMITTEES</option>\n");
+                .append("<option value=\"ALL\" selected=\"selected\">ALL COMMITTEES</option>\n");
         for (CommitteeAlias item : items) {
             if (item.getCtyCode() % 100 != 99) { // Exclude special committees
                 String committeeName = item.getAlternateName();

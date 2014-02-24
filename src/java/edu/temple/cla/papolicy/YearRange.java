@@ -108,7 +108,10 @@ public class YearRange {
      */
     public String getAscendingYears() {
         StringBuilder stb = new StringBuilder();
-        for (int i = minYear; i <= maxYear; i++) {
+        stb.append("\r\n<option selected=\"selected\">");
+        stb.append(minYear);
+        stb.append("</option>");
+        for (int i = minYear+1; i <= maxYear; i++) {
             stb.append("\r\n<option>");
             stb.append(i);
             stb.append("</option>");
@@ -121,7 +124,10 @@ public class YearRange {
      */
     public String getDescendingYears() {
         StringBuilder stb = new StringBuilder();
-        for (int i = maxYear; i >= minYear; i--) {
+        stb.append("\r\n<option selected=\"selected\">");
+        stb.append(maxYear);
+        stb.append("</option>");
+        for (int i = maxYear-1; i >= minYear; i--) {
             stb.append("\r\n<option>");
             stb.append(i);
             stb.append("</option>");
@@ -138,7 +144,10 @@ public class YearRange {
         int minSessionYear = (minYear-1)/2 * 2 + 1;
         int maxSessionYear = (maxYear+1)/2 * 2;
         StringBuilder stb = new StringBuilder();
-        for (int i = minSessionYear; i <= maxSessionYear; i += 2) {
+        stb.append("\r\n<option selected=\"selected\">");
+        stb.append(minSessionYear);
+        stb.append("</option>");
+        for (int i = minSessionYear+2; i <= maxSessionYear; i += 2) {
             stb.append("\r\n<option value=\"");
             stb.append(i);
             stb.append("\">");
@@ -157,7 +166,10 @@ public class YearRange {
         int minSessionYear = (minYear-1)/2 * 2 + 1;
         int maxSessionYear = (maxYear+1)/2 * 2;
         StringBuilder stb = new StringBuilder();
-        for (int i = maxSessionYear; i >= minSessionYear; i -= 2) {
+        stb.append("\r\n<option selected=\"selected\">");
+        stb.append(maxSessionYear);
+        stb.append("</option>");
+        for (int i = maxSessionYear-2; i >= minSessionYear; i -= 2) {
             stb.append("\r\n<option value=\"");
             stb.append(i);
             stb.append("\">");
