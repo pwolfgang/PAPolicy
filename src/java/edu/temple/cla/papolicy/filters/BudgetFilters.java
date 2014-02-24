@@ -62,8 +62,8 @@ public class BudgetFilters extends Filter {
 "                <fieldset><legend>Inflation Adjustment</legend>" +                
 "                &nbsp;&nbsp;<input type=\"radio\" id=\"adjust0\" name=\"adjust\" value=\"0\" />\n"+
 "                <label for=\"adjust0\">Un-adjusted Dollars</label>\n"+
-"                <br/>&nbsp;&nbsp;<label><input type=\"radio\" id=\"adjust1\" name=\"adjust\" value=\"1\" checked=\"checked\" />\n"+
-"                <lable for=\"adjust1\">Inflation-adjusted</label><label for=\"baseYear\"> Dollars Base Year</label>\n"+
+"                <br/>&nbsp;&nbsp;<input type=\"radio\" id=\"adjust1\" name=\"adjust\" value=\"1\" checked=\"checked\" />\n"+
+"                <label for=\"adjust1\">Inflation-adjusted</label><label for=\"baseYear\"> Dollars Base Year</label>\n"+
 "                <select id=\"baseYear\" name=\"baseYear\">\n"+
 "        ");
         for (Deflator item : items) {
@@ -74,9 +74,9 @@ public class BudgetFilters extends Filter {
                 stb.append(" selected=\"selected\">");
             }
             stb.append(item.getYear());
-            stb.append("</option>");
+            stb.append("</option>\n");
         }
-        stb.append("</select></fieldset>");
+        stb.append("</select>\n</fieldset>\n");
         return stb.toString();
     }
 

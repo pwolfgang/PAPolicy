@@ -37,8 +37,8 @@
                 <table class="border">
                     <tr>
                         <th></th>
-                        <th width="38%">DATASETS TO SEARCH:</th>
-                        <th width="50%">DATASET FILTERS
+                        <th style="width:38%">DATASETS TO SEARCH:</th>
+                        <th style="width:50%">DATASET FILTERS
                             <br/><span class="smallText">
                                 Pre-set to default values
                             </span>
