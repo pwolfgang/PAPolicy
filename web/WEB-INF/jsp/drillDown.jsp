@@ -46,7 +46,12 @@
                                         <td>
                                             <%
                                                 if (obj != null) {
-                                                    String txt = obj.toString();
+                                                    String txt;
+                                                    if (obj instanceof Date) {
+                                                        txt = String.format("%1$tb&nbsp;%1$te,%1$tY", obj);
+                                                    } else {
+                                                        txt = obj.toString();
+                                                    }
                                                     %><%=edu.temple.cla.papolicy.Utility.reformatHyperlink(txt)%><%
                                                 } else {
                                                     %>&nbsp;<%
