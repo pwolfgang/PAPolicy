@@ -52,18 +52,18 @@ public class BudgetFilters extends Filter {
         List<Deflator> items = getJdbcTemplate().query(query, itemMapper);
         StringBuilder stb = new StringBuilder();
         stb.append("<fieldset><legend>Display</legend>"
-                + "&nbsp;&nbsp;<label><input type=\"radio\" name=\"disp\" value=\"0\" checked=\"checked\" />\n"+
-"                Dollar Values</label>\n"+
-"                <br/>&nbsp;&nbsp;<label><input type=\"radio\" name=\"disp\" value=\"1\" />\n"+
-"                Percent of Total Spending</label>\n"+
-"                <br />&nbsp;&nbsp;<label><input type=\"radio\" name=\"disp\" value=\"2\" />\n"+
-"                Display Percent Change</label>\n"+
+                + "&nbsp;&nbsp;<input type=\"radio\" id=\"disp0\" name=\"disp\" value=\"0\" checked=\"checked\" />\n"+
+"                <label for=\"disp0\">Dollar Values</label>\n"+
+"                <br/>&nbsp;&nbsp;<input type=\"radio\" id=\"disp1\" name=\"disp\" value=\"1\" />\n"+
+"                <label for=\"disp1\">Percent of Total Spending</label>\n"+
+"                <br />&nbsp;&nbsp;<input type=\"radio\" id=\"disp2\" name=\"disp\" value=\"2\" />\n"+
+"                <label for=\"disp2\">Display Percent Change</label>\n"+
 "                </fieldset><br />\n"+
 "                <fieldset><legend>Inflation Adjustment</legend>" +                
-"                &nbsp;&nbsp;<label><input type=\"radio\" name=\"adjust\" value=\"0\" />\n"+
-"                Un-adjusted Dollars</label>\n"+
-"                <br/>&nbsp;&nbsp;<label><input type=\"radio\" name=\"adjust\" value=\"1\" checked=\"checked\" />\n"+
-"                Inflation-adjusted</label><label for=\"baseYear\"> Dollars Base Year</label>\n"+
+"                &nbsp;&nbsp;<input type=\"radio\" id=\"adjust0\" name=\"adjust\" value=\"0\" />\n"+
+"                <label for=\"adjust0\">Un-adjusted Dollars</label>\n"+
+"                <br/>&nbsp;&nbsp;<label><input type=\"radio\" id=\"adjust1\" name=\"adjust\" value=\"1\" checked=\"checked\" />\n"+
+"                <lable for=\"adjust1\">Inflation-adjusted</label><label for=\"baseYear\"> Dollars Base Year</label>\n"+
 "                <select id=\"baseYear\" name=\"baseYear\">\n"+
 "        ");
         for (Deflator item : items) {

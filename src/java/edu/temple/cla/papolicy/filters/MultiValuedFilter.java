@@ -78,7 +78,7 @@ public class MultiValuedFilter extends Filter {
                 stb.append("<br/><input type=\"checkbox\" "
                         + "id=\""+valuesParameterName+item.getID()+"\" name=\""+valuesParameterName+"\" "
                         + "value=\""+item.getID()+"\" checked=\"checked\" />\n"
-                        + "<label for=\""+valuesParameterName+"\">"
+                        + "<label for=\""+valuesParameterName+item.getID()+"\">"
                         + item.getDescription()+"</label>");
             }
         }
