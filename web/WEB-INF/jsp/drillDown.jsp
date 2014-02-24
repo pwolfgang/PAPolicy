@@ -25,8 +25,8 @@
         <%@include file="header.jspf"%>
         <h2>Drilldown Results</h2>
         <%
-            List<Map<String, Object>> theList =
-                    (List<Map<String, Object>>) request.getAttribute("theList");
+            List<Map<String, Object>> theList
+                    = (List<Map<String, Object>>) request.getAttribute("theList");
             if (theList.size() > 0) {
                 Set<String> columnTitles = theList.get(0).keySet();
         %>
@@ -46,10 +46,16 @@
                 <td>
                     <%
                         if (obj != null) {
-                            String txt = obj.toString();
-                    %><%=edu.temple.cla.papolicy.Utility.reformatHyperlink(txt)%><%
+                            String txt;
+                            if (obj instanceof Date) {
+                                txt = String.format("%1$tb&nbsp;%1$te,%1$tY", obj);
                             } else {
-                    %>&nbsp;<%                                                        }
+                                txt = obj.toString();
+                            }
+                    %><%=edu.temple.cla.papolicy.Utility.reformatHyperlink(txt)%><%
+                        } else {
+                    %>&nbsp;<%
+                        }
                     %>
                 </td>
                 <%

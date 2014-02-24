@@ -77,7 +77,7 @@ public class Utility {
      
      /**
       * Method to format hyperlinks in the drilldown.  A hyperlink that has been
-      * created in MS Access has the form <i>text</i>#<i>ref</i> where the 
+      * created in MS Access has the form <i>text</i>#<i>ref</i># where the 
       * <i>text</i> is optional. This is translated to 
       * %lt:a href=%qt;<i>ref</i>%qt;%gt <i>text</i>%lt;/a%gt;. If the <i>text</i>
       * is empty, then the <i>ref</i> is used. If the hyperlink contains no #
