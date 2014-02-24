@@ -27,10 +27,21 @@ public class CheckBoxFilter extends Filter {
         parameterName = "F" + getId();
     }
 
+    /**
+     * Construct the filter form input as a set of two radio buttons: 
+     * NotSelected (default) Selected
+     * @return HTML to generate the form input.
+     */
     @Override
     public String getFilterFormInput() {
-        return "<input type=\"checkbox\" id=\""+parameterName+"\" name=\""+parameterName+"\" value=\"1\" /><lable>"+getDescription()+"</label>\n";
-    }
+        return "\n"+
+"            <fieldset><legend>"+getDescription()+"</legend>\n"+
+"                  <input type=\"radio\" name=\""+parameterName+"\" id=\""+parameterName+"0\" value=\"0\" checked=\"checked\"/>"
+                + "&nbsp; <label for=\""+parameterName+"0\">Not Selected</label>\n"+
+"                  <input type=\"radio\" name=\""+parameterName+"\" id=\""+parameterName+"1\" value=\"1\" />"
+                + "&nbsp; <label for=\""+parameterName+"1\">Selected</label>\n" +
+"            </fieldset>\n";
+        }
 
     public void setFilterParameterValues(HttpServletRequest request) {
         parameterValue = request.getParameter(parameterName);

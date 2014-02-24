@@ -99,7 +99,7 @@ h3			{
 #leftnav a.first	{
     border-top: 13px solid #ccccff;
     margin-top: 0px;
-    font-size: 16px;
+    font-size: large;
     font-weight: bold;
 }
 
@@ -113,13 +113,13 @@ h3			{
 
 #leftnav .sub {
     text-indent: 15px;
-    font-size: 11px;
+    font-size: small;
 }
 
 #leftnav .sub2 {
 
     text-indent: 30px;
-    font-size: 10px;
+    font-size: small;
 }
 
 #leftnav .current {
@@ -169,8 +169,8 @@ a:hover 	{color: #990000; text-decoration: underline;}
 a:active 	{color: #000000; text-decoration: underline;}
 
 a.highlight:link, a.highlight:visited {color: #cc0000; text-decoration: underline;}
-a.highlight:hover 	{color: #000; text-decoration: none;}
-a.highlight:active	{color: #000; text-decoration: none;}
+a.highlight:hover 	{color: #000; text-decoration: underline;}
+a.highlight:active	{color: #000; text-decoration: underline;}
 
 .aligntop	{vertical-align: top;}
 .aligncenter	{text-align: center;}
@@ -207,7 +207,7 @@ td.category {
     font-style: italic;
     color: #FF0000;
     font-weight: bold;
-    font-size: 12px;
+    font-size: medium;
 }
 
 #datasets a.rollover {

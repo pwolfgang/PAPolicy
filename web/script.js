@@ -80,11 +80,7 @@ function expandBudget(tableIdNo) {
 function expandSubtopics(topicNo) {
     var subtopicListElement = document.getElementById("s"+topicNo);
     var subtopicBoxElement = document.getElementById("x"+topicNo);
-    if (subtopicBoxElement.checked) {
-        subtopicListElement.style.display="block";
-    } else {
-        subtopicListElement.style.display="none";
-    }
+    subtopicListElement.style.display="block";
 }
 
 function expandNote(tableIdNo) {

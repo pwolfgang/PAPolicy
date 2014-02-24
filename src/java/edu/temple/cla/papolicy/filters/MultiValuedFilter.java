@@ -75,8 +75,11 @@ public class MultiValuedFilter extends Filter {
 "        ");
         for (DropDownItem item : items) {
             if (item.getID() != 99) {
-                stb.append("<br/><label><input type=\"checkbox\" name=\""+valuesParameterName+"\" value=\""+item.getID()+"\" checked=\"checked\" />\n"+
-"                "+item.getDescription()+"</label>");
+                stb.append("<br/><input type=\"checkbox\" "
+                        + "id=\""+valuesParameterName+item.getID()+"\" name=\""+valuesParameterName+"\" "
+                        + "value=\""+item.getID()+"\" checked=\"checked\" />\n"
+                        + "<label for=\""+valuesParameterName+"\">"
+                        + item.getDescription()+"</label>");
             }
         }
         stb.append("</fieldset>");
