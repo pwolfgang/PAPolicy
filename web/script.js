@@ -77,10 +77,16 @@ function expandBudget(tableIdNo) {
     }
 }
 
-function expandSubtopics(topicNo) {
+function expandSubtopics(topicNo, button) {
     var subtopicListElement = document.getElementById("s"+topicNo);
     var subtopicBoxElement = document.getElementById("x"+topicNo);
-    subtopicListElement.style.display="block";
+    if (subtopicListElement.style.display != "block"){
+        subtopicListElement.style.display="block";
+        button.value = "Contract subtopics";
+    } else {
+        subtopicListElement.style.display="none";
+        button.value = "Expand subtopics";
+    }
 }
 
 function expandNote(tableIdNo) {

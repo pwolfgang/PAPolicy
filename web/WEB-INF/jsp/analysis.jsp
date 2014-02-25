@@ -123,7 +123,7 @@
                                 <input type="checkbox" name="subtopics" value="${majorTopic.code}" id="subtopics${majorTopic.code}"/>
                                 <label for="subtopics${majorTopic.code}">All subtopics in ${majorTopic.description}</label>
                                 <br /><input type="button"
-                                             onclick="expandSubtopics(${majorTopic.code});"
+                                             onclick="expandSubtopics(${majorTopic.code},this);"
                                              id="x${majorTopic.code}" value="Expand subtopics"/>
                                 <div id="s${majorTopic.code}" class="subcodelist">
                                     <label for="ss${majorTopic.code}">${majorTopic.description} Subtopics</label><br/>
