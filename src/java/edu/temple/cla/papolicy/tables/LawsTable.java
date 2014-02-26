@@ -43,7 +43,7 @@ public class LawsTable extends BillsTable {
 
     @Override
     public String getYearColumn() {
-        return "Year_Enacted";
+        return "year(Date_Enacted)";
     }
 
     @Override
