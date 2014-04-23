@@ -14,12 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 /**
- *
+ * Filter that consists of several options displayed in a dropdown form.
  * @author Paul Wolfgang
  */
 public class DropDown extends Filter {
 
-    private String parameterName;
+    private final String parameterName;
     private String parameterValue;
 
     private String filterQualifier;
@@ -32,6 +32,10 @@ public class DropDown extends Filter {
     }
 
 
+    /**
+     * Method to generate the HTML used to display the filter form
+     * @return filter form HTML code
+     */
     @Override
     public String getFilterFormInput() {
         ParameterizedRowMapper<DropDownItem> itemMapper = new DropDownItemMapper();
@@ -49,15 +53,27 @@ public class DropDown extends Filter {
         return stb.toString();
     }
     
+    /**
+     * Method to get the parameter values and build the filter strings
+     * @param request Request object.
+     */
+    @Override
     public void setFilterParameterValues(HttpServletRequest request) {
         parameterValue = request.getParameter(parameterName);
         buildFilterStrings();
     }
 
+    /**
+     * Get the filterQueryString
+     * @return filterQueryString
+     */
     public String getFilterQueryString() {
         return filterQuery.toString();
     }
 
+    /**
+     * Method to build the filter expression and qualifier string
+     */
     private void buildFilterStrings() {
         if ("-1".equals(parameterValue)){
             filterQuery = new EmptyExpression();
@@ -76,6 +92,11 @@ public class DropDown extends Filter {
         }
     }
     
+    /** Get the filterQualifier
+     * 
+     * @return filterQualifier 
+     */
+    @Override
     public String getFilterQualifier() {
         return filterQualifier;
     }

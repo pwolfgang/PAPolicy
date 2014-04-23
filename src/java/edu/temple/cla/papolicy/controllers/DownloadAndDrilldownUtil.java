@@ -59,7 +59,7 @@ public class DownloadAndDrilldownUtil {
                 case Types.TIMESTAMP:
                     addDateValue(sheet, i, rs);
             }
-        } catch (Exception ex) {
+        } catch (Exception ex) { // Want to catch unchecked exceptions.
             logger.error("Error converting cell", ex);
             sheet.addCell("null");
         }

@@ -29,6 +29,7 @@ public class TranscriptCommitteeMapper
      * @return The mapped object.
      * @throws SQLException 
      */
+    @Override
     public TranscriptCommittee mapRow(ResultSet rs, int rowNum) throws SQLException {
 
         TranscriptCommittee item = new TranscriptCommittee();

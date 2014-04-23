@@ -38,7 +38,7 @@ public class YearRange {
      * @param endYear The selected end year
      * @param startSession The selected start session
      * @param endSession The selected end session
-     * @param session Indicates whether this is years or session.
+     * @param span Indicates whether this is years or session.
      */
     public YearRange(String startYear, String endYear, String startSession, String endSession, String span) {
         if (span.equals("years")) {
@@ -68,10 +68,10 @@ public class YearRange {
     }
 
     /**
-     * Get the predicessor to the min year. If sessions this is the minYear -2
-     * @return the predicessor to the min year.
+     * Get the predecessor to the min year. If sessions this is the minYear -2
+     * @return the predecessor to the min year.
      */
-    public int getMinYearPredicessor() {
+    public int getMinYearPredecessor() {
         if (session) {
             return minYear - 2;
         } else {
@@ -145,7 +145,7 @@ public class YearRange {
         int maxSessionYear = (maxYear+1)/2 * 2;
         StringBuilder stb = new StringBuilder();
         stb.append("\r\n<option selected=\"selected\">");
-        stb.append(minSessionYear);
+        stb.append(String.format("%4d-%02d",minSessionYear, (minSessionYear+1) % 100));
         stb.append("</option>");
         for (int i = minSessionYear+2; i <= maxSessionYear; i += 2) {
             stb.append("\r\n<option value=\"");
@@ -167,7 +167,7 @@ public class YearRange {
         int maxSessionYear = (maxYear+1)/2 * 2;
         StringBuilder stb = new StringBuilder();
         stb.append("\r\n<option selected=\"selected\">");
-        stb.append(maxSessionYear);
+        stb.append(String.format("%4d-%02d", maxSessionYear-1, maxSessionYear%100));
         stb.append("</option>");
         for (int i = maxSessionYear-2; i >= minSessionYear; i -= 2) {
             stb.append("\r\n<option value=\"");

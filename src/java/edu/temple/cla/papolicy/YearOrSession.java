@@ -12,9 +12,9 @@ package edu.temple.cla.papolicy;
  */
 public class YearOrSession {
 
-    private int minYear;
-    private int maxYear;
-    private boolean session;
+    private final int minYear;
+    private final int maxYear;
+    private final boolean session;
 
     /**
      * Constructor.

@@ -44,7 +44,7 @@ public class DrillDownController extends AbstractController {
             Map<String, Object> theMap = new HashMap<>();
             theMap.put("theList", theList);
             return new ModelAndView("drillDown", theMap);
-        } catch (Exception ex) {
+        } catch (Exception ex) { // Want to catch unchecked exceptions as well
             logger.error(ex);
             return null;
         }

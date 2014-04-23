@@ -10,12 +10,14 @@ import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * A checkbox filter allows the selection of an option.  Actually two radio
+ * buttons are displayed. The name checkbox is historical. The change to
+ * radio buttons was made to support accessibility. 
  * @author Paul Wolfgang
  */
 public class CheckBoxFilter extends Filter {
 
-    private String parameterName;
+    private final String parameterName;
     private String parameterValue;
 
     private String filterQualifier;
@@ -43,11 +45,20 @@ public class CheckBoxFilter extends Filter {
 "            </fieldset>\n";
         }
 
+    /**
+     * Method to capture the request parameters. It then builds the filter
+     * strings.
+     * @param request 
+     */
+    @Override
     public void setFilterParameterValues(HttpServletRequest request) {
         parameterValue = request.getParameter(parameterName);
         buildFilterStrings();
     }
 
+    /**
+     * Method to build the filter expression and filter qualifier.
+     */
     private void buildFilterStrings() {
         if ("1".equals(parameterValue)) {
             filterQuery = new Comparison(getColumnName(), "<>", "0");
@@ -58,6 +69,11 @@ public class CheckBoxFilter extends Filter {
         }
     }
 
+    /**
+     * Return the filter qualifier
+     * @return filterQualifier
+     */
+    @Override
     public String getFilterQualifier() {
         return filterQualifier;
     }

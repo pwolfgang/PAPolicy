@@ -9,6 +9,7 @@ import edu.temple.cla.papolicy.queryBuilder.Comparison;
 import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
 import edu.temple.cla.papolicy.tables.AbstractTable;
 import edu.temple.cla.papolicy.tables.Table;
+import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
@@ -47,7 +48,7 @@ public class IndividualBillDrilldownController extends AbstractController{
         try {
             // Forward to DrillDown controller.
             response.sendRedirect(drillDownURL);
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             logger.error("Error when setting redirect " + drillDownURL, ex);
         }
         return null;

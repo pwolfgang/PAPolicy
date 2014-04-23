@@ -50,7 +50,7 @@ public class DisplayFormController extends AbstractController {
         try {
             // Load the selected table objects
             ParameterizedRowMapper<Topic> topicMapper = new TopicMapper();
-            List<Table> tableList = new ArrayList<Table>();
+            List<Table> tableList = new ArrayList<>();
             String[] tableIds = request.getParameterValues("dataset");
             if (tableIds == null) {
                 response.sendRedirect("analysis.spg?error=1");
@@ -112,11 +112,11 @@ public class DisplayFormController extends AbstractController {
             for (Column column : columns) {
                 List<Column> columnsList = columnMap.get(column.getUnits());
                 if (columnsList == null) {
-                    columnsList = new ArrayList<Column>();
+                    columnsList = new ArrayList<>();
                 }
                 if (column.getUnits() == Units.PERCENT_CHANGE) {
                     column.setValueMap(yearRange.getMinYear() - 2, yearRange.getMaxYear());
-                    column.setInitialPrevValue(yearRange.getMinYearPredicessor(), yearRange.getMinYear());
+                    column.setInitialPrevValue(yearRange.getMinYearPredecessor(), yearRange.getMinYear());
                 } else {
                     column.setValueMap(yearRange.getMinYear(), yearRange.getMaxYear());
                 }
@@ -179,7 +179,7 @@ public class DisplayFormController extends AbstractController {
             // Add the chart to the map.
             theMap.put("dataset", Chart.createChart(datasetList));
             return new ModelAndView("results", theMap);
-        } catch (Exception ex) {
+        } catch (Exception ex) { // want to catch and log all exceptions
             logger.error(ex);
             throw ex;
         }

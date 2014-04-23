@@ -7,6 +7,7 @@ package edu.temple.cla.papolicy;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
@@ -41,7 +42,7 @@ public class Utility {
             out.close();
             String codedString = Base64.encodeBase64URLSafeString(bytes.toByteArray());
             return codedString;
-        } catch (Exception ex) {
+        } catch (IOException ex) { // Cannot happen
             logger.error(ex);
             return theString;
         }
@@ -69,7 +70,7 @@ public class Utility {
                  w.write(c);
              }
              return w.toString();
-         } catch (Exception ex) {
+         } catch (IOException ex) {
              logger.error(ex);
              return theString;
          }

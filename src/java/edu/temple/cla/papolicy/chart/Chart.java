@@ -55,7 +55,7 @@ public class Chart extends HttpServlet {
         CategoryPlot plot = new CategoryPlot();
         int index = 0;
         for (MyDataset dataset : datasets) {
-            ValueAxis rangeAxis = null;
+            ValueAxis rangeAxis;
             if (dataset.getUnits() == Units.RANK) {
                 String[] axisLables = createAxisLables(dataset.getMaxValue().doubleValue());
                 rangeAxis = new SymbolAxis(dataset.getAxisTitle(), axisLables);
@@ -91,7 +91,7 @@ public class Chart extends HttpServlet {
      */
     private static CategoryPlot createBarPlot(MyDataset dataset) {
         CategoryPlot plot = new CategoryPlot();
-        ValueAxis rangeAxis = null;
+        ValueAxis rangeAxis;
         if (dataset.getUnits() == Units.RANK) {
             String[] axisLables = createAxisLables(dataset.getMaxValue().doubleValue());
             rangeAxis = new SymbolAxis(dataset.getAxisTitle(), axisLables);
@@ -154,7 +154,7 @@ public class Chart extends HttpServlet {
         try {
             File outputFile = File.createTempFile("chart", ".png");
             FileOutputStream out = new FileOutputStream(outputFile);
-            Plot plot = null;
+            Plot plot;
             if (datasets.size() == 1) {
                 MyDataset dataset0 = datasets.get(0);
                 if (dataset0.getColumnCount() == 1) {

@@ -87,7 +87,7 @@ public class GeneralFundBalanceColumnTest {
     @Test
     public void testGetPercentChange() {
       testColumn.setValueMap(yearRange.getMinYear() - 2, yearRange.getMaxYear());
-      testColumn.setInitialPrevValue(yearRange.getMinYearPredicessor(), yearRange.getMinYear());
+      testColumn.setInitialPrevValue(yearRange.getMinYearPredecessor(), yearRange.getMinYear());
       Number expected1979 = null;
       Number expected1980 = new Double(126.7);
       Number expected1981 = new Double(5.9);

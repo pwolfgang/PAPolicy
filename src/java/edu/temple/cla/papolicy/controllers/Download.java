@@ -46,7 +46,7 @@ public class Download extends AbstractController {
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
-        ResultSetMetaData rsmd = null;
+        ResultSetMetaData rsmd;
         MyWorkbook wb = null;
         MyWorksheet sheet = null;
         try {
@@ -85,7 +85,7 @@ public class Download extends AbstractController {
             logger.error("Error reading table", ex);
         } catch (IOException ioex) {
             logger.error(ioex);
-        } catch (Throwable ex) {
+        } catch (Throwable ex) {  // Catch any unexcpetied condition
             logger.error("Unexpected fatal condition", ex);
         } finally {
             if (sheet != null) {

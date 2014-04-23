@@ -25,7 +25,8 @@ public class TopicMapper implements ParameterizedRowMapper<Topic> {
      * @return The mapped object.
      * @throws SQLException 
      */
-    public Topic mapRow(ResultSet rs, int colNum) throws SQLException {
+    @Override
+    public Topic mapRow(ResultSet rs, int rowNum) throws SQLException {
 
         Topic item = new Topic();
         try {

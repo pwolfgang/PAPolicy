@@ -41,8 +41,8 @@ public class Column {
     private SortedMap<Integer, Number> valueMap;
     private SortedMap<Integer, Number> unfilteredTotalMap;
     private SortedMap<Integer, Number> filteredTotalMap;
-    private SortedMap<String, Number> displayedValueMap = new TreeMap<>();
-    private SortedMap<String, String> drillDownMap = new TreeMap<>();
+    private final SortedMap<String, Number> displayedValueMap = new TreeMap<>();
+    private final SortedMap<String, String> drillDownMap = new TreeMap<>();
     private Number prevValue = null;
     private String downloadQueryString = null;
     private Number minValue = null;
@@ -381,7 +381,7 @@ public class Column {
     public void setUnfilteredTotalMap(int minYear, int maxYear) {
         String query = getUnfilteredTotalQueryString(minYear, maxYear);
         List<YearValue> list = table.getYearValueList(query);
-        unfilteredTotalMap = new TreeMap<Integer, Number>();
+        unfilteredTotalMap = new TreeMap<>();
         for (YearValue yv : list) {
             unfilteredTotalMap.put(new Integer(yv.getYear()), yv.getValue());
         }
@@ -395,7 +395,7 @@ public class Column {
     public void setFilteredTotalMap(int minYear, int maxYear) {
         String query = getFilteredTotalQueryString(minYear, maxYear);
         List<YearValue> list = table.getYearValueList(query);
-        filteredTotalMap = new TreeMap<Integer, Number>();
+        filteredTotalMap = new TreeMap<>();
         for (YearValue yv : list) {
             filteredTotalMap.put(new Integer(yv.getYear()), yv.getValue());
         }
@@ -483,7 +483,7 @@ public class Column {
 
     /**
      * Set the download query string.
-     * @param downloadQuery the downloadQuery to set
+     * @param downloadQueryString the downloadQueryString to set
      */
     public void setDownloadQueryString(String downloadQueryString) {
         this.downloadQueryString = downloadQueryString;
@@ -512,6 +512,7 @@ public class Column {
      *
      * @param textColumn The name of the text column
      * @param freeText the free text string
+     * @return The expressing to select the free text
      */
     public Expression parseFreeText(String textColumn, String freeText) {
         Pattern p = Pattern.compile("(\\\"[^\\\"]+\\\")|([^\\p{javaWhitespace}]+)");

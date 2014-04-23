@@ -41,7 +41,7 @@ public class AnalysisController extends AbstractController {
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         try {
-            Map<String, Object> model = new HashMap<String, Object>();
+            Map<String, Object> model = new HashMap<>();
             ParameterizedRowMapper<Table> tableMapper = new TableMapper();
             ParameterizedRowMapper<Filter> filterMapper = new FilterMapper();
             ParameterizedRowMapper<Topic> topicMapper = new TopicMapper();
@@ -88,7 +88,7 @@ public class AnalysisController extends AbstractController {
             stb.delete(stb.length() - 2, stb.length());
             model.put("topicList", stb.toString());
             return new ModelAndView("analysis", model);
-        } catch (Exception ex) {
+        } catch (Exception ex) { // What to catch all exceptions
             logger.error(ex);
             throw ex;
         }

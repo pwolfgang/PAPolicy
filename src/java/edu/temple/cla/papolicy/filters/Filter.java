@@ -18,12 +18,12 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
  */
 public abstract class Filter {
 
-    private int id;
-    private int tableId;
-    private String description;
-    private String columnName;
-    private String tableReference;
-    private String additionalParam;
+    private final int id;
+    private final int tableId;
+    private final String description;
+    private final String columnName;
+    private final String tableReference;
+    private final String additionalParam;
     private SimpleJdbcTemplate jdbcTemplate;
     protected Expression filterQuery;
 

@@ -23,12 +23,12 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  */
 public class BillsCommittee extends Filter {
 
-    private String parameterName;
-    private String primaryName;
+    private final String parameterName;
+    private final String primaryName;
     private String parameterValue;
     private String primaryValue;
     private String filterQualifier;
-    private String chamberNumber;
+    private final String chamberNumber;
 
     /**
      * Construct a BillsCommittee object
@@ -101,7 +101,7 @@ public class BillsCommittee extends Filter {
             filterQuery = new EmptyExpression();
             filterQualifier = "";
         } else {
-            StringBuilder stb = new StringBuilder();
+            StringBuilder stb;
             String ctyCode = parameterValue;
             Expression primary = new Comparison("_" + ctyCode + "P", "<>", "0");
             if ("1".equals(primaryValue)) {
@@ -117,8 +117,7 @@ public class BillsCommittee extends Filter {
                     + " WHERE CtyCode=\'" + ctyCode + "\'";
             List<CommitteeAlias> selectedCommitteeList =
                     getJdbcTemplate().query(query, itemMapper);
-            Map<Integer, CommitteeAlias> uniqueCommittees =
-                    new TreeMap<Integer, CommitteeAlias>();
+            Map<Integer, CommitteeAlias> uniqueCommittees = new TreeMap<>();
             for (CommitteeAlias committee : selectedCommitteeList) {
                 uniqueCommittees.put(committee.getCtyCode(), committee);
             }

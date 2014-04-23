@@ -67,7 +67,7 @@ public class DownloadGovernorsBudgetAddress extends HttpServlet {
             pw.println("</body>");
             pw.println("</html>");
             pw.close();
-            }catch (Throwable t) {
+            }catch (Throwable t) { // Want to log any error
                 logger.error(t);
             }
         } finally {

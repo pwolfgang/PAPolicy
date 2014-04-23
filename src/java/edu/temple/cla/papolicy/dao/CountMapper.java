@@ -5,7 +5,6 @@
 
 package edu.temple.cla.papolicy.dao;
 
-import edu.temple.cla.papolicy.Utility;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;

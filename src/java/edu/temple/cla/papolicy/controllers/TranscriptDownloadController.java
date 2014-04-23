@@ -53,7 +53,7 @@ public class TranscriptDownloadController extends AbstractController {
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
-        ResultSetMetaData rsmd = null;
+        ResultSetMetaData rsmd;
         MyWorkbook wb = null;
         MyWorksheet sheet = null;
         try {
@@ -102,7 +102,7 @@ public class TranscriptDownloadController extends AbstractController {
             logger.error("Error reading table", ex);
         } catch (IOException ioex) {
             logger.error(ioex);
-        } catch (Throwable ex) {
+        } catch (Throwable ex) { // Want to catch any additional errors
             logger.error("Unexpected fatal condition", ex);
         } finally {
             if (sheet != null) {

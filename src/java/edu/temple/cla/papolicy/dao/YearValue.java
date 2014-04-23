@@ -10,7 +10,7 @@ package edu.temple.cla.papolicy.dao;
  * @author Paul Wolfgang
  */
 public class YearValue {
-    private int year;
+    private final int year;
     private Number value;
 
     public YearValue(int year, Number value) {

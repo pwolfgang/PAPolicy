@@ -27,12 +27,12 @@ public class MyDataset implements CategoryDataset, Serializable{
     
     static final long serialVersionUID = 6150912507653373738L;
 
-    private List<Column> columns;
-    private List<String> columnLabels = new ArrayList<>();
-    private List<String> rowLabels = new ArrayList<>();
+    private final List<Column> columns;
+    private final List<String> columnLabels = new ArrayList<>();
+    private final List<String> rowLabels = new ArrayList<>();
     
-    private SortedMap<String, Integer> columnKeyMap = new TreeMap<>();
-    private SortedMap<String, Integer> rowKeyMap = new TreeMap<>();
+    private final SortedMap<String, Integer> columnKeyMap = new TreeMap<>();
+    private final SortedMap<String, Integer> rowKeyMap = new TreeMap<>();
     private Number minValue = null;
     private Number maxValue = null;
 
@@ -166,9 +166,10 @@ public class MyDataset implements CategoryDataset, Serializable{
 
     /**
      * Determine the index of the specified row
-     * @param row The key that represents this row
+     * @param key The key that represents this row
      * @return The index of this row
      */
+    @Override
     public int getRowIndex(Comparable key) {
         return rowKeyMap.get((String)key);
     }
@@ -189,7 +190,7 @@ public class MyDataset implements CategoryDataset, Serializable{
      */
     @Override
     public List getRowKeys() {
-        return new ArrayList<String>(rowKeyMap.keySet());
+        return new ArrayList<>(rowKeyMap.keySet());
     }
 
     /**
@@ -198,7 +199,7 @@ public class MyDataset implements CategoryDataset, Serializable{
      */
     @Override
     public List getColumnKeys() {
-        return new ArrayList<String>(columnKeyMap.keySet());
+        return new ArrayList<>(columnKeyMap.keySet());
     }
 
     /**
@@ -209,6 +210,7 @@ public class MyDataset implements CategoryDataset, Serializable{
      * @param columnKey The column key
      * @return The value at the given row and column
      */
+    @Override
     public Number getValue(Comparable rowKey, Comparable columnKey) {
         int rowIndex = getRowIndex(rowKey);
         // Remember Dataset rows are our columns

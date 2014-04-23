@@ -30,7 +30,7 @@ public class TranscriptDrillDownController extends AbstractController {
      * Create the ModelAndView. The model will contain the referenced transcript
      * and the committess and bills referenced.
      * @param request The HTTP request object
-     * @param reaponse The HTTP response object
+     * @param response The HTTP response object
      * @return Model containing the data and a reference to the TranscriptDrillDown jsp page
      */
     @Override
@@ -50,7 +50,7 @@ public class TranscriptDrillDownController extends AbstractController {
             Map<String, Object> theMap = new HashMap<>();
             theMap.put("theList", theList);
             return new ModelAndView("transcriptDrillDown", theMap);
-        } catch (Exception ex) {
+        } catch (Exception ex) { // catch all exceptions
             logger.error(ex);
             return null;
         }
