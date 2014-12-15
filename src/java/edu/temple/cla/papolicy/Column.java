@@ -4,23 +4,16 @@
  */
 package edu.temple.cla.papolicy;
 
+import edu.temple.cla.papolicy.queryBuilder.FreeTextParser;
 import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.queryBuilder.Between;
-import edu.temple.cla.papolicy.queryBuilder.Composite;
-import edu.temple.cla.papolicy.queryBuilder.Conjunction;
-import edu.temple.cla.papolicy.queryBuilder.Disjunction;
-import edu.temple.cla.papolicy.queryBuilder.Expression;
-import edu.temple.cla.papolicy.queryBuilder.Like;
 import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
 import edu.temple.cla.papolicy.tables.Table;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
 /**
@@ -221,7 +214,7 @@ public class Column {
         if (topicCountQuery == null) {
             topicCountQuery = table.getTopicQuery(topic).clone();
             if (freeText != null) {
-                topicCountQuery.setFreeText(parseFreeText(table.getTextColumn(), freeText));
+                topicCountQuery.setFreeText(FreeTextParser.parse(table.getTextColumn(), freeText));
             }
         }
         return topicCountQuery;
@@ -507,63 +500,4 @@ public class Column {
         return maxValue;
     }
 
-    /**
-     * Method to parse the free text and generate the query condition
-     *
-     * @param textColumn The name of the text column
-     * @param freeText the free text string
-     * @return The expressing to select the free text
-     */
-    public Expression parseFreeText(String textColumn, String freeText) {
-        Pattern p = Pattern.compile("(\\\"[^\\\"]+\\\")|([^\\p{javaWhitespace}]+)");
-        Scanner scan = new Scanner(freeText);
-        List<String> list = new ArrayList<>();
-        String t;
-        while ((t = scan.findInLine(p)) != null) {
-            list.add(t);
-        }
-        Expression result;
-        if (list.size() == 1) {
-            result = createLike(textColumn, list.get(0));
-        } else {
-            result = new Conjunction();
-            for (String token : list) {
-                switch (token.toLowerCase()) {
-                    case "and":
-                        if (result.getClass() != Conjunction.class) {
-                            Expression lhs = result;
-                            Conjunction c = new Conjunction();
-                            c.addTerm(lhs);
-                            result = c;
-                        }
-                        break;
-                    case "or":
-                        if (result.getClass() != Disjunction.class) {
-                            Expression lhs = result;
-                            Disjunction d = new Disjunction();
-                            d.addTerm(lhs);
-                            result = d;
-                        }
-                        break;
-                    default:
-                        Composite c = (Composite) result;
-                        c.addTerm(createLike(textColumn, token));
-                }
-            }
-        }
-        return result;
-    }
-
-    /**
-     * Create a Like expression to select a given key word.
-     * @param textColumn The column in the table to search.
-     * @param token The key word or phrase to be sought.
-     * @return 
-     */
-    private Like createLike(String textColumn, String token) {
-        if (token.startsWith("\"")) {
-            token = token.substring(1, token.length() - 1);
-        }
-        return new Like(textColumn, "%" + token + "%");
-    }
 }
