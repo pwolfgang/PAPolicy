@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 /**
  *

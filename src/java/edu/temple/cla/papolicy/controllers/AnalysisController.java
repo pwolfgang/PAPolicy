@@ -13,10 +13,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 /**
  * Controller that responds to the analysis page request.  This controller
@@ -27,7 +27,7 @@ public class AnalysisController extends AbstractController {
 
     private static final Logger logger = Logger.getLogger(AnalysisController.class);
 
-    private SimpleJdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     /**
      * Method to handle the HTTP request. This method builds the model object
@@ -100,7 +100,7 @@ public class AnalysisController extends AbstractController {
      * provides access to the database.
      * @param jdbcTemplate The jdbcTemplate object.
      */
-    public void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate) {
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 }

@@ -21,8 +21,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -34,7 +34,7 @@ import org.springframework.web.servlet.mvc.AbstractController;
 public class DisplayFormController extends AbstractController {
 
     private static Logger logger = Logger.getLogger(DisplayFormController.class);
-    private SimpleJdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     /**
      * Respond to the http post request.
@@ -189,7 +189,7 @@ public class DisplayFormController extends AbstractController {
      * Sets the jdbcTemplate for database access.  Called by Spring framework
      * @param jdbcTemplate The jdbcTemplate object.
      */
-    public void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate) {
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 }

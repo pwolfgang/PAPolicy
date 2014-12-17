@@ -13,7 +13,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -24,7 +24,7 @@ import org.springframework.web.servlet.mvc.AbstractController;
 public class TranscriptDrillDownController extends AbstractController {
 
     private static final Logger logger = Logger.getLogger(TranscriptDrillDownController.class);
-    private SimpleJdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     /**
      * Create the ModelAndView. The model will contain the referenced transcript
@@ -61,7 +61,7 @@ public class TranscriptDrillDownController extends AbstractController {
      * (Called by the Spring framework.)
      * @param jdbcTemplate the jdbcTemplate to set
      */
-    public void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate) {
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 }

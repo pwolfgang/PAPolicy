@@ -19,7 +19,7 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.ext.hsqldb.HsqldbDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 /**
@@ -143,8 +143,8 @@ public class TestDatabase {
         }
     }
     
-    public static SimpleJdbcTemplate getSimpleJdbcTemplate() {
-        return new SimpleJdbcTemplate(dataSource);
+    public static JdbcTemplate getJdbcTemplate() {
+        return new JdbcTemplate(dataSource);
     }
     
 }

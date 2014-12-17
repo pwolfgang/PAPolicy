@@ -8,7 +8,7 @@ package edu.temple.cla.papolicy.filters;
 import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
 import edu.temple.cla.papolicy.queryBuilder.Expression;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * A Filter is responsible for displaying the html fragment that is included
@@ -24,7 +24,7 @@ public abstract class Filter {
     private final String columnName;
     private final String tableReference;
     private final String additionalParam;
-    private SimpleJdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
     protected Expression filterQuery;
 
     /**
@@ -126,7 +126,7 @@ public abstract class Filter {
      * Return the jdbcTemplate
      * @return the jdbcTemplate
      */
-    public SimpleJdbcTemplate getJdbcTemplate() {
+    public JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;
     }
 
@@ -134,7 +134,7 @@ public abstract class Filter {
      * Set the jdbcTemplate. Set when the filter object is constructed.
      * @param jdbcTemplate the jdbcTemplate to set
      */
-    public void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate) {
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
     

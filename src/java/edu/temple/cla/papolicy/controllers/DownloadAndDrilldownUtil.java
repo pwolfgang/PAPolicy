@@ -10,8 +10,8 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 /**
  * This class contains utility methods common to the download and drill down
@@ -174,7 +174,7 @@ public class DownloadAndDrilldownUtil {
      * @param transcriptId ID of the transcript
      * @return List of committees
      */
-    static List<String> getCommitteeNames(SimpleJdbcTemplate jdbcTemplate,
+    static List<String> getCommitteeNames(JdbcTemplate jdbcTemplate,
             String transcriptId) {
         List<TranscriptCommittee> committeeList
                 = jdbcTemplate.query(transcriptJoinQuery + transcriptId + "'",
@@ -192,7 +192,7 @@ public class DownloadAndDrilldownUtil {
      * @param transcriptId ID of the transcript
      * @return List of billIds
      */
-    static List<String> getBillIdList(SimpleJdbcTemplate jdbcTemplate,
+    static List<String> getBillIdList(JdbcTemplate jdbcTemplate,
             String transcriptId) {
         List<String> billIdList
                 = jdbcTemplate.query(transcriptBillsQuery + transcriptId + "'", 

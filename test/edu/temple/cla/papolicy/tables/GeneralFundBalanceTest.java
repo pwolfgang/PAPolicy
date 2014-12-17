@@ -21,7 +21,7 @@ import mockit.NonStrictExpectations;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  *
@@ -30,7 +30,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 public class GeneralFundBalanceTest {
     
     @Mocked HttpServletRequest request;
-    @Mocked SimpleJdbcTemplate jdbcTemplate;
+    @Mocked JdbcTemplate jdbcTemplate;
     private YearValue[] yearValues = new YearValue[] {
         new YearValue(1979,   30),
         new YearValue(1980,   68),

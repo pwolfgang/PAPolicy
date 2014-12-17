@@ -14,7 +14,7 @@ import mockit.NonStrictExpectations;
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  *
@@ -26,7 +26,7 @@ public class BillsCommitteeTest {
     @Mocked
     HttpServletRequest request;
     @Mocked
-    SimpleJdbcTemplate jdbcTemplate;
+    JdbcTemplate jdbcTemplate;
 
     public BillsCommitteeTest() {
     }

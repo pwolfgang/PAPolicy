@@ -10,7 +10,6 @@ import edu.temple.cla.papolicy.filters.Filter;
 import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
 import java.util.List;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 /**
  * The BudgetTable contains the spending data from the US Census allocated

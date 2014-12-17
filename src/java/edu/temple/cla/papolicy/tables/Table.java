@@ -10,7 +10,7 @@ import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
 import java.util.List;
 import java.util.SortedMap;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * The Table interface defines the methods for each of the datasets.
@@ -125,7 +125,7 @@ public interface Table extends Cloneable {
      * The jdbcTemplate is set when the class is loaded.
      * @param jdbcTemplate the jdbcTemplate to set
      */
-    void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate);
+    void setJdbcTemplate(JdbcTemplate jdbcTemplate);
 
     /**
      * The qualifier is used to distinguish subtables.

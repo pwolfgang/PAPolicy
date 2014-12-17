@@ -20,7 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  *
@@ -29,7 +29,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 public class LegServiceAgencyColumnTest {
     @Mocked
     HttpServletRequest request;
-    private SimpleJdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
     private Column testColumn;
     private Table testTable;
     private String[] drillDownColumns;
@@ -58,7 +58,7 @@ public class LegServiceAgencyColumnTest {
     @Before
     public void setUp() throws Exception {
         TestDatabase.beforeTest();
-        jdbcTemplate = TestDatabase.getSimpleJdbcTemplate();
+        jdbcTemplate = TestDatabase.getJdbcTemplate();
         drillDownColumns = new String[]{"Title", "Orginization", "Year", "Month", "Day", "Abstract", "FinalCode"};
         testTable = new StandardTable();
         testTable.setId(6);

@@ -11,8 +11,8 @@ import edu.temple.cla.papolicy.dao.AllTopics;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 /**
  * This class manages the list of topics and subtopics that have been selected
@@ -32,7 +32,7 @@ public class TopicList {
      * @param topics The response string from the form submittal.
      * @param jdbcTemplate The jcbcTemplate used to access the database.
      */
-    public TopicList(String[] topics, SimpleJdbcTemplate jdbcTemplate) {
+    public TopicList(String[] topics, JdbcTemplate jdbcTemplate) {
         if (topics == null) {
             majorTopics.put(0, new AllTopics());
             selectedTopics.put(0, new AllTopics());

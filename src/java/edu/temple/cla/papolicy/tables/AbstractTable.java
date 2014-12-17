@@ -27,8 +27,8 @@ import java.util.SortedMap;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 /**
  * The AbstractTable provides default implementation of the Table interface.
@@ -52,7 +52,7 @@ public abstract class AbstractTable implements Table {
     private char qualifier;
     private String noteColumn;
     private List<Filter> filterList;
-    protected SimpleJdbcTemplate jdbcTemplate;
+    protected JdbcTemplate jdbcTemplate;
     private Conjunction filterQuery;
     private QueryBuilder totalUnfilteredQuery;
     private QueryBuilder totalFilteredQuery;
@@ -198,7 +198,7 @@ public abstract class AbstractTable implements Table {
      * @param jdbcTemplate the jdbcTemplate to set
      */
     @Override
-    public void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate) {
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -603,7 +603,7 @@ public abstract class AbstractTable implements Table {
       * @throws Error If the table does not exist in the database
       */
      public static Table[] getTable(String tableId, char qualifier,
-            HttpServletRequest request, SimpleJdbcTemplate jdbcTemplate)
+            HttpServletRequest request, JdbcTemplate jdbcTemplate)
             throws DataAccessException, Error {
         ParameterizedRowMapper<Table> tableMapper = new TableMapper();
         ParameterizedRowMapper<Filter> filterMapper = new FilterMapper();

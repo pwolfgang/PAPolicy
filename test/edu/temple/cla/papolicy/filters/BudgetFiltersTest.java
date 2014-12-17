@@ -13,7 +13,7 @@ import mockit.NonStrictExpectations;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  *
@@ -25,7 +25,7 @@ public class BudgetFiltersTest {
     @Mocked
     HttpServletRequest request;
     @Mocked
-    SimpleJdbcTemplate jdbcTemplate;
+    JdbcTemplate jdbcTemplate;
 
     private Deflator[] deflators = new Deflator[] {
         new Deflator(1997,  8211.7, 0.8495),
