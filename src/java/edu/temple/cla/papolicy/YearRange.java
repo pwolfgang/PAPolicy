@@ -144,7 +144,9 @@ public class YearRange {
         int minSessionYear = (minYear-1)/2 * 2 + 1;
         int maxSessionYear = (maxYear+1)/2 * 2;
         StringBuilder stb = new StringBuilder();
-        stb.append("\r\n<option selected=\"selected\">");
+        stb.append("\r\n<option value=\"");
+        stb.append(minSessionYear);
+        stb.append("\" selected=\"selected\">");
         stb.append(String.format("%4d-%02d",minSessionYear, (minSessionYear+1) % 100));
         stb.append("</option>");
         for (int i = minSessionYear+2; i <= maxSessionYear; i += 2) {
@@ -166,7 +168,9 @@ public class YearRange {
         int minSessionYear = (minYear-1)/2 * 2 + 1;
         int maxSessionYear = (maxYear+1)/2 * 2;
         StringBuilder stb = new StringBuilder();
-        stb.append("\r\n<option selected=\"selected\">");
+        stb.append("\r\n<option value=\"");
+        stb.append(maxSessionYear);
+        stb.append("\" selected=\"selected\">");
         stb.append(String.format("%4d-%02d", maxSessionYear-1, maxSessionYear%100));
         stb.append("</option>");
         for (int i = maxSessionYear-2; i >= minSessionYear; i -= 2) {
