@@ -48,9 +48,9 @@ public class Party extends Filter implements Cloneable {
         return "<fieldset><legend>"+getDescription()+"</legend>\n"+
 "              <input type=\"radio\" id=\"F"+getId()+"N\" name=\"F"+getId()+"\" value=\"NOFILTER\" checked=\"checked\" />"
                 + "&nbsp;<label for=\"F"+getId()+"N\">Both</label>\n"+
-"              <input type=\"radio\" id=\"F"+getId()+"R\" value=\"0\" />"
+"              <input type=\"radio\" id=\"F"+getId()+"R\" name=\"F"+getId()+"\" value=\"0\" />"
                 + "&nbsp;<label for=\"F"+getId()+"R\">Republican</label>\n"+
-"              <input type=\"radio\" id=\"F"+getId()+"D\" value=\"1\" />"
+"              <input type=\"radio\" id=\"F"+getId()+"D\" name=\"F"+getId()+"\" value=\"1\" />"
                 + "&nbsp;<label for=\"F"+getId()+"D\">Democrat</label>\n"
             + "</fieldset>";
     }
