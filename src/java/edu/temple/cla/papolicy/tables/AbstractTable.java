@@ -36,7 +36,7 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  * @author Paul Wolfgang
  */
 public abstract class AbstractTable implements Table {
-    private static Logger LOGGER = Logger.getLogger(AbstractTable.class);
+    private static final Logger LOGGER = Logger.getLogger(AbstractTable.class);
 
     private int id;
     private String tableName;

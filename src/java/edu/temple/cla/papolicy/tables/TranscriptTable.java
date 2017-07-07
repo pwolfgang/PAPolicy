@@ -19,7 +19,7 @@ import java.util.List;
  * @author Paul Wolfgang
  */
 public class TranscriptTable extends StandardTable {
-
+    
     @Override
     public QueryBuilder getUnfilteredTotalQuery() {
         QueryBuilder builder = new QueryBuilder();
@@ -79,5 +79,5 @@ public class TranscriptTable extends StandardTable {
     public TranscriptTable clone() {
         return (TranscriptTable)super.clone();
     }
-
+    
 }

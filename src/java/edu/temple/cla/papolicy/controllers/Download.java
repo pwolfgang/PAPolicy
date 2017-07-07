@@ -24,8 +24,10 @@ import org.springframework.web.servlet.mvc.AbstractController;
  */
 public class Download extends AbstractController {
 
-    private static Logger logger = Logger.getLogger(Download.class);
+    private static Logger LOGGER = Logger.getLogger(Download.class);
+
     private DataSource dataSource;
+    private AbstractController transcriptDownloadController;
 
     /**
      * Create the ModelAndView
@@ -40,6 +42,14 @@ public class Download extends AbstractController {
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
             HttpServletResponse response) {
+        String requestURI = request.getRequestURI();
+        if (requestURI.matches(".*House.?Hearings.*")) {
+            try {
+                return transcriptDownloadController.handleRequest(request, response);
+            } catch (Throwable ex) {
+                LOGGER.error(ex);
+            }
+        }
         // Extract the query from the request.
         String query = Utility.decodeAndDecompress(request.getParameter("query"));
         response.setContentType("application/ms-excel");
@@ -82,11 +92,11 @@ public class Download extends AbstractController {
             wb.close();
             wb = null;
         } catch (SQLException ex) {
-            logger.error("Error reading table", ex);
+            LOGGER.error("Error reading table", ex);
         } catch (IOException ioex) {
-            logger.error(ioex);
+            LOGGER.error(ioex);
         } catch (Throwable ex) {  // Catch any unexcpetied condition
-            logger.error("Unexpected fatal condition", ex);
+            LOGGER.error("Unexpected fatal condition", ex);
         } finally {
             if (sheet != null) {
                 sheet.close();
@@ -119,6 +129,14 @@ public class Download extends AbstractController {
      */
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+    /**
+     * Method to set the transcriptDownloadControler. This method is
+     * called by the Spring framework.
+     * @param transcriptDownloadController
+     */
+    public void setTranscriptDownloadController(AbstractController transcriptDownloadController) {
+        this.transcriptDownloadController = transcriptDownloadController;
     }
 
 }
