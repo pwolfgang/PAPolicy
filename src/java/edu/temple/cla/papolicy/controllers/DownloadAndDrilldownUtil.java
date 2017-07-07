@@ -21,14 +21,14 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  */
 public class DownloadAndDrilldownUtil {
 
-    private static final Logger logger = Logger.getLogger(DownloadAndDrilldownUtil.class);
-    private static final String transcriptJoinQuery
+    private static final Logger LOGGER = Logger.getLogger(DownloadAndDrilldownUtil.class);
+    private static final String TRANSCRIPT_COMMITTEE_QUERY
             = "SELECT * from Transcript_Committee join CommitteeAliases on committeeID=ID WHERE transcriptID='";
-    private static final String transcriptBillsQuery
+    private static final String TRANSCRIPT_BILL_QUERY
             = "SELECT BillID from Transcript_BillID WHERE TranscriptID='";
-    private static final ParameterizedRowMapper<TranscriptCommittee> transcriptCommitteeMapper
+    private static final ParameterizedRowMapper<TranscriptCommittee> TRANSCRIPT_COMMITTEE_MAPPER
             = new TranscriptCommitteeMapper();
-    private static final ParameterizedRowMapper<String> stringMapper = new StringMapper();
+    private static final ParameterizedRowMapper<String> STRING_MAPPER = new StringMapper();
 
     static void addColumn(int columnType, int i, MyWorksheet sheet, ResultSet rs) {
         try {
@@ -60,7 +60,7 @@ public class DownloadAndDrilldownUtil {
                     addDateValue(sheet, i, rs);
             }
         } catch (Exception ex) { // Want to catch unchecked exceptions.
-            logger.error("Error converting cell", ex);
+            LOGGER.error("Error converting cell", ex);
             sheet.addCell("null");
         }
     }
@@ -177,8 +177,8 @@ public class DownloadAndDrilldownUtil {
     static List<String> getCommitteeNames(JdbcTemplate jdbcTemplate,
             String transcriptId) {
         List<TranscriptCommittee> committeeList
-                = jdbcTemplate.query(transcriptJoinQuery + transcriptId + "'",
-                        transcriptCommitteeMapper);
+                = jdbcTemplate.query(TRANSCRIPT_COMMITTEE_QUERY + transcriptId + "'",
+                        TRANSCRIPT_COMMITTEE_MAPPER);
         List<String> committeeNames = new ArrayList<>();
         for (TranscriptCommittee transcriptCommittee : committeeList) {
             committeeNames.add(transcriptCommittee.getCommitteeAlias().getAlternateName());
@@ -195,8 +195,8 @@ public class DownloadAndDrilldownUtil {
     static List<String> getBillIdList(JdbcTemplate jdbcTemplate,
             String transcriptId) {
         List<String> billIdList
-                = jdbcTemplate.query(transcriptBillsQuery + transcriptId + "'", 
-                        stringMapper);
+                = jdbcTemplate.query(TRANSCRIPT_BILL_QUERY + transcriptId + "'", 
+                        STRING_MAPPER);
         fixBillId(billIdList);
         return billIdList;
     }

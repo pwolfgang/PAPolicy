@@ -46,7 +46,7 @@ public class HouseHearingsCommittee extends Filter {
     @Override
     public String getFilterFormInput() {
         ParameterizedRowMapper<CommitteeName> itemMapper = new CommitteeNameMapper();
-        String chamberNumber = null;
+        String chamberNumber;
         if (getAdditionalParam().equals("House")) {
             chamberNumber = "1";
         } else {
@@ -55,11 +55,21 @@ public class HouseHearingsCommittee extends Filter {
         String query = "SELECT * FROM "+getTableReference()+" WHERE CtyCode LIKE('"+chamberNumber+"%%') ORDER BY Name";
         List<CommitteeName> items = getJdbcTemplate().query(query, itemMapper);
         StringBuilder stb = new StringBuilder();
-        stb.append("<label for=\"F"+getId()+"\">"+getAdditionalParam()+" Hearings</label>\n"+
-"                <br/>\n<select name=\"F"+getId()+"\" id=\"F"+getId()+"\">\n"+
-"                <option value=\"ALL\" selected=\"selected\">ALL COMMITTEES</option>\n");
+        stb.append("<label for=\"F")
+                .append(getId()).append("\">")
+                .append(getAdditionalParam())
+                .append(" Hearings</label>\n")
+                .append("                <br/>\n<select name=\"F")
+                .append(getId()).append("\" id=\"F")
+                .append(getId())
+                .append("\">\n")
+                .append("                <option value=\"ALL\" selected=\"selected\">ALL COMMITTEES</option>\n");
         for (CommitteeName item : items) {
-            stb.append("<option value=\""+item.getCtyCode()+"\">"+item.getName()+"</option>\n");
+            stb.append("<option value=\"")
+                    .append(item.getCtyCode())
+                    .append("\">")
+                    .append(item.getName())
+                    .append("</option>\n");
         }
         stb.append("</select><br/>\n");
         return stb.toString();
@@ -74,6 +84,13 @@ public class HouseHearingsCommittee extends Filter {
         return selected;
     }
 
+    /**
+     * Set the filter parameter values from the HTTP request and set the
+     * filter query and qualifier string.  The qualifier string is the
+     * final committee name, even though an earlier name may have been
+     * selected from the drop-down.
+     * @param request The HTTP request object.
+     */
     @Override
     public void setFilterParameterValues(HttpServletRequest request) {
         ctyCode = request.getParameter("F"+getId());
@@ -88,11 +105,9 @@ public class HouseHearingsCommittee extends Filter {
     }
 
     /**
-     * Set the filter parameter values from the HTTP request and set the
-     * filter query and qualifier string.  The qualifier string is the
+     * Set the filter qualifier string.  The qualifier string is the
      * final committee name, even though an earlier name may have been
      * selected from the drop-down.
-     * @param request The HTTP request object.
      */
     public void setFilterQualifier() {
         if (ctyCode != null && !ctyCode.equals("ALL")) {
@@ -111,6 +126,7 @@ public class HouseHearingsCommittee extends Filter {
      * Return a string that describes the selected filter.
      * @return A string that describes the selected filter.
      */
+    @Override
     public String getFilterQualifier() {
         return filterQuallifierString;
     }

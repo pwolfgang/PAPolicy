@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
  */
 public class Column {
 
-    private static Logger logger = Logger.getLogger(Column.class);
+    private static Logger LOGGER = Logger.getLogger(Column.class);
     private Table table;
     private Topic topic;
     private String freeText;
@@ -330,7 +330,7 @@ public class Column {
         }
         Double pv = prevValue.doubleValue();
         Double cv = currentValue.doubleValue();
-        Number result = new Double((cv - pv) / pv * 100.0);
+        Number result = (cv - pv) / pv * 100.0;
         prevValue = currentValue;
         return result;
     }
@@ -362,7 +362,7 @@ public class Column {
                     }
                 }
             }
-            valueMap.put(new Integer(yv.getYear()), yv.getValue());
+            valueMap.put(yv.getYear(), yv.getValue());
         }
     }
 
@@ -376,7 +376,7 @@ public class Column {
         List<YearValue> list = table.getYearValueList(query);
         unfilteredTotalMap = new TreeMap<>();
         for (YearValue yv : list) {
-            unfilteredTotalMap.put(new Integer(yv.getYear()), yv.getValue());
+            unfilteredTotalMap.put(yv.getYear(), yv.getValue());
         }
     }
 
@@ -390,7 +390,7 @@ public class Column {
         List<YearValue> list = table.getYearValueList(query);
         filteredTotalMap = new TreeMap<>();
         for (YearValue yv : list) {
-            filteredTotalMap.put(new Integer(yv.getYear()), yv.getValue());
+            filteredTotalMap.put(yv.getYear(), yv.getValue());
         }
     }
 

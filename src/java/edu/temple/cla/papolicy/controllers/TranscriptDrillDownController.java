@@ -23,7 +23,7 @@ import org.springframework.web.servlet.mvc.AbstractController;
  */
 public class TranscriptDrillDownController extends AbstractController {
 
-    private static final Logger logger = Logger.getLogger(TranscriptDrillDownController.class);
+    private static final Logger LOGGER = Logger.getLogger(TranscriptDrillDownController.class);
     private JdbcTemplate jdbcTemplate;
 
     /**
@@ -51,7 +51,7 @@ public class TranscriptDrillDownController extends AbstractController {
             theMap.put("theList", theList);
             return new ModelAndView("transcriptDrillDown", theMap);
         } catch (Exception ex) { // catch all exceptions
-            logger.error(ex);
+            LOGGER.error(ex);
             return null;
         }
     }

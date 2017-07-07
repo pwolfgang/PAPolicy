@@ -36,7 +36,7 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  * @author Paul Wolfgang
  */
 public abstract class AbstractTable implements Table {
-    private static Logger logger = Logger.getLogger(AbstractTable.class);
+    private static Logger LOGGER = Logger.getLogger(AbstractTable.class);
 
     private int id;
     private String tableName;
@@ -429,7 +429,7 @@ public abstract class AbstractTable implements Table {
         Number sum = getValueForRange(valueMap);
         Number total = getValueForRange(totalMap);
         if (total != null && total.doubleValue() != 0) {
-            return new Double(sum != null ? sum.doubleValue() / total.doubleValue() * 100 : new Double(0));
+            return sum != null ? sum.doubleValue() / total.doubleValue() * 100 : new Double(0);
         }
         return null;
     }
@@ -445,9 +445,9 @@ public abstract class AbstractTable implements Table {
         if (n1 == null) return n2;
         if (n2 == null) return n1;
         if (n1 instanceof Integer && n2 instanceof Integer) {
-            return new Integer(n1.intValue() + n2.intValue());
+            return n1.intValue() + n2.intValue();
         }
-        return new Double(n1.doubleValue() + n2.doubleValue());
+        return n1.doubleValue() + n2.doubleValue();
     }
 
     /**
@@ -671,6 +671,7 @@ public abstract class AbstractTable implements Table {
     
     /**
      * Make a deep copy of this table object
+     * This method catches CloneNotSupportedException
      * @return a copy of this table object
      */
     @Override
@@ -707,7 +708,7 @@ public abstract class AbstractTable implements Table {
         try {
             stb.append(URLEncoder.encode(stb2.toString(), "UTF-8"));
         } catch (UnsupportedEncodingException ex) {
-            logger.error(ex);
+            LOGGER.error(ex);
         }
         stb.append(".xlsx?query=");
         stb.append(downloadQueryString);

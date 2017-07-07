@@ -64,12 +64,17 @@ public class TranscriptTable extends StandardTable {
      */
     @Override
     public void setDrillDownColumns(String[] drillDownColumns) {
-        List<String> drillDownColumnsList = new ArrayList<String>();
+        List<String> drillDownColumnsList = new ArrayList<>();
         drillDownColumnsList.add("ID");
         drillDownColumnsList.addAll(Arrays.asList(drillDownColumns));
         this.drillDownColumns = drillDownColumnsList.toArray(new String[drillDownColumnsList.size()]);
     }
     
+    /**
+     * Create a deep copy of this object.
+     * Note: the super class catches CloneNotSupported
+     * @return A deep copy of this object
+     */
     @Override
     public TranscriptTable clone() {
         return (TranscriptTable)super.clone();
