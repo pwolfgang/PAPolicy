@@ -1,12 +1,8 @@
 package edu.temple.cla.papolicy.controllers;
 
-import edu.temple.cis.wolfgang.mycreatexlsx.MyWorksheet;
 import edu.temple.cla.papolicy.dao.StringMapper;
 import edu.temple.cla.papolicy.dao.TranscriptCommittee;
 import edu.temple.cla.papolicy.dao.TranscriptCommitteeMapper;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
@@ -30,126 +26,6 @@ public class DownloadAndDrilldownUtil {
             = new TranscriptCommitteeMapper();
     private static final ParameterizedRowMapper<String> STRING_MAPPER = new StringMapper();
 
-    static void addColumn(int columnType, int i, MyWorksheet sheet, ResultSet rs) {
-        try {
-            switch (columnType) {
-                case Types.BIT:
-                case Types.TINYINT:
-                case Types.SMALLINT:
-                case Types.INTEGER:
-                    addIntValue(sheet, i, rs);
-                    break;
-                case Types.BIGINT:
-                    addLongValue(sheet, i, rs);
-                    break;
-                case Types.FLOAT:
-                case Types.REAL:
-                case Types.DOUBLE:
-                case Types.NUMERIC:
-                case Types.DECIMAL:
-                    addDoubleValue(sheet, i, rs);
-                    break;
-                case Types.CHAR:
-                case Types.VARCHAR:
-                case Types.LONGVARCHAR:
-                    addStringValue(sheet, i, rs);
-                    break;
-                case Types.DATE:
-                case Types.TIME:
-                case Types.TIMESTAMP:
-                    addDateValue(sheet, i, rs);
-            }
-        } catch (Exception ex) { // Want to catch unchecked exceptions.
-            LOGGER.error("Error converting cell", ex);
-            sheet.addCell("null");
-        }
-    }
-
-    /**
-     * Method to add an int value to a worksheet
-     * @param sheet The worksheet
-     * @param i The column index
-     * @param rs Result set containing the data
-     * @throws SQLException 
-     */
-    private static void addIntValue(MyWorksheet sheet, int i, ResultSet rs)
-            throws SQLException {
-        int intValue = rs.getInt(i + 1);
-        if (!rs.wasNull()) {
-            sheet.addCell(intValue);
-        } else {
-            sheet.addCell("null");
-        }
-    }
-
-    /**
-     * Method to add a long value to a worksheet
-     * @param sheet The worksheet
-     * @param i The column index
-     * @param rs Result set containing the data
-     * @throws SQLException 
-     */
-    private static void addLongValue(MyWorksheet sheet, int i, ResultSet rs)
-            throws SQLException {
-        long longValue = rs.getLong(i + 1);
-        if (!rs.wasNull()) {
-            sheet.addCell(longValue);
-        } else {
-            sheet.addCell("null");
-        }
-
-    }
-
-    /**
-     * Method to add a double value to a worksheet
-     * @param sheet The worksheet
-     * @param i The column index
-     * @param rs Result set containing the data
-     * @throws SQLException 
-     */
-    private static void addDoubleValue(MyWorksheet sheet, int i, ResultSet rs)
-            throws SQLException {
-        double doubleValue = rs.getDouble(i + 1);
-        if (!rs.wasNull()) {
-            sheet.addCell(doubleValue);
-        } else {
-            sheet.addCell("null");
-        }
-    }
-
-    /**
-     * Method to add a date value to a worksheet
-     * @param sheet The worksheet
-     * @param i The column index
-     * @param rs Result set containing the data
-     * @throws SQLException 
-     */
-    private static void addDateValue(MyWorksheet sheet, int i, ResultSet rs)
-            throws SQLException {
-        String dateString = rs.getString(i + 1);
-        if (!rs.wasNull()) {
-            sheet.addDateCell(dateString);
-        } else {
-            sheet.addCell("null");
-        }
-    }
-
-    /**
-     * Method to add a string value to a worksheet
-     * @param sheet The worksheet
-     * @param i The column index
-     * @param rs Result set containing the data
-     * @throws SQLException 
-     */
-    private static void addStringValue(MyWorksheet sheet, int i, ResultSet rs)
-            throws SQLException {
-        String stringValue = rs.getString(i + 1);
-        if (!rs.wasNull()) {
-            sheet.addCell(stringValue);
-        } else {
-            sheet.addCell("null");
-        }
-    }
 
     /**
      * Ensure that all of the year part of the BillId's are odd.

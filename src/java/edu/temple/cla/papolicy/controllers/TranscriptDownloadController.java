@@ -4,8 +4,8 @@ import static edu.temple.cla.papolicy.controllers.DownloadAndDrilldownUtil.getCo
 import static edu.temple.cla.papolicy.controllers.DownloadAndDrilldownUtil.getBillIdList;
 import edu.temple.cis.wolfgang.mycreatexlsx.MyWorkbook;
 import edu.temple.cis.wolfgang.mycreatexlsx.MyWorksheet;
+import edu.temple.cis.wolfgang.mycreatexlsx.Util;
 import edu.temple.cla.papolicy.Utility;
-import static edu.temple.cla.papolicy.controllers.DownloadAndDrilldownUtil.addColumn;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -31,7 +31,7 @@ import org.springframework.web.servlet.mvc.AbstractController;
  */
 public class TranscriptDownloadController extends AbstractController {
 
-    private static final Logger logger = Logger.getLogger(TranscriptDownloadController.class);
+    private static final Logger LOGGER = Logger.getLogger(TranscriptDownloadController.class);
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
 
@@ -83,7 +83,7 @@ public class TranscriptDownloadController extends AbstractController {
                 String transcriptId = rs.getString("ID");
                 sheet.startRow();
                 for (int i = 0; i < numColumns; i++) {
-                    addColumn(columnTypes[i], i, sheet, rs);
+                    Util.addColumn(columnTypes[i], i, sheet, rs);
                 }
                 List<String> committeeNamesList = getCommitteeNames(jdbcTemplate, transcriptId);
                 String committeeNames = formatNames(committeeNamesList);
@@ -99,11 +99,11 @@ public class TranscriptDownloadController extends AbstractController {
             wb.close();
             wb = null;
         } catch (SQLException ex) {
-            logger.error("Error reading table", ex);
+            LOGGER.error("Error reading table", ex);
         } catch (IOException ioex) {
-            logger.error(ioex);
+            LOGGER.error(ioex);
         } catch (Throwable ex) { // Want to catch any additional errors
-            logger.error("Unexpected fatal condition", ex);
+            LOGGER.error("Unexpected fatal condition", ex);
         } finally {
             if (sheet != null) {
                 sheet.close();
