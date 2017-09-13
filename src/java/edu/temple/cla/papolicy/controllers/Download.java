@@ -50,7 +50,7 @@ public class Download extends AbstractController {
         response.setContentType("application/ms-excel");
         try {
         OutputStream out = response.getOutputStream();
-            Util.BuildSpreadsheetFromQuery(dataSource, query, out);
+            Util.buildSpreadsheetFromQuery(dataSource, query, out);
         } catch (IOException ioex) {
             LOGGER.error(ioex);
         }
