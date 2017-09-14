@@ -27,7 +27,7 @@ import org.apache.log4j.Logger;
 public class DownloadGovernorsBudgetAddress extends HttpServlet {
 
     private String path;
-    private static final Logger logger = Logger.getLogger(DownloadGovernorsBudgetAddress.class);
+    private static final Logger LOGGER = Logger.getLogger(DownloadGovernorsBudgetAddress.class);
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -70,7 +70,7 @@ public class DownloadGovernorsBudgetAddress extends HttpServlet {
                 pw.println("</body>");
                 pw.println("</html>");
             } catch (Throwable t) { // Want to log any error
-                logger.error(t);
+                LOGGER.error(t);
             }
         }
     }

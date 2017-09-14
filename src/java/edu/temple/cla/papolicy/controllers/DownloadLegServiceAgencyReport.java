@@ -68,9 +68,9 @@ public class DownloadLegServiceAgencyReport extends AbstractController {
         if (agencyAndFileName != null) {
             File filePath = new File(path);
             File inputFile = new File(filePath, agencyAndFileName[0] + File.separator + agencyAndFileName[1]);
-            response.setHeader("Content-Disposition", "attachment;filename=\"" + agencyAndFileName[1] + "\"");
             try (InputStream in = new BufferedInputStream(new FileInputStream(inputFile));
                     OutputStream out = response.getOutputStream()) {
+                response.setHeader("Content-Disposition", "attachment;filename=\"" + agencyAndFileName[1] + "\"");
                 int c;
                 while ((c = in.read()) != -1) {
                     out.write(c);
