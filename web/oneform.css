@@ -105,3 +105,13 @@ th {
 	font-size: 70%;
 	color: #CC3366;
 }
+
+fieldset {
+    border: solid #000000 1px;
+    margin: 2px;
+}
+
+legend {
+    width: auto;
+    margin-bottom: 0;
+}

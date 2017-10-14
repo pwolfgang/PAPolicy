@@ -5,8 +5,9 @@
 
 package edu.temple.cla.papolicy.filters;
 
-import edu.temple.cla.papolicy.dao.CommitteeAliasMapper;
 import edu.temple.cla.papolicy.dao.CommitteeAlias;
+import edu.temple.cla.papolicy.dao.CommitteeName;
+import edu.temple.cla.papolicy.dao.CommitteeNameMapper;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
@@ -39,21 +40,21 @@ public class HearingsCommittee extends Filter {
      */
     @Override
     public String getFilterFormInput() {
-        ParameterizedRowMapper<CommitteeAlias> itemMapper = new CommitteeAliasMapper();
+        ParameterizedRowMapper<CommitteeName> itemMapper = new CommitteeNameMapper();
         String chamberNumber = null;
         if (getAdditionalParam().equals("House")) {
             chamberNumber = "1";
         } else {
             chamberNumber = "2";
         }
-        String query = "SELECT * FROM "+getTableReference()+" WHERE CtyCode LIKE('"+chamberNumber+"%%') ORDER BY AlternateName";
-        List<CommitteeAlias> items = getJdbcTemplate().query(query, itemMapper);
+        String query = "SELECT * FROM "+getTableReference()+" WHERE CtyCode LIKE('"+chamberNumber+"%%') ORDER BY Name";
+        List<CommitteeName> items = getJdbcTemplate().query(query, itemMapper);
         StringBuilder stb = new StringBuilder();
         stb.append("<label for=\"F"+getId()+"\">"+getAdditionalParam()+" Hearings</label>\n"+
 "                <br /><select name=\"F"+getId()+"\" id=\"F"+getId()+"\">\n"+
 "                <option value=\"ALL\" selected=\"selected\">ALL COMMITTEES</option>\n");
-        for (CommitteeAlias item : items) {
-            stb.append("<option value=\""+item.getCtyCode()+"\">"+item.getAlternateName()+"</option>\n");
+        for (CommitteeName item : items) {
+            stb.append("<option value=\""+item.getCtyCode()+"\">"+item.getName()+"</option>\n");
         }
         stb.append("</select><br/>");
         return stb.toString();
