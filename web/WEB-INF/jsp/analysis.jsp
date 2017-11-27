@@ -38,7 +38,7 @@
                     <%}%>
                 </p>
                 <form id="analysisForm" method="post" action="display.spg">
-                    <table class="table table-condensed">
+                    <table role="region" aria-label="dataset select" class="table table-condensed">
                         <tr>
                             <th style="width:38%">DATASETS TO SEARCH:</th>
                             <th style="width:50%">DATASET FILTERS
@@ -70,7 +70,7 @@
                             </tr>
                         </c:forEach>
                     </table>
-                    <table class="table table-condensed">
+                    <table role="region" aria-label="policy code selection" class="table table-condensed">
                         <tr>
                             <th>
                                 <p>POLICY AREAS TO INCLUDE: </p>
@@ -133,7 +133,7 @@
                             </td>
                         </tr>
                     </table>
-                    <table class="table table-condensed">
+                    <table role="region" aria-label="free text search" class="table table-condensed">
                         <tr>
                             <td><fieldset><legend>
                                         FREE TEXT
@@ -160,7 +160,7 @@
                             </td>
                         </tr> 
                     </table>
-                    <table class="table table-condensed">
+                    <table role="region" aria-label="date range select" class="table table-condensed">
                         <tr>
                             <td>
                                 <fieldset><legend>
