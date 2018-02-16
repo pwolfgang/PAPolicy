@@ -7,7 +7,7 @@ import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.dao.YearValueMapper;
 import edu.temple.cla.papolicy.filters.BudgetFilters;
 import edu.temple.cla.papolicy.filters.Filter;
-import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
+import edu.temple.cla.policydb.queryBuilder.QueryBuilder;
 import java.util.List;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 

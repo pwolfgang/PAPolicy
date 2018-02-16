@@ -4,11 +4,11 @@
  */
 package edu.temple.cla.papolicy;
 
-import edu.temple.cla.papolicy.queryBuilder.FreeTextParser;
+import edu.temple.cla.policydb.queryBuilder.FreeTextParser;
 import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.YearValue;
-import edu.temple.cla.papolicy.queryBuilder.Between;
-import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
+import edu.temple.cla.policydb.queryBuilder.Between;
+import edu.temple.cla.policydb.queryBuilder.QueryBuilder;
 import edu.temple.cla.papolicy.tables.Table;
 import java.util.List;
 import java.util.Set;

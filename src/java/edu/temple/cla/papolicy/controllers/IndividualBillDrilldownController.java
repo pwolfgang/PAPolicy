@@ -5,8 +5,8 @@
 
 package edu.temple.cla.papolicy.controllers;
 
-import edu.temple.cla.papolicy.queryBuilder.Comparison;
-import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
+import edu.temple.cla.policydb.queryBuilder.Comparison;
+import edu.temple.cla.policydb.queryBuilder.QueryBuilder;
 import edu.temple.cla.papolicy.tables.AbstractTable;
 import edu.temple.cla.papolicy.tables.Table;
 import java.io.IOException;

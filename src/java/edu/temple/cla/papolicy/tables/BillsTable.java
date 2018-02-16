@@ -5,9 +5,9 @@
 
 package edu.temple.cla.papolicy.tables;
 
-import edu.temple.cla.papolicy.queryBuilder.Disjunction;
-import edu.temple.cla.papolicy.queryBuilder.Like;
-import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
+import edu.temple.cla.policydb.queryBuilder.Disjunction;
+import edu.temple.cla.policydb.queryBuilder.Like;
+import edu.temple.cla.policydb.queryBuilder.QueryBuilder;
 import javax.servlet.http.HttpServletRequest;
 
 /**

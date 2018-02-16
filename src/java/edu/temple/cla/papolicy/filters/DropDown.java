@@ -7,8 +7,8 @@ package edu.temple.cla.papolicy.filters;
 
 import edu.temple.cla.papolicy.dao.DropDownItemMapper;
 import edu.temple.cla.papolicy.dao.DropDownItem;
-import edu.temple.cla.papolicy.queryBuilder.Comparison;
-import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
+import edu.temple.cla.policydb.queryBuilder.Comparison;
+import edu.temple.cla.policydb.queryBuilder.EmptyExpression;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;

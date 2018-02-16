@@ -9,7 +9,7 @@ import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.*;
 import edu.temple.cla.papolicy.chart.Chart;
 import edu.temple.cla.papolicy.chart.MyDataset;
-import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
+import edu.temple.cla.policydb.queryBuilder.QueryBuilder;
 import edu.temple.cla.papolicy.tables.AbstractTable;
 import edu.temple.cla.papolicy.tables.Table;
 import java.util.ArrayList;

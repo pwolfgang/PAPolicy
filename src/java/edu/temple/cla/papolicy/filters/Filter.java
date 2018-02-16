@@ -5,8 +5,8 @@
 
 package edu.temple.cla.papolicy.filters;
 
-import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
-import edu.temple.cla.papolicy.queryBuilder.Expression;
+import edu.temple.cla.policydb.queryBuilder.EmptyExpression;
+import edu.temple.cla.policydb.queryBuilder.Expression;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.jdbc.core.JdbcTemplate;
 

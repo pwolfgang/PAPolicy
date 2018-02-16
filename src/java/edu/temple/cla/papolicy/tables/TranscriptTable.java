@@ -8,7 +8,7 @@ package edu.temple.cla.papolicy.tables;
 import edu.temple.cla.papolicy.Utility;
 import edu.temple.cla.papolicy.filters.Filter;
 import edu.temple.cla.papolicy.filters.HouseHearingsCommittee;
-import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
+import edu.temple.cla.policydb.queryBuilder.QueryBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

@@ -9,7 +9,7 @@ import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.filters.BinaryFilter;
 import edu.temple.cla.papolicy.filters.Filter;
-import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
+import edu.temple.cla.policydb.queryBuilder.QueryBuilder;
 import edu.temple.cla.papolicy.tables.StandardTable;
 import edu.temple.cla.papolicy.tables.Table;
 import java.util.Arrays;

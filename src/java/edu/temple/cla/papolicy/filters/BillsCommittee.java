@@ -7,10 +7,10 @@ package edu.temple.cla.papolicy.filters;
 
 import edu.temple.cla.papolicy.dao.CommitteeAliasMapper;
 import edu.temple.cla.papolicy.dao.CommitteeAlias;
-import edu.temple.cla.papolicy.queryBuilder.Comparison;
-import edu.temple.cla.papolicy.queryBuilder.Disjunction;
-import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
-import edu.temple.cla.papolicy.queryBuilder.Expression;
+import edu.temple.cla.policydb.queryBuilder.Comparison;
+import edu.temple.cla.policydb.queryBuilder.Disjunction;
+import edu.temple.cla.policydb.queryBuilder.EmptyExpression;
+import edu.temple.cla.policydb.queryBuilder.Expression;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;

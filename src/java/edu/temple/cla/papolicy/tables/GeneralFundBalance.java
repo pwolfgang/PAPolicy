@@ -6,7 +6,7 @@
 package edu.temple.cla.papolicy.tables;
 
 import edu.temple.cla.papolicy.dao.Topic;
-import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
+import edu.temple.cla.policydb.queryBuilder.QueryBuilder;
 import javax.servlet.http.HttpServletRequest;
 
 /**

@@ -5,7 +5,7 @@
 
 package edu.temple.cla.papolicy.filters;
 
-import edu.temple.cla.papolicy.queryBuilder.EmptyExpression;
+import edu.temple.cla.policydb.queryBuilder.EmptyExpression;
 import javax.servlet.http.HttpServletRequest;
 
 /**

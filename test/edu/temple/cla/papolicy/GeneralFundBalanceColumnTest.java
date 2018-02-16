@@ -7,7 +7,7 @@ package edu.temple.cla.papolicy;
 import edu.temple.cis.wolfgang.simpledbtest.TestDatabase;
 import edu.temple.cla.papolicy.filters.BudgetFilters;
 import edu.temple.cla.papolicy.filters.Filter;
-import edu.temple.cla.papolicy.queryBuilder.QueryBuilder;
+import edu.temple.cla.policydb.queryBuilder.QueryBuilder;
 import edu.temple.cla.papolicy.tables.GeneralFundBalance;
 import edu.temple.cla.papolicy.tables.Table;
 import java.util.Arrays;
