@@ -51,74 +51,73 @@ public class BillsTableTest {
      */
     @Test
     public void testGetTitleBox() {
-        String expected = "\n<dl>\n" +
-"<dt><input type=\"checkbox\" name=\"dataset\" value=\"3\"\n" +
+        String expected = "\n\n" +
+"<input type=\"checkbox\" name=\"dataset\" value=\"3\"\n" +
 "        id=\"t3\" onclick=\"expandBills(3);\" />\n" +
-"        <label for=\"t3\"><span class=\"strong\">Bills and Resolutions</span></label></dt>\n" +
+"        <label for=\"t3\"><span class=\"strong\">Bills and Resolutions</span></label>\n" +
 "\n" +
 "<div class=\"subtbl\" id=\"subtbl3\">\n" +
 "    <fieldset><legend>Chamber</legend>\n" +
-"    <dd><input type=\"checkbox\" name=\"chamber\" value=\"House\" id=\"houseChamber\" checked=\"checked\" />\n" +
+"    <input type=\"checkbox\" name=\"chamber\" value=\"House\" id=\"houseChamber\" checked=\"checked\" />\n" +
 "        <label for=\"houseChamber\"><span class=\"strong\">House</span></label>\n" +
-"    </dd>\n" +
-"    <dd><input type=\"checkbox\" name=\"chamber\" value=\"Senate\" id=\"senateChamber\" checked=\"checked\" />\n" +
+"    \n" +
+"    <input type=\"checkbox\" name=\"chamber\" value=\"Senate\" id=\"senateChamber\" checked=\"checked\" />\n" +
 "        <label for=\"senateChamber\"><span class=\"strong\">Senate</span></label>\n" +
-"    </dd>    </fieldset>\n" +
+"        </fieldset>\n" +
 "<fieldset><legend>Type</legend>\n" +
-"    <dd><input type=\"radio\" name=\"billtype\" value=\"BOTH\" id=\"billtypeBoth\" checked=\"checked\" />\n" +
+"    <input type=\"radio\" name=\"billtype\" value=\"BOTH\" id=\"billtypeBoth\" checked=\"checked\" />\n" +
 "        <label for=\"billtypeBoth\"><span class=\"strong\">Bills and Resolutions</span></label>\n" +
-"    </dd>\n" +
-"    <dd><input type=\"radio\" name=\"billtype\" value=\"BILLS\" id=\"billtypeBills\" />\n" +
+"    <br/>\n" +
+"    <input type=\"radio\" name=\"billtype\" value=\"BILLS\" id=\"billtypeBills\" />\n" +
 "        <label for=\"billtypeBills\"><span class=\"strong\">Bills</span></label>\n" +
-"    </dd>\n" +
-"    <dd><input type=\"radio\" name=\"billtype\" value=\"RES\" id=\"billtypeRes\" />\n" +
+"    <br/>\n" +
+"    <input type=\"radio\" name=\"billtype\" value=\"RES\" id=\"billtypeRes\" />\n" +
 "        <label for=\"billtypeRes\"><span class=\"strong\">Resolutions</span></label>\n" +
-"    </dd>\n" +
+"    \n" +
 "    </fieldset>\n" +
 "    <fieldset><legend>Session Type</legend>\n" +
-"    <dd><input type=\"radio\" name=\"sessiontype\" value=\"REGULAR\" id=\"regularSessions\" checked=\"checked\" />\n" +
-"        <label for=\"regularSessions\"><span class=\"strong\">Regular Sessions Only</span></label></dd>\n" +
-"    <dd><input type=\"radio\" name=\"sessiontype\" value=\"SPECIAL\" id=\"specialSessions\"/>\n" +
-"        <label for=\"specialSessions\"><span class=\"strong\">Special Sessions Only</span></label></dd>\n" +
-"    <dd><input type=\"radio\" name=\"sessiontype\" value=\"BOTH\" id=\"bothSessionTypes\"/>\n" +
-"        <label for=\"bothSessionTypes\"><span class=\"strong\">Both Regular and Special Sessions</span></label></dd>\n" +
+"    <input type=\"radio\" name=\"sessiontype\" value=\"REGULAR\" id=\"regularSessions\" checked=\"checked\" />\n" +
+"        <label for=\"regularSessions\"><span class=\"strong\">Regular Sessions Only</span></label>\n" +
+"    <br/><input type=\"radio\" name=\"sessiontype\" value=\"SPECIAL\" id=\"specialSessions\"/>\n" +
+"        <label for=\"specialSessions\"><span class=\"strong\">Special Sessions Only</span></label>\n" +
+"    <br/><input type=\"radio\" name=\"sessiontype\" value=\"BOTH\" id=\"bothSessionTypes\"/>\n" +
+"        <label for=\"bothSessionTypes\"><span class=\"strong\">Both Regular and Special Sessions</span></label>\n" +
 "    </fieldset>\n" +
 "</div>\n" +
-"</dl>\n" +
-"<dl>\n" +
-"<dt><input type=\"checkbox\" name=\"dataset\" value=\"3a\"\n" +
+"\n" +
+"\n" +
+"<br/><input type=\"checkbox\" name=\"dataset\" value=\"3a\"\n" +
 "           id=\"t3a\" onclick='expandBills(\"3a\");' />\n" +
-"    <label for=\"t3a\"><span class=\"strong\">Acts (Laws) and Adopted Resolutions</span></label></dt>\n" +
+"    <label for=\"t3a\"><span class=\"strong\">Acts (Laws) and Adopted Resolutions</span></label>\n" +
 "<div class=\"subtbl\" id=\"subtbl3a\">\n" +
 "    <fieldset><legend>Chamber</legend>\n" +
-"    <dd><input type=\"checkbox\" name=\"chambera\" value=\"House\" id=\"houseChambera\" checked=\"checked\" />\n" +
+"    <input type=\"checkbox\" name=\"chambera\" value=\"House\" id=\"houseChambera\" checked=\"checked\" />\n" +
 "        <label for=\"houseChambera\"><span class=\"strong\">House</span></label>\n" +
-"    </dd>\n" +
-"    <dd><input type=\"checkbox\" name=\"chambera\" value=\"Senate\" id=\"senateChambera\" checked=\"checked\" />\n" +
+"    \n" +
+"    <br/><input type=\"checkbox\" name=\"chambera\" value=\"Senate\" id=\"senateChambera\" checked=\"checked\" />\n" +
 "        <label for=\"senateChambera\"><span class=\"strong\">Senate</span></label>\n" +
-"    </dd>    </fieldset>\n" +
+"        </fieldset>\n" +
 "<fieldset><legend>Type</legend>\n" +
-"    <dd><input type=\"radio\" name=\"billtypea\" value=\"BOTH\" id=\"billtypeBotha\" checked=\"checked\" />\n" +
+"    <br/><input type=\"radio\" name=\"billtypea\" value=\"BOTH\" id=\"billtypeBotha\" checked=\"checked\" />\n" +
 "        <label for=\"billtypeBotha\"><span class=\"strong\">Acts and Adopted Resolutions</span></label>\n" +
-"    </dd>\n" +
-"    <dd><input type=\"radio\" name=\"billtypea\" value=\"BILLS\" id=\"billtypeBillsa\" />\n" +
+"    \n" +
+"    <br/><input type=\"radio\" name=\"billtypea\" value=\"BILLS\" id=\"billtypeBillsa\" />\n" +
 "        <label for=\"billtypeBillsa\"><span class=\"strong\">Acts</span></label>\n" +
-"    </dd>\n" +
-"    <dd><input type=\"radio\" name=\"billtypea\" value=\"RES\" id=\"billtypeResa\" />\n" +
+"    \n" +
+"    <br/><input type=\"radio\" name=\"billtypea\" value=\"RES\" id=\"billtypeResa\" />\n" +
 "        <label for=\"billtypeResa\"><span class=\"strong\">Adopted Resolutions</span></label>\n" +
-"    </dd>\n" +
+"    \n" +
 "    </fieldset>\n" +
 "    <fieldset><legend>Session Type</legend>\n" +
-"    <dd><input type=\"radio\" name=\"sessiontypea\" value=\"REGULAR\" id=\"regularSessionsa\" checked=\"checked\" />\n" +
-"        <label for=\"regularSessionsa\"><span class=\"strong\">Regular Sessions Only</span></label></dd>\n" +
-"    <dd><input type=\"radio\" name=\"sessiontypea\" value=\"SPECIAL\" id=\"specialSessionsa\"/>\n" +
-"        <label for=\"specialSessionsa\"><span class=\"strong\">Special Sessions Only</span></label></dd>\n" +
-"    <dd><input type=\"radio\" name=\"sessiontypea\" value=\"BOTH\" id=\"bothSessionTypesa\"/>\n" +
-"        <label for=\"bothSessionTypesa\"><span class=\"strong\">Both Regular and Special Sessions</span></label></dd>\n" +
+"    <input type=\"radio\" name=\"sessiontypea\" value=\"REGULAR\" id=\"regularSessionsa\" checked=\"checked\" />\n" +
+"        <label for=\"regularSessionsa\"><span class=\"strong\">Regular Sessions Only</span></label>\n" +
+"    <br/><input type=\"radio\" name=\"sessiontypea\" value=\"SPECIAL\" id=\"specialSessionsa\"/>\n" +
+"        <label for=\"specialSessionsa\"><span class=\"strong\">Special Sessions Only</span></label>\n" +
+"    <br/><input type=\"radio\" name=\"sessiontypea\" value=\"BOTH\" id=\"bothSessionTypesa\"/>\n" +
+"        <label for=\"bothSessionTypesa\"><span class=\"strong\">Both Regular and Special Sessions</span></label>\n" +
 "    </fieldset>\n" +
 "</div>\n" +
-"</dl>\n"  +
-"        " +
+"\n        " +
 "";
         String result = testTable.getTitleBox();
         assertEquals(expected, result);
@@ -147,7 +146,7 @@ public class BillsTableTest {
             result = "REGULAR";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+        String expected = "SELECT year(Date_Referred) AS TheYear, count(ID) AS TheValue "
                 + "FROM Bills_Data WHERE Bill LIKE('HB%') AND Session NOT LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQuery().build());
     }
@@ -163,7 +162,7 @@ public class BillsTableTest {
             result = "REGULAR";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+        String expected = "SELECT year(Date_Referred) AS TheYear, count(ID) AS TheValue "
                 + "FROM Bills_Data WHERE Bill LIKE('SB%') AND Session NOT LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQuery().build());
     }
@@ -179,7 +178,7 @@ public class BillsTableTest {
             result = "REGULAR";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+        String expected = "SELECT year(Date_Referred) AS TheYear, count(ID) AS TheValue "
                 + "FROM Bills_Data WHERE Bill LIKE('SR%') AND Session NOT LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQuery().build());
     }
@@ -195,7 +194,7 @@ public class BillsTableTest {
             result = "REGULAR";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+        String expected = "SELECT year(Date_Referred) AS TheYear, count(ID) AS TheValue "
                 + "FROM Bills_Data WHERE Bill LIKE('HR%') AND Session NOT LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQuery().build());
     }
@@ -211,7 +210,7 @@ public class BillsTableTest {
             result = "REGULAR";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+        String expected = "SELECT year(Date_Referred) AS TheYear, count(ID) AS TheValue "
                 + "FROM Bills_Data WHERE (Bill LIKE('HR%') OR Bill LIKE('SR%')) "
                 + "AND Session NOT LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQuery().build());
@@ -228,7 +227,7 @@ public class BillsTableTest {
             result = "REGULAR";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+        String expected = "SELECT year(Date_Referred) AS TheYear, count(ID) AS TheValue "
                 + "FROM Bills_Data WHERE (Bill LIKE('HB%') OR Bill LIKE('SB%')) "
                 + "AND Session NOT LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQuery().build());
@@ -245,7 +244,7 @@ public class BillsTableTest {
             result = "SPECIAL";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+        String expected = "SELECT year(Date_Referred) AS TheYear, count(ID) AS TheValue "
                 + "FROM Bills_Data WHERE (Bill LIKE('HB%') OR Bill LIKE('SB%')) AND Session LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQuery().build());
     }
@@ -261,7 +260,7 @@ public class BillsTableTest {
             result = "BOTH";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+        String expected = "SELECT year(Date_Referred) AS TheYear, count(ID) AS TheValue "
                 + "FROM Bills_Data WHERE (Bill LIKE('HB%') OR Bill LIKE('SB%'))";
         assertEquals(expected, testTable.getUnfilteredTotalQuery().build());
     }
@@ -277,7 +276,7 @@ public class BillsTableTest {
             result = "REGULAR";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+        String expected = "SELECT year(Date_Referred) AS TheYear, count(ID) AS TheValue "
                 + "FROM Bills_Data WHERE (Bill LIKE('HB%') OR Bill LIKE('HR%')) "
                 + "AND Session NOT LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQuery().build());
@@ -294,7 +293,7 @@ public class BillsTableTest {
             result = "REGULAR";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+        String expected = "SELECT year(Date_Referred) AS TheYear, count(ID) AS TheValue "
                 + "FROM Bills_Data WHERE (Bill LIKE('SB%') OR Bill LIKE('SR%')) "
                 + "AND Session NOT LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQuery().build());
@@ -311,7 +310,7 @@ public class BillsTableTest {
             result = "REGULAR";
         }};
         testTable.setAdditionalParameters(request);
-        String expected = "SELECT Year_Referred AS TheYear, count(ID) AS TheValue "
+        String expected = "SELECT year(Date_Referred) AS TheYear, count(ID) AS TheValue "
                 + "FROM Bills_Data WHERE Session NOT LIKE('%-%-%')";
         assertEquals(expected, testTable.getUnfilteredTotalQuery().build());
     }

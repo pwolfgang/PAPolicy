@@ -52,10 +52,10 @@ public class BillsCommitteeTest {
     @Test
     public void testGetFilterFormInput() {
         String expected = "<fieldset><legend>Referred to House Committee</legend>\n" +
-"<label><input name=\"hprimary\" value=\"1\" type=\"checkbox\"/> Primary Only</label>\n" +
-"<br/><label><select name=\"F401\">Name\n" +
-"<option value=\"ALL\">ALL COMMITTEES</option>\n" +
-"<option value=\"101\">Aging and Older Adult Services</option>\n</select></label></fieldset>";
+"<input name=\"hprimary\" value=\"1\" id=\"hprimary\" type=\"checkbox\"/><label for=\"hprimary\"> Primary Only</label>\n" +
+"<br/><label for=\"F401\">Name</label><select name=\"F401\" id=\"F401\">"
+                + "<option value=\"ALL\" selected=\"selected\">ALL COMMITTEES</option>\n" +
+"<option value=\"101\">Aging and Older Adult Services</option>\n</select></fieldset>";
         assertEquals(expected, filter.getFilterFormInput());
     }
 

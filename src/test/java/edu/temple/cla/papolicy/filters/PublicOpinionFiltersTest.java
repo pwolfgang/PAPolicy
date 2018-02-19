@@ -33,8 +33,10 @@ public class PublicOpinionFiltersTest {
     public void testGetFilterFormInput() {
         System.out.println("getFilterFormInput");
         String expResult = "<fieldset><legend>Display as</legend>"
-                + "<label><input type=\"radio\" name=\"mipdisp\" value=\"0\" checked=\"checked\" />Percent</label>\n" +
-"                <label><input type=\"radio\" name=\"mipdisp\" value=\"1\" />Rank</label></fieldset>";
+                + "<input type=\"radio\" id=\"mipdisp0\" name=\"mipdisp\" value=\"0\" checked=\"checked\" />"
+                + "<label for=\"mipdisp0\">Percent</label>\n"
+                + "<input type=\"radio\" id=\"mipdisp1\" name=\"mipdisp\" value=\"1\" />"
+                + "<label for=\"mipdisp1\">Rank</label></fieldset>";
         String result = filter.getFilterFormInput();
         assertEquals(expResult, result);
     }

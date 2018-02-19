@@ -41,11 +41,11 @@ public class StandardTableTest {
     @Test
     public void testGetTitleBox() {
         String expected = "\n" +
-"        <dl><dt>\n" +
+"        \n" +
 "            <input type=\"checkbox\" name=\"dataset\" value=\"6\"\n" +
 "                 id=\"t6\" onclick=\"expandFilters(6);expandNote(6);\" />\n" +
 "            <label for=\"t6\"><span class=\"strong\">Legislative Service Agency Reports</span></label>\n" +
-"        </dt></dl>\n" +
+"        \n" +
 "        <div id=\"note6\" class=\"nnoottee\"><p></p></div>\n" +
 "        ";
         String result = testTable.getTitleBox();

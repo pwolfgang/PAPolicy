@@ -35,10 +35,10 @@ public class PartyTest {
     @Test
     public void testGetFilterFormInput() {
         String expected = "<fieldset><legend>Sponsor Party</legend>\n" +
-"              <label><input type=\"radio\" name=\"F407\" value=\"NOFILTER\" checked=\"checked\" />&nbsp;Both</label>\n" +
-"              <label><input type=\"radio\" name=\"F407\" value=\"0\" />&nbsp;Republican</label>\n" +
-"              <label><input type=\"radio\" name=\"F407\" value=\"1\" />&nbsp;Democrat</label>\n"
-                + "</fieldset>";
+"              <input type=\"radio\" id=\"F407N\" name=\"F407\" value=\"NOFILTER\" checked=\"checked\" />&nbsp;<label for=\"F407N\">Both</label>\n" +
+"              <input type=\"radio\" id=\"F407R\" name=\"F407\" value=\"0\" />&nbsp;<label for=\"F407R\">Republican</label>\n" +
+"              <input type=\"radio\" id=\"F407D\" name=\"F407\" value=\"1\" />&nbsp;<label for=\"F407D\">Democrat</label>\n" +
+"</fieldset>";
         assertEquals(expected,filter.getFilterFormInput());
     }
 

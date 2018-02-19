@@ -7,10 +7,8 @@ package edu.temple.cla.papolicy.filters;
 import edu.temple.cla.papolicy.dao.CommitteeAlias;
 import edu.temple.cla.papolicy.dao.CommitteeAliasMapper;
 import java.util.Arrays;
-import javax.servlet.http.HttpServletRequest;
 import mockit.Expectations;
 import mockit.Mocked;
-import static mockit.internal.expectations.ActiveInvocations.anyString;
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
@@ -24,8 +22,6 @@ public class HearingsCommitteeTest {
 
     HearingsCommittee filter;
     @Mocked
-    HttpServletRequest request;
-    @Mocked
     JdbcTemplate jdbcTemplate;
 
     public HearingsCommitteeTest() {
@@ -34,6 +30,10 @@ public class HearingsCommitteeTest {
     @Before
     public void setUp() {
         filter = new HearingsCommittee(102, 5, "Senate Committee", null, "CommitteeAliases", "Senate");
+    }
+
+    @Test
+    public void testGetFilterFormInput() {
         new Expectations() {
             {
                 CommitteeAlias committee = new CommitteeAlias();
@@ -43,20 +43,16 @@ public class HearingsCommitteeTest {
                 committee.setName("Aging and Youth");
                 committee.setStartYear(0);
                 committee.setEndYear(9999);
-                jdbcTemplate.query(anyString, new CommitteeAliasMapper());minTimes=0;
-                result = Arrays.asList(new CommitteeAlias[]{committee});
+                jdbcTemplate.query(anyString, new CommitteeAliasMapper());
+                result = Arrays.asList(committee);
             }
         };
         filter.setJdbcTemplate(jdbcTemplate);
-    }
-
-    @Test
-    public void testGetFilterFormInput() {
-        String expected = "<label>Senate Hearings\n" +
-"                <br /><select name=\"F102\">\n" +
+        String expected = "<label for=\"F102\">Senate Hearings</label>\n" +
+"                <br /><select name=\"F102\" id=\"F102\">\n" +
 "                <option value=\"ALL\" selected=\"selected\">ALL COMMITTEES</option>\n"
                 + "<option value=\"201\">Aging and Youth</option>\n"
-                + "</select></label><br/>";
+                + "</select><br/>";
         assertEquals(expected, filter.getFilterFormInput());
     }
 

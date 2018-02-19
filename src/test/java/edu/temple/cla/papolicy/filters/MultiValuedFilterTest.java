@@ -43,7 +43,7 @@ public class MultiValuedFilterTest {
     
     @Before
     public void setUp() {
-        filter = new MultiValuedFilter(406, 3, "Constitution Ammendment", "Con_Ammend", "Con_Ammend", null);
+        filter = new MultiValuedFilter(406, 3, "Constitution Amendment", "Con_Ammend", "Con_Ammend", null);
         new Expectations() {{
             String query1 = "SELECT ID, Description FROM Con_Ammend ORDER BY ID";
             String query2 = "SELECT ID, Description FROM Con_Ammend";
@@ -63,20 +63,17 @@ public class MultiValuedFilterTest {
 
     @Test
     public void testGetFilterFormInput() {
-        String expected = "<fieldset><legend>Constitution Ammendment</legend>\n" +
-"              <label><input type=\"radio\" name=\"F406\" value=\"587\" checked=\"checked\" />&nbsp;No Filter</label>\n" +
-"              <label><input type=\"radio\" name=\"F406\" value=\"0\" />&nbsp;Exclude</label>\n" +
-"              <label><input type=\"radio\" name=\"F406\" value=\"1\" />&nbsp;Include</label>\n" +
-"        <dl><dd><label><input type=\"checkbox\" name=\"V406\" value=\"0\" checked=\"checked\" />\n" +
-"                Not Passed by Legislature</label></dd>"
-                + "<dd><label><input type=\"checkbox\" name=\"V406\" value=\"1\" checked=\"checked\" />\n" +
-"                Passed Once by Legislature</label></dd>"
-                + "<dd><label><input type=\"checkbox\" name=\"V406\" value=\"2\" checked=\"checked\" />\n" +
-"                Passed Twice in Consecutive Sessions</label></dd>"
-                + "<dd><label><input type=\"checkbox\" name=\"V406\" value=\"3\" checked=\"checked\" />\n" +
-"                Approved by the Voters</label></dd><dd><label><input type=\"checkbox\" name=\"V406\" value=\"4\" checked=\"checked\" />\n" +
-"                Defeated by the Voters</label></dd><dd><label><input type=\"checkbox\" name=\"V406\" value=\"5\" checked=\"checked\" />\n" +
-"                Partially approved by Voters</label></dd></dl></fieldset>" +
+        String expected = "<fieldset><legend>Constitution Amendment</legend>\n" +
+"              <input type=\"radio\" id=\"F406BOTH\" name=\"F406\" value=\"587\" checked=\"checked\" />&nbsp;<label for=\"F406BOTH\">No Filter</label>\n" +
+"              <input type=\"radio\" id=\"F4060\" name=\"F406\" value=\"0\" />&nbsp;<label for=\"F4060\">Exclude</label>\n" +
+"              <input type=\"radio\" id=\"F4061\" name=\"F406\" value=\"1\" />&nbsp;<label for=\"F4061\">Include</label>\n" +
+"        <br/><input type=\"checkbox\" id=\"V4060\" name=\"V406\" value=\"0\" checked=\"checked\" />\n" +
+"<label for=\"V4060\">Not Passed by Legislature</label><br/><input type=\"checkbox\" id=\"V4061\" name=\"V406\" value=\"1\" checked=\"checked\" />\n" +
+"<label for=\"V4061\">Passed Once by Legislature</label><br/><input type=\"checkbox\" id=\"V4062\" name=\"V406\" value=\"2\" checked=\"checked\" />\n" +
+"<label for=\"V4062\">Passed Twice in Consecutive Sessions</label><br/><input type=\"checkbox\" id=\"V4063\" name=\"V406\" value=\"3\" checked=\"checked\" />\n" +
+"<label for=\"V4063\">Approved by the Voters</label><br/><input type=\"checkbox\" id=\"V4064\" name=\"V406\" value=\"4\" checked=\"checked\" />\n" +
+"<label for=\"V4064\">Defeated by the Voters</label><br/><input type=\"checkbox\" id=\"V4065\" name=\"V406\" value=\"5\" checked=\"checked\" />\n" +
+"<label for=\"V4065\">Partially approved by Voters</label></fieldset>" +
 "";
         String result = filter.getFilterFormInput();
         assertEquals(expected, result);

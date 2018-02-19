@@ -31,7 +31,13 @@ public class CheckBoxFilterTest {
 
     @Test
     public void testGetFilterFormInput() {
-        String expected = "<label><input type=\"checkbox\" name=\"F403\" value=\"1\" /> Conference Committee</label>\n";
+        String expected = "\n" +
+"            <fieldset><legend>Conference Committee</legend>\n" +
+"                  <input type=\"radio\" name=\"F403\" id=\"F4030\" value=\"0\" checked=\"checked\"/>&nbsp;"
+                + " <label for=\"F4030\">Not Selected</label>\n" +
+"                  <input type=\"radio\" name=\"F403\" id=\"F4031\" value=\"1\" />&nbsp;"
+                + " <label for=\"F4031\">Selected</label>\n" +
+"            </fieldset>\n";
         assertEquals(expected, filter.getFilterFormInput());
     }
 

@@ -47,12 +47,12 @@ public class HouseHearingsCommitteeTest {
 
     @Test
     public void testGetFilterFormInput() {
-        String expected = "<label>House Hearings\n" +
+        String expected = "<label for=\"F1201\">House Hearings</label>\n" +
 "                <br/>\n" +
-"<select name=\"F1201\">\"\n" +
+"<select name=\"F1201\" id=\"F1201\">\n" +
 "                <option value=\"ALL\" selected=\"selected\">ALL COMMITTEES</option>\n" +
 "<option value=\"101\">Aging and Older Adult Services</option>\n" +
-"</select></label><br/>\n";
+"</select><br/>\n";
         assertEquals(expected, filter.getFilterFormInput());
     }
 

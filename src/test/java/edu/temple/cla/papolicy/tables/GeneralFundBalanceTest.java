@@ -84,11 +84,11 @@ public class GeneralFundBalanceTest {
 
     @Test
     public void testGetTitleBox() {
-        String expected = "<dl><dt><input type=\"checkbox\" name=\"dataset\" "
+        String expected = "<input type=\"checkbox\" name=\"dataset\" "
                 + "value=\"11\"/><span class=\"strong\">General Fund Balance\r\n"
                 + "<br/>Include Rainy Day Fund <input type=\"radio\" "
                 + "name=\"rainyDay\" value=\"0\" checked />No <input type=\"radio\" "
-                + "name=\"rainyDay\" value=\"1\" />Yes</span></dd></span></dt></dl>";
+                + "name=\"rainyDay\" value=\"1\" />Yes</span></dd></span>";
         assertEquals(expected, testTable.getTitleBox());
     }
 

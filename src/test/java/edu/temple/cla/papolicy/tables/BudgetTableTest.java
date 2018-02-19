@@ -33,7 +33,7 @@ public class BudgetTableTest {
     @Mocked HttpServletRequest request;
     @Mocked JdbcTemplate jdbcTemplate;
     
-    private YearValue[] yearValues = new YearValue[] {
+    private final YearValue[] yearValues = new YearValue[] {
         new YearValue(1979, 3490),
         new YearValue(1980, 2717),
         new YearValue(1981, 3840),
@@ -41,7 +41,7 @@ public class BudgetTableTest {
         new YearValue(1983, 4164)
     };
     
-    private YearValue[] expectedValues = new YearValue[] {
+    private final YearValue[] expectedValues = new YearValue[] {
         new YearValue(1979, 4172),
         new YearValue(1980, 4084),
         new YearValue(1981, 3840),
@@ -49,7 +49,7 @@ public class BudgetTableTest {
         new YearValue(1983, 3733)
     };
     
-    private Deflator[] deflatorValues = new Deflator[] {
+    private final Deflator[] deflatorValues = new Deflator[] {
         new Deflator(1979, 2501.4, 0.4325),
         new Deflator(1980, 2724.2, 0.4707),
         new Deflator(1981, 3057.0, 0.5171),
@@ -89,10 +89,10 @@ public class BudgetTableTest {
     @Test
     public void testGetTitleBox() {
         String expected = "\n" +
-"<dl><input type=\"checkbox\" name=\"dataset\" value=\"11A\"\n" +
+"<input type=\"checkbox\" name=\"dataset\" value=\"11A\"\n" +
 "        id=\"t11A\" onclick=\"expandBudget(11);\" />\n" +
-"    <label for=\"t11A\"><span class=\"strong\">Total Spending All Funds</span></label></dl>\n" +
-"<dl><input type=\"checkbox\" name=\"dataset\" value=\"11B\"\n" +
+"    <label for=\"t11A\"><span class=\"strong\">Total Spending All Funds</span></label>\n" +
+"<br/><input type=\"checkbox\" name=\"dataset\" value=\"11B\"\n" +
 "        id=\"t11B\" onclick=\"expandBudget(11);\" />\n" +
 "    <label for=\"t11B\"><span class=\"strong\">General Fund Balance</span></label>\n" +
 "    <div class=\"subtbl\" id=\"subtbl11B\">\n" +
@@ -101,7 +101,7 @@ public class BudgetTableTest {
 "          <input type=\"radio\" name=\"rainyDay\" value=\"0\" id=\"rainyDay0\" checked=\"checked\" /><label for=\"rainyDay0\">No</label>\n" +
 "       </fieldset>\n" +
 "    </div>\n" +
-"</dl>\n";
+"\n";
         String result = testTable.getTitleBox();
         assertEquals(expected, testTable.getTitleBox());
     }
