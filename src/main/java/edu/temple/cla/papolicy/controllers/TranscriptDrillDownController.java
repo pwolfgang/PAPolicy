@@ -32,8 +32,8 @@
 package edu.temple.cla.papolicy.controllers;
 
 import edu.temple.cla.papolicy.Utility;
-import static edu.temple.cla.papolicy.controllers.DownloadAndDrilldownUtil.getCommitteeNames;
-import static edu.temple.cla.papolicy.controllers.DownloadAndDrilldownUtil.getBillIdList;
+import static edu.temple.cla.papolicy.controllers.TranscriptDownloadAndDrilldownUtil.getCommitteeNames;
+import static edu.temple.cla.papolicy.controllers.TranscriptDownloadAndDrilldownUtil.getBillIdList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

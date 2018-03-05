@@ -46,9 +46,9 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  *
  * @author Paul Wolfgang
  */
-public class DownloadAndDrilldownUtil {
+public class TranscriptDownloadAndDrilldownUtil {
 
-    private static final Logger LOGGER = Logger.getLogger(DownloadAndDrilldownUtil.class);
+    private static final Logger LOGGER = Logger.getLogger(TranscriptDownloadAndDrilldownUtil.class);
     private static final String TRANSCRIPT_COMMITTEE_QUERY
             = "SELECT * from Transcript_Committee join CommitteeAliases on committeeID=ID WHERE transcriptID='";
     private static final String TRANSCRIPT_BILL_QUERY

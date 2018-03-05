@@ -31,11 +31,10 @@
  */
 package edu.temple.cla.papolicy.controllers;
 
-import static edu.temple.cla.papolicy.controllers.DownloadAndDrilldownUtil.getCommitteeNames;
-import static edu.temple.cla.papolicy.controllers.DownloadAndDrilldownUtil.getBillIdList;
+import static edu.temple.cla.papolicy.controllers.TranscriptDownloadAndDrilldownUtil.getCommitteeNames;
+import static edu.temple.cla.papolicy.controllers.TranscriptDownloadAndDrilldownUtil.getBillIdList;
 import edu.temple.cla.policydb.wolfgang.mycreatexlsx.MyWorkbook;
 import edu.temple.cla.policydb.wolfgang.mycreatexlsx.MyWorksheet;
-import edu.temple.cla.policydb.wolfgang.mycreatexlsx.Util;
 import edu.temple.cla.papolicy.Utility;
 import java.io.IOException;
 import java.sql.Connection;
@@ -114,7 +113,7 @@ public class TranscriptDownloadController extends AbstractController {
                 String transcriptId = rs.getString("ID");
                 sheet.startRow();
                 for (int i = 0; i < numColumns; i++) {
-                    Util.addColumn(columnTypes[i], i, sheet, rs);
+                    DownloadUtility.addColumn(columnTypes[i], i, sheet, rs);
                 }
                 List<String> committeeNamesList = getCommitteeNames(jdbcTemplate, transcriptId);
                 String committeeNames = formatNames(committeeNamesList);
