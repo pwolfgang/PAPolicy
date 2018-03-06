@@ -21,6 +21,10 @@
             <id>querybuilder</id>
             <url>https://github.com/pwolfgang/querybuilder/releases</url>
         </repository>
+        <repository>
+            <id>MyCreateXLSX</id>
+            <url>https://github.com/pwolfgang/MyCreateXLSX/releases</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -28,7 +32,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>MyCreateXLSX</artifactId>
-            <version>${project.version}</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.dbunit</groupId>
