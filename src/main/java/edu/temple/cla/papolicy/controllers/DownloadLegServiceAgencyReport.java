@@ -59,7 +59,6 @@ public class DownloadLegServiceAgencyReport extends AbstractController {
 
     private String path;
     private static final Logger LOGGER = Logger.getLogger(DownloadLegServiceAgencyReport.class);
-    private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
 
     /**
@@ -133,16 +132,6 @@ public class DownloadLegServiceAgencyReport extends AbstractController {
         } catch (Throwable t) { // Want to log any error
             logger.error(t);
         }
-    }
-
-    /**
-     * Method to set the DataSource. This method is called by the Spring
-     * framework.
-     *
-     * @param dataSource the datasource to set
-     */
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
     }
 
     /**

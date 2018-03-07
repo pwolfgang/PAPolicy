@@ -346,6 +346,7 @@ public class AbstractTableTest {
                                     "Elderly<>0 AND FinalCode LIKE('6__') " +
                                     "AND Year BETWEEN 1991 AND 2006 ORDER BY Year");
         String expected = "<a href=\"Legislative+Service+Agency+Reports+1991_2006.xlsx?"
+                + "table=" + testTable.getTableName() + "&"
                 + "query=H4sIAAAAAAAAACWKywqCQBSGX-XfWa7GFoJggZcjRZPCOCCuZNCDCIPGFJFvH0z"
                 + "L79KSpEIjrFTzgOS5ZfdZRs5mXsdd8XNz7xe6KymCNt-zQFaXIDuxs3t6-WO1rMYW28SQ"
                 + "tzsdgngYgqMvPRuHnHRHVCNKksjbkxAxGlWSQt775wfXKREchgAAAA\">"

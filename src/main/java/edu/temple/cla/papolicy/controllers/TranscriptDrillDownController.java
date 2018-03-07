@@ -55,7 +55,7 @@ public class TranscriptDrillDownController extends AbstractController {
 
     /**
      * Create the ModelAndView. The model will contain the referenced transcript
-     * and the committess and bills referenced.
+     * and the committees and bills referenced.
      * @param request The HTTP request object
      * @param response The HTTP response object
      * @return Model containing the data and a reference to the TranscriptDrillDown jsp page

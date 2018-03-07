@@ -146,12 +146,12 @@ public class LegServiceAgencyColumnTest {
     public void testGetDownloadURL() {
         String expected = "<a href=\"Law%2C+Crime%2C+and+Family+Issues+"
                 + "Legislative+Service+Agency+Reports+Include+Dealing+with+"
-                + "Taxes+1979_1983.xlsx?query=H4sIAAAAAAAAAAt29XF1DlHQUnAL8v"
-                + "dV8ElND04tKstMTnVMT81LrgxKLcgvKilWCPdwDXJVCEmssLEzUHD0c1F"
-                + "wy8xLzHHOT0lV8PH0dtVQNzSKj1fXBEtFpiYWKTi5hoS7uvopGFqaW4JF"
-                + "DS0tjBX8g1xcgxScIsFqABcZf6d6AAAA\">Law, Crime, and Family "
-                + "Issues Legislative Service Agency Reports Include Dealing "
-                + "with Taxes</a><br/>";
+                + "Taxes+1979_1983.xlsx?table=LegServiceAgencyReports&query="
+                + "H4sIAAAAAAAAAAt29XF1DlHQUnAL8vdV8ElND04tKstMTnVMT81LrgxKL"
+                + "cgvKilWCPdwDXJVCEmssLEzUHD0c1Fwy8xLzHHOT0lV8PH0dtVQNzSKj1"
+                + "fXBEtFpiYWKTi5hoS7uvopGFqaW4JFDS0tjBX8g1xcgxScIsFqABcZf6d"
+                + "6AAAA\">Law, Crime, and Family Issues Legislative Service "
+                + "Agency Reports Include Dealing with Taxes</a><br/>";
         assertEquals(expected, testColumn.getDownloadURL());
     }
 

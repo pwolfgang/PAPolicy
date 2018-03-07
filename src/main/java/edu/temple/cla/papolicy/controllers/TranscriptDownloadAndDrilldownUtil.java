@@ -87,9 +87,9 @@ public class TranscriptDownloadAndDrilldownUtil {
                 = jdbcTemplate.query(TRANSCRIPT_COMMITTEE_QUERY + transcriptId + "'",
                         TRANSCRIPT_COMMITTEE_MAPPER);
         List<String> committeeNames = new ArrayList<>();
-        for (TranscriptCommittee transcriptCommittee : committeeList) {
+        committeeList.forEach((transcriptCommittee) -> {
             committeeNames.add(transcriptCommittee.getCommitteeAlias().getAlternateName());
-        }
+        });
         return committeeNames;
     }
 

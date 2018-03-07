@@ -736,7 +736,9 @@ public abstract class AbstractTable implements Table {
         } catch (UnsupportedEncodingException ex) {
             LOGGER.error(ex);
         }
-        stb.append(".xlsx?query=");
+        stb.append(".xlsx?table=");
+        stb.append(getTableName());
+        stb.append("&query=");
         stb.append(downloadQueryString);
         stb.append("\">");
         stb.append(downloadTitle);
