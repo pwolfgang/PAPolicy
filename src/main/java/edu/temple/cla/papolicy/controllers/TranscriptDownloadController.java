@@ -37,6 +37,7 @@ import edu.temple.cla.policydb.wolfgang.mycreatexlsx.MyWorkbook;
 import edu.temple.cla.policydb.wolfgang.mycreatexlsx.MyWorksheet;
 import edu.temple.cla.papolicy.Utility;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -65,6 +66,60 @@ public class TranscriptDownloadController extends AbstractController {
     private DataSource dataSource;
     private JdbcTemplate jdbcTemplate;
 
+    private void buildSpreadsheetFromQuery(String query, OutputStream out) {
+        try (Connection conn = dataSource.getConnection()) {
+            try (Statement stmt = conn.createStatement()) {
+                try (ResultSet rs = stmt.executeQuery(query)) {
+                    ResultSetMetaData rsmd = rs.getMetaData();
+                    int numColumns = rsmd.getColumnCount();
+                    String[] columnNames = new String[numColumns + 2];
+                    int[] columnTypes = new int[numColumns + 2];
+                    for (int i = 0; i < numColumns; i++) {
+                        columnNames[i] = rsmd.getColumnName(i + 1);
+                        columnTypes[i] = rsmd.getColumnType(i + 1);
+                    }
+                    columnNames[numColumns] = "Committees";
+                    columnTypes[numColumns] = Types.VARCHAR;
+                    columnNames[numColumns + 1] = "Bills";
+                    columnTypes[numColumns + 1] = Types.VARCHAR;
+                    try (MyWorkbook wb = new MyWorkbook(out)) {
+                        try (MyWorksheet sheet = wb.getWorksheet()) {
+                            sheet.startRow();
+                            // for each column in the query results, create a spreadsheet column
+                            for (int i = 0; i < numColumns; i++) {
+                                sheet.addCell(columnNames[i]);
+                            }
+                            sheet.endRow();
+                            // For each row in the query results, create a spreadsheet row
+                            while (rs.next()) {
+                                String transcriptId = rs.getString("ID");
+                                sheet.startRow();
+                                for (int i = 0; i < numColumns; i++) {
+                                    DownloadUtility.addColumn(columnTypes[i], i, sheet, rs);
+                                }
+                                List<String> committeeNamesList = getCommitteeNames(jdbcTemplate, transcriptId);
+                                String committeeNames = formatNames(committeeNamesList);
+                                sheet.addCell(committeeNames);
+                                List<String> billIdList = getBillIdList(jdbcTemplate, transcriptId);
+                                formatBillIds(billIdList);
+                                String billIds = formatNames(billIdList);
+                                sheet.addCell(billIds);
+                                sheet.endRow();
+                            }
+                        }
+                    }
+                } catch (SQLException ex) {
+                    LOGGER.error("Error reading table", ex);
+                }
+            }
+        } catch (SQLException ex) {
+            LOGGER.error("Error opening connection", ex);
+        } catch (Throwable ex) {
+            // Catch any unexcpetied condition
+            LOGGER.error("Unexpected fatal condition", ex);
+        }
+    }
+
     /**
      * Create the ModelAndView
      *
@@ -80,82 +135,11 @@ public class TranscriptDownloadController extends AbstractController {
             HttpServletResponse response) {
         String query = Utility.decodeAndDecompress(request.getParameter("query"));
         response.setContentType("application/ms-excel");
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-        ResultSetMetaData rsmd;
-        MyWorkbook wb = null;
-        MyWorksheet sheet = null;
         try {
-            conn = dataSource.getConnection();
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(query);
-            rsmd = rs.getMetaData();
-            int numColumns = rsmd.getColumnCount();
-            String[] columnNames = new String[numColumns + 2];
-            int[] columnTypes = new int[numColumns + 2];
-            for (int i = 0; i < numColumns; i++) {
-                columnNames[i] = rsmd.getColumnName(i + 1);
-                columnTypes[i] = rsmd.getColumnType(i + 1);
-            }
-            columnNames[numColumns] = "Committees";
-            columnTypes[numColumns] = Types.VARCHAR;
-            columnNames[numColumns + 1] = "Bills";
-            columnTypes[numColumns + 1] = Types.VARCHAR;
-            wb = new MyWorkbook(response.getOutputStream());
-            sheet = wb.getWorksheet();
-            sheet.startRow();
-            for (int i = 0; i < numColumns + 2; i++) {
-                sheet.addCell(columnNames[i]);
-            }
-            sheet.endRow();
-            while (rs.next()) {
-                String transcriptId = rs.getString("ID");
-                sheet.startRow();
-                for (int i = 0; i < numColumns; i++) {
-                    DownloadUtility.addColumn(columnTypes[i], i, sheet, rs);
-                }
-                List<String> committeeNamesList = getCommitteeNames(jdbcTemplate, transcriptId);
-                String committeeNames = formatNames(committeeNamesList);
-                sheet.addCell(committeeNames);
-                List<String> billIdList = getBillIdList(jdbcTemplate, transcriptId);
-                formatBillIds(billIdList);
-                String billIds = formatNames(billIdList);
-                sheet.addCell(billIds);
-                sheet.endRow();
-            }
-            sheet.close();
-            sheet = null;
-            wb.close();
-            wb = null;
-        } catch (SQLException ex) {
-            LOGGER.error("Error reading table", ex);
+            OutputStream out = response.getOutputStream();
+            buildSpreadsheetFromQuery(query, out);
         } catch (IOException ioex) {
-            LOGGER.error(ioex);
-        } catch (Throwable ex) { // Want to catch any additional errors
-            LOGGER.error("Unexpected fatal condition", ex);
-        } finally {
-            if (sheet != null) {
-                sheet.close();
-            }
-            if (wb != null) {
-                wb.close();
-            }
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-            } catch (SQLException e) { /* nothing more can be done */ }
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-            } catch (SQLException e) { /* nothing more can be done */ }
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) { /* nothing more can be done */ }
+            LOGGER.error("Error obtaining OutputStream from response", ioex);
         }
         return null;
     }
@@ -179,10 +163,11 @@ public class TranscriptDownloadController extends AbstractController {
     }
 
     /**
-     * Method to format the list of names into a single string. An empty list
-     * is converted to the empty string. A list with one name is converted
-     * to its first entry, and a list with more than one name is converted
-     * to a comma separated list
+     * Method to format the list of names into a single string. An empty list is
+     * converted to the empty string. A list with one name is converted to its
+     * first entry, and a list with more than one name is converted to a comma
+     * separated list
+     *
      * @param names The List<String> to be formated
      * @return The formatted string.
      */
@@ -203,6 +188,7 @@ public class TranscriptDownloadController extends AbstractController {
 
     /**
      * Method to format the list of BillIDs Each billId is converted in place
+     *
      * @param billIds The List<String> to be converted
      */
     private void formatBillIds(List<String> billIds) {
@@ -213,10 +199,11 @@ public class TranscriptDownloadController extends AbstractController {
 
     /**
      * Method to convert a billId from yyyysxxnnnn into either yyyy xx nn or
-     * yyyy-s xx nn where yyyy is the session start year s is the special session
-     * number xx is the type (HB, HR, SB, SR) and nnnn is the leading zero
-     * padded bill number. If s is zero, then it is omitted. The leading
+     * yyyy-s xx nn where yyyy is the session start year s is the special
+     * session number xx is the type (HB, HR, SB, SR) and nnnn is the leading
+     * zero padded bill number. If s is zero, then it is omitted. The leading
      * zeros are also omitted from the bill number.
+     *
      * @param billId String to be converted
      * @return Converted result.
      */

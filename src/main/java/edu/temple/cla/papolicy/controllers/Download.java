@@ -55,82 +55,49 @@ import org.springframework.web.servlet.mvc.AbstractController;
  */
 public class Download extends AbstractController {
 
-    private static Logger LOGGER = Logger.getLogger(Download.class);
+    private static final Logger LOGGER = Logger.getLogger(Download.class);
     private DataSource dataSource;
     private AbstractController transcriptDownloadController;
 
-    private void buildSpreadsheetFromQuery(DataSource dataSource, String query, OutputStream out) {
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-        ResultSetMetaData rsmd;
-        MyWorkbook wb = null;
-        MyWorksheet sheet = null;
-        try {
-            conn = dataSource.getConnection();
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(query);
-            rsmd = rs.getMetaData();
-            int numColumns = rsmd.getColumnCount();
-            String[] columnNames = new String[numColumns];
-            int[] columnTypes = new int[numColumns];
-            for (int i = 0; i < numColumns; i++) {
-                columnNames[i] = rsmd.getColumnName(i + 1);
-                columnTypes[i] = rsmd.getColumnType(i + 1);
-            }
-            wb = new MyWorkbook(out);
-            sheet = wb.getWorksheet();
-            sheet.startRow();
-            // for each column in the query results, create a spreadsheet column
-            for (int i = 0; i < numColumns; i++) {
-                sheet.addCell(columnNames[i]);
-            }
-            sheet.endRow();
-            // For each row in the query results, create a spreadsheet row
-            while (rs.next()) {
-                sheet.startRow();
-                for (int i = 0; i < numColumns; i++) {
-                    DownloadUtility.addColumn(columnTypes[i], i, sheet, rs);
+    private void buildSpreadsheetFromQuery(String query, OutputStream out) {
+        try (Connection conn = dataSource.getConnection()) {
+            try (Statement stmt = conn.createStatement()) {
+                try (ResultSet rs = stmt.executeQuery(query)) {
+                    ResultSetMetaData rsmd = rs.getMetaData();
+                    int numColumns = rsmd.getColumnCount();
+                    String[] columnNames = new String[numColumns];
+                    int[] columnTypes = new int[numColumns];
+                    for (int i = 0; i < numColumns; i++) {
+                        columnNames[i] = rsmd.getColumnName(i + 1);
+                        columnTypes[i] = rsmd.getColumnType(i + 1);
+                    }
+                    try (MyWorkbook wb = new MyWorkbook(out)) {
+                        try (MyWorksheet sheet = wb.getWorksheet()) {
+                            sheet.startRow();
+                            // for each column in the query results, create a spreadsheet column
+                            for (int i = 0; i < numColumns; i++) {
+                                sheet.addCell(columnNames[i]);
+                            }
+                            sheet.endRow();
+                            // For each row in the query results, create a spreadsheet row
+                            while (rs.next()) {
+                                sheet.startRow();
+                                for (int i = 0; i < numColumns; i++) {
+                                    DownloadUtility.addColumn(columnTypes[i], i, sheet, rs);
+                                }
+                                sheet.endRow();
+                            }
+                        }
+                    }
+                } catch (SQLException ex) {
+                    LOGGER.error("Error reading table", ex);
                 }
-                sheet.endRow();
             }
-            sheet.close();
-            sheet = null;
-            wb.close();
-            wb = null;
         } catch (SQLException ex) {
-            LOGGER.error("Error reading table", ex);
+            LOGGER.error("Error opening connection", ex);
         } catch (Throwable ex) {
             // Catch any unexcpetied condition
             LOGGER.error("Unexpected fatal condition", ex);
-        } finally {
-            if (sheet != null) {
-                sheet.close();
-            }
-            if (wb != null) {
-                wb.close();
-            }
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-            } catch (SQLException e) {
-                /* nothing more can be done */
-            }
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-            } catch (SQLException e) {
-                /* nothing more can be done */
-            }
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                /* nothing more can be done */
-            }
         }
     }
 
@@ -146,7 +113,8 @@ public class Download extends AbstractController {
      */
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
-            HttpServletResponse response) {
+            HttpServletResponse response
+    ) {
         String requestURI = request.getRequestURI();
         if (requestURI.matches(".*House.?Hearings.*")) {
             try {
@@ -159,25 +127,28 @@ public class Download extends AbstractController {
         String query = Utility.decodeAndDecompress(request.getParameter("query"));
         response.setContentType("application/ms-excel");
         try {
-        OutputStream out = response.getOutputStream();
-            buildSpreadsheetFromQuery(dataSource, query, out);
+            OutputStream out = response.getOutputStream();
+            buildSpreadsheetFromQuery(query, out);
         } catch (IOException ioex) {
             LOGGER.error(ioex);
         }
         return null;
     }
-    
+
     /**
      * Method to set the DataSource. This method is called by the Spring
      * framework.
+     *
      * @param dataSource the datasource to set
      */
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
+
     /**
-     * Method to set the transcriptDownloadControler. This method is
-     * called by the Spring framework.
+     * Method to set the transcriptDownloadControler. This method is called by
+     * the Spring framework.
+     *
      * @param transcriptDownloadController
      */
     public void setTranscriptDownloadController(AbstractController transcriptDownloadController) {
