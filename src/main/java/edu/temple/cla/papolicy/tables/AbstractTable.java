@@ -34,8 +34,6 @@ package edu.temple.cla.papolicy.tables;
 import edu.temple.cla.papolicy.Units;
 import edu.temple.cla.papolicy.Utility;
 import edu.temple.cla.papolicy.YearRange;
-import edu.temple.cla.papolicy.dao.FilterMapper;
-import edu.temple.cla.papolicy.dao.TableMapper;
 import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.dao.YearValueMapper;
@@ -52,7 +50,6 @@ import java.util.Map;
 import java.util.SortedMap;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
@@ -292,11 +289,11 @@ public abstract class AbstractTable implements Table {
     public StringBuilder getFilterQualifierString() {
         StringBuilder stb = new StringBuilder();
         ArrayList<String> filterQualifiers = new ArrayList<>();
-        for (Filter filter:filterList) {
-            if (!"".equals(filter.getFilterQualifier())) {
-                filterQualifiers.add(filter.getFilterQualifier());
-            }
-        }
+        filterList.stream()
+                .filter((filter) -> (!"".equals(filter.getFilterQualifier())))
+                .forEachOrdered((filter) -> {
+                    filterQualifiers.add(filter.getFilterQualifier());
+        });
         if (!filterQualifiers.isEmpty()) {
             stb.append(" ");
             stb.append(filterQualifiers.get(0));
@@ -316,9 +313,9 @@ public abstract class AbstractTable implements Table {
     public Conjunction getFilterQuery() {
         if (filterQuery == null) {
             filterQuery = new Conjunction();
-            for (Filter filter : filterList) {
+            filterList.forEach((filter) -> {
                 filterQuery.addTerm(filter.getFilterQuery());
-            }
+            });
         }
         return filterQuery;
     }
@@ -618,83 +615,6 @@ public abstract class AbstractTable implements Table {
          this.codeColumn = codeColumn;
      }
 
-//     /**
-//      * Load the selected table object and associated filters.
-//      * @param tableId The table id
-//      * @param qualifier The qualifier to select subtable
-//      * @param request HTTP request from the form
-//      * @param jdbcTemplate jdbcTemplate to access the database
-//      * @return The selected filter object encapsulated in an array.
-//      * @throws DataAccessException If there is a problem querying the database
-//      * @throws Error If the table does not exist in the database
-//      */
-//     public static Table[] getTable(String tableId, char qualifier,
-//            HttpServletRequest request, JdbcTemplate jdbcTemplate)
-//            throws DataAccessException, Error {
-//        ParameterizedRowMapper<Table> tableMapper = new TableMapper();
-//        ParameterizedRowMapper<Filter> filterMapper = new FilterMapper();
-//        List<Table> aTableList = jdbcTemplate.query("SELECT * FROM Tables WHERE ID=" + tableId, tableMapper);
-//        if (aTableList.size() != 1) {
-//            throw new Error("TableID " + tableId + " not in database");
-//        }
-//        Table table = aTableList.get(0);
-//        table = table.getSubTable(qualifier);
-//        table.setAdditionalParameters(request);
-//        String query = "SELECT * from Filters WHERE TableID=" + table.getId() + " ORDER BY ID";
-//        List<Filter> filterList = jdbcTemplate.query(query, filterMapper);
-//        for (Filter filter : filterList) {
-//            filter.setJdbcTemplate(jdbcTemplate);
-//            filter.setFilterParameterValues(request);
-//        }
-//        table.setFilterList(filterList);
-//        table.setJdbcTemplate(jdbcTemplate);
-//        //Scan filter list to see how many variations there may be.
-//        int numVariations = 1;
-//        for (Filter f : filterList) {
-//            numVariations *= f.getNumberOfFilterChoices();
-//        }
-//        if (numVariations == 1) {
-//            return new Table[] {table};
-//        }
-//        List<Table> tableList = new ArrayList<>();
-//        tableList.add(table);
-//        while (expandChoices(tableList)) { 
-//            // work done in the method expandChoices method
-//        }
-//        return tableList.toArray(new Table[tableList.size()]);
-//    }
-//    
-//     /**
-//      * Method to expand the list of tables to account for multiple filter
-//      * value choices. (This method was added to allow for comparison of
-//      * filter choices, but is no longer used.)
-//      * @param tableList The list of selected tables
-//      * @return true if there are no more expansions to be performed.
-//      */
-//     private static boolean expandChoices(List<Table> tableList) {
-//        for (int i = 0; i < tableList.size(); i++) {
-//            Table table = tableList.get(i);
-//            List<Filter> filterList = table.getFilterList();
-//            for (int j = 0; j < filterList.size(); j++) {
-//                Filter filter = filterList.get(j);
-//                if (filter.getNumberOfFilterChoices() != 1) {
-//                    Table[] newTables = new Table[filter.getNumberOfFilterChoices()];
-//                    Filter[] filters = filter.getFilterChoices();
-//                    for (int k = 0; k < newTables.length; k++) {
-//                        newTables[k] = table.clone();
-//                        newTables[k].getFilterList().set(j, filters[k]);
-//                    }
-//                    tableList.remove(i);
-//                    for (Table newTable : newTables) {
-//                        tableList.add(i, newTable);
-//                    }
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;               
-//    }
-    
     /**
      * Make a deep copy of this table object
      * This method catches CloneNotSupportedException
