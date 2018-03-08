@@ -49,7 +49,7 @@ public class CommitteeAliasMapper implements ParameterizedRowMapper<CommitteeAli
      * @param rs ResultSet set to the current row of the table
      * @param rowNum index of the current row (not used)
      * @return The mapped object.
-     * @throws SQLException 
+     * @throws SQLException if an error occurs while executing the processing the row.
      */
     @Override
     public CommitteeAlias mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -72,8 +72,8 @@ public class CommitteeAliasMapper implements ParameterizedRowMapper<CommitteeAli
     /**
      * Determine of two ParameterizedRowmapper objects are equal.  Since
      * the row mapper is stateless, equality of class is sufficient.
-     * @param o
-     * @return 
+     * @param o The other object
+     * @return true if the objects are equal.
      */
     @Override
     public boolean equals(Object o) {

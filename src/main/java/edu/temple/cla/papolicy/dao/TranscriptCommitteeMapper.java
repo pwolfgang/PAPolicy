@@ -46,14 +46,14 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 public class TranscriptCommitteeMapper 
         implements ParameterizedRowMapper<TranscriptCommittee>{
 
-    private static final Logger logger = Logger.getLogger(CommitteeAliasMapper.class);
+    private static final Logger LOGGER = Logger.getLogger(CommitteeAliasMapper.class);
 
     /**
      * Perform the mapping.
      * @param rs ResultSet set to the current row of the table
      * @param rowNum index of the current row (not used)
      * @return The mapped object.
-     * @throws SQLException 
+     * @throws SQLException If an error occurs
      */
     @Override
     public TranscriptCommittee mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -63,7 +63,7 @@ public class TranscriptCommitteeMapper
             item.setTranscriptID(rs.getInt("transcriptID"));
             item.setCommitteeAlias(new CommitteeAliasMapper().mapRow(rs, rowNum));
         } catch (SQLException ex) {
-            logger.error(ex);
+            LOGGER.error(ex);
             throw ex;
         }
         return item;
@@ -72,14 +72,23 @@ public class TranscriptCommitteeMapper
     /**
      * Determine of two ParameterizedRowmapper objects are equal.  Since
      * the row mapper is stateless, equality of class is sufficient.
-     * @param o
-     * @return 
+     * @param o The other object
+     * @return True of the objects are equal
      */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;
         return this.getClass() == o.getClass();
+    }
+
+    /**
+     * Since equality depends on equality of classes, the class hashCode is returned.
+     * @return The class hashCode.
+     */
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 
 }

@@ -66,7 +66,7 @@ public class AnalysisController extends AbstractController {
      * @param request The servlet request object
      * @param response The servlet response object
      * @return A ModelAndView object.
-     * @throws Exception 
+     * @throws Exception All possible exceptions are thrown.
      */
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request,

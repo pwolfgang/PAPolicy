@@ -42,14 +42,14 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  */
 public class CommitteeNameMapper implements ParameterizedRowMapper<CommitteeName>{
 
-    private static final Logger logger = Logger.getLogger(CommitteeAliasMapper.class);
+    private static final Logger LOGGER = Logger.getLogger(CommitteeAliasMapper.class);
 
     /**
      * Perform the mapping.
      * @param rs ResultSet set to the current row of the table
      * @param rowNum index of the current row (not used)
      * @return The mapped object.
-     * @throws SQLException 
+     * @throws SQLException if an error occurs when processing the row
      */
     @Override
     public CommitteeName mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -59,7 +59,7 @@ public class CommitteeNameMapper implements ParameterizedRowMapper<CommitteeName
         item.setCtyCode(rs.getInt("CtyCode"));
         item.setName(rs.getString("Name"));
         } catch (SQLException ex) {
-            logger.error(ex);
+            LOGGER.error(ex);
             throw ex;
         }
         return item;
@@ -68,8 +68,8 @@ public class CommitteeNameMapper implements ParameterizedRowMapper<CommitteeName
     /**
      * Determine of two ParameterizedRowmapper objects are equal.  Since
      * the row mapper is stateless, equality of class is sufficient.
-     * @param o
-     * @return 
+     * @param o The other object
+     * @return true if objects are equal
      */
     @Override
     public boolean equals(Object o) {

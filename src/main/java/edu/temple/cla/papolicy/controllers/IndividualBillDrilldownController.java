@@ -49,7 +49,7 @@ import org.springframework.web.servlet.mvc.AbstractController;
  * @author Paul
  */
 public class IndividualBillDrilldownController extends AbstractController{
-    private static final Logger logger = Logger.getLogger(TranscriptDrillDownController.class);
+    private static final Logger LOGGER = Logger.getLogger(TranscriptDrillDownController.class);
     private JdbcTemplate jdbcTemplate;
 
     /**
@@ -64,7 +64,7 @@ public class IndividualBillDrilldownController extends AbstractController{
         // Get the requested bill id.
         String billId = request.getParameter("billId");
         // Load the BillsTable.
-        Table billsTable = AbstractTable.getTable("3", ' ', request, jdbcTemplate)[0];
+        Table billsTable = Table.getTable("3", ' ', request, jdbcTemplate)[0];
         // Create a select query for the specified bill.
         QueryBuilder initialQuery = new QueryBuilder();
         initialQuery.setTable(billsTable.getTableName());
@@ -75,7 +75,7 @@ public class IndividualBillDrilldownController extends AbstractController{
             // Forward to DrillDown controller.
             response.sendRedirect(drillDownURL);
         } catch (IOException ex) {
-            logger.error("Error when setting redirect " + drillDownURL, ex);
+            LOGGER.error("Error when setting redirect " + drillDownURL, ex);
         }
         return null;
     }

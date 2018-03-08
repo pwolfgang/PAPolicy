@@ -42,14 +42,14 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  */
 public class DeflatorMapper implements ParameterizedRowMapper<Deflator> {
 
-    private static final Logger logger = Logger.getLogger(DeflatorMapper.class);
+    private static final Logger LOGGER = Logger.getLogger(DeflatorMapper.class);
 
     /**
      * Perform the mapping.
      * @param rs ResultSet set to the current row of the table
      * @param rowNum index of the current row (not used)
      * @return The mapped object.
-     * @throws SQLException 
+     * @throws SQLException if an error occurs when processing the row.
      */
     @Override
     public Deflator mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -60,7 +60,7 @@ public class DeflatorMapper implements ParameterizedRowMapper<Deflator> {
         item.setGDP(rs.getFloat("GDP"));
         item.setPriceIndex(rs.getFloat("Price_Index"));
         } catch (SQLException ex) {
-            logger.error(ex);
+            LOGGER.error(ex);
             throw ex;
         }
         return item;
@@ -69,8 +69,8 @@ public class DeflatorMapper implements ParameterizedRowMapper<Deflator> {
     /**
      * Determine of two ParameterizedRowmapper objects are equal.  Since
      * the row mapper is stateless, equality of class is sufficient.
-     * @param o
-     * @return 
+     * @param o The other object
+     * @return true if the objects are equal
      */
     @Override
     public boolean equals(Object o) {

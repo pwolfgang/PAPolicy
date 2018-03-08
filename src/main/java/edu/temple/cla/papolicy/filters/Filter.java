@@ -78,7 +78,7 @@ public abstract class Filter {
      * Return the id
      * @return the id
      */
-    public int getId() {
+    public final int getId() {
         return id;
     }
 
@@ -130,7 +130,7 @@ public abstract class Filter {
 
     /**
      * Method to capture the form input from the HTTP request.
-     * @param request 
+     * @param request The HTTP request.
      */
     public abstract void setFilterParameterValues(HttpServletRequest request);
 
@@ -170,6 +170,7 @@ public abstract class Filter {
      * select all variations which will be displayed in separate columns
      * in the result table. 
      * By default this method returns this enclosed in an array
+     * @return An array of Filter instances.
      */
     public Filter[] getFilterChoices() {
         return new Filter[] {this};

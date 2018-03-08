@@ -46,7 +46,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 /**
- * Class to respond to requests to download a selected governor&apos;s budget
+ * Class to respond to requests to download a selected governor&#x27;s budget
  * address
  *
  * @author Paul Wolfgang
@@ -103,10 +103,10 @@ public class DownloadGovernorsBudgetAddress extends HttpServlet {
     }
 
     /**
-     * Initialize the path where the governor&apos;s budget address files are
+     * Initialize the path where the governor&#x27;s budget address files are
      * located. Value is specified in the web.xml file.
      *
-     * @throws ServletException
+     * @throws ServletException if there is an error
      */
     @Override
     public void init() throws ServletException {

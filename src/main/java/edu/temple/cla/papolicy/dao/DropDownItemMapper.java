@@ -49,7 +49,7 @@ public class DropDownItemMapper implements ParameterizedRowMapper<DropDownItem> 
      * @param rs ResultSet set to the current row of the table
      * @param rowNum index of the current row (not used)
      * @return The mapped object.
-     * @throws SQLException 
+     * @throws SQLException If an error occurs when processing the row
      */
     @Override
     public DropDownItem mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -64,6 +64,12 @@ public class DropDownItemMapper implements ParameterizedRowMapper<DropDownItem> 
         return item;
     }
     
+    /**
+     * Determine if two RowMapper objects are equal. Since these objects are
+     * stateless, equality of class is sufficient.
+     * @param o The other object
+     * @return True if the object are equal.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

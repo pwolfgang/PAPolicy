@@ -77,7 +77,7 @@ public class PublicOpinionFilters extends Filter {
 
     /**
      * Method to capture the form input from the HTTP request.
-     * @param request 
+     * @param request The HTTP request.
      */
     @Override
     public void setFilterParameterValues(HttpServletRequest request){

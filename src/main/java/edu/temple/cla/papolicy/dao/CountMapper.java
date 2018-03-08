@@ -42,21 +42,21 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  */
 public class CountMapper implements ParameterizedRowMapper<Integer> {
 
-    private static final Logger logger = Logger.getLogger(CountMapper.class);
+    private static final Logger LOGGER = Logger.getLogger(CountMapper.class);
 
     /**
      * Perform the mapping.
      * @param rs ResultSet set to the current row of the table
      * @param rowNum index of the current row (not used)
      * @return The mapped object.
-     * @throws SQLException 
+     * @throws SQLException If an error occurs processing the row.
      */
     @Override
     public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
         try {
-            return new Integer(rs.getInt("Count"));
+            return rs.getInt("Count");
         } catch (SQLException ex) {
-            logger.error(ex);
+            LOGGER.error(ex);
             throw ex;
         }
     }
@@ -64,8 +64,8 @@ public class CountMapper implements ParameterizedRowMapper<Integer> {
     /**
      * Determine of two ParameterizedRowmapper objects are equal.  Since
      * the row mapper is stateless, equality of class is sufficient.
-     * @param o
-     * @return 
+     * @param o The other object
+     * @return True if the objects are equal.
      */
     @Override
     public boolean equals(Object o) {

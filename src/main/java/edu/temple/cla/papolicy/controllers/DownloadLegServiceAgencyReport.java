@@ -44,7 +44,6 @@ import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.servlet.ModelAndView;
@@ -67,7 +66,7 @@ public class DownloadLegServiceAgencyReport extends AbstractController {
      *
      * @param request servlet request
      * @param response servlet response
-     * @return
+     * @return null since there is no view to be displayed.
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
@@ -138,7 +137,7 @@ public class DownloadLegServiceAgencyReport extends AbstractController {
      * Method to set the JdbcTemplate. This method is called by the Spring
      * framework.
      *
-     * @param jdbcTemplate
+     * @param jdbcTemplate The JdbcTemplate to be set.
      */
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -148,7 +147,7 @@ public class DownloadLegServiceAgencyReport extends AbstractController {
      * Method to set the path to the files. This method is called by the Spring
      * framework.
      *
-     * @param path
+     * @param path The path to the files.
      */
     public void setPath(String path) {
         this.path = path;

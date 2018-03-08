@@ -42,14 +42,14 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  */
 public class YearValueMapper implements ParameterizedRowMapper<YearValue> {
 
-    private static final Logger logger = Logger.getLogger(YearValueMapper.class);
+    private static final Logger LOGGER = Logger.getLogger(YearValueMapper.class);
 
     /**
      * Perform the mapping. The value is either an integer or a double.
      * @param rs ResultSet set to the current row of the table
      * @param rowNum index of the current row (not used)
      * @return The mapped object.
-     * @throws SQLException 
+     * @throws SQLException If an error occurs extracting the data
      */
     @Override
     public YearValue mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -63,11 +63,11 @@ public class YearValueMapper implements ParameterizedRowMapper<YearValue> {
                 try {
                     value = new Double(valueString);
                 } catch (NumberFormatException ex2) {
-                    logger.error(valueString + " not valid ", ex2);
+                    LOGGER.error(valueString + " not valid ", ex2);
                 }
             }
         } catch (SQLException sqlex) {
-            logger.error(sqlex);
+            LOGGER.error(sqlex);
             throw sqlex;
          }
         return new YearValue(year, value);
@@ -76,8 +76,8 @@ public class YearValueMapper implements ParameterizedRowMapper<YearValue> {
     /**
      * Determine of two ParameterizedRowmapper objects are equal.  Since
      * the row mapper is stateless, equality of class is sufficient.
-     * @param o
-     * @return 
+     * @param o The other object
+     * @return True if the objects are equal.
      */
     @Override
     public boolean equals(Object o) {

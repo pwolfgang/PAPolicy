@@ -42,21 +42,21 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  */
 public class StringMapper implements ParameterizedRowMapper<String> {
 
-    private static final Logger logger = Logger.getLogger(YearValueMapper.class);
+    private static final Logger LOGGER = Logger.getLogger(YearValueMapper.class);
 
     /**
      * Create a new String object with the contents of the current row.
      * @param rs ResultSet set to the current row of the table
      * @param rowNum index of the current row (not used)
      * @return The mapped object.
-     * @throws SQLException 
+     * @throws SQLException If an error occurs.
      */
     @Override
     public String mapRow(ResultSet rs, int rowNum) throws SQLException {
         try {
             return rs.getString(1);
         } catch (SQLException sqlex) {
-            logger.error(sqlex);
+            LOGGER.error(sqlex);
             throw sqlex;
         }
     }
@@ -64,8 +64,8 @@ public class StringMapper implements ParameterizedRowMapper<String> {
     /**
      * Determine of two ParameterizedRowmapper objects are equal.  Since
      * the row mapper is stateless, equality of class is sufficient.
-     * @param o
-     * @return 
+     * @param o The other object.
+     * @return True if the objects are equal.
      */
     @Override
     public boolean equals(Object o) {

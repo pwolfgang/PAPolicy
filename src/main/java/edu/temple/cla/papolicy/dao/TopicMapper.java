@@ -42,14 +42,14 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  */
 public class TopicMapper implements ParameterizedRowMapper<Topic> {
 
-    private static final Logger logger = Logger.getLogger(TopicMapper.class);
+    private static final Logger LOGGER = Logger.getLogger(TopicMapper.class);
 
     /**
      * Perform the mapping.
      * @param rs ResultSet set to the current row of the table
      * @param rowNum index of the current row (not used)
      * @return The mapped object.
-     * @throws SQLException 
+     * @throws SQLException If an error occurs
      */
     @Override
     public Topic mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -59,7 +59,7 @@ public class TopicMapper implements ParameterizedRowMapper<Topic> {
             item.setCode(rs.getInt("Code"));
             item.setDescription(rs.getString("Description"));
         } catch (SQLException ex) {
-            logger.error(ex);
+            LOGGER.error(ex);
             throw ex;
         }
         return item;
@@ -68,8 +68,8 @@ public class TopicMapper implements ParameterizedRowMapper<Topic> {
     /**
      * Determine of two ParameterizedRowmapper objects are equal.  Since
      * the row mapper is stateless, equality of class is sufficient.
-     * @param o
-     * @return 
+     * @param o The other object
+     * @return True if the objects are equal
      */
     @Override
     public boolean equals(Object o) {

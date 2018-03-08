@@ -44,14 +44,14 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  */
 public class FilterMapper implements ParameterizedRowMapper<Filter> {
 
-    private static final Logger logger = Logger.getLogger(FilterMapper.class);
+    private static final Logger LOGGER = Logger.getLogger(FilterMapper.class);
 
     /**
      * Create a Filter object from the contents of the current row.
      * @param rs ResultSet set to the current row of the table
      * @param rowNum index of the current row (not used)
      * @return The mapped object.
-     * @throws SQLException 
+     * @throws SQLException If an error occurs when processing the row.
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -64,8 +64,8 @@ public class FilterMapper implements ParameterizedRowMapper<Filter> {
                     (Constructor<Filter>)itemClass.getDeclaredConstructor(
                     int.class, int.class, String.class, String.class, 
                     String.class, String.class);
-            Integer id = new Integer(rs.getInt("ID"));
-            Integer tableId = new Integer(rs.getInt("TableID"));
+            Integer id = rs.getInt("ID");
+            Integer tableId = rs.getInt("TableID");
             String columnName = rs.getString("ColumnName");
             String description = rs.getString("Description");
             String tableReference = rs.getString("TableReference");
@@ -74,10 +74,10 @@ public class FilterMapper implements ParameterizedRowMapper<Filter> {
                     columnName, tableReference, additionalParam);
             return item;
         } catch (SQLException sqlex) {
-            logger.error(sqlex);
+            LOGGER.error(sqlex);
             throw sqlex;
         } catch (Exception ex) {
-            logger.error(ex);
+            LOGGER.error(ex);
         }
         return null;
     }
@@ -85,8 +85,8 @@ public class FilterMapper implements ParameterizedRowMapper<Filter> {
     /**
      * Determine of two ParameterizedRowmapper objects are equal.  Since
      * the row mapper is stateless, equality of class is sufficient.
-     * @param o
-     * @return 
+     * @param o The other object.
+     * @return True if the objects are equal.
      */
     @Override
     public boolean equals(Object o) {

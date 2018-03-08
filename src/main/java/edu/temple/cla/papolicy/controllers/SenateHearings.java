@@ -109,7 +109,7 @@ public class SenateHearings extends HttpServlet {
     }
 
     /**
-     * Initialize the path where the governor&apos;s budget address files are
+     * Initialize the path where the governor&#x27;s budget address files are
      * located. Value is specified in the web.xml file.
      *
      */

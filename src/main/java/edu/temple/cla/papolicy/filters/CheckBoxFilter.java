@@ -74,7 +74,7 @@ public class CheckBoxFilter extends Filter {
     /**
      * Method to capture the request parameters. It then builds the filter
      * strings.
-     * @param request 
+     * @param request The HTTP request
      */
     @Override
     public void setFilterParameterValues(HttpServletRequest request) {

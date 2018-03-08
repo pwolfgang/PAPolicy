@@ -69,7 +69,7 @@ public class DisplayFormController extends AbstractController {
      * @param response The response object (not used).
      * @return A model that contains the data to be displayed and a direction to
      * the results.jsp page.
-     * @throws Exception 
+     * @throws Exception All possible exceptions are thrown.
      */
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request,
@@ -89,7 +89,7 @@ public class DisplayFormController extends AbstractController {
                     qualifier = tableId.charAt(tableId.length() - 1);
                     tableId = tableId.substring(0, tableId.length() - 1);
                 }
-                Table[] tables = AbstractTable.getTable(tableId, qualifier, request, jdbcTemplate);
+                Table[] tables = Table.getTable(tableId, qualifier, request, jdbcTemplate);
                 tableList.addAll(Arrays.asList(tables));
             }
             // Load the selected topics.

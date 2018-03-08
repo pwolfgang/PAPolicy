@@ -153,7 +153,6 @@ public class Column {
     /**
      * Construct the query string that selects the filtered data for all topics.
      * @return The query string that selects the filtered  data for all topics.
-     * @depreciated
      */
     public String getFilteredTotalQueryString() {
         return getFilteredTotalQuery().build();
@@ -174,7 +173,6 @@ public class Column {
     /**
      * Construct the query string that selects all data for all topics.
      * @return A query string that selects all data for all topics
-     * @depreciated
      */
     public String getUnfilteredTotalQueryString() {
         return getUnfilteredTotalQuery().build() + " WHERE ";
@@ -199,7 +197,6 @@ public class Column {
      * @param startYear The start year
      * @param endYear The end year
      * @return A query string that selects all data for a given year range
-     * @depreciated
      */
     public String getUnfilteredTotalQueryString(int startYear, int endYear) {
         return getUnfilteredTotalQuery(startYear, endYear).build();
@@ -224,7 +221,6 @@ public class Column {
      * @param startYear The start year
      * @param endYear The end year
      * @return A query string to select the filtered data for a given year range
-     * @depreciated
      */
     public String getFilteredTotalQueryString(int startYear, int endYear) {
         return getFilteredTotalQuery(startYear, endYear).build();
@@ -250,7 +246,6 @@ public class Column {
     /**
      * Generate the query string that selects the items for a topic and/or free text.
      * @return Query string that selects the items for a topic and/or free text.
-     * @depreciated
      */
     public String getTopicCountQueryString() {
         return getTopicCountQuery().build();
@@ -272,10 +267,9 @@ public class Column {
 
     /**
      * Generate the query string to select items for a particular topic for a given year range.
-     * @param startYear
-     * @param endYear
+     * @param startYear The start year
+     * @param endYear The end year
      * @return The query string to select items for a particular topic for a given year range.
-     * @depreciated
      */
     public String getTopicCountQueryString(int startYear, int endYear) {
         return getTopicCountQuery(startYear, endYear).build();

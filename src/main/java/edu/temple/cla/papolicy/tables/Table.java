@@ -33,15 +33,20 @@ package edu.temple.cla.papolicy.tables;
 
 import edu.temple.cla.papolicy.Units;
 import edu.temple.cla.papolicy.YearRange;
+import edu.temple.cla.papolicy.dao.FilterMapper;
+import edu.temple.cla.papolicy.dao.TableMapper;
 import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.filters.Filter;
 import edu.temple.cla.policydb.queryBuilder.Conjunction;
 import edu.temple.cla.policydb.queryBuilder.QueryBuilder;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedMap;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 /**
  * The Table interface defines the methods for each of the datasets.
@@ -217,7 +222,7 @@ public interface Table extends Cloneable {
     
     /**
      * The unfiltered total query selects all items from the table in a given date range.
-     * @return 
+     * @return The unfiltered total query string. 
      */
     QueryBuilder getUnfilteredTotalQuery();
 
@@ -343,7 +348,7 @@ public interface Table extends Cloneable {
 
     /**
      * Method to set the note column. Called when table is loaded.
-     * @param noteColumn 
+     * @param noteColumn The value to be set.
      */
     void setNoteColumn(String noteColumn);
 
@@ -370,7 +375,7 @@ public interface Table extends Cloneable {
      * @param downloadTitle title to appear in the URL
      * @param downloadQueryString query to perform the download less year range
      * @param yearRange Range of years to download.
-     * @return 
+     * @return The URL to perform the download.
      */
     String getDownloadURL(String downloadTitle, String downloadQueryString,
             YearRange yearRange);
@@ -383,4 +388,82 @@ public interface Table extends Cloneable {
      * @return A string to be included in the analysis table.
      */
     String getDisplayedValue(String key, Number value, Units units);
+    
+         /**
+      * Load the selected table object and associated filters.
+      * @param tableId The table id
+      * @param qualifier The qualifier to select subtable
+      * @param request HTTP request from the form
+      * @param jdbcTemplate jdbcTemplate to access the database
+      * @return The selected filter object encapsulated in an array.
+      * @throws DataAccessException If there is a problem querying the database
+      * @throws Error If the table does not exist in the database
+      */
+      static Table[] getTable(String tableId, char qualifier,
+            HttpServletRequest request, JdbcTemplate jdbcTemplate)
+            throws DataAccessException, Error {
+        ParameterizedRowMapper<Table> tableMapper = new TableMapper();
+        ParameterizedRowMapper<Filter> filterMapper = new FilterMapper();
+        List<Table> aTableList = jdbcTemplate.query("SELECT * FROM Tables WHERE ID=" + tableId, tableMapper);
+        if (aTableList.size() != 1) {
+            throw new Error("TableID " + tableId + " not in database");
+        }
+        Table table = aTableList.get(0);
+        table = table.getSubTable(qualifier);
+        table.setAdditionalParameters(request);
+        String query = "SELECT * from Filters WHERE TableID=" + table.getId() + " ORDER BY ID";
+        List<Filter> filterList = jdbcTemplate.query(query, filterMapper);
+        for (Filter filter : filterList) {
+            filter.setJdbcTemplate(jdbcTemplate);
+            filter.setFilterParameterValues(request);
+        }
+        table.setFilterList(filterList);
+        table.setJdbcTemplate(jdbcTemplate);
+        //Scan filter list to see how many variations there may be.
+        int numVariations = 1;
+        for (Filter f : filterList) {
+            numVariations *= f.getNumberOfFilterChoices();
+        }
+        if (numVariations == 1) {
+            return new Table[] {table};
+        }
+        List<Table> tableList = new ArrayList<>();
+        tableList.add(table);
+        while (expandChoices(tableList)) { 
+            // work done in the method expandChoices method
+        }
+        return tableList.toArray(new Table[tableList.size()]);
+    }
+    
+     /**
+      * Method to expand the list of tables to account for multiple filter
+      * value choices. (This method was added to allow for comparison of
+      * filter choices, but is no longer used.)
+      * @param tableList The list of selected tables
+      * @return true if there are no more expansions to be performed.
+      */
+     static boolean expandChoices(List<Table> tableList) {
+        for (int i = 0; i < tableList.size(); i++) {
+            Table table = tableList.get(i);
+            List<Filter> filterList = table.getFilterList();
+            for (int j = 0; j < filterList.size(); j++) {
+                Filter filter = filterList.get(j);
+                if (filter.getNumberOfFilterChoices() != 1) {
+                    Table[] newTables = new Table[filter.getNumberOfFilterChoices()];
+                    Filter[] filters = filter.getFilterChoices();
+                    for (int k = 0; k < newTables.length; k++) {
+                        newTables[k] = table.clone();
+                        newTables[k].getFilterList().set(j, filters[k]);
+                    }
+                    tableList.remove(i);
+                    for (Table newTable : newTables) {
+                        tableList.add(i, newTable);
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;               
+    }
+
 }

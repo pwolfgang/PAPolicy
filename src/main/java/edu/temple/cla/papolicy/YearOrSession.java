@@ -57,7 +57,7 @@ public class YearOrSession {
     /**
      * Construct a string representation. If this is a session then the
      * result is yyyy-yy, otherwise it is a single yyyy.
-     * @return 
+     * @return String representation of a session or year.
      */
     @Override
     public String toString() {

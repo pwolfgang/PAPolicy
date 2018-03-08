@@ -43,7 +43,7 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  */
 public class TableMapper implements ParameterizedRowMapper<Table> {
 
-    private static final Logger logger = Logger.getLogger(TableMapper.class);
+    private static final Logger LOGGER = Logger.getLogger(TableMapper.class);
 
     public TableMapper() {
     }
@@ -53,7 +53,7 @@ public class TableMapper implements ParameterizedRowMapper<Table> {
      * @param rs ResultSet set to the current row of the table
      * @param rowNum index of the current row (not used)
      * @return The mapped object.
-     * @throws SQLException 
+     * @throws SQLException If an error occurs
      */
     @Override
     public Table mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -81,9 +81,9 @@ public class TableMapper implements ParameterizedRowMapper<Table> {
             item.setNoteColumn(rs.getString("Note"));
             return item;
         } catch (SQLException sqlex) {
-            logger.error(sqlex);
+            LOGGER.error(sqlex);
         } catch (Exception ex) {
-            logger.error(ex);
+            LOGGER.error(ex);
         }
         return null;
     }
@@ -91,8 +91,8 @@ public class TableMapper implements ParameterizedRowMapper<Table> {
     /**
      * Determine of two ParameterizedRowmapper objects are equal.  Since
      * the row mapper is stateless, equality of class is sufficient.
-     * @param o
-     * @return 
+     * @param o The other object
+     * @return True if the objects are equal.
      */
     @Override
     public boolean equals(Object o) {

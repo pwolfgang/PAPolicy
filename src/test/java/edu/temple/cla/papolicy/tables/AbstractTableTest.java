@@ -50,7 +50,6 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import mockit.Expectations;
 import mockit.Mocked;
-import static mockit.internal.expectations.ActiveInvocations.anyString;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -64,13 +63,13 @@ public class AbstractTableTest {
     
     private Table testTable;
     private String[] drillDownColumns;
-    private Filter[] filterList = new Filter[]{
+    private final Filter[] filterList = new Filter[]{
         new BinaryFilter(501, 6, "Legislative Request", "LegRequest", null, null),
         new BinaryFilter(502, 6, "Policy Recommendation", "Recommendation", null, null),
         new BinaryFilter(504, 6, "Dealing with Taxes", "Tax", null, null),
         new BinaryFilter(505, 6, "Concerning the Elderly", "Elderly", null, null)
     };
-    private YearValue[] yearValues = new YearValue[] {
+    private final YearValue[] yearValues = new YearValue[] {
         new YearValue(1979, 4),
         new YearValue(1980, 5),
         new YearValue(1981, 2),
@@ -89,6 +88,7 @@ public class AbstractTableTest {
     public void setUp() {
         drillDownColumns = new String[]{"Title", "Orginization", "Year", "Month", "Day", "Abstract", "FinalCode"};
         testTable = new AbstractTable(){
+            @Override
             public String getTitleBox(){return null;}
         };
         testTable.setId(6);
@@ -334,7 +334,7 @@ public class AbstractTableTest {
 
     @Test
     public void testGetTable() throws Exception {
-        Table[] result = AbstractTable.getTable("6", '\u0000', request, jdbcTemplate);
+        Table[] result = Table.getTable("6", '\u0000', request, jdbcTemplate);
         assertEquals(testTable, result[0]);
     }
 

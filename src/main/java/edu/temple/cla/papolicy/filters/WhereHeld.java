@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * The WhereHeld filter is a special case of the BinaryFilter. It displays a set
- * of radio buttons BOTH, &lt;city&gt;, Outside &lt;city&gt. The &lt;city&gt; is
+ * of radio buttons BOTH, &lt;city&gt;, Outside &lt;city&gt;. The &lt;city&gt; is
  * set to "Harrisburg" by the additionalParameter from the Filters database row.
  * This allows this to be used in other states.
  *
@@ -46,7 +46,7 @@ import javax.servlet.http.HttpServletRequest;
 public class WhereHeld extends Filter {
 
     private static final String BOTH = "587";
-    private String parameterName;
+    private final String parameterName;
     private String parameterValue;
     private String filterQualifier;
 
@@ -70,7 +70,7 @@ public class WhereHeld extends Filter {
 
     /**
      * Generate the HTML to display the filter form input. It displays a set of
-     * radio buttons BOTH, &lt;city&gt;, Outside &lt;city&gt.
+     * radio buttons BOTH, &lt;city&gt;, Outside &lt;city&gt;.
      *
      * @return HTML to display the filter form input.
      */
@@ -88,7 +88,7 @@ public class WhereHeld extends Filter {
 
     /**
      * Method to capture the form input from the HTTP request.
-     * @param request
+     * @param request  The HTTP request.
      */
     @Override
     public void setFilterParameterValues(HttpServletRequest request) {
