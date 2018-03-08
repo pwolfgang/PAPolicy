@@ -56,7 +56,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 public class TestDatabase {
     
     private static String createTables =
-"CREATE TABLE Tables (\n" +
+"CREATE TABLE IF NOT EXISTS Tables (\n" +
 "  ID integer DEFAULT '0' NOT NULL,\n" +
 "  TableName varchar(255) DEFAULT NULL,\n" +
 "  TableTitle varchar(255) DEFAULT NULL,\n" +
@@ -73,7 +73,7 @@ public class TestDatabase {
 "  PRIMARY KEY (ID)\n" +
 ")";
     private static String createFilters =
-"CREATE TABLE Filters (\n" +
+"CREATE TABLE IF NOT EXISTS Filters (\n" +
 "  ID integer DEFAULT '0' NOT NULL,\n" +
 "  TableID integer DEFAULT NULL,\n" +
 "  ColumnName varchar(255) DEFAULT NULL,\n" +
@@ -84,7 +84,7 @@ public class TestDatabase {
 "  PRIMARY KEY (ID)\n" +
 ")";
     private static String createLegServiceAgencyReports =
-"CREATE TABLE LegServiceAgencyReports (\n" +
+"CREATE TABLE IF NOT EXISTS LegServiceAgencyReports (\n" +
 "  ID integer DEFAULT '0' NOT NULL,\n" +
 "  Title varchar(255) DEFAULT NULL,\n" +
 "  Organization varchar(255) DEFAULT NULL,\n" +
@@ -104,7 +104,7 @@ public class TestDatabase {
 ")";
 
     private static String createPennsylvaniaGeneralFundBalance =
-"CREATE TABLE PennsylvaniaGeneralFundBalance (\n" +
+"CREATE TABLE IF NOT EXISTS PennsylvaniaGeneralFundBalance (\n" +
 "  ID integer DEFAULT '0' NOT NULL,\n" +
 "  Year smallint DEFAULT NULL,\n" +
 "  Beginning_Balance smallint DEFAULT NULL,\n" +
@@ -119,7 +119,7 @@ public class TestDatabase {
 ")";  
     
     private static String createDeflator =
-"CREATE TABLE Deflator (\n" +
+"CREATE TABLE IF NOT EXISTS Deflator (\n" +
 "  Year smallint DEFAULT NULL,\n" +
 "  GDP double DEFAULT NULL,\n" +
 "  Price_Index double DEFAULT NULL,\n" +
