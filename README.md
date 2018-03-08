@@ -1,4 +1,4 @@
-* Pennsylvania Policy Database analysis tool.
+# Pennsylvania Policy Database analysis tool.
 
 This is a Java Server Pages application that allows users to select one or more
 of the database tables from the Pennsylvania Policy Database.  Selection criteria
@@ -11,4 +11,6 @@ provided.
 This web application is modeled on the original U. S. Policy Agenda's project. It
 is written in a way that allows for adaptation to other Policy Agenda's projects
 datasets.
+
+Details of the design are described in the file Generalized Web Data Analysis Tool_v2.pdf
 
