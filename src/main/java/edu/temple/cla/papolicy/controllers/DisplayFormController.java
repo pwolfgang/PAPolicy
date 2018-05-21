@@ -37,7 +37,6 @@ import edu.temple.cla.papolicy.*;
 import edu.temple.cla.papolicy.chart.Chart;
 import edu.temple.cla.papolicy.chart.MyDataset;
 import edu.temple.cla.policydb.queryBuilder.QueryBuilder;
-import edu.temple.cla.papolicy.tables.AbstractTable;
 import edu.temple.cla.papolicy.tables.Table;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,7 +59,7 @@ import org.springframework.web.servlet.mvc.AbstractController;
  */
 public class DisplayFormController extends AbstractController {
 
-    private static Logger logger = Logger.getLogger(DisplayFormController.class);
+    private static final Logger LOGGER = Logger.getLogger(DisplayFormController.class);
     private JdbcTemplate jdbcTemplate;
 
     /**
@@ -136,7 +135,7 @@ public class DisplayFormController extends AbstractController {
             }
             // Group the columns by units. (Budget data and public opinion have their own units)
             Map<Units, List<Column>> columnMap = new HashMap<>();
-            for (Column column : columns) {
+            columns.forEach((column) -> {
                 List<Column> columnsList = columnMap.get(column.getUnits());
                 if (columnsList == null) {
                     columnsList = new ArrayList<>();
@@ -147,7 +146,7 @@ public class DisplayFormController extends AbstractController {
                 } else {
                     column.setValueMap(yearRange.getMinYear(), yearRange.getMaxYear());
                 }
-                if (column.getUnits() == Units.PERCENT 
+                if (column.getUnits() == Units.PERCENT
                         || column.getUnits() == Units.PERCENT_OF_FILTERED 
                         || column.getUnits() == Units.PERCENT_OF_TOTAL) {
                     column.setFilteredTotalMap(yearRange.getMinYear(), yearRange.getMaxYear());
@@ -159,7 +158,7 @@ public class DisplayFormController extends AbstractController {
                 column.setDownloadQueryString(Utility.compressAndEncode(downloadQuery.build()));
                 columnsList.add(column);
                 columnMap.put(column.getUnits(), columnsList);
-            }
+            });
             // Poplulate each row of each column.
             Iterator<YearOrSession> itr = yearRange.iterator();
             while (itr.hasNext()) {
@@ -169,26 +168,36 @@ public class DisplayFormController extends AbstractController {
                 int currentMaxYear = current.getMaxYear();
                 for (int j = 0; j < columns.size(); j++) {
                     Column column = columns.get(j);
-                    if (column.getUnits() == Units.COUNT) {
-                        QueryBuilder countQuery =
-                                column.getTopicCountQuery(current.getMinYear(),
-                                current.getMaxYear());
-                        column.setDrillDown(rowKey, column.getTable().createDrillDownURL(countQuery));
+                    if (null == column.getUnits()) {
                         column.setDisplayedValue(rowKey, column.getValue(currentMinYear,
                                 currentMaxYear));
-                    } else if (column.getUnits() == Units.PERCENT) {
-                        column.setDisplayedValue(rowKey, column.getPercent(currentMinYear,
-                                currentMaxYear));
-                    } else if (column.getUnits() == Units.PERCENT_OF_FILTERED) {
-                        column.setDisplayedValue(rowKey, column.getPercent(currentMinYear, currentMaxYear));
-                    } else if (column.getUnits() == Units.PERCENT_OF_TOTAL) {
-                        column.setDisplayedValue(rowKey, column.getPercentOfTotal(currentMinYear, currentMaxYear));
-                    } else if (column.getUnits() == Units.PERCENT_CHANGE) {
-                        column.setDisplayedValue(rowKey, column.getPercentChange(currentMinYear,
-                                currentMaxYear));
-                    } else {
-                        column.setDisplayedValue(rowKey, column.getValue(currentMinYear,
-                                currentMaxYear));
+                    } else switch (column.getUnits()) {
+                        case COUNT:
+                            QueryBuilder countQuery =
+                                    column.getTopicCountQuery(current.getMinYear(),
+                                            current.getMaxYear());
+                            column.setDrillDown(rowKey, column.getTable().createDrillDownURL(countQuery));
+                            column.setDisplayedValue(rowKey, column.getValue(currentMinYear,
+                                    currentMaxYear));
+                            break;
+                        case PERCENT:
+                            column.setDisplayedValue(rowKey, column.getPercent(currentMinYear,
+                                    currentMaxYear));
+                            break;
+                        case PERCENT_OF_FILTERED:
+                            column.setDisplayedValue(rowKey, column.getPercent(currentMinYear, currentMaxYear));
+                            break;
+                        case PERCENT_OF_TOTAL:
+                            column.setDisplayedValue(rowKey, column.getPercentOfTotal(currentMinYear, currentMaxYear));
+                            break;
+                        case PERCENT_CHANGE:
+                            column.setDisplayedValue(rowKey, column.getPercentChange(currentMinYear,
+                                    currentMaxYear));
+                            break;
+                        default:
+                            column.setDisplayedValue(rowKey, column.getValue(currentMinYear,
+                                    currentMaxYear));
+                            break;
                     }
                 }
             }
@@ -198,16 +207,19 @@ public class DisplayFormController extends AbstractController {
             theMap.put("columns", columns);
             // Create MyDataset objects for each group of columns with common units
             List<MyDataset> datasetList = new ArrayList<>();
-            for (Map.Entry<Units, List<Column>> entry : columnMap.entrySet()) {
-                Units unit = entry.getKey();
-                List<Column> theColumns = entry.getValue();
-                datasetList.add(new MyDataset(theColumns));
-            }
+//            for (Map.Entry<Units, List<Column>> entry : columnMap.entrySet()) {
+//                Units unit = entry.getKey();
+//                List<Column> theColumns = entry.getValue();
+//                datasetList.add(new MyDataset(theColumns));
+//            }
+            columnMap.forEach((k,v)-> {
+                datasetList.add(new MyDataset(v));
+            });
             // Add the chart to the map.
             theMap.put("dataset", Chart.createChart(datasetList));
             return new ModelAndView("results", theMap);
         } catch (Exception ex) { // want to catch and log all exceptions
-            logger.error(ex);
+            LOGGER.error("Exception Caught", ex);
             throw ex;
         }
     }

@@ -58,7 +58,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="billDrillDown.spg">individualBillDrilldownController</prop>
                 <prop key="lsar.spg">downloadLegServiceAgencyReport</prop>
                 <prop key="*Total+Spending*">budgetDownloadController</prop>
-                <prop key="*House?Hearings*.xlsx">transcriptDownloadController</prop>
                 <prop key="*.xlsx">downloadController</prop>
             </props>
         </property>
@@ -122,12 +121,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
         class="edu.temple.cla.papolicy.controllers.BudgetDownload">
             <property name="dataSource" ref="dataSource"/>
     </bean>
-    
-    <bean name="transcriptDownloadController"
-        class="edu.temple.cla.papolicy.controllers.TranscriptDownloadController">
-            <property name="jdbcTemplate" ref="jdbcTemplate"/>
-    </bean>
-    
+       
     <bean name="downloadLegServiceAgencyReport"
           class="edu.temple.cla.papolicy.controllers.DownloadLegServiceAgencyReport">
           <property name="jdbcTemplate" ref="jdbcTemplate"/>
