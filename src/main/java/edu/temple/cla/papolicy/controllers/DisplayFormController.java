@@ -31,8 +31,6 @@
  */
 package edu.temple.cla.papolicy.controllers;
 
-import edu.temple.cla.papolicy.dao.TopicMapper;
-import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.*;
 import edu.temple.cla.papolicy.chart.Chart;
 import edu.temple.cla.papolicy.chart.MyDataset;
@@ -48,7 +46,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -75,7 +72,6 @@ public class DisplayFormController extends AbstractController {
             HttpServletResponse response) throws Exception {
         try {
             // Load the selected table objects
-            ParameterizedRowMapper<Topic> topicMapper = new TopicMapper();
             List<Table> tableList = new ArrayList<>();
             String[] tableIds = request.getParameterValues("dataset");
             if (tableIds == null) {
@@ -99,7 +95,6 @@ public class DisplayFormController extends AbstractController {
             // Get the display range and span (years or legislative session)
             String range = request.getParameter("range");
             boolean fRange = "1".equals(range);
-            String span = request.getParameter("span");
             YearRange yearRange = new YearRange(request.getParameter("startYear"),
                     request.getParameter("endYear"),
                     request.getParameter("startSession"),
@@ -109,22 +104,22 @@ public class DisplayFormController extends AbstractController {
             String showResults = request.getParameter("showResults");
             // Create a column for each dataset/topic pair and dataset/freetext.
             List<Column> columns = new ArrayList<>();
-            for (Table table : tableList) {
+            tableList.forEach(table -> {
                 if (table.isTopicSearchable()) {
                     if (table.isMajorOnly()) {
-                        for (Topic topic : topics.getMajorTopics().values()) {
+                        topics.getMajorTopics().values().forEach(topic -> {
                             columns.add(new Column(table, topic, null, showResults, yearRange));
                             if (fFreeText && fRange && table.getTextColumn() != null) {
                                 columns.add(new Column(table, topic, freeText, showResults, yearRange));
                             }
-                        }
+                        });
                     } else {
-                        for (Topic topic : topics.getSelectedTopics().values()) {
+                        topics.getSelectedTopics().values().forEach(topic -> {
                             columns.add(new Column(table, topic, null, showResults, yearRange));
                             if (fFreeText && fRange && table.getTextColumn() != null) {
                                 columns.add(new Column(table, topic, freeText, showResults, yearRange));
                             }
-                        }
+                        });
                     }
                 } else {
                     columns.add(new Column(table, null, null, showResults, yearRange));
@@ -132,7 +127,7 @@ public class DisplayFormController extends AbstractController {
                 if (fFreeText && !fRange && table.getTextColumn() != null) {
                     columns.add(new Column(table, null, freeText, showResults, yearRange));
                 }
-            }
+            });
             // Group the columns by units. (Budget data and public opinion have their own units)
             Map<Units, List<Column>> columnMap = new HashMap<>();
             columns.forEach((column) -> {
@@ -207,11 +202,6 @@ public class DisplayFormController extends AbstractController {
             theMap.put("columns", columns);
             // Create MyDataset objects for each group of columns with common units
             List<MyDataset> datasetList = new ArrayList<>();
-//            for (Map.Entry<Units, List<Column>> entry : columnMap.entrySet()) {
-//                Units unit = entry.getKey();
-//                List<Column> theColumns = entry.getValue();
-//                datasetList.add(new MyDataset(theColumns));
-//            }
             columnMap.forEach((k,v)-> {
                 datasetList.add(new MyDataset(v));
             });
