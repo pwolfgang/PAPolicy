@@ -334,8 +334,8 @@ public class AbstractTableTest {
 
     @Test
     public void testGetTable() throws Exception {
-        Table[] result = Table.getTable("6", '\u0000', request, jdbcTemplate);
-        assertEquals(testTable, result[0]);
+        Table result = Table.getTable("6", '\u0000', request, jdbcTemplate);
+        assertEquals(testTable, result);
     }
 
     @Test
