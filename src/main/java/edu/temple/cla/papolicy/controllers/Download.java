@@ -46,6 +46,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.List;
+import java.util.StringJoiner;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
@@ -210,18 +211,9 @@ public class Download extends AbstractController {
      * @return The formatted string.
      */
     private String formatNames(List<String> names) {
-        if (names.isEmpty()) {
-            return "";
-        }
-        if (names.size() == 1) {
-            return names.get(0);
-        }
-        StringBuilder stb = new StringBuilder(names.get(0));
-        for (int i = 1; i < names.size(); i++) {
-            stb.append(", ");
-            stb.append(names.get(i));
-        }
-        return stb.toString();
+        StringJoiner sj = new StringJoiner(", ");
+        names.forEach(name -> sj.add(name));
+        return sj.toString();
     }
 
     /**

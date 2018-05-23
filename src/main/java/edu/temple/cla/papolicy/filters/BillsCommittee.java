@@ -99,7 +99,7 @@ public class BillsCommittee extends Filter {
                 .append("<select name=\"").append(parameterName).append("\" ")
                 .append("id=\"").append(parameterName).append("\">")
                 .append("<option value=\"ALL\" selected=\"selected\">ALL COMMITTEES</option>\n");
-        for (CommitteeAlias item : items) {
+        items.forEach(item -> {
             if (item.getCtyCode() % 100 != 99) { // Exclude special committees
                 String committeeName = item.getAlternateName();
                 if (!committeeName.startsWith(getAdditionalParam())) {
@@ -110,7 +110,7 @@ public class BillsCommittee extends Filter {
                             .append("</option>\n");
                 }
             }
-        }
+        });
         stb.append("</select>");
         stb.append("</fieldset>");
         return stb.toString();
@@ -144,17 +144,17 @@ public class BillsCommittee extends Filter {
             List<CommitteeAlias> selectedCommitteeList =
                     getJdbcTemplate().query(query, itemMapper);
             Map<Integer, CommitteeAlias> uniqueCommittees = new TreeMap<>();
-            for (CommitteeAlias committee : selectedCommitteeList) {
+            selectedCommitteeList.forEach(committee -> {
                 uniqueCommittees.put(committee.getCtyCode(), committee);
-            }
+            });
             stb = new StringBuilder();
             stb.append("Referred to ");
-            for (CommitteeAlias committee : uniqueCommittees.values()) {
+            uniqueCommittees.values().forEach(committee -> {
                 stb.append(getAdditionalParam());
                 stb.append(" ");
                 stb.append(committee.getName());
                 stb.append(" committee");
-            }
+            });
             if ("1".equals(primaryValue)) {
                 stb.append(" as primary committee");
             }

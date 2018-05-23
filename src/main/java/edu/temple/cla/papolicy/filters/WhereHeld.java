@@ -101,17 +101,25 @@ public class WhereHeld extends Filter {
      * filter form input.
      */
     private void buildFilterStrings() {
-        if (BOTH.equals(parameterValue)) {
-            filterQuery = new EmptyExpression();
-            filterQualifier = "";
-        } else if ("0".equals(parameterValue)) {
-            filterQuery = new Comparison(getColumnName(), "=", "\'" 
-                    + getAdditionalParam() + "\'");
-            filterQualifier = "Held in " + getAdditionalParam();
-        } else {
+        if (null == parameterValue) {
             filterQuery = new Comparison(getColumnName(), "<>", "\'" 
                     + getAdditionalParam() + "\'");
             filterQualifier = "Held outside " + getAdditionalParam();
+        } else switch (parameterValue) {
+            case BOTH:
+                filterQuery = new EmptyExpression();
+                filterQualifier = "";
+                break;
+            case "0":
+                filterQuery = new Comparison(getColumnName(), "=", "\'"
+                        + getAdditionalParam() + "\'");
+                filterQualifier = "Held in " + getAdditionalParam();
+                break;
+            default:
+                filterQuery = new Comparison(getColumnName(), "<>", "\'"
+                        + getAdditionalParam() + "\'");
+                filterQualifier = "Held outside " + getAdditionalParam();
+                break;
         }
     }
 

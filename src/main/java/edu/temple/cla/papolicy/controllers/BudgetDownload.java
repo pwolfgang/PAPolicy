@@ -50,7 +50,7 @@ import org.springframework.web.servlet.mvc.AbstractController;
  */
 public class BudgetDownload extends AbstractController{
 
-    private static Logger logger = Logger.getLogger(Download.class);
+    private static Logger LOGGER = Logger.getLogger(Download.class);
 
     private DataSource dataSource;
 
@@ -68,7 +68,7 @@ public class BudgetDownload extends AbstractController{
         try {
             uri = URLDecoder.decode(uri, "UTF-8");
         } catch (UnsupportedEncodingException ex) {
-            logger.error(ex);
+            LOGGER.error(ex);
             return null;
         }
         int posLastSlash = uri.lastIndexOf("/");

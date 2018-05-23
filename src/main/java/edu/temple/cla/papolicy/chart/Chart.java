@@ -179,27 +179,27 @@ public class Chart extends HttpServlet {
     public static String createChart(List<MyDataset> datasets) {
         try {
             File outputFile = File.createTempFile("chart", ".png");
-            FileOutputStream out = new FileOutputStream(outputFile);
-            Plot plot;
-            if (datasets.size() == 1) {
-                MyDataset dataset0 = datasets.get(0);
-                if (dataset0.getColumnCount() == 1) {
-                    PieDataset pds = DatasetUtilities.createPieDatasetForColumn(dataset0, 0);
-                    plot = createPiePlot(pds);
-                } else if (dataset0.getRowCount() == 1) {
-                    plot = createBarPlot(dataset0);
+            try (FileOutputStream out = new FileOutputStream(outputFile)) {
+                Plot plot;
+                if (datasets.size() == 1) {
+                    MyDataset dataset0 = datasets.get(0);
+                    if (dataset0.getColumnCount() == 1) {
+                        PieDataset pds = DatasetUtilities.createPieDatasetForColumn(dataset0, 0);
+                        plot = createPiePlot(pds);
+                    } else if (dataset0.getRowCount() == 1) {
+                        plot = createBarPlot(dataset0);
+                    } else {
+                        plot = createLinePlot(datasets);
+                    }
                 } else {
                     plot = createLinePlot(datasets);
                 }
-            } else {
-                plot = createLinePlot(datasets);
+                JFreeChart chart = new JFreeChart("",
+                        new Font("SanSerif", Font.BOLD, 12),
+                        plot,
+                        true);
+                ChartUtilities.writeChartAsPNG(out, chart, 800, 600);
             }
-            JFreeChart chart = new JFreeChart("",
-                    new Font("SanSerif", Font.BOLD, 12),
-                    plot,
-                    true);
-            ChartUtilities.writeChartAsPNG(out, chart, 800, 600);
-            out.close();
             return outputFile.getAbsolutePath();
         } catch (IOException ioex) {
             logger.error(ioex);

@@ -48,7 +48,7 @@ import org.springframework.web.servlet.mvc.AbstractController;
  */
 public class DrillDownController extends AbstractController {
 
-    private static final Logger logger = Logger.getLogger(DrillDownController.class);
+    private static final Logger LOGGER = Logger.getLogger(DrillDownController.class);
     private JdbcTemplate jdbcTemplate;
 
     /**
@@ -71,7 +71,7 @@ public class DrillDownController extends AbstractController {
             theMap.put("theList", theList);
             return new ModelAndView("drillDown", theMap);
         } catch (Exception ex) { // Want to catch unchecked exceptions as well
-            logger.error(ex);
+            LOGGER.error(ex);
             return null;
         }
     }

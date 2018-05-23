@@ -31,14 +31,12 @@
  */
 package edu.temple.cla.papolicy.controllers;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -68,19 +66,12 @@ public class DownloadGovernorsBudgetAddress extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String fileName = request.getParameter("year");
-        File pathFile = new File(path);
         File inputFile = new File(path, fileName
                 + " Governors Budget Address.pdf");
-        try (InputStream in = new BufferedInputStream(
-                new FileInputStream(inputFile));
-                OutputStream out = response.getOutputStream()) {
+        try (OutputStream out = response.getOutputStream()) {
             response.setContentType("application/pdf");
             response.setHeader("Content-Disposition", "attachment;filename=\"" + inputFile.getName() + "\"");
-            int c;
-            while ((c = in.read()) != -1) {
-                out.write(c);
-            }
-            out.flush();
+            Files.copy(inputFile.toPath(), out);
         } catch (FileNotFoundException ex) {
             try (PrintWriter pw = response.getWriter()) {
                 response.setContentType("text/html");

@@ -6,9 +6,9 @@
  * modification, are permitted provided that the following conditions are met:
  *
  * * Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer.
+ *   yearValueList of conditions and the following disclaimer.
  * * Redistributions in binary form must reproduce the above copyright notice,
- *   this list of conditions and the following disclaimer in the documentation
+ *   this yearValueList of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
  * * All advertising materials features or use of this software must display 
  *   the following  acknowledgement
@@ -363,9 +363,9 @@ public class Column {
      */
     public void setValueMap(int minYear, int maxYear) {
         String query = getTopicCountQueryString(minYear, maxYear);
-        List<YearValue> list = table.getYearValueList(query);
+        List<YearValue> yearValueList = table.getYearValueList(query);
         valueMap = new TreeMap<>();
-        for (YearValue yv : list) {
+        yearValueList.forEach((yv) -> {
             Number value = yv.getValue();
             if (value != null) {
                 if (minValue == null) {
@@ -384,7 +384,7 @@ public class Column {
                 }
             }
             valueMap.put(yv.getYear(), yv.getValue());
-        }
+        });
     }
 
     /**
@@ -394,11 +394,11 @@ public class Column {
      */
     public void setUnfilteredTotalMap(int minYear, int maxYear) {
         String query = getUnfilteredTotalQueryString(minYear, maxYear);
-        List<YearValue> list = table.getYearValueList(query);
+        List<YearValue> yearValueList = table.getYearValueList(query);
         unfilteredTotalMap = new TreeMap<>();
-        for (YearValue yv : list) {
+        yearValueList.forEach((yv) -> {
             unfilteredTotalMap.put(yv.getYear(), yv.getValue());
-        }
+        });
     }
 
     /**
@@ -408,11 +408,11 @@ public class Column {
      */
     public void setFilteredTotalMap(int minYear, int maxYear) {
         String query = getFilteredTotalQueryString(minYear, maxYear);
-        List<YearValue> list = table.getYearValueList(query);
+        List<YearValue> yearValueList = table.getYearValueList(query);
         filteredTotalMap = new TreeMap<>();
-        for (YearValue yv : list) {
+        yearValueList.forEach((yv) -> {
             filteredTotalMap.put(yv.getYear(), yv.getValue());
-        }
+        });
     }
 
     /**

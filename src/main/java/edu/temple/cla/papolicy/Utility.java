@@ -50,7 +50,7 @@ import org.apache.log4j.Logger;
  */
 public class Utility {
 
-    private static final Logger logger = Logger.getLogger(Utility.class);
+    private static final Logger LOGGER = Logger.getLogger(Utility.class);
 
     /**
      * Method to compress and encode a string to be used as a get parameter.
@@ -69,7 +69,7 @@ public class Utility {
             String codedString = Base64.encodeBase64URLSafeString(bytes.toByteArray());
             return codedString;
         } catch (IOException ex) { // Cannot happen
-            logger.error(ex);
+            LOGGER.error("IO Exception writing to internal string", ex);
             return theString;
         }
     }
@@ -97,7 +97,7 @@ public class Utility {
              }
              return w.toString();
          } catch (IOException ex) {
-             logger.error(ex);
+             LOGGER.error(ex);
              return theString;
          }
      }

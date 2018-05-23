@@ -56,7 +56,7 @@ import org.springframework.web.servlet.mvc.AbstractController;
  */
 public class AnalysisController extends AbstractController {
 
-    private static final Logger logger = Logger.getLogger(AnalysisController.class);
+    private static final Logger LOGGER = Logger.getLogger(AnalysisController.class);
 
     private JdbcTemplate jdbcTemplate;
 
@@ -92,9 +92,9 @@ public class AnalysisController extends AbstractController {
                 String query = "SELECT * from Filters WHERE TableID=" + table.getId()
                         + " ORDER BY ID";
                 List<Filter> filterList = jdbcTemplate.query(query, filterMapper);
-                for (Filter filter : filterList) {
+                filterList.forEach((filter) -> {
                     filter.setJdbcTemplate(jdbcTemplate);
-                }
+                });
                 table.setFilterList(filterList);
                 table.setJdbcTemplate(jdbcTemplate);
             }
@@ -107,20 +107,20 @@ public class AnalysisController extends AbstractController {
                     topicMapper);
             StringBuilder stb = new StringBuilder();
             // Read the minor topics associated with each major topic
-            for (Topic majorTopic : majorTopics) {
+            majorTopics.forEach((majorTopic) -> {
                 int majorCode = majorTopic.getCode();
                 stb.append(majorCode);
                 stb.append(", ");
                 String topicQuery = "SELECT * from Code WHERE Code LIKE(\'" + majorCode + "__\') ORDER BY Description";
                 List<Topic> subTopics = jdbcTemplate.query(topicQuery, topicMapper);
                 majorTopic.setSubTopics(subTopics);
-            }
+            });
             model.put("topics", majorTopics);
             stb.delete(stb.length() - 2, stb.length());
             model.put("topicList", stb.toString());
             return new ModelAndView("analysis", model);
         } catch (Exception ex) { // What to catch all exceptions
-            logger.error(ex);
+            LOGGER.error(ex);
             throw ex;
         }
     }
