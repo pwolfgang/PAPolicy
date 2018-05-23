@@ -41,6 +41,7 @@ import edu.temple.cla.papolicy.filters.Filter;
 import edu.temple.cla.policydb.queryBuilder.Conjunction;
 import edu.temple.cla.policydb.queryBuilder.QueryBuilder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.SortedMap;
 import javax.servlet.http.HttpServletRequest;
@@ -389,7 +390,7 @@ public interface Table extends Cloneable {
      */
     String getDisplayedValue(String key, Number value, Units units);
     
-         /**
+    /**
       * Load the selected table object and associated filters.
       * @param tableId The table id
       * @param qualifier The qualifier to select subtable
@@ -399,7 +400,7 @@ public interface Table extends Cloneable {
       * @throws DataAccessException If there is a problem querying the database
       * @throws Error If the table does not exist in the database
       */
-      static Table[] getTable(String tableId, char qualifier,
+      static Table getTable(String tableId, char qualifier,
             HttpServletRequest request, JdbcTemplate jdbcTemplate)
             throws DataAccessException, Error {
         ParameterizedRowMapper<Table> tableMapper = new TableMapper();
@@ -413,57 +414,62 @@ public interface Table extends Cloneable {
         table.setAdditionalParameters(request);
         String query = "SELECT * from Filters WHERE TableID=" + table.getId() + " ORDER BY ID";
         List<Filter> filterList = jdbcTemplate.query(query, filterMapper);
-        for (Filter filter : filterList) {
+        filterList.forEach(filter -> {
             filter.setJdbcTemplate(jdbcTemplate);
             filter.setFilterParameterValues(request);
-        }
+        });
         table.setFilterList(filterList);
         table.setJdbcTemplate(jdbcTemplate);
-        //Scan filter list to see how many variations there may be.
-        int numVariations = 1;
-        for (Filter f : filterList) {
-            numVariations *= f.getNumberOfFilterChoices();
-        }
-        if (numVariations == 1) {
-            return new Table[] {table};
-        }
-        List<Table> tableList = new ArrayList<>();
-        tableList.add(table);
-        while (expandChoices(tableList)) { 
-            // work done in the method expandChoices method
-        }
-        return tableList.toArray(new Table[tableList.size()]);
-    }
-    
-     /**
-      * Method to expand the list of tables to account for multiple filter
-      * value choices. (This method was added to allow for comparison of
-      * filter choices, but is no longer used.)
-      * @param tableList The list of selected tables
-      * @return true if there are no more expansions to be performed.
-      */
-     static boolean expandChoices(List<Table> tableList) {
-        for (int i = 0; i < tableList.size(); i++) {
-            Table table = tableList.get(i);
-            List<Filter> filterList = table.getFilterList();
-            for (int j = 0; j < filterList.size(); j++) {
-                Filter filter = filterList.get(j);
-                if (filter.getNumberOfFilterChoices() != 1) {
-                    Table[] newTables = new Table[filter.getNumberOfFilterChoices()];
-                    Filter[] filters = filter.getFilterChoices();
-                    for (int k = 0; k < newTables.length; k++) {
-                        newTables[k] = table.clone();
-                        newTables[k].getFilterList().set(j, filters[k]);
-                    }
-                    tableList.remove(i);
-                    for (Table newTable : newTables) {
-                        tableList.add(i, newTable);
-                    }
-                    return true;
-                }
-            }
-        }
-        return false;               
-    }
+        return table;
+      }
+        
+//        This code was added to allow for comparison of filter choices, but is no longer
+//        used.
+//        //Scan filter list to see how many variations there may be.
+//        int numVariations = 1;
+//        for (Filter f : filterList) {
+//            numVariations *= f.getNumberOfFilterChoices();
+//        }
+//        if (numVariations == 1) {
+//            return Arrays.asList(table);
+//        }
+//        List<Table> tableList = new ArrayList<>();
+//        tableList.add(table);
+//        while (expandChoices(tableList)) { 
+//            // work done in the method expandChoices method
+//        }
+//        return tableList;
+//    }
+//    
+//     /**
+//      * Method to expand the list of tables to account for multiple filter
+//      * value choices. (This method was added to allow for comparison of
+//      * filter choices, but is no longer used.)
+//      * @param tableList The list of selected tables
+//      * @return true if there are no more expansions to be performed.
+//      */
+//     static boolean expandChoices(List<Table> tableList) {
+//        for (int i = 0; i < tableList.size(); i++) {
+//            Table table = tableList.get(i);
+//            List<Filter> filterList = table.getFilterList();
+//            for (int j = 0; j < filterList.size(); j++) {
+//                Filter filter = filterList.get(j);
+//                if (filter.getNumberOfFilterChoices() != 1) {
+//                    Table[] newTables = new Table[filter.getNumberOfFilterChoices()];
+//                    Filter[] filters = filter.getFilterChoices();
+//                    for (int k = 0; k < newTables.length; k++) {
+//                        newTables[k] = table.clone();
+//                        newTables[k].getFilterList().set(j, filters[k]);
+//                    }
+//                    tableList.remove(i);
+//                    for (Table newTable : newTables) {
+//                        tableList.add(i, newTable);
+//                    }
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;               
+//    }
 
 }

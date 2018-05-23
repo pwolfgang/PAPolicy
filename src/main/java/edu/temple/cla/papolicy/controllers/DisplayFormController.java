@@ -34,10 +34,11 @@ package edu.temple.cla.papolicy.controllers;
 import edu.temple.cla.papolicy.*;
 import edu.temple.cla.papolicy.chart.Chart;
 import edu.temple.cla.papolicy.chart.MyDataset;
+import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.policydb.queryBuilder.QueryBuilder;
 import edu.temple.cla.papolicy.tables.Table;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -84,8 +85,8 @@ public class DisplayFormController extends AbstractController {
                     qualifier = tableId.charAt(tableId.length() - 1);
                     tableId = tableId.substring(0, tableId.length() - 1);
                 }
-                Table[] tables = Table.getTable(tableId, qualifier, request, jdbcTemplate);
-                tableList.addAll(Arrays.asList(tables));
+                Table table = Table.getTable(tableId, qualifier, request, jdbcTemplate);
+                tableList.add(table);
             }
             // Load the selected topics.
             TopicList topics = new TopicList(request.getParameterValues("subtopics"), jdbcTemplate);
@@ -106,21 +107,18 @@ public class DisplayFormController extends AbstractController {
             List<Column> columns = new ArrayList<>();
             tableList.forEach(table -> {
                 if (table.isTopicSearchable()) {
+                    Collection<Topic> topicValues;
                     if (table.isMajorOnly()) {
-                        topics.getMajorTopics().values().forEach(topic -> {
-                            columns.add(new Column(table, topic, null, showResults, yearRange));
-                            if (fFreeText && fRange && table.getTextColumn() != null) {
-                                columns.add(new Column(table, topic, freeText, showResults, yearRange));
-                            }
-                        });
+                        topicValues = topics.getMajorTopics().values();
                     } else {
-                        topics.getSelectedTopics().values().forEach(topic -> {
-                            columns.add(new Column(table, topic, null, showResults, yearRange));
-                            if (fFreeText && fRange && table.getTextColumn() != null) {
-                                columns.add(new Column(table, topic, freeText, showResults, yearRange));
-                            }
-                        });
-                    }
+                        topicValues = topics.getSelectedTopics().values();
+                    }               
+                    topicValues.forEach(topic -> {
+                        columns.add(new Column(table, topic, null, showResults, yearRange));
+                        if (fFreeText && fRange && table.getTextColumn() != null) {
+                            columns.add(new Column(table, topic, freeText, showResults, yearRange));
+                        }
+                    });
                 } else {
                     columns.add(new Column(table, null, null, showResults, yearRange));
                 }
