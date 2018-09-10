@@ -88,37 +88,6 @@ public class PartyTest {
         assertEquals(demQuery, filter.getFilterQuery().toString());
     }
 
-//    @Test
-//    public void testGetFilterChoicesNotBoth() {
-//        setParameterValue("NOFILTER");
-//        Filter[] choices = filter.getFilterChoices();
-//        assertEquals(1, choices.length);
-//        assertEquals(filter, choices[0]);
-//    }
-//    
-//    @Test
-//    public void testGetFilerChoicesBoth() {
-//        setParameterValue("ALL");
-//        Filter[] choices = filter.getFilterChoices();
-//        assertEquals(2, choices.length);
-//        assertEquals(repQuery, choices[0].getFilterQuery().toString());
-//        assertEquals(repQualifier, choices[0].getFilterQualifier());
-//        assertEquals(demQuery, choices[1].getFilterQuery().toString());
-//        assertEquals(demQualifier, choices[1].getFilterQualifier());
-//    }
-//
-//    @Test
-//    public void testGetNumberOfFilterChoicesNotBoth() {
-//        setParameterValue("NOFILTER");
-//        assertEquals(1, filter.getNumberOfFilterChoices());
-//    }
-//
-//    @Test
-//    public void testGetNumberOfFilterChoicesBoth() {
-//        setParameterValue("ALL");
-//        assertEquals(2, filter.getNumberOfFilterChoices());
-//    }
-
     @Test
     public void testGetFilterQualifierNoFilter() {
         setParameterValue("NOFILTER");
