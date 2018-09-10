@@ -165,26 +165,6 @@ public abstract class Filter {
         this.jdbcTemplate = jdbcTemplate;
     }
     
-//    /**
-//     * Return an array of Filter instances when multiple filter choices
-//     * have been selected. This feature allows for a filter to be used to
-//     * select all variations which will be displayed in separate columns
-//     * in the result table. 
-//     * By default this method returns this enclosed in an array
-//     * @return An array of Filter instances.
-//     */
-//    public Filter[] getFilterChoices() {
-//        return new Filter[] {this};
-//    }
-//    
-//    /**
-//     * Return the number of filter choices.
-//     * @return Default return value of 1
-//     */
-//    public int getNumberOfFilterChoices() {
-//        return 1;
-//    }
-    
     /**
      * Determine if two filter objects are equal.
      * @param o The other object
