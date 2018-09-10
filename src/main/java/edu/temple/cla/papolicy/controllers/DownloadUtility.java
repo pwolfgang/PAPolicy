@@ -31,16 +31,10 @@
  */
 package edu.temple.cla.papolicy.controllers;
 
-import edu.temple.cla.policydb.wolfgang.mycreatexlsx.MyWorkbook;
 import edu.temple.cla.policydb.wolfgang.mycreatexlsx.MyWorksheet;
-import java.io.OutputStream;
-import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Types;
-import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 
 /**

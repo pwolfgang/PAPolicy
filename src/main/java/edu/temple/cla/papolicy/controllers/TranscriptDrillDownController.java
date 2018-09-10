@@ -67,13 +67,13 @@ public class TranscriptDrillDownController extends AbstractController {
             String codedQuery = request.getParameter("query");
             String query = Utility.decodeAndDecompress(codedQuery);
             List<Map<String, Object>> theList = jdbcTemplate.queryForList(query);
-            for (Map<String, Object> row : theList) {
+            theList.forEach(row -> {
                 String transcriptId = (String) row.get("ID");
                 List<String> committeeNamesList = getCommitteeNames(jdbcTemplate, transcriptId);
                 row.put("Committees", committeeNamesList);
                 List<String> billIdList = getBillIdList(jdbcTemplate, transcriptId);
                 row.put("Bills", billIdList);
-            }
+            });
             Map<String, Object> theMap = new HashMap<>();
             theMap.put("theList", theList);
             return new ModelAndView("transcriptDrillDown", theMap);

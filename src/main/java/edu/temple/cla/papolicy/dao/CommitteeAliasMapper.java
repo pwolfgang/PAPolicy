@@ -42,7 +42,7 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  */
 public class CommitteeAliasMapper implements ParameterizedRowMapper<CommitteeAlias> {
 
-    private static final Logger logger = Logger.getLogger(CommitteeAliasMapper.class);
+    private static final Logger LOGGER = Logger.getLogger(CommitteeAliasMapper.class);
 
     /**
      * Perform the mapping.
@@ -63,7 +63,7 @@ public class CommitteeAliasMapper implements ParameterizedRowMapper<CommitteeAli
             item.setStartYear(rs.getInt("StartYear"));
             item.setEndYear(rs.getInt("EndYear"));
         } catch (SQLException ex) {
-            logger.error(ex);
+            LOGGER.error(ex);
             throw ex;
         }
         return item;

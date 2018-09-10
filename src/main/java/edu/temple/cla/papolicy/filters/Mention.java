@@ -100,15 +100,24 @@ public class Mention extends Filter {
      * Method to build the filter expression and the filter qualifier string.
      */
     private void buildFilterStrings() {
-        if (BOTH.equals(parameterValue)) {
-            filterQuery = new EmptyExpression();
-            filterQualifier = "";
-        } else if ("0".equals(parameterValue)) { // No Mention
-            filterQuery = new Comparison(getColumnName(), "=", "0");
-            filterQualifier = "No Mention of " + getDescription();
-        } else { // Mention includes signficant mention
+        if (null == parameterValue) { // Mention includes signficant mention
             filterQuery = new Comparison(getColumnName(), "<>", "0");
             filterQualifier = "Mention of " + getDescription();
+        } else switch (parameterValue) {
+            case BOTH:
+                filterQuery = new EmptyExpression();
+                filterQualifier = "";
+                break;
+            case "0":
+                // No Mention
+                filterQuery = new Comparison(getColumnName(), "=", "0");
+                filterQualifier = "No Mention of " + getDescription();
+                break;
+            default:
+                // Mention includes signficant mention
+                filterQuery = new Comparison(getColumnName(), "<>", "0");
+                filterQualifier = "Mention of " + getDescription();
+                break;
         }
     }
 
@@ -116,6 +125,7 @@ public class Mention extends Filter {
      * Method to return the description of this filter
      * @return Description of this filter
      */
+    @Override
     public String getFilterQualifier() {
         return filterQualifier;
     }

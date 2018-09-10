@@ -31,16 +31,12 @@
  */
 package edu.temple.cla.papolicy.controllers;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.nio.file.Files;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -77,9 +73,8 @@ public class DownloadLegServiceAgencyReport extends AbstractController {
         String id = request.getParameter("ID");
         String[] agencyAndFileName = jdbcTemplate.query(
                 "select Agency, FileName from LSAReportsText where ID=?",
-                (PreparedStatement preparedStatement) -> {
-                    preparedStatement.setString(1, id);
-                }, (ResultSet rs) -> {
+                preparedStatement -> preparedStatement.setString(1, id),
+                rs -> {
                     if (rs.next()) {
                         String[] result = new String[2];
                         result[0] = rs.getString("Agency");
@@ -92,16 +87,11 @@ public class DownloadLegServiceAgencyReport extends AbstractController {
         if (agencyAndFileName != null) {
             File filePath = new File(path);
             File inputFile = new File(filePath, agencyAndFileName[0] + File.separator + agencyAndFileName[1]);
-            try (InputStream in = new BufferedInputStream(new FileInputStream(inputFile));
-                    OutputStream out = response.getOutputStream()) {
-                response.setHeader("Content-Disposition", "attachment;filename=\"" + agencyAndFileName[1] + "\"");
-                int c;
-                while ((c = in.read()) != -1) {
-                    out.write(c);
-                }
-                in.close();
-                out.flush();
-            } catch (FileNotFoundException fileNotFound) {
+            OutputStream out = response.getOutputStream();
+            response.setHeader("Content-Disposition", "attachment;filename=\"" + agencyAndFileName[1] + "\"");
+            try {
+                Files.copy(inputFile.toPath(), out);
+            } catch (IOException ioex) {
                 reportError(response, inputFile.getName());
             }
         } else {

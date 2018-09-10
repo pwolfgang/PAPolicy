@@ -43,7 +43,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class Party extends Filter implements Cloneable {
 
-    private String parameterName;
+    private final String parameterName;
     private String parameterValue;
 
     private String filterQualifier;
@@ -95,59 +95,23 @@ public class Party extends Filter implements Cloneable {
      * Method to build the filter query based on the form input.
      */
     private void buildFilterStrings() {
-        if ("NOFILTER".equals(parameterValue)) {
-            filterQuery = new EmptyExpression();
-            filterQualifier = "";
-        } else if ("0".equals(parameterValue)) { // Republican
-            filterQuery = new Comparison(getColumnName(), "=", "0");
-            filterQualifier = "Sponsored by a Republican";
-        } else if ("1".equals(parameterValue)) { // Democrat
-            filterQuery = new Comparison(getColumnName(), "=", "1");
-            filterQualifier = "Sponsored by a Democrat";
-        }
-    }
-    
-    @Override
-    /**
-     * Return an array of Filter instances when multiple filter choices
-     * have been selected. This feature allows for a filter to be used to
-     * select all variations which will be displayed in separate columns
-     * in the result table. It was added as a choice to the Party filter
-     * to allow comparisons between number of bills/acts introduced by
-     * one party vs the other. Since there are only two parties, the
-     * resulting graphs were mirror images. The choice has been removed
-     * from the filter choices.
-     * If "ALL" was selected, an array of two filter instances
-     * one selecting Republican and the other selecting Democrat is returned.
-     * Otherwise an array containing this is returned.
-     * @return An array of the filter choices.
-     */
-    public Party[] getFilterChoices() {
-        if ("ALL".equals(parameterValue)) {
-            Party[] result = new Party[2];
-            result[0] = clone();
-            result[1] = clone();
-            result[0].parameterValue = "0";
-            result[0].buildFilterStrings();
-            result[1].parameterValue = "1";
-            result[1].buildFilterStrings();
-            return result;
-        } else {
-            return new Party[]{this};
-        }
-    }
-    
-    /**
-     * Return the number of filter choices.
-     * 
-     * @return Default return value of 1
-     */
-    @Override
-    public int getNumberOfFilterChoices() {
-        if ("ALL".equals(parameterValue)) {
-            return 2;
-        } else {
-            return 1;
+        if (null != parameterValue) switch (parameterValue) {
+            case "NOFILTER":
+                filterQuery = new EmptyExpression();
+                filterQualifier = "";
+                break;
+            case "0":
+                // Republican
+                filterQuery = new Comparison(getColumnName(), "=", "0");
+                filterQualifier = "Sponsored by a Republican";
+                break;
+            case "1":
+                // Democrat
+                filterQuery = new Comparison(getColumnName(), "=", "1");
+                filterQualifier = "Sponsored by a Democrat";
+                break;
+            default:
+                break;
         }
     }
     

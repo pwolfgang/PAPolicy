@@ -31,14 +31,12 @@
  */
 package edu.temple.cla.papolicy.controllers;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -52,7 +50,7 @@ import org.apache.log4j.Logger;
  */
 public class SenateHearings extends HttpServlet {
 
-    private static final Logger logger = Logger.getLogger(SenateHearings.class);
+    private static final Logger LOGGER = Logger.getLogger(SenateHearings.class);
     private String path;
 
     /**
@@ -68,44 +66,32 @@ public class SenateHearings extends HttpServlet {
         try {
             File pathFile = new File(path);
             File inputFile = new File(path, fileName + ".pdf");
-            InputStream in = new BufferedInputStream(new FileInputStream(inputFile));
             response.setContentType("application/pdf");
             out = response.getOutputStream();
-            int c;
-            while ((c = in.read()) != -1) {
-                out.write(c);
-            }
-            in.close();
+            Files.copy(inputFile.toPath(), out);
         } catch (FileNotFoundException ex) {
             try {
                 response.setContentType("text/html");
-                PrintWriter pw = response.getWriter();
-                pw.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"");
-                pw.println("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">");
-                pw.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\" xml:lang=\"en\">");
-                pw.println("<head>");
-                pw.println("<title>Error Page</title>");
-                pw.println("</head>");
-                pw.println("<body>");
-                pw.println("<img src=\"images/cla_201_4c.jpg\" alt=\"CLA Logo\" width=\"592\" height=\"77\" />");
-                pw.println("<h1>Pennsylvania Policy Database Project</h1>");
-                pw.println("<p>We are sorry, but " + fileName + " is not available.</p>");
-                pw.println("</body>");
-                pw.println("</html>");
-                pw.close();
+                try (PrintWriter pw = response.getWriter()) {
+                    pw.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"");
+                    pw.println("\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">");
+                    pw.println("<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\" xml:lang=\"en\">");
+                    pw.println("<head>");
+                    pw.println("<title>Error Page</title>");
+                    pw.println("</head>");
+                    pw.println("<body>");
+                    pw.println("<img src=\"images/cla_201_4c.jpg\" alt=\"CLA Logo\" width=\"592\" height=\"77\" />");
+                    pw.println("<h1>Pennsylvania Policy Database Project</h1>");
+                    pw.println("<p>We are sorry, but " + fileName + " is not available.</p>");
+                    pw.println("</body>");
+                    pw.println("</html>");
+                }
             } catch (Throwable t) { // Log all errors
-                logger.error(t);
+                LOGGER.error(t);
             }
         } catch (IOException ioex) {
-            logger.error(ioex);
-        } finally {
-            if (out != null) {
-                try {
-                    out.close();
-                } catch (IOException ioex) {
-                }
-            }
-        }
+            LOGGER.error(ioex);
+        } 
     }
 
     /**

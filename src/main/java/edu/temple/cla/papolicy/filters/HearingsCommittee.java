@@ -66,7 +66,7 @@ public class HearingsCommittee extends Filter {
     @Override
     public String getFilterFormInput() {
         ParameterizedRowMapper<CommitteeAlias> itemMapper = new CommitteeAliasMapper();
-        String chamberNumber = null;
+        String chamberNumber;
         if (getAdditionalParam().equals("House")) {
             chamberNumber = "1";
         } else {
@@ -75,12 +75,15 @@ public class HearingsCommittee extends Filter {
         String query = "SELECT * FROM "+getTableReference()+" WHERE CtyCode LIKE('"+chamberNumber+"%%') ORDER BY Name";
         List<CommitteeAlias> items = getJdbcTemplate().query(query, itemMapper);
         StringBuilder stb = new StringBuilder();
-        stb.append("<label for=\"F"+getId()+"\">"+getAdditionalParam()+" Hearings</label>\n"+
-"                <br /><select name=\"F"+getId()+"\" id=\"F"+getId()+"\">\n"+
-"                <option value=\"ALL\" selected=\"selected\">ALL COMMITTEES</option>\n");
-        for (CommitteeAlias item : items) {
-            stb.append("<option value=\""+item.getCtyCode()+"\">"+item.getName()+"</option>\n");
-        }
+        stb.append("<label for=\"F").append(getId()).append("\">")
+                .append(getAdditionalParam())
+                .append(" Hearings</label>\n                <br /><select name=\"F")
+                .append(getId()).append("\" id=\"F").append(getId())
+                .append("\">\n                <option value=\"ALL\" selected=\"selected\">ALL COMMITTEES</option>\n");
+        items.forEach(item -> {
+            stb.append("<option value=\"").append(item.getCtyCode())
+                    .append("\">").append(item.getName()).append("</option>\n");
+        });
         stb.append("</select><br/>");
         return stb.toString();
     }

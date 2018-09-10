@@ -37,6 +37,7 @@ import edu.temple.cla.papolicy.dao.AllTopics;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
@@ -75,65 +76,44 @@ public class TopicList {
         }
 
         // Build comma separated list of major topics
-        StringBuilder stb = new StringBuilder();
-        for (Integer code : majorTopics.keySet()) {
-            stb.append(code);
-            stb.append(", ");
-        }
-        stb.delete(stb.length()-2, stb.length());
-        String majorTopicsSelected = stb.toString();
+        String majorTopicsSelected = majorTopics.keySet()
+                .stream()
+                .map(code -> code.toString())
+                .collect(Collectors.joining(", "));
 
         // Build comma separated list of major topics within selected topics
-        stb = new StringBuilder();
-        for (Integer code : selectedTopics.keySet()) {
-            if (code < 100) {
-                stb.append(code);
-                stb.append(", ");
-            }
-        }
-        if (stb.length() > 0) {
-            stb.delete(stb.length() - 2, stb.length());
-        }
-        String majorTopicsInSelectedTopics = stb.toString();
+        String majorTopicsInSelectedTopics = selectedTopics.keySet()
+                .stream()
+                .filter(code -> code < 100)
+                .map(code -> code.toString())
+                .collect(Collectors.joining(", "));
 
         // Build comma separated list of subtopics only
-        stb = new StringBuilder();
-        for (Integer code : selectedTopics.keySet()) {
-            if (code >= 100) {
-                stb.append(code);
-                stb.append(", ");
-            }
-        }
-        if (stb.length() > 0) {
-            stb.delete(stb.length() - 2, stb.length());
-        }
-        String subTopicsOnly = stb.toString();
+        String subTopicsOnly = selectedTopics.keySet()
+                .stream()
+                .filter(code -> code >= 100)
+                .map(code -> code.toString())
+                .collect(Collectors.joining(", "));
 
         // Update the maps to include the Topic descriptions
         ParameterizedRowMapper<Topic> topicMapper = new TopicMapper();
         String query = "SELECT * FROM MajorCode WHERE Code IN ("
                 + majorTopicsSelected + ")";
         List<Topic> topicList = jdbcTemplate.query(query, topicMapper);
-        for (Topic aTopic : topicList) {
-            majorTopics.put(aTopic.getCode(), aTopic);
-        }
+        topicList.forEach(aTopic -> majorTopics.put(aTopic.getCode(), aTopic));
 
         if (majorTopicsInSelectedTopics.length() > 0) {
             query = "SELECT * FROM MajorCode WHERE Code IN ("
                     + majorTopicsInSelectedTopics + ")";
             topicList = jdbcTemplate.query(query, topicMapper);
-            for (Topic aTopic : topicList) {
-                selectedTopics.put(aTopic.getCode(), aTopic);
-            }
+            topicList.forEach(aTopic -> selectedTopics.put(aTopic.getCode(), aTopic));
         }
 
         if (subTopicsOnly.length() > 0) {
             query = "SELECT * FROM Code WHERE Code IN ("
                     + subTopicsOnly + ")";
             topicList = jdbcTemplate.query(query, topicMapper);
-            for (Topic aTopic : topicList) {
-                selectedTopics.put(aTopic.getCode(), aTopic);
-            }
+            topicList.forEach(aTopic -> selectedTopics.put(aTopic.getCode(), aTopic));
         }
     }
 

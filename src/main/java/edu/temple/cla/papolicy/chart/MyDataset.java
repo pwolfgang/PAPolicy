@@ -243,7 +243,7 @@ public class MyDataset implements CategoryDataset, Serializable{
         Number returnValue = columns.get(rowIndex).getDisplayedValue((String)columnKey);
         if (getUnits() == Units.RANK) {
             if (returnValue != null && returnValue.doubleValue() != 0) {
-                returnValue = new Double(Math.floor(maxValue.doubleValue()) - returnValue.doubleValue());
+                returnValue = Math.floor(maxValue.doubleValue()) - returnValue.doubleValue();
             }
         }
         return returnValue;

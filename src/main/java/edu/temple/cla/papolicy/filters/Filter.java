@@ -33,6 +33,7 @@ package edu.temple.cla.papolicy.filters;
 
 import edu.temple.cla.policydb.queryBuilder.EmptyExpression;
 import edu.temple.cla.policydb.queryBuilder.Expression;
+import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -102,7 +103,7 @@ public abstract class Filter {
      * Return the columnName
      * @return the columnName
      */
-    public String getColumnName() {
+    public final String getColumnName() {
         return columnName;
     }
 
@@ -110,7 +111,7 @@ public abstract class Filter {
      * Return the table reference
      * @return the tableReference
      */
-    public String getTableReference() {
+    public final String getTableReference() {
         return tableReference;
     }
 
@@ -118,7 +119,7 @@ public abstract class Filter {
      * Return the additional parameter
      * @return the additionalParam
      */
-    public String getAdditionalParam() {
+    public final String getAdditionalParam() {
         return additionalParam;
     }
 
@@ -165,30 +166,11 @@ public abstract class Filter {
     }
     
     /**
-     * Return an array of Filter instances when multiple filter choices
-     * have been selected. This feature allows for a filter to be used to
-     * select all variations which will be displayed in separate columns
-     * in the result table. 
-     * By default this method returns this enclosed in an array
-     * @return An array of Filter instances.
-     */
-    public Filter[] getFilterChoices() {
-        return new Filter[] {this};
-    }
-    
-    /**
-     * Return the number of filter choices.
-     * @return Default return value of 1
-     */
-    public int getNumberOfFilterChoices() {
-        return 1;
-    }
-    
-    /**
      * Determine if two filter objects are equal.
      * @param o The other object
      * @return True if this and o are equal.
      */
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;
@@ -197,11 +179,22 @@ public abstract class Filter {
             return (getId() == other.getId() &&
                     getTableId() == other.getTableId() &&
                     getDescription().equals(other.getDescription()) &&
-                    getTableReference() == null ? other.getTableReference() == null : getTableReference().equals(other.getTableReference()) &&
-                    getAdditionalParam() == null ? other.getAdditionalParam() == null : getAdditionalParam().equals(other.getAdditionalParam()));
+                    Objects.equals(getTableReference(), other.getTableReference())) &&
+                    Objects.equals(getAdditionalParam(), other.getAdditionalParam());
         } else {
             return false;
         }
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 67 * hash + this.id;
+        hash = 67 * hash + this.tableId;
+        hash = 67 * hash + Objects.hashCode(this.description);
+        hash = 67 * hash + Objects.hashCode(this.tableReference);
+        hash = 67 * hash + Objects.hashCode(this.additionalParam);
+        return hash;
+    }
+    
 }
