@@ -35,7 +35,7 @@ import edu.temple.cla.papolicy.dao.DeflatorMapper;
 import edu.temple.cla.papolicy.dao.Deflator;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * Class to generate the filter form input for the budget related data.
@@ -74,7 +74,7 @@ public class BudgetFilters extends Filter {
     @Override
     public String getFilterFormInput() {
         String query = "SELECT * FROM " + getAdditionalParam() + " ORDER BY Year";
-        ParameterizedRowMapper<Deflator> itemMapper = new DeflatorMapper();
+        RowMapper<Deflator> itemMapper = new DeflatorMapper();
         List<Deflator> items = getJdbcTemplate().query(query, itemMapper);
         StringBuilder stb = new StringBuilder();
         stb.append("<fieldset><legend>Display</legend>"

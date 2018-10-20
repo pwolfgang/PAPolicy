@@ -34,13 +34,13 @@ package edu.temple.cla.papolicy.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * Map queries of the Deflator table to a Deflator object.
  * @author Paul Wolfgang
  */
-public class DeflatorMapper implements ParameterizedRowMapper<Deflator> {
+public class DeflatorMapper implements RowMapper<Deflator> {
 
     private static final Logger LOGGER = Logger.getLogger(DeflatorMapper.class);
 

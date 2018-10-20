@@ -36,13 +36,13 @@ import java.lang.reflect.Constructor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * Map a query of the Filters table to a Filter object.
  * @author Paul Wolfgang
  */
-public class FilterMapper implements ParameterizedRowMapper<Filter> {
+public class FilterMapper implements RowMapper<Filter> {
 
     private static final Logger LOGGER = Logger.getLogger(FilterMapper.class);
 

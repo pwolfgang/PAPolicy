@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * Filter to select the committee(s) that held hearings on a bill.
@@ -86,7 +86,7 @@ public class BillsCommittee extends Filter {
      */
     @Override
     public String getFilterFormInput() {
-        ParameterizedRowMapper<CommitteeAlias> itemMapper = new CommitteeAliasMapper();
+        RowMapper<CommitteeAlias> itemMapper = new CommitteeAliasMapper();
         String query = "SELECT * FROM " + getTableReference() + " WHERE CtyCode LIKE(\'" +
                 chamberNumber + "%%\') ORDER BY AlternateName";
         List<CommitteeAlias> items = getJdbcTemplate().query(query, itemMapper);
@@ -138,7 +138,7 @@ public class BillsCommittee extends Filter {
                 disjunction.addTerm(new Comparison("_" + ctyCode + "O", "<>", "0"));
                 filterQuery = disjunction;
             }
-            ParameterizedRowMapper<CommitteeAlias> itemMapper = new CommitteeAliasMapper();
+            RowMapper<CommitteeAlias> itemMapper = new CommitteeAliasMapper();
             String query = "SELECT * FROM " + getTableReference()
                     + " WHERE CtyCode=\'" + ctyCode + "\'";
             List<CommitteeAlias> selectedCommitteeList =

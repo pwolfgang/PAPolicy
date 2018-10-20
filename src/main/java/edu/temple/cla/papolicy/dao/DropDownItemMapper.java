@@ -34,15 +34,15 @@ package edu.temple.cla.papolicy.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * Map queries for DropDown items associated with a filter to DropDown objects.
  * @author Paul Wolfgang
  */
-public class DropDownItemMapper implements ParameterizedRowMapper<DropDownItem> {
+public class DropDownItemMapper implements RowMapper<DropDownItem> {
 
-    private static final Logger logger = Logger.getLogger(DropDownItemMapper.class);
+    private static final Logger LOGGER = Logger.getLogger(DropDownItemMapper.class);
 
     /**
      * Perform the mapping.
@@ -58,7 +58,7 @@ public class DropDownItemMapper implements ParameterizedRowMapper<DropDownItem> 
             item.setID(rs.getInt("ID"));
             item.setDescription(rs.getString("Description"));
         } catch (SQLException ex) {
-            logger.error(ex);
+            LOGGER.error(ex);
             throw ex;
         }
         return item;

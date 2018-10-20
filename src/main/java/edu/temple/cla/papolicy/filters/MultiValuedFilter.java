@@ -40,7 +40,7 @@ import edu.temple.cla.policydb.queryBuilder.Disjunction;
 import edu.temple.cla.policydb.queryBuilder.EmptyExpression;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * A multivalued filter consists of a set of radio buttons
@@ -83,7 +83,7 @@ public class MultiValuedFilter extends Filter {
      */
     @Override
     public String getFilterFormInput() {
-        ParameterizedRowMapper<DropDownItem> itemMapper = new DropDownItemMapper();
+        RowMapper<DropDownItem> itemMapper = new DropDownItemMapper();
         String query = "SELECT ID, Description FROM " + getTableReference() +
                 " ORDER BY ID";
         List<DropDownItem> items = getJdbcTemplate().query(query, itemMapper);
@@ -160,7 +160,7 @@ public class MultiValuedFilter extends Filter {
             String query = "SELECT ID, Description FROM " + getTableReference()
                     + " WHERE ID IN " + vstb;
             String queryForAll = "SELECT ID, Description FROM " + getTableReference();
-            ParameterizedRowMapper<DropDownItem> itemMapper = new DropDownItemMapper();
+            RowMapper<DropDownItem> itemMapper = new DropDownItemMapper();
             List<DropDownItem> items = getJdbcTemplate().query(query, itemMapper);
             List<DropDownItem> allItems = getJdbcTemplate().query(queryForAll, itemMapper);
             if (items.size() == allItems.size()) {

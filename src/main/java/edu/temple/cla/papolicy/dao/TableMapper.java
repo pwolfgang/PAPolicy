@@ -35,13 +35,13 @@ import edu.temple.cla.papolicy.tables.Table;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * Map a query of the Tables table to a Table object.
  * @author Paul Wolfgang
  */
-public class TableMapper implements ParameterizedRowMapper<Table> {
+public class TableMapper implements RowMapper<Table> {
 
     private static final Logger LOGGER = Logger.getLogger(TableMapper.class);
 

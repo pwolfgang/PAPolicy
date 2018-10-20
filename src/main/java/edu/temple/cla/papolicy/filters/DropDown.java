@@ -37,7 +37,7 @@ import edu.temple.cla.policydb.queryBuilder.Comparison;
 import edu.temple.cla.policydb.queryBuilder.EmptyExpression;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * Filter that consists of several options displayed in a dropdown form.
@@ -64,7 +64,7 @@ public class DropDown extends Filter {
      */
     @Override
     public String getFilterFormInput() {
-        ParameterizedRowMapper<DropDownItem> itemMapper = new DropDownItemMapper();
+        RowMapper<DropDownItem> itemMapper = new DropDownItemMapper();
         String query = "SELECT ID, Description FROM " + getTableReference() +
                 " ORDER BY ID";
         List<DropDownItem> items = getJdbcTemplate().query(query, itemMapper);
@@ -108,7 +108,7 @@ public class DropDown extends Filter {
             filterQuery = new Comparison(getColumnName(), "=", "\'" + parameterValue + "\'");
             String query = "SELECT ID, Description FROM " + getTableReference()
                 + " WHERE ID=" + parameterValue;
-            ParameterizedRowMapper<DropDownItem> itemMapper = new DropDownItemMapper();
+            RowMapper<DropDownItem> itemMapper = new DropDownItemMapper();
             List<DropDownItem> itemList = getJdbcTemplate().query(query, itemMapper);
             if (itemList.size() == 1) {
                 filterQualifier = getDescription() + " is " + itemList.get(0).getDescription();

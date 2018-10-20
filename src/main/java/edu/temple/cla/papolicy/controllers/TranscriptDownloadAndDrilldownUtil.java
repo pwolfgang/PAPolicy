@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * This class contains utility methods common to the download and drill down
@@ -53,9 +53,9 @@ public class TranscriptDownloadAndDrilldownUtil {
             = "SELECT * from Transcript_Committee join CommitteeAliases on committeeID=ID WHERE transcriptID='";
     private static final String TRANSCRIPT_BILL_QUERY
             = "SELECT BillID from Transcript_BillID WHERE TranscriptID='";
-    private static final ParameterizedRowMapper<TranscriptCommittee> TRANSCRIPT_COMMITTEE_MAPPER
+    private static final RowMapper<TranscriptCommittee> TRANSCRIPT_COMMITTEE_MAPPER
             = new TranscriptCommitteeMapper();
-    private static final ParameterizedRowMapper<String> STRING_MAPPER = new StringMapper();
+    private static final RowMapper<String> STRING_MAPPER = new StringMapper();
 
 
     /**

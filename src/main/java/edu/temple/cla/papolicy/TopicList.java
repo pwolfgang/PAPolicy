@@ -39,7 +39,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * This class manages the list of topics and subtopics that have been selected
@@ -96,7 +96,7 @@ public class TopicList {
                 .collect(Collectors.joining(", "));
 
         // Update the maps to include the Topic descriptions
-        ParameterizedRowMapper<Topic> topicMapper = new TopicMapper();
+        RowMapper<Topic> topicMapper = new TopicMapper();
         String query = "SELECT * FROM MajorCode WHERE Code IN ("
                 + majorTopicsSelected + ")";
         List<Topic> topicList = jdbcTemplate.query(query, topicMapper);

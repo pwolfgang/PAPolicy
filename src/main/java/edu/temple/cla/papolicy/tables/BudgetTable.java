@@ -40,7 +40,7 @@ import edu.temple.cla.papolicy.filters.BudgetFilters;
 import edu.temple.cla.papolicy.filters.Filter;
 import edu.temple.cla.policydb.queryBuilder.QueryBuilder;
 import java.util.List;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * The BudgetTable contains the spending data from the US Census allocated
@@ -243,8 +243,8 @@ public class BudgetTable extends AbstractTable {
      */
     @Override
     public List<YearValue> getYearValueList(String query) {
-        ParameterizedRowMapper<YearValue> mapper = new YearValueMapper();
-        ParameterizedRowMapper<Deflator> deflatorMapper = new DeflatorMapper();
+        RowMapper<YearValue> mapper = new YearValueMapper();
+        RowMapper<Deflator> deflatorMapper = new DeflatorMapper();
         List<YearValue> list = jdbcTemplate.query(query, mapper);
         List<Filter> filterList = getFilterList();
         BudgetFilters budgetFilters = (BudgetFilters)filterList.get(0);

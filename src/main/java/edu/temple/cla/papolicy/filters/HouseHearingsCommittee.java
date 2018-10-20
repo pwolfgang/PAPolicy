@@ -37,7 +37,7 @@ import edu.temple.cla.policydb.queryBuilder.Comparison;
 import edu.temple.cla.policydb.queryBuilder.EmptyExpression;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * Filter to select the committee(s) that held hearings in the House Hearings Dataset
@@ -71,7 +71,7 @@ public class HouseHearingsCommittee extends Filter {
      */
     @Override
     public String getFilterFormInput() {
-        ParameterizedRowMapper<CommitteeName> itemMapper = new CommitteeNameMapper();
+        RowMapper<CommitteeName> itemMapper = new CommitteeNameMapper();
         String chamberNumber;
         if (getAdditionalParam().equals("House")) {
             chamberNumber = "1";
@@ -137,7 +137,7 @@ public class HouseHearingsCommittee extends Filter {
      */
     public void setFilterQualifier() {
         if (ctyCode != null && !ctyCode.equals("ALL")) {
-            ParameterizedRowMapper<CommitteeName> itemMapper = new CommitteeNameMapper();
+            RowMapper<CommitteeName> itemMapper = new CommitteeNameMapper();
             String query = "SELECT * FROM "+getTableReference()+" WHERE CtyCode=" + ctyCode +";";
             List<CommitteeName> items = getJdbcTemplate().query(query, itemMapper);
             if (!items.isEmpty()) {

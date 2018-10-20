@@ -35,7 +35,7 @@ import edu.temple.cla.papolicy.dao.CommitteeAlias;
 import edu.temple.cla.papolicy.dao.CommitteeAliasMapper;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * Filter to select the committee(s) that held hearings in the Senate hearing dataset.
@@ -65,7 +65,7 @@ public class HearingsCommittee extends Filter {
      */
     @Override
     public String getFilterFormInput() {
-        ParameterizedRowMapper<CommitteeAlias> itemMapper = new CommitteeAliasMapper();
+        RowMapper<CommitteeAlias> itemMapper = new CommitteeAliasMapper();
         String chamberNumber;
         if (getAdditionalParam().equals("House")) {
             chamberNumber = "1";
