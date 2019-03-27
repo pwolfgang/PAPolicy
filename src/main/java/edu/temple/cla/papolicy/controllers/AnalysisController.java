@@ -91,7 +91,7 @@ public class AnalysisController extends AbstractController {
                 if (table.getMaxYear() > maxYear) {
                     maxYear = table.getMaxYear();
                 }
-                // Read the filtest associated with this table.
+                // Read the filters associated with this table.
                 String query = "SELECT * from Filters WHERE TableID=" + table.getId()
                         + " ORDER BY ID";
                 List<Filter> filterList = jdbcTemplate.query(query, filterMapper);

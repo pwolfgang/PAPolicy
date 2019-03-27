@@ -73,6 +73,7 @@ POSSIBILITY OF SUCH DAMAGE.
             %>
             <tr valign="top">
                 <%
+                    String txt;
                     for (Map.Entry<String, Object> entry : rowData.entrySet()) {
                 %>
                 <td>
@@ -82,21 +83,25 @@ POSSIBILITY OF SUCH DAMAGE.
                                 List<String> committeeNamesList = (List<String>) entry.getValue();
                                 for (String committeeName : committeeNamesList) {
                     %><%=committeeName%><br/><%
-                        }
-                    } else if (entry.getKey().equals("Bills")) {
-                        List<String> billsIdList = ((List<String>) entry.getValue());
-                        for (String billId : billsIdList) {
+                                }
+                            } else if (entry.getKey().equals("Bills")) {
+                                List<String> billsIdList = ((List<String>) entry.getValue());
+                                for (String billId : billsIdList) {
                     %><a href="billDrillDown.spg?billId=<%=billId%>"><%=billId%></a><br/><%
-                        }
-                    } else {
-                        String txt = entry.getValue().toString();
-                        if (txt.startsWith("#") && txt.endsWith("#")) {
-                            txt = txt.substring(1, txt.length() - 1);
-                    %><a href="<%=txt%>" target="_blank"><%=txt%></a><%
-                    } else {
+                                }
+                            } else if (entry.getKey().equals("Link")) {
+                                txt = entry.getValue().toString();
+                                txt = edu.temple.cla.papolicy.Utility.reformatHyperlink(txt);
+                    %><%=txt%><%
+                            } else {
+                                Object obj = entry.getValue();
+                                if (obj instanceof Date) {
+                                    txt = String.format("%1$tb&nbsp;%1$te,%1$tY", obj);
+                                } else {
+                                    txt = obj.toString();
+                                }
                     %><%=txt%><%
                             }
-                        }
                     } else {
                     %>&nbsp;<%                                        }
                     %>

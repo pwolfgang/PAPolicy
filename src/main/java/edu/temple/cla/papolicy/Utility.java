@@ -38,6 +38,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.StringWriter;
+import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import org.apache.commons.codec.binary.Base64;
@@ -50,6 +51,7 @@ import org.apache.log4j.Logger;
  */
 public class Utility {
 
+    private static final Pattern HYPERLINK = Pattern.compile("<a\\s+href=\\\".+\\\".*>.*</a>");
     private static final Logger LOGGER = Logger.getLogger(Utility.class);
 
     /**
@@ -106,16 +108,22 @@ public class Utility {
       * Method to format hyperlinks in the drilldown.  A hyperlink that has been
       * created in MS Access has the form <i>text</i>#<i>ref</i># where the 
       * <i>text</i> is optional. This is translated to 
-      * %lt:a href=%qt;<i>ref</i>%qt;%gt <i>text</i>%lt;/a%gt;. If the <i>text</i>
+      * &lt;a href=&quot;<i>ref</i>&quot;&gt;<i>text</i>&lt;/a&gt;. If the <i>text</i>
       * is empty, then the <i>ref</i> is used. If the hyperlink contains no #
-      * characters, then it is assumed not to be a  hyperlink and is unchanged.
+      * characters, then the string is checked to see if it is the form 
+      * &lt;a href=&quot;<i>ref</i>&quot;&gt;<i>text</i>&lt;/a&gt;. If not, the string
+      * is presumed to contain the ref and is reformatted as described above.
       * @param hyperlink The hyperlink string
       * @return The html string to be inserted into the table cell
       */
      public static String reformatHyperlink(String hyperlink) {
          int firstSharp = hyperlink.indexOf("#");
          if (firstSharp == -1) {
-             return hyperlink;
+             if (HYPERLINK.matcher(hyperlink).matches()) {
+                 return hyperlink;
+             } else {
+                 return ("<a href=\"" + hyperlink + "\">" + hyperlink + "</a>");
+             }
          }
          int secondSharp = hyperlink.indexOf("#", firstSharp + 1);
          if (secondSharp == -1) secondSharp = hyperlink.length();
