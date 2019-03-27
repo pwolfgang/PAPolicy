@@ -34,13 +34,13 @@ package edu.temple.cla.papolicy.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * Map a count query to an Integer value.
  * @author Paul Wolfgang
  */
-public class CountMapper implements ParameterizedRowMapper<Integer> {
+public class CountMapper implements RowMapper<Integer> {
 
     private static final Logger LOGGER = Logger.getLogger(CountMapper.class);
 

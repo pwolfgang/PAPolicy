@@ -31,9 +31,6 @@
  */
 package edu.temple.cla.papolicy;
 
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -61,8 +58,16 @@ public class UtilityTest {
      */
     @Test
     public void hyperlinkWithNoSharpChars() {
-        String hyperlink = "ordinary text";
-        String expResult = "ordinary text";
+        String hyperlink = "lsar.spg?ID=CRP_2018_003";
+        String expResult = "<a href=\"lsar.spg?ID=CRP_2018_003\">lsar.spg?ID=CRP_2018_003</a>";
+        String result = Utility.reformatHyperlink(hyperlink);
+        assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void fullyFormattedHyperlink() {
+        String hyperlink = "<a href=\"lsar.spg?ID=CRP_2018_003\">lsar.spg?ID=CRP_2018_003</a>";
+        String expResult = "<a href=\"lsar.spg?ID=CRP_2018_003\">lsar.spg?ID=CRP_2018_003</a>";
         String result = Utility.reformatHyperlink(hyperlink);
         assertEquals(expResult, result);
     }

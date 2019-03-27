@@ -34,13 +34,13 @@ package edu.temple.cla.papolicy.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * Map a query for a String to a String object.
  * @author Paul
  */
-public class StringMapper implements ParameterizedRowMapper<String> {
+public class StringMapper implements RowMapper<String> {
 
     private static final Logger LOGGER = Logger.getLogger(YearValueMapper.class);
 

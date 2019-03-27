@@ -34,13 +34,13 @@ package edu.temple.cla.papolicy.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * Map a query of the Code or MajorCode tables to a Topic object.
  * @author Paul Wolfgang
  */
-public class TopicMapper implements ParameterizedRowMapper<Topic> {
+public class TopicMapper implements RowMapper<Topic> {
 
     private static final Logger LOGGER = Logger.getLogger(TopicMapper.class);
 

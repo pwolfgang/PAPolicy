@@ -73,18 +73,23 @@ POSSIBILITY OF SUCH DAMAGE.
             %>
             <tr valign="top">
                 <%
-                    for (Object obj : rowData.values()) {
+                    for (Map.Entry<String, Object> entry : rowData.entrySet()) {
                 %>
                 <td>
                     <%
+                        String key = entry.getKey();
+                        Object obj = entry.getValue();
                         if (obj != null) {
                             String txt;
                             if (obj instanceof Date) {
                                 txt = String.format("%1$tb&nbsp;%1$te,%1$tY", obj);
                             } else {
                                 txt = obj.toString();
+                                if ("Link".equals(key)) {
+                                    txt = edu.temple.cla.papolicy.Utility.reformatHyperlink(txt); 
+                                }
                             }
-                    %><%=edu.temple.cla.papolicy.Utility.reformatHyperlink(txt)%><%
+                    %><%=txt%><%
                         } else {
                     %>&nbsp;<%
                         }

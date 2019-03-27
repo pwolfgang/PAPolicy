@@ -34,7 +34,7 @@ package edu.temple.cla.papolicy.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * Map queries of the Transcript_Committee table to TranscriptCommittee objects.
@@ -44,7 +44,7 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
  * @author Paul Wolfgang
  */
 public class TranscriptCommitteeMapper 
-        implements ParameterizedRowMapper<TranscriptCommittee>{
+        implements RowMapper<TranscriptCommittee>{
 
     private static final Logger LOGGER = Logger.getLogger(CommitteeAliasMapper.class);
 

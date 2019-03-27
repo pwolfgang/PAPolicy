@@ -34,13 +34,13 @@ package edu.temple.cla.papolicy.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * Class to map query of the CommitteeAliases table to the CommitteeAlias object.
  * @author Paul Wolfgang
  */
-public class CommitteeAliasMapper implements ParameterizedRowMapper<CommitteeAlias> {
+public class CommitteeAliasMapper implements RowMapper<CommitteeAlias> {
 
     private static final Logger LOGGER = Logger.getLogger(CommitteeAliasMapper.class);
 

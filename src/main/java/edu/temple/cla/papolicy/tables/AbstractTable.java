@@ -51,7 +51,7 @@ import java.util.SortedMap;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * The AbstractTable provides default implementation of the Table interface.
@@ -490,7 +490,7 @@ public abstract class AbstractTable implements Table {
      */
     @Override
     public List<YearValue> getYearValueList(String query) {
-        ParameterizedRowMapper<YearValue> mapper = new YearValueMapper();
+        RowMapper<YearValue> mapper = new YearValueMapper();
         List<YearValue> list = jdbcTemplate.query(query, mapper);
         return list;
     }

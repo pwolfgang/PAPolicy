@@ -42,7 +42,7 @@ import edu.temple.cla.policydb.queryBuilder.QueryBuilder;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  *
@@ -96,7 +96,7 @@ public class PublicOpinionTable extends StandardTable {
         }
         double value = 25.0 - total/valueMap.size();
         if (Double.isNaN(value)) return null;
-        else return new Double(value);
+        else return value;
     }
 
     @Override
@@ -108,18 +108,18 @@ public class PublicOpinionTable extends StandardTable {
         }
         double value = total/valueMap.size() * 100;
         if (Double.isNaN(value)) return null;
-        else return new Double(value);
+        else return value;
 
     }
 
     @Override
     public List<YearValue> getYearValueList(String query) {
-        ParameterizedRowMapper<YearValue> mapper = new YearValueMapper();
+        RowMapper<YearValue> mapper = new YearValueMapper();
         List<YearValue> list = jdbcTemplate.query(query, mapper);
         if (getUnits(null) == Units.RANK) {
-            for (YearValue yv : list) {
-                yv.setValue(new Double(25 - yv.getValue().doubleValue()));
-            }
+            list.forEach((yv) -> {
+                yv.setValue(25 - yv.getValue().doubleValue());
+            });
         }
         return list;
     }

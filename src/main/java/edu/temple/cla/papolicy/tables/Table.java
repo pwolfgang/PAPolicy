@@ -40,14 +40,12 @@ import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.filters.Filter;
 import edu.temple.cla.policydb.queryBuilder.Conjunction;
 import edu.temple.cla.policydb.queryBuilder.QueryBuilder;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.SortedMap;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * The Table interface defines the methods for each of the datasets.
@@ -403,8 +401,8 @@ public interface Table extends Cloneable {
       static Table getTable(String tableId, char qualifier,
             HttpServletRequest request, JdbcTemplate jdbcTemplate)
             throws DataAccessException, Error {
-        ParameterizedRowMapper<Table> tableMapper = new TableMapper();
-        ParameterizedRowMapper<Filter> filterMapper = new FilterMapper();
+        RowMapper<Table> tableMapper = new TableMapper();
+        RowMapper<Filter> filterMapper = new FilterMapper();
         List<Table> aTableList = jdbcTemplate.query("SELECT * FROM Tables WHERE ID=" + tableId, tableMapper);
         if (aTableList.size() != 1) {
             throw new Error("TableID " + tableId + " not in database");

@@ -45,7 +45,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -73,9 +76,9 @@ public class AnalysisController extends AbstractController {
             HttpServletResponse response) throws Exception {
         try {
             Map<String, Object> model = new HashMap<>();
-            ParameterizedRowMapper<Table> tableMapper = new TableMapper();
-            ParameterizedRowMapper<Filter> filterMapper = new FilterMapper();
-            ParameterizedRowMapper<Topic> topicMapper = new TopicMapper();
+            RowMapper<Table> tableMapper = new TableMapper();
+            RowMapper<Filter> filterMapper = new FilterMapper();
+            RowMapper<Topic> topicMapper = new TopicMapper();
             // Read the list of tables to be displayed.
             List<Table> tables =
                     jdbcTemplate.query("SELECT * from Tables ORDER BY ID", tableMapper);
@@ -88,7 +91,7 @@ public class AnalysisController extends AbstractController {
                 if (table.getMaxYear() > maxYear) {
                     maxYear = table.getMaxYear();
                 }
-                // Read the filtest associated with this table.
+                // Read the filters associated with this table.
                 String query = "SELECT * from Filters WHERE TableID=" + table.getId()
                         + " ORDER BY ID";
                 List<Filter> filterList = jdbcTemplate.query(query, filterMapper);

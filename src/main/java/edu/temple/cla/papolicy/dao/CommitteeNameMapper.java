@@ -34,13 +34,13 @@ package edu.temple.cla.papolicy.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * Map queries of the CommitteeNames table to a CommitteeName object.
  * @author Paul Wolfgang
  */
-public class CommitteeNameMapper implements ParameterizedRowMapper<CommitteeName>{
+public class CommitteeNameMapper implements RowMapper<CommitteeName>{
 
     private static final Logger LOGGER = Logger.getLogger(CommitteeAliasMapper.class);
 
