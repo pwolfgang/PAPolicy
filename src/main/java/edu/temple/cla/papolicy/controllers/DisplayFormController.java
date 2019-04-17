@@ -35,6 +35,7 @@ import edu.temple.cla.papolicy.*;
 import edu.temple.cla.papolicy.chart.Chart;
 import edu.temple.cla.papolicy.chart.MyDataset;
 import edu.temple.cla.papolicy.dao.Topic;
+import edu.temple.cla.papolicy.tables.AbstractTable;
 import edu.temple.cla.policydb.queryBuilder.QueryBuilder;
 import edu.temple.cla.papolicy.tables.Table;
 import java.util.ArrayList;
@@ -85,8 +86,8 @@ public class DisplayFormController extends AbstractController {
                     qualifier = tableId.charAt(tableId.length() - 1);
                     tableId = tableId.substring(0, tableId.length() - 1);
                 }
-                Table table = Table.getTable(tableId, qualifier, request, jdbcTemplate);
-                tableList.add(table);
+                List<Table> tables = AbstractTable.getTable(tableId, qualifier, request, jdbcTemplate);
+                tableList.addAll(tables);
             }
             // Load the selected topics.
             TopicList topics = new TopicList(request.getParameterValues("subtopics"), jdbcTemplate);

@@ -178,13 +178,15 @@ public class AbstractTableTest {
 
     @Test
     public void testToString() {
-        String expected = "Legislative Service Agency Reports Exclude Dealing with Taxes and Include Concerning the Elderly";
+        String expected = "Legislative Service Agency Reports Exclude Dealing "
+                + "with Taxes and Include Concerning the Elderly";
         assertEquals(expected, testTable.toString());
     }
 
     @Test
     public void testGetDownloadTitle() {
-        String expected = "Legislative Service Agency Reports Exclude Dealing with Taxes and Include Concerning the Elderly";
+        String expected = "Legislative Service Agency Reports Exclude Dealing "
+                + "with Taxes and Include Concerning the Elderly";
         assertEquals(expected, testTable.toString());
     }
 
@@ -207,13 +209,15 @@ public class AbstractTableTest {
 
     @Test
     public void testGetUnfilteredTotalQueryString() {
-        String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM LegServiceAgencyReports";
+        String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM "
+                + "LegServiceAgencyReports";
         assertEquals(expected, testTable.getUnfilteredTotalQuery().build());
     }
 
     @Test
     public void testGetFilteredTotalQueryString() {
-        String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM LegServiceAgencyReports WHERE Tax=0 AND Elderly<>0";
+        String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM "
+                + "LegServiceAgencyReports WHERE Tax=0 AND Elderly<>0";
         assertEquals(expected, testTable.getFilteredTotalQuery().build());
     }
 
@@ -222,7 +226,8 @@ public class AbstractTableTest {
         Topic topic = new Topic();
         topic.setCode(6);
         topic.setDescription("Education");
-        String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM LegServiceAgencyReports" +
+        String expected = "SELECT Year AS TheYear, count(ID) AS TheValue FROM "
+                + "LegServiceAgencyReports" +
                 " WHERE Tax=0 AND Elderly<>0 AND FinalCode LIKE('6__')";
         assertEquals(expected, testTable.getTopicQuery(topic).build());
     }
@@ -334,8 +339,9 @@ public class AbstractTableTest {
 
     @Test
     public void testGetTable() throws Exception {
-        Table result = Table.getTable("6", '\u0000', request, jdbcTemplate);
-        assertEquals(testTable, result);
+        List<Table> result = AbstractTable.getTable("6", '\u0000', request, jdbcTemplate);
+        List<Table> expected = Arrays.asList(testTable);
+        assertEquals(expected, result);
     }
 
     @Test

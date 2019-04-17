@@ -34,6 +34,8 @@ package edu.temple.cla.papolicy.tables;
 import edu.temple.cla.papolicy.Units;
 import edu.temple.cla.papolicy.Utility;
 import edu.temple.cla.papolicy.YearRange;
+import edu.temple.cla.papolicy.dao.FilterMapper;
+import edu.temple.cla.papolicy.dao.TableMapper;
 import edu.temple.cla.papolicy.dao.Topic;
 import edu.temple.cla.papolicy.dao.YearValue;
 import edu.temple.cla.papolicy.dao.YearValueMapper;
@@ -50,6 +52,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -614,6 +617,65 @@ public abstract class AbstractTable implements Table {
      public void setCodeColumn(String codeColumn) {
          this.codeColumn = codeColumn;
      }
+
+    public static List<Table> getTable(String tableId, char qualifier,
+            HttpServletRequest request, JdbcTemplate jdbcTemplate)
+            throws DataAccessException, Error {
+        RowMapper<Table> tableMapper = new TableMapper();
+        RowMapper<Filter> filterMapper = new FilterMapper();
+        List<Table> aTableList = jdbcTemplate.query("SELECT * FROM Tables WHERE ID=" + tableId, tableMapper);
+        if (aTableList.size() != 1) {
+            throw new Error("TableID " + tableId + " not in database");
+        }
+        Table table = aTableList.get(0);
+        table = table.getSubTable(qualifier);
+        table.setAdditionalParameters(request);
+        String query = "SELECT * from Filters WHERE TableID=" + table.getId() + " ORDER BY ID";
+        List<Filter> filterList = jdbcTemplate.query(query, filterMapper);
+        filterList.forEach(filter -> {
+            filter.setJdbcTemplate(jdbcTemplate);
+            filter.setFilterParameterValues(request);
+        });
+        table.setFilterList(filterList);
+        table.setJdbcTemplate(jdbcTemplate);
+        //Scan filter list to see how many variations there may be.
+        int numVariations = 1;
+        for (Filter f : filterList) {
+            numVariations *= f.getNumberOfFilterChoices();
+        }
+        List<Table> tableList = new ArrayList<>();
+        tableList.add(table);
+        if (numVariations > 1) {
+            while (expandChoices(tableList)) { 
+               // work done in the method expandChoices method
+            }
+        }
+        return tableList;
+    }
+    
+    private static boolean expandChoices(List<Table> tableList) {
+        for (int i = 0; i < tableList.size(); i++) {
+            Table table = tableList.get(i);
+            List<Filter> filterList = table.getFilterList();
+            for (int j = 0; j < filterList.size(); j++) {
+                Filter filter = filterList.get(j);
+                if (filter.getNumberOfFilterChoices() != 1) {
+                    Table[] newTables = new Table[filter.getNumberOfFilterChoices()];
+                    Filter[] filters = filter.getFilterChoices();
+                    for (int k = 0; k < newTables.length; k++) {
+                        newTables[k] = table.clone();
+                        newTables[k].getFilterList().set(j, filters[k]);
+                    }
+                    tableList.remove(i);
+                    for (Table newTable : newTables) {
+                        tableList.add(i, newTable);
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;               
+    }
 
     /**
      * Make a deep copy of this table object

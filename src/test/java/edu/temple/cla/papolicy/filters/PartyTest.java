@@ -65,6 +65,7 @@ public class PartyTest {
 "              <input type=\"radio\" id=\"F407N\" name=\"F407\" value=\"NOFILTER\" checked=\"checked\" />&nbsp;<label for=\"F407N\">Both</label>\n" +
 "              <input type=\"radio\" id=\"F407R\" name=\"F407\" value=\"0\" />&nbsp;<label for=\"F407R\">Republican</label>\n" +
 "              <input type=\"radio\" id=\"F407D\" name=\"F407\" value=\"1\" />&nbsp;<label for=\"F407D\">Democrat</label>\n" +
+"              <input type=\"radio\" id=\"F407A\" name=\"F407\" value=\"ALL\" />&nbsp;<label for=\"F407A\">All</label>\n" +
 "</fieldset>";
         assertEquals(expected,filter.getFilterFormInput());
     }

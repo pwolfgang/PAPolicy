@@ -72,12 +72,18 @@ public class Party extends Filter implements Cloneable {
     @Override
     public String getFilterFormInput() {
         return "<fieldset><legend>"+getDescription()+"</legend>\n"+
-"              <input type=\"radio\" id=\"F"+getId()+"N\" name=\"F"+getId()+"\" value=\"NOFILTER\" checked=\"checked\" />"
+"              <input type=\"radio\" id=\"F"+getId()+"N\" name=\"F"+getId()+"\" "
+                + "value=\"NOFILTER\" checked=\"checked\" />"
                 + "&nbsp;<label for=\"F"+getId()+"N\">Both</label>\n"+
-"              <input type=\"radio\" id=\"F"+getId()+"R\" name=\"F"+getId()+"\" value=\"0\" />"
+"              <input type=\"radio\" id=\"F"+getId()+"R\" name=\"F"+getId()+"\" "
+                + "value=\"0\" />"
                 + "&nbsp;<label for=\"F"+getId()+"R\">Republican</label>\n"+
-"              <input type=\"radio\" id=\"F"+getId()+"D\" name=\"F"+getId()+"\" value=\"1\" />"
-                + "&nbsp;<label for=\"F"+getId()+"D\">Democrat</label>\n"
+"              <input type=\"radio\" id=\"F"+getId()+"D\" name=\"F"+getId()+"\" "
+                + "value=\"1\" />"
+                + "&nbsp;<label for=\"F"+getId()+"D\">Democrat</label>\n"+
+"              <input type=\"radio\" id=\"F"+getId()+"A\" name=\"F"+getId()+"\" "
+                + "value=\"ALL\" />"
+                + "&nbsp;<label for=\"F"+getId()+"A\">All</label>\n"                
             + "</fieldset>";
     }
 
@@ -115,6 +121,31 @@ public class Party extends Filter implements Cloneable {
         }
     }
     
+    @Override
+    public Party[] getFilterChoices() {
+        if ("ALL".equals(parameterValue)) {
+            Party[] result = new Party[2];
+            result[0] = clone();
+            result[1] = clone();
+            result[0].parameterValue = "0";
+            result[1].parameterValue = "1";
+            for (Party p : result) {
+                p.buildFilterStrings();
+            }
+            return result;
+        } else {
+            return new Party[]{this};
+        }
+    }
+    
+    public int getNumberOfFilterChoices() {
+        if ("ALL".equals(parameterValue)) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+
     /**
      * Make a copy of this Party object. 
      * Since the data fields are all strings, a shallow copy is all that
