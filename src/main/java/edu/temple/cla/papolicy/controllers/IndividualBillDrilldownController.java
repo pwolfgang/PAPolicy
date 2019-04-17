@@ -31,6 +31,7 @@
  */
 package edu.temple.cla.papolicy.controllers;
 
+import edu.temple.cla.papolicy.tables.AbstractTable;
 import edu.temple.cla.policydb.queryBuilder.Comparison;
 import edu.temple.cla.policydb.queryBuilder.QueryBuilder;
 import edu.temple.cla.papolicy.tables.Table;
@@ -63,7 +64,7 @@ public class IndividualBillDrilldownController extends AbstractController{
         // Get the requested bill id.
         String billId = request.getParameter("billId");
         // Load the BillsTable.
-        Table billsTable = Table.getTable("3", ' ', request, jdbcTemplate);
+        Table billsTable = AbstractTable.getTable("3", ' ', request, jdbcTemplate).get(0);
         // Create a select query for the specified bill.
         QueryBuilder initialQuery = new QueryBuilder();
         initialQuery.setTable(billsTable.getTableName());
